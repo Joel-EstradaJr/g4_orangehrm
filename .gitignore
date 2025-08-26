@@ -10,6 +10,7 @@ src/cache/orangehrm/
 
 # Installer logs
 src/log/installer.log
+src/log/orangehrm.log
 
 # Node.js dependencies (ignore everywhere)
 node_modules/
