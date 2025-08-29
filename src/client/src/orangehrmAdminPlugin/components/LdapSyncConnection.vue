@@ -22,7 +22,7 @@
     <div class="orangehrm-header-container">
       <div class="orangehrm-ldap-sync">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('admin.sync_connection') }}
+          {{ $t("admin.sync_connection") }}
         </oxd-text>
         <oxd-text
           v-show="lastSync"
@@ -48,22 +48,22 @@
 </template>
 
 <script>
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import {APIService} from '@/core/util/services/api.service';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {OxdSpinner} from '@ohrm/oxd';
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import { APIService } from "@/core/util/services/api.service";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { OxdSpinner } from "@ohrm/oxd";
 
 export default {
-  name: 'LdapSyncConnection',
+  name: "LdapSyncConnection",
   components: {
-    'oxd-loading-spinner': OxdSpinner,
+    "oxd-loading-spinner": OxdSpinner,
   },
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/ldap/user-sync',
+      "/api/v2/admin/ldap/user-sync"
     );
-    const {jsDateFormat} = useDateFormat();
+    const { jsDateFormat } = useDateFormat();
 
     return {
       http,
@@ -84,18 +84,18 @@ export default {
       if (this.lastSyncDate && this.lastSyncTime) {
         const parsedDateTime = parseDate(
           `${this.lastSyncDate} ${this.lastSyncTime} +00:00`,
-          'yyyy-MM-dd HH:mm xxx',
+          "yyyy-MM-dd HH:mm xxx"
         );
         return this.$t(
           this.lastSyncStatus === 1
-            ? 'admin.last_synced_on_datetime'
-            : 'admin.last_sync_failed_on_datetime',
+            ? "admin.last_synced_on_datetime"
+            : "admin.last_sync_failed_on_datetime",
           {
             datetime: formatDate(
               parsedDateTime,
-              `hh:mm a ${this.jsDateFormat}`,
+              `hh:mm a ${this.jsDateFormat}`
             ),
-          },
+          }
         );
       } else {
         return null;
@@ -111,7 +111,7 @@ export default {
       this.http
         .getAll()
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.lastSyncStatus = data.syncStatus;
           this.lastSyncDate =
             data.syncFinishedAt?.date || data.syncStartedAt?.date;
@@ -127,22 +127,22 @@ export default {
       this.http
         .create()
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.lastSyncStatus = data.syncStatus;
           this.lastSyncDate =
             data.syncFinishedAt?.date || data.syncStartedAt?.date;
           this.lastSyncTime =
             data.syncFinishedAt?.time || data.syncStartedAt?.time;
           this.$toast.success({
-            title: this.$t('general.success'),
-            message: this.$t('admin.synchronization_successful'),
+            title: this.$t("general.success"),
+            message: this.$t("admin.synchronization_successful"),
           });
         })
         .catch(() => {
           this.getLastSyncStatus();
           this.$toast.error({
-            title: this.$t('general.error'),
-            message: this.$t('admin.synchronization_failed'),
+            title: this.$t("general.error"),
+            message: this.$t("admin.synchronization_failed"),
           });
         })
         .finally(() => {

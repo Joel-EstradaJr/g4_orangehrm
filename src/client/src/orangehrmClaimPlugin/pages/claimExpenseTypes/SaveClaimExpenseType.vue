@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('claim.add_expense_type') }}
+        {{ $t("claim.add_expense_type") }}
       </oxd-text>
 
       <oxd-divider />
@@ -48,7 +48,7 @@
           <oxd-grid-item class="--offset-row-3">
             <div class="orangehrm-sm-field">
               <oxd-text tag="p" class="orangehrm-sm-field-label">
-                {{ $t('general.active') }}
+                {{ $t("general.active") }}
               </oxd-text>
               <oxd-switch-input v-model="expenseTypes.status" />
             </div>
@@ -74,35 +74,35 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {OxdSwitchInput} from '@ohrm/oxd';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import { OxdSwitchInput } from "@ohrm/oxd";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const initialExpenseTypes = {
-  name: '',
-  description: '',
+  name: "",
+  description: "",
   status: true,
 };
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
+    "oxd-switch-input": OxdSwitchInput,
   },
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/claim/expenses/types',
+      "/api/v2/claim/expenses/types"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const expenseTypeNameUniqueValidation = createUniqueValidator(
-      'ExpenseType',
-      'name',
+      "ExpenseType",
+      "name",
       {
-        matchByField: 'isDeleted',
-        matchByValue: 'false',
-      },
+        matchByField: "isDeleted",
+        matchByValue: "false",
+      }
     );
     return {
       http,
@@ -113,7 +113,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      expenseTypes: {...initialExpenseTypes},
+      expenseTypes: { ...initialExpenseTypes },
       rules: {
         name: [
           required,
@@ -127,7 +127,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/claim/viewExpense');
+      navigate("/claim/viewExpense");
     },
     onSave() {
       this.isLoading = true;

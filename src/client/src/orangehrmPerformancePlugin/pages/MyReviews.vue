@@ -22,7 +22,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('general.my_reviews') }}
+          {{ $t("general.my_reviews") }}
         </oxd-text>
       </div>
       <table-header :selected="0" :total="total" :loading="isLoading">
@@ -47,33 +47,33 @@
   </div>
 </template>
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import useSort from '@ohrm/core/util/composable/useSort';
-import {computed, inject} from 'vue';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import useLocale from '@/core/util/composable/useLocale';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import {navigate} from '@/core/util/helper/navigation';
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import useSort from "@ohrm/core/util/composable/useSort";
+import { computed, inject } from "vue";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import useLocale from "@/core/util/composable/useLocale";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import { navigate } from "@/core/util/helper/navigation";
 import {
   viewIcon,
   evaluateIcon,
   viewLabel,
   evaluateLabel,
-} from '@/orangehrmPerformancePlugin/util/composable/useReviewActions';
-import ReviewPeriodCell from '@/orangehrmPerformancePlugin/components/ReviewPeriodCell';
-import {tableScreenStateKey} from '@ohrm/oxd';
+} from "@/orangehrmPerformancePlugin/util/composable/useReviewActions";
+import ReviewPeriodCell from "@/orangehrmPerformancePlugin/components/ReviewPeriodCell";
+import { tableScreenStateKey } from "@ohrm/oxd";
 
 const defaultSortOrder = {
-  'performanceReview.statusId': 'ASC',
-  'performanceReview.dueDate': 'ASC',
-  'performanceReview.reviewPeriodStart': 'DEFAULT',
-  'reviewer.status': 'DEFAULT',
+  "performanceReview.statusId": "ASC",
+  "performanceReview.dueDate": "ASC",
+  "performanceReview.reviewPeriodStart": "DEFAULT",
+  "reviewer.status": "DEFAULT",
 };
 
 export default {
   setup() {
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
 
@@ -86,11 +86,11 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/performance/reviews',
+      "/api/v2/performance/reviews"
     );
 
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const trackerNormalizer = (data) => {
       return data.map((item) => {
@@ -104,17 +104,19 @@ export default {
               jsDateFormat,
               {
                 locale,
-              },
+              }
             ),
             reviewPeriodEnd: formatDate(
               parseDate(item.reviewPeriodEnd),
               jsDateFormat,
               {
                 locale,
-              },
+              }
             ),
           },
-          dueDate: formatDate(parseDate(item.dueDate), jsDateFormat, {locale}),
+          dueDate: formatDate(parseDate(item.dueDate), jsDateFormat, {
+            locale,
+          }),
           overallStatus: item.overallStatus.statusName,
           selfEvaluationStatus: item.selfReviewStatus,
           statusId: item.overallStatus.statusId,
@@ -156,47 +158,47 @@ export default {
     return {
       headers: [
         {
-          name: 'jobTitle',
-          slot: 'title',
-          title: this.$t('general.job_title'),
-          style: {flex: 1},
+          name: "jobTitle",
+          slot: "title",
+          title: this.$t("general.job_title"),
+          style: { flex: 1 },
         },
         {
-          name: 'department',
-          title: this.$t('general.sub_unit'),
-          style: {flex: 1},
+          name: "department",
+          title: this.$t("general.sub_unit"),
+          style: { flex: 1 },
         },
         {
-          name: 'reviewPeriod',
-          title: this.$t('performance.review_period'),
-          sortField: 'performanceReview.reviewPeriodStart',
-          style: {flex: 2},
+          name: "reviewPeriod",
+          title: this.$t("performance.review_period"),
+          sortField: "performanceReview.reviewPeriodStart",
+          style: { flex: 2 },
           cellRenderer: this.reviewPeriodCellRenderer,
         },
         {
-          name: 'dueDate',
-          title: this.$t('performance.due_date'),
-          sortField: 'performanceReview.dueDate',
-          style: {flex: 1},
+          name: "dueDate",
+          title: this.$t("performance.due_date"),
+          sortField: "performanceReview.dueDate",
+          style: { flex: 1 },
         },
         {
-          name: 'selfEvaluationStatus',
-          title: this.$t('performance.self_evaluation_status'),
-          sortField: 'reviewer.status',
-          style: {flex: 1},
+          name: "selfEvaluationStatus",
+          title: this.$t("performance.self_evaluation_status"),
+          sortField: "reviewer.status",
+          style: { flex: 1 },
         },
         {
-          name: 'overallStatus',
-          title: this.$t('performance.review_status'),
-          sortField: 'performanceReview.statusId',
-          style: {flex: 1},
+          name: "overallStatus",
+          title: this.$t("performance.review_status"),
+          sortField: "performanceReview.statusId",
+          style: { flex: 1 },
         },
         {
-          name: 'action',
-          slot: 'footer',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "action",
+          slot: "footer",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellRenderer: this.actionButtonCellRenderer,
         },
       ],
@@ -206,24 +208,24 @@ export default {
     actionButtonCellRenderer(...[, , , row]) {
       const cellConfig = {};
       const screenState = inject(tableScreenStateKey);
-      if (screenState.screenType === 'lg' || screenState.screenType === 'xl') {
-        if (row.selfEvaluationStatus === 'Completed') {
+      if (screenState.screenType === "lg" || screenState.screenType === "xl") {
+        if (row.selfEvaluationStatus === "Completed") {
           cellConfig.view = viewIcon;
-          cellConfig.view.props.title = this.$t('general.view');
+          cellConfig.view.props.title = this.$t("general.view");
           cellConfig.view.onClick = this.onClickEvaluate;
         } else {
           cellConfig.evaluate = evaluateIcon;
-          cellConfig.evaluate.props.title = this.$t('performance.evaluate');
+          cellConfig.evaluate.props.title = this.$t("performance.evaluate");
           cellConfig.evaluate.onClick = this.onClickEvaluate;
         }
       } else {
-        if (row.selfEvaluationStatus === 'Completed') {
+        if (row.selfEvaluationStatus === "Completed") {
           cellConfig.view = viewLabel;
-          cellConfig.view.props.label = this.$t('general.view');
+          cellConfig.view.props.label = this.$t("general.view");
           cellConfig.view.onClick = this.onClickEvaluate;
         } else {
           cellConfig.evaluate = evaluateLabel;
-          cellConfig.evaluate.props.label = this.$t('performance.evaluate');
+          cellConfig.evaluate.props.label = this.$t("performance.evaluate");
           cellConfig.evaluate.onClick = this.onClickEvaluate;
         }
       }
@@ -247,10 +249,10 @@ export default {
       };
     },
     onClickView() {
-      navigate('/performance/searchKpi');
+      navigate("/performance/searchKpi");
     },
     onClickEvaluate(item) {
-      navigate('/performance/reviewEvaluate/id/{id}', {id: item.id});
+      navigate("/performance/reviewEvaluate/id/{id}", { id: item.id });
     },
   },
 };

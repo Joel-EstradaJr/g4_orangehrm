@@ -15,61 +15,61 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import usei18n from './usei18n';
-import {buildLocale} from '@ohrm/oxd';
+import usei18n from "./usei18n";
+import { buildLocale } from "@ohrm/oxd";
 
 export default function useLocale() {
-  const {$t} = usei18n();
+  const { $t } = usei18n();
 
   const locale: Locale = buildLocale({
     months: {
       wide: [
-        $t('general.january'),
-        $t('general.february'),
-        $t('general.march'),
-        $t('general.april'),
-        $t('general.may'),
-        $t('general.june'),
-        $t('general.july'),
-        $t('general.august'),
-        $t('general.september'),
-        $t('general.october'),
-        $t('general.november'),
-        $t('general.december'),
+        $t("general.january"),
+        $t("general.february"),
+        $t("general.march"),
+        $t("general.april"),
+        $t("general.may"),
+        $t("general.june"),
+        $t("general.july"),
+        $t("general.august"),
+        $t("general.september"),
+        $t("general.october"),
+        $t("general.november"),
+        $t("general.december"),
       ],
       abbreviated: [
-        $t('general.jan'),
-        $t('general.feb'),
-        $t('general.mar'),
-        $t('general.apr'),
-        $t('general.may'),
-        $t('general.jun'),
-        $t('general.jul'),
-        $t('general.aug'),
-        $t('general.sep'),
-        $t('general.oct'),
-        $t('general.nov'),
-        $t('general.dec'),
+        $t("general.jan"),
+        $t("general.feb"),
+        $t("general.mar"),
+        $t("general.apr"),
+        $t("general.may"),
+        $t("general.jun"),
+        $t("general.jul"),
+        $t("general.aug"),
+        $t("general.sep"),
+        $t("general.oct"),
+        $t("general.nov"),
+        $t("general.dec"),
       ],
     },
     days: {
       abbreviated: [
-        $t('general.sun'),
-        $t('general.mon'),
-        $t('general.tue'),
-        $t('general.wed'),
-        $t('general.thu'),
-        $t('general.fri'),
-        $t('general.sat'),
+        $t("general.sun"),
+        $t("general.mon"),
+        $t("general.tue"),
+        $t("general.wed"),
+        $t("general.thu"),
+        $t("general.fri"),
+        $t("general.sat"),
       ],
       wide: [
-        $t('general.sunday'),
-        $t('general.monday'),
-        $t('general.tuesday'),
-        $t('general.wednesday'),
-        $t('general.thursday'),
-        $t('general.friday'),
-        $t('general.saturday'),
+        $t("general.sunday"),
+        $t("general.monday"),
+        $t("general.tuesday"),
+        $t("general.wednesday"),
+        $t("general.thursday"),
+        $t("general.friday"),
+        $t("general.saturday"),
       ],
     },
   });

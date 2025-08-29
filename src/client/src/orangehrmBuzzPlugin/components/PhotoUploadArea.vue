@@ -22,20 +22,20 @@
     <div class="orangehrm-photo-upload-area">
       <oxd-icon class="orangehrm-photo-upload-icon" name="images" />
       <oxd-text type="card-title">
-        {{ $t('buzz.add_photos') }}
+        {{ $t("buzz.add_photos") }}
       </oxd-text>
     </div>
   </oxd-input-field>
 </template>
 
 <script>
-import {OxdIcon} from '@ohrm/oxd';
+import { OxdIcon } from "@ohrm/oxd";
 
 export default {
-  name: 'PhotoUploadArea',
+  name: "PhotoUploadArea",
 
   components: {
-    'oxd-icon': OxdIcon,
+    "oxd-icon": OxdIcon,
   },
 };
 </script>

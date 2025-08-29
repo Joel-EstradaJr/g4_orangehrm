@@ -37,7 +37,7 @@
           @update:model-value="$emit('update:password', $event)"
         />
         <oxd-text class="user-password-hint" tag="p">
-          {{ $t('general.password_strength_message') }}
+          {{ $t("general.password_strength_message") }}
         </oxd-text>
       </oxd-grid-item>
 
@@ -61,16 +61,16 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {promiseDebounce} from '@ohrm/oxd';
-import {APIService} from '@/core/util/services/api.service';
-import usePasswordPolicy from '@/core/util/composable/usePasswordPolicy';
-import PasswordStrengthIndicator from '@/core/components/labels/PasswordStrengthIndicator';
+} from "@ohrm/core/util/validation/rules";
+import { promiseDebounce } from "@ohrm/oxd";
+import { APIService } from "@/core/util/services/api.service";
+import usePasswordPolicy from "@/core/util/composable/usePasswordPolicy";
+import PasswordStrengthIndicator from "@/core/components/labels/PasswordStrengthIndicator";
 
 export default {
-  name: 'PasswordInput',
+  name: "PasswordInput",
   components: {
-    'password-strength-indicator': PasswordStrengthIndicator,
+    "password-strength-indicator": PasswordStrengthIndicator,
   },
   props: {
     password: {
@@ -86,10 +86,10 @@ export default {
       default: true,
     },
   },
-  emits: ['update:password', 'update:passwordConfirm'],
+  emits: ["update:password", "update:passwordConfirm"],
   setup() {
-    const http = new APIService(window.appGlobal.baseUrl, '');
-    const {passwordStrength, validatePassword} = usePasswordPolicy(http);
+    const http = new APIService(window.appGlobal.baseUrl, "");
+    const { passwordStrength, validatePassword } = usePasswordPolicy(http);
 
     return {
       passwordStrength,
@@ -109,7 +109,7 @@ export default {
             if (this.isPasswordRequired || this.password.length > 0) {
               return (
                 (!!v && v === this.password) ||
-                this.$t('general.passwords_do_not_match')
+                this.$t("general.passwords_do_not_match")
               );
             } else {
               return true;

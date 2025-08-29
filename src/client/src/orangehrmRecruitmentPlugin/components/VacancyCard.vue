@@ -31,7 +31,7 @@
       ></oxd-button>
     </div>
     <oxd-divider v-show="vacancyDescription"></oxd-divider>
-    <div :class="{'orangehrm-vacancy-card-body': isViewDetails}">
+    <div :class="{ 'orangehrm-vacancy-card-body': isViewDetails }">
       <oxd-text type="toast-message">
         <pre v-if="vacancyDescription" class="orangehrm-vacancy-card-pre-tag">{{
           vacancyDescription
@@ -45,7 +45,7 @@
       <a @click="viewDetails">
         <oxd-text tag="p" class="orangehrm-vacancy-card-anchor-tag">
           {{
-            isViewDetails ? $t('general.show_more') : $t('general.show_less')
+            isViewDetails ? $t("general.show_more") : $t("general.show_less")
           }}
         </oxd-text>
       </a>
@@ -54,12 +54,12 @@
 </template>
 
 <script>
-import {toRefs} from 'vue';
-import {navigate} from '@/core/util/helper/navigation';
-import {useResponsive} from '@ohrm/oxd';
+import { toRefs } from "vue";
+import { navigate } from "@/core/util/helper/navigation";
+import { useResponsive } from "@ohrm/oxd";
 
 export default {
-  name: 'VacancyCard',
+  name: "VacancyCard",
   props: {
     vacancyId: {
       type: Number,
@@ -102,7 +102,9 @@ export default {
       this.viewMore = !this.viewMore;
     },
     apply() {
-      navigate('/recruitmentApply/applyVacancy/id/{id}', {id: this.vacancyId});
+      navigate("/recruitmentApply/applyVacancy/id/{id}", {
+        id: this.vacancyId,
+      });
     },
   },
 };

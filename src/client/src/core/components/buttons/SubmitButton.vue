@@ -28,6 +28,6 @@
 
 <script>
 export default {
-  name: 'SubmitButton',
+  name: "SubmitButton",
 };
 </script>

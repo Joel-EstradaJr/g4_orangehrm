@@ -24,16 +24,16 @@
     :label="$t('time.project')"
     :create-options="loadProjects"
   >
-    <template #option="{data}">
+    <template #option="{ data }">
       <span> {{ data.label }} </span>
     </template>
   </oxd-input-field>
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'ProjectAutocomplete',
+  name: "ProjectAutocomplete",
   props: {
     onlyAllowed: {
       type: Boolean,
@@ -53,7 +53,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/time/projects',
+      "/api/v2/time/projects"
     );
     return {
       http,
@@ -66,7 +66,7 @@ export default {
           const params = {
             name: this.excludeCustomerName ? serachParam.trim() : undefined,
             onlyAllowed: this.onlyAllowed,
-            model: 'detailed',
+            model: "detailed",
             excludeProjectIds:
               this.excludeProjectIds.length > 0
                 ? this.excludeProjectIds
@@ -75,7 +75,7 @@ export default {
               ? serachParam.trim()
               : undefined,
           };
-          this.http.getAll(params).then(({data}) => {
+          this.http.getAll(params).then(({ data }) => {
             resolve(
               data.data.map((project) => {
                 return {
@@ -85,7 +85,7 @@ export default {
                     : `${project.customer?.name} - ${project.name}`,
                   _customer: project.customer,
                 };
-              }),
+              })
             );
           });
         } else {

@@ -45,7 +45,7 @@
       class="orangehrm-buzz-comment-readmore"
       @click="onClickShowMore"
     >
-      {{ showAllComments ? $t('general.show_less') : $t('general.show_more') }}
+      {{ showAllComments ? $t("general.show_less") : $t("general.show_more") }}
     </oxd-text>
     <delete-confirmation
       ref="deleteDialog"
@@ -55,25 +55,25 @@
 </template>
 
 <script>
-import useToast from '@/core/util/composable/useToast';
-import {onBeforeMount, reactive, ref, toRefs} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import useAutoFocus from '@/core/util/composable/useAutoFocus';
-import PostComment from '@/orangehrmBuzzPlugin/components/PostComment';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
+import useToast from "@/core/util/composable/useToast";
+import { onBeforeMount, reactive, ref, toRefs } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import useAutoFocus from "@/core/util/composable/useAutoFocus";
+import PostComment from "@/orangehrmBuzzPlugin/components/PostComment";
+import ProfileImage from "@/orangehrmBuzzPlugin/components/ProfileImage";
+import useBuzzAPIs from "@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
 
 export default {
-  name: 'PostCommentContainer',
+  name: "PostCommentContainer",
 
   components: {
-    'post-comment': PostComment,
-    'profile-image': ProfileImage,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "post-comment": PostComment,
+    "profile-image": ProfileImage,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
-  directives: {...useAutoFocus()},
+  directives: { ...useAutoFocus() },
 
   props: {
     postId: {
@@ -86,7 +86,7 @@ export default {
     },
   },
 
-  emits: ['create', 'delete'],
+  emits: ["create", "delete"],
 
   setup(props, context) {
     const deleteDialog = ref();
@@ -96,18 +96,17 @@ export default {
       comments: [],
       showAllComments: false,
     });
-    const {saveSuccess, updateSuccess, deleteSuccess} = useToast();
-    const {fetchPostComments, savePostComment, deletePostComment} = useBuzzAPIs(
-      new APIService(window.appGlobal.baseUrl, ''),
-    );
+    const { saveSuccess, updateSuccess, deleteSuccess } = useToast();
+    const { fetchPostComments, savePostComment, deletePostComment } =
+      useBuzzAPIs(new APIService(window.appGlobal.baseUrl, ""));
 
     const loadComments = () => {
       fetchPostComments(props.postId, state.showAllComments ? 0 : 4, true).then(
         (response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
           state.total = meta.total;
           state.comments = [...data];
-        },
+        }
       );
     };
 
@@ -117,7 +116,7 @@ export default {
         state.text = null;
         loadComments();
         saveSuccess();
-        context.emit('create');
+        context.emit("create");
       });
     };
 
@@ -133,11 +132,11 @@ export default {
 
     const onDeleteComment = (commentId) => {
       deleteDialog.value.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           deletePostComment(props.postId, commentId).then(() => {
             loadComments();
             deleteSuccess();
-            context.emit('delete');
+            context.emit("delete");
           });
         }
       });

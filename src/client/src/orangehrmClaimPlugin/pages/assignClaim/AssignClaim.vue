@@ -22,7 +22,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-card-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('claim.assign_claim') }}
+          {{ $t("claim.assign_claim") }}
         </oxd-text>
         <oxd-divider />
         <oxd-form :loading="isLoading">
@@ -110,20 +110,20 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import ClaimAttachment from '@/orangehrmClaimPlugin/components/ClaimAttachment.vue';
-import ClaimExpenses from '@/orangehrmClaimPlugin/components/ClaimExpenses.vue';
-import ClaimActionButtons from '@/orangehrmClaimPlugin/components/ClaimActionButtons.vue';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import ClaimAttachment from "@/orangehrmClaimPlugin/components/ClaimAttachment.vue";
+import ClaimExpenses from "@/orangehrmClaimPlugin/components/ClaimExpenses.vue";
+import ClaimActionButtons from "@/orangehrmClaimPlugin/components/ClaimActionButtons.vue";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
 
 export default {
-  name: 'AssignClaim',
+  name: "AssignClaim",
 
   components: {
-    'claim-attachment': ClaimAttachment,
-    'claim-expenses': ClaimExpenses,
-    'claim-action-buttons': ClaimActionButtons,
+    "claim-attachment": ClaimAttachment,
+    "claim-expenses": ClaimExpenses,
+    "claim-action-buttons": ClaimActionButtons,
   },
 
   props: {
@@ -148,7 +148,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/claim/employees/${props.empNumber}/requests`,
+      `/api/v2/claim/employees/${props.empNumber}/requests`
     );
 
     return {
@@ -158,12 +158,12 @@ export default {
 
   data() {
     const statusMap = {
-      SUBMITTED: this.$t('time.submitted'),
-      APPROVED: this.$t('time.approved'),
-      REJECTED: this.$t('leave.rejected'),
-      CANCELLED: this.$t('leave.cancelled'),
-      PAID: this.$t('claim.paid'),
-      INITIATED: this.$t('claim.initiated'),
+      SUBMITTED: this.$t("time.submitted"),
+      APPROVED: this.$t("time.approved"),
+      REJECTED: this.$t("leave.rejected"),
+      CANCELLED: this.$t("leave.cancelled"),
+      PAID: this.$t("claim.paid"),
+      INITIATED: this.$t("claim.initiated"),
     };
     return {
       isLoading: false,
@@ -174,33 +174,33 @@ export default {
       allowedActions: [],
       employee: {},
       statusMap,
-      employeeName: '',
+      employeeName: "",
     };
   },
 
   computed: {
     canEdit() {
       if (this.allowedActions) {
-        return this.allowedActions.includes('Submit');
+        return this.allowedActions.includes("Submit");
       }
       return false;
     },
     formattedEventName() {
       return this.claimEvent.isDeleted
-        ? `${this.claimEvent.name} ${this.$t('general.deleted')}`
+        ? `${this.claimEvent.name} ${this.$t("general.deleted")}`
         : !this.claimEvent.status
-        ? `${this.claimEvent.name} (${this.$t('performance.inactive')})`
+        ? `${this.claimEvent.name} (${this.$t("performance.inactive")})`
         : this.claimEvent.name;
     },
   },
 
   beforeMount() {
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $tEmpName } = useEmployeeNameTranslate();
     this.isLoading = true;
     this.http
       .get(this.id)
       .then((res) => {
-        const {data, meta} = res.data;
+        const { data, meta } = res.data;
         this.response = res.data;
         this.request = data;
         this.claimEvent = data.claimEvent;
@@ -216,7 +216,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/claim/submitClaim');
+      navigate("/claim/submitClaim");
     },
   },
 };

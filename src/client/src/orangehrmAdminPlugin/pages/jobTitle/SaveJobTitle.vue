@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.add_job_title') }}
+        {{ $t("admin.add_job_title") }}
       </oxd-text>
 
       <oxd-divider />
@@ -55,7 +55,7 @@
             :rules="rules.specification"
           />
           <oxd-text class="orangehrm-input-hint" tag="p">
-            {{ $t('general.accepts_up_to_n_mb', {count: formattedFileSize}) }}
+            {{ $t("general.accepts_up_to_n_mb", { count: formattedFileSize }) }}
           </oxd-text>
         </oxd-form-row>
 
@@ -87,21 +87,21 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
   validFileTypes,
   maxFileSize,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const initialJobTitle = {
-  title: '',
-  description: '',
+  title: "",
+  description: "",
   specification: null,
-  note: '',
+  note: "",
 };
 
 export default {
@@ -119,16 +119,16 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/job-titles',
+      "/api/v2/admin/job-titles"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const jobTitleUniqueValidation = createUniqueValidator(
-      'JobTitle',
-      'jobTitleName',
+      "JobTitle",
+      "jobTitleName",
       {
-        matchByField: 'isDeleted',
-        matchByValue: 'false',
-      },
+        matchByField: "isDeleted",
+        matchByValue: "false",
+      }
     );
 
     return {
@@ -140,7 +140,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      jobTitle: {...initialJobTitle},
+      jobTitle: { ...initialJobTitle },
       rules: {
         title: [
           required,
@@ -165,7 +165,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/admin/viewJobTitleList');
+      navigate("/admin/viewJobTitleList");
     },
     onSave() {
       this.isLoading = true;

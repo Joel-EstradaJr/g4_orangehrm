@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-top-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">{{
-      $t('general.add_language')
+      $t("general.add_language")
     }}</oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -96,17 +96,17 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 const languageModel = {
   languageId: null,
   fluencyId: null,
   competencyId: null,
-  comment: '',
+  comment: "",
 };
 
 export default {
-  name: 'SaveLanguage',
+  name: "SaveLanguage",
 
   props: {
     http: {
@@ -127,12 +127,12 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   data() {
     return {
       isLoading: false,
-      language: {...languageModel},
+      language: { ...languageModel },
       languages: [],
       rules: {
         languageId: [required],
@@ -149,7 +149,7 @@ export default {
     },
     allowedFluencies() {
       const languageIndex = this.languages.findIndex(
-        (item) => item.id === this.language.languageId?.id,
+        (item) => item.id === this.language.languageId?.id
       );
       if (languageIndex > -1) {
         const selectedLanguage = this.languages[languageIndex];
@@ -165,12 +165,12 @@ export default {
     this.isLoading = true;
     this.http
       .request({
-        method: 'GET',
+        method: "GET",
         url: this.api,
-        params: {limit: 0},
+        params: { limit: 0 },
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         if (Array.isArray(data)) {
           this.languages = data.map((item) => {
             return {
@@ -206,7 +206,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

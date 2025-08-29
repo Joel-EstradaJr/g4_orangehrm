@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.module_configuration') }}
+        {{ $t("admin.module_configuration") }}
       </oxd-text>
 
       <oxd-divider />
@@ -31,67 +31,67 @@
           <oxd-grid :cols="3" class="orangehrm-full-width-grid">
             <div class="orangehrm-module-field-row">
               <oxd-text tag="p" class="orangehrm-module-field-label">
-                {{ $t('admin.admin_module') }}
+                {{ $t("admin.admin_module") }}
               </oxd-text>
               <oxd-switch-input v-model="modules.admin" :disabled="true" />
             </div>
             <div class="orangehrm-module-field-row">
               <oxd-text tag="p" class="orangehrm-module-field-label">
-                {{ $t('admin.pim_module') }}
+                {{ $t("admin.pim_module") }}
               </oxd-text>
               <oxd-switch-input v-model="modules.pim" :disabled="true" />
             </div>
             <div class="orangehrm-module-field-row">
               <oxd-text tag="p" class="orangehrm-module-field-label">
-                {{ $t('admin.leave_module') }}
+                {{ $t("admin.leave_module") }}
               </oxd-text>
               <oxd-switch-input v-model="modules.leave" />
             </div>
             <div class="orangehrm-module-field-row">
               <oxd-text tag="p" class="orangehrm-module-field-label">
-                {{ $t('admin.time_module') }}
+                {{ $t("admin.time_module") }}
               </oxd-text>
               <oxd-switch-input v-model="modules.time" />
             </div>
             <div class="orangehrm-module-field-row">
               <oxd-text tag="p" class="orangehrm-module-field-label">
-                {{ $t('admin.recruitment_module') }}
+                {{ $t("admin.recruitment_module") }}
               </oxd-text>
               <oxd-switch-input v-model="modules.recruitment" />
             </div>
             <div class="orangehrm-module-field-row">
               <oxd-text tag="p" class="orangehrm-module-field-label">
-                {{ $t('admin.performance_module') }}
+                {{ $t("admin.performance_module") }}
               </oxd-text>
               <oxd-switch-input v-model="modules.performance" />
             </div>
             <div class="orangehrm-module-field-row">
               <oxd-text tag="p" class="orangehrm-module-field-label">
-                {{ $t('admin.directory_module') }}
+                {{ $t("admin.directory_module") }}
               </oxd-text>
               <oxd-switch-input v-model="modules.directory" />
             </div>
             <div class="orangehrm-module-field-row">
               <oxd-text tag="p" class="orangehrm-module-field-label">
-                {{ $t('admin.maintenance_module') }}
+                {{ $t("admin.maintenance_module") }}
               </oxd-text>
               <oxd-switch-input v-model="modules.maintenance" />
             </div>
             <div class="orangehrm-module-field-row">
               <oxd-text tag="p" class="orangehrm-module-field-label">
-                {{ $t('general.mobile') }}
+                {{ $t("general.mobile") }}
               </oxd-text>
               <oxd-switch-input v-model="modules.mobile" />
             </div>
             <div class="orangehrm-module-field-row">
               <oxd-text tag="p" class="orangehrm-module-field-label">
-                {{ $t('claim.claim_module') }}
+                {{ $t("claim.claim_module") }}
               </oxd-text>
               <oxd-switch-input v-model="modules.claim" />
             </div>
             <div class="orangehrm-module-field-row">
               <oxd-text tag="p" class="orangehrm-module-field-label">
-                {{ $t('general.buzz') }}
+                {{ $t("general.buzz") }}
               </oxd-text>
               <oxd-switch-input v-model="modules.buzz" />
             </div>
@@ -109,9 +109,9 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {reloadPage} from '@/core/util/helper/navigation';
-import {OxdSwitchInput} from '@ohrm/oxd';
+import { APIService } from "@/core/util/services/api.service";
+import { reloadPage } from "@/core/util/helper/navigation";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const modulesModel = {
   admin: false,
@@ -129,12 +129,12 @@ const modulesModel = {
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
+    "oxd-switch-input": OxdSwitchInput,
   },
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/modules',
+      "/api/v2/admin/modules"
     );
     return {
       http,
@@ -142,7 +142,7 @@ export default {
   },
   data() {
     return {
-      modules: {...modulesModel},
+      modules: { ...modulesModel },
       isLoading: false,
     };
   },
@@ -151,7 +151,7 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.modules.admin = data.admin;
         this.modules.pim = data.pim;
         this.modules.leave = data.leave;
@@ -186,11 +186,11 @@ export default {
       };
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: payload,
         })
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.modules = data;
           return this.$toast.saveSuccess();
         })

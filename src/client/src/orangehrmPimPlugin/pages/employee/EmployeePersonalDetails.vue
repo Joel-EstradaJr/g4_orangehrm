@@ -21,7 +21,7 @@
   <edit-employee-layout :employee-id="empNumber" screen="personal">
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('general.personal_details') }}
+        {{ $t("general.personal_details") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -141,7 +141,7 @@
             <oxd-grid-item>
               <oxd-input-group
                 :label="$t('pim.gender')"
-                :classes="{wrapper: '--gender-grouped-field'}"
+                :classes="{ wrapper: '--gender-grouped-field' }"
               >
                 <oxd-input-field
                   v-model="employee.gender"
@@ -192,39 +192,39 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import FullNameInput from '@/orangehrmPimPlugin/components/FullNameInput';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import EditEmployeeLayout from "@/orangehrmPimPlugin/components/EditEmployeeLayout";
+import FullNameInput from "@/orangehrmPimPlugin/components/FullNameInput";
 import {
   required,
   shouldNotExceedCharLength,
   validDateFormat,
-} from '@ohrm/core/util/validation/rules';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const employeeModel = {
-  firstName: '',
-  middleName: '',
-  lastName: '',
-  employeeId: '',
-  otherId: '',
-  drivingLicenseNo: '',
-  drivingLicenseExpiredDate: '',
-  ssnNumber: '',
-  sinNumber: '',
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  employeeId: "",
+  otherId: "",
+  drivingLicenseNo: "",
+  drivingLicenseExpiredDate: "",
+  ssnNumber: "",
+  sinNumber: "",
   nationality: [],
   maritalStatus: [],
-  birthday: '',
-  gender: '',
-  nickname: '',
-  smoker: '',
-  militaryService: '',
+  birthday: "",
+  gender: "",
+  nickname: "",
+  smoker: "",
+  militaryService: "",
 };
 
 export default {
   components: {
-    'edit-employee-layout': EditEmployeeLayout,
-    'full-name-input': FullNameInput,
+    "edit-employee-layout": EditEmployeeLayout,
+    "full-name-input": FullNameInput,
   },
 
   props: {
@@ -253,9 +253,9 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.empNumber}/personal-details`,
+      `/api/v2/pim/employees/${props.empNumber}/personal-details`
     );
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -266,7 +266,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      employee: {...employeeModel},
+      employee: { ...employeeModel },
       rules: {
         firstName: [required, shouldNotExceedCharLength(30)],
         middleName: [shouldNotExceedCharLength(30)],
@@ -282,9 +282,9 @@ export default {
         drivingLicenseExpiredDate: [validDateFormat(this.userDateFormat)],
       },
       maritalStatuses: [
-        {id: 'Single', label: this.$t('pim.single')},
-        {id: 'Married', label: this.$t('pim.married')},
-        {id: 'Other', label: this.$t('pim.other')},
+        { id: "Single", label: this.$t("pim.single") },
+        { id: "Married", label: this.$t("pim.married") },
+        { id: "Other", label: this.$t("pim.other") },
       ],
     };
   },
@@ -296,22 +296,22 @@ export default {
       .then((response) => {
         this.updateModel(response);
         return this.http.request({
-          method: 'GET',
-          url: '/api/v2/pim/employees',
+          method: "GET",
+          url: "/api/v2/pim/employees",
         });
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.rules.employeeId.push((v) => {
           const index = data.findIndex(
             (item) =>
               item.employeeId?.trim() &&
-              String(item.employeeId).toLowerCase() == String(v).toLowerCase(),
+              String(item.employeeId).toLowerCase() == String(v).toLowerCase()
           );
           if (index > -1) {
-            const {empNumber} = data[index];
+            const { empNumber } = data[index];
             return empNumber != this.empNumber
-              ? this.$t('pim.employee_id_exists')
+              ? this.$t("pim.employee_id_exists")
               : true;
           } else {
             return true;
@@ -328,7 +328,7 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             lastName: this.employee.lastName,
             firstName: this.employee.firstName,
@@ -364,13 +364,13 @@ export default {
     },
 
     updateModel(response) {
-      const {data} = response.data;
-      this.employee = {...employeeModel, ...data};
+      const { data } = response.data;
+      this.employee = { ...employeeModel, ...data };
       this.employee.maritalStatus = this.maritalStatuses.find(
-        (item) => item.id === data.maritalStatus,
+        (item) => item.id === data.maritalStatus
       );
       this.employee.nationality = this.nationalities.find(
-        (item) => item.id === data.nationality?.id,
+        (item) => item.id === data.nationality?.id
       );
     },
   },

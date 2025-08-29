@@ -1,7 +1,14 @@
-import {nanoid} from 'nanoid';
-import {OxdToast, TOAST_TYPES} from '@ohrm/oxd';
-import {translate as translatorFactory} from '@/core/plugins/i18n/translate';
-import {h, defineComponent, TransitionGroup, App, reactive, toRefs} from 'vue';
+import { nanoid } from "nanoid";
+import { OxdToast, TOAST_TYPES } from "@ohrm/oxd";
+import { translate as translatorFactory } from "@/core/plugins/i18n/translate";
+import {
+  h,
+  defineComponent,
+  TransitionGroup,
+  App,
+  reactive,
+  toRefs,
+} from "vue";
 
 const translate = translatorFactory();
 
@@ -54,13 +61,13 @@ export interface ToasterAPI {
 
 const state: ToasterState = reactive({
   toasts: [],
-  transition: '',
-  class: '',
-  position: '',
+  transition: "",
+  class: "",
+  position: "",
 });
 
 const Toaster = defineComponent({
-  name: 'OxdToaster',
+  name: "OxdToaster",
   setup() {
     return {
       ...toRefs(state),
@@ -69,7 +76,7 @@ const Toaster = defineComponent({
   computed: {
     classes(): object {
       return {
-        'oxd-toast-container': true,
+        "oxd-toast-container": true,
         [`oxd-toast-container--${this.position}`]: true,
       };
     },
@@ -85,7 +92,7 @@ const Toaster = defineComponent({
   render() {
     return h(
       TransitionGroup,
-      {appear: true, name: this.transition, tag: 'div', class: this.classes},
+      { appear: true, name: this.transition, tag: "div", class: this.classes },
       {
         default: () =>
           this.toasts.map((toast: Toast, index: number) => {
@@ -96,11 +103,11 @@ const Toaster = defineComponent({
               message: toast.message,
               show: toast.show,
               class: this.class,
-              'onUpdate:show': (state: boolean) =>
+              "onUpdate:show": (state: boolean) =>
                 this.onUpdateShow(state, index),
             });
           }),
-      },
+      }
     );
   },
 });
@@ -108,13 +115,13 @@ const Toaster = defineComponent({
 export default {
   install: (app: App, options: ToasterOptions) => {
     // Create toaster vdom element
-    const toastWrapper = document.createElement('oxd-toaster');
-    toastWrapper.id = 'oxd-toaster_1';
-    (document.getElementById('app') as HTMLElement).appendChild(toastWrapper);
+    const toastWrapper = document.createElement("oxd-toaster");
+    toastWrapper.id = "oxd-toaster_1";
+    (document.getElementById("app") as HTMLElement).appendChild(toastWrapper);
 
     // Toaster API
     const clear = (id: number | string): void => {
-      if (typeof id === 'string') {
+      if (typeof id === "string") {
         const _index = state.toasts.findIndex((item) => item.id === id);
         if (_index > -1) {
           clear(_index);
@@ -127,7 +134,7 @@ export default {
     const notify = (toast: Toast): Promise<string> => {
       return new Promise((resolve) => {
         const _id = nanoid(8);
-        state.toasts.push({...toast, id: _id});
+        state.toasts.push({ ...toast, id: _id });
         if (!options.persist) {
           const _duration = options.duration ? options.duration : 2500;
           setTimeout(() => {
@@ -142,7 +149,7 @@ export default {
 
     const success = (message: ToastMessage): Promise<string> => {
       return notify({
-        id: '', // Auto setting
+        id: "", // Auto setting
         type: TOAST_TYPES.TYPE_SUCCESS,
         show: true,
         ...message,
@@ -151,7 +158,7 @@ export default {
 
     const error = (message: ToastMessage): Promise<string> => {
       return notify({
-        id: '', // Auto setting
+        id: "", // Auto setting
         type: TOAST_TYPES.TYPE_ERROR,
         show: true,
         ...message,
@@ -160,7 +167,7 @@ export default {
 
     const info = (message: ToastMessage): Promise<string> => {
       return notify({
-        id: '', // Auto setting
+        id: "", // Auto setting
         type: TOAST_TYPES.TYPE_INFO,
         show: true,
         ...message,
@@ -169,7 +176,7 @@ export default {
 
     const warn = (message: ToastMessage): Promise<string> => {
       return notify({
-        id: '', // Auto setting
+        id: "", // Auto setting
         type: TOAST_TYPES.TYPE_WARN,
         show: true,
         ...message,
@@ -178,7 +185,7 @@ export default {
 
     const show = (message: ToastMessage): Promise<string> => {
       return notify({
-        id: '', // Auto setting
+        id: "", // Auto setting
         type: TOAST_TYPES.TYPE_DEFAULT,
         show: true,
         ...message,
@@ -191,52 +198,52 @@ export default {
 
     const saveSuccess = () =>
       success({
-        title: translate('general.success'),
-        message: translate('general.successfully_saved'),
+        title: translate("general.success"),
+        message: translate("general.successfully_saved"),
       });
 
     const addSuccess = () =>
       success({
-        title: translate('general.success'),
-        message: translate('general.successfully_added'),
+        title: translate("general.success"),
+        message: translate("general.successfully_added"),
       });
 
     const updateSuccess = () =>
       success({
-        title: translate('general.success'),
-        message: translate('general.successfully_updated'),
+        title: translate("general.success"),
+        message: translate("general.successfully_updated"),
       });
 
     const deleteSuccess = () =>
       success({
-        title: translate('general.success'),
-        message: translate('general.successfully_deleted'),
+        title: translate("general.success"),
+        message: translate("general.successfully_deleted"),
       });
 
     const cannotDelete = () =>
       error({
-        title: translate('general.error'),
-        message: translate('general.cannot_be_deleted'),
+        title: translate("general.error"),
+        message: translate("general.cannot_be_deleted"),
       });
 
     const noRecordsFound = () =>
       info({
-        title: translate('general.info'),
-        message: translate('general.no_records_found'),
+        title: translate("general.info"),
+        message: translate("general.no_records_found"),
       });
 
     const unexpectedError = (errorMessage: string | null) =>
       error({
-        title: translate('general.error'),
-        message: errorMessage ?? translate('general.unexpected_error'),
+        title: translate("general.error"),
+        message: errorMessage ?? translate("general.unexpected_error"),
       });
 
-    state.class = options.class ? options.class : 'oxd-toast-container--toast';
-    state.transition = options.animation ? options.animation : 'oxd-toast-list';
-    state.position = options.position ? options.position : 'bottom';
+    state.class = options.class ? options.class : "oxd-toast-container--toast";
+    state.transition = options.animation ? options.animation : "oxd-toast-list";
+    state.position = options.position ? options.position : "bottom";
 
     // Define Toaster component
-    app.component('OxdToaster', Toaster);
+    app.component("OxdToaster", Toaster);
 
     // Add Toaster API to Vue global scope
     const toasterAPI: ToasterAPI = {

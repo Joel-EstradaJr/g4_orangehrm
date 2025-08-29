@@ -24,14 +24,14 @@
 </template>
 
 <script>
-import SummaryCard from '@/orangehrmCorporateDirectoryPlugin/components/SummaryCard';
-import EmployeeDetails from '@/orangehrmCorporateDirectoryPlugin/components/EmployeeDetails';
+import SummaryCard from "@/orangehrmCorporateDirectoryPlugin/components/SummaryCard";
+import EmployeeDetails from "@/orangehrmCorporateDirectoryPlugin/components/EmployeeDetails";
 
 export default {
-  name: 'SummaryCardDetails',
+  name: "SummaryCardDetails",
   components: {
-    'employee-details': EmployeeDetails,
-    'summary-card': SummaryCard,
+    "employee-details": EmployeeDetails,
+    "summary-card": SummaryCard,
   },
   props: {
     employeeId: {

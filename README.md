@@ -51,3 +51,6 @@ Submit your help requests through [OrangeHRM Help Portal](https://starterhelp.or
 
 ## License 
 GNU General Public License
+
+## Additional Docs
+- Leave Assistant (Chatbot) for the Leave module: `docs/leave-assistant.md`

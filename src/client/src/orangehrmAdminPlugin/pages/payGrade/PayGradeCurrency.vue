@@ -32,7 +32,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <inline-action-button display-type="secondary" @click="onClickAdd">
-          {{ $t('general.currencies') }}
+          {{ $t("general.currencies") }}
         </inline-action-button>
       </div>
       <table-header
@@ -64,22 +64,22 @@
   </div>
 </template>
 <script>
-import InlineActionButton from '@/orangehrmAdminPlugin/components/InlineActionButton.vue';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import SavePayCurrency from '@/orangehrmAdminPlugin/pages/payGrade/SavePayCurrency.vue';
-import EditPayCurrency from '@/orangehrmAdminPlugin/pages/payGrade/EditPayCurrency.vue';
-import DeleteConfirmationDialog from '@/core/components/dialogs/DeleteConfirmationDialog';
+import InlineActionButton from "@/orangehrmAdminPlugin/components/InlineActionButton.vue";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import SavePayCurrency from "@/orangehrmAdminPlugin/pages/payGrade/SavePayCurrency.vue";
+import EditPayCurrency from "@/orangehrmAdminPlugin/pages/payGrade/EditPayCurrency.vue";
+import DeleteConfirmationDialog from "@/core/components/dialogs/DeleteConfirmationDialog";
 
 const PayGradeCurrencyNormalizer = (data) => {
   return data.map((item) => {
     let maxSalary = item.maxSalary ? Number(item.maxSalary) : 0;
     let minSalary = item.minSalary ? Number(item.minSalary) : 0;
-    maxSalary = maxSalary.toLocaleString('en-US', {
+    maxSalary = maxSalary.toLocaleString("en-US", {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
     });
-    minSalary = minSalary.toLocaleString('en-US', {
+    minSalary = minSalary.toLocaleString("en-US", {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
     });
@@ -94,12 +94,12 @@ const PayGradeCurrencyNormalizer = (data) => {
 };
 
 export default {
-  name: 'PayGradeCurrency',
+  name: "PayGradeCurrency",
   components: {
-    'inline-action-button': InlineActionButton,
-    'save-pay-currency': SavePayCurrency,
-    'edit-pay-currency': EditPayCurrency,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "inline-action-button": InlineActionButton,
+    "save-pay-currency": SavePayCurrency,
+    "edit-pay-currency": EditPayCurrency,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
   props: {
     payGradeId: {
@@ -110,7 +110,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/admin/pay-grades/${props.payGradeId}/currencies`,
+      `/api/v2/admin/pay-grades/${props.payGradeId}/currencies`
     );
     const {
       showPaginator,
@@ -141,39 +141,39 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.currency'),
-          style: {flex: 2},
+          name: "name",
+          slot: "title",
+          title: this.$t("general.currency"),
+          style: { flex: 2 },
         },
         {
-          name: 'minSalary',
-          title: this.$t('admin.minimum_salary'),
-          style: {flex: 1},
+          name: "minSalary",
+          title: this.$t("admin.minimum_salary"),
+          style: { flex: 1 },
         },
         {
-          name: 'maxSalary',
-          title: this.$t('admin.maximum_salary'),
-          style: {flex: 1},
+          name: "maxSalary",
+          title: this.$t("admin.maximum_salary"),
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -202,7 +202,7 @@ export default {
     onClickDelete(item) {
       if (!this.selectable) return;
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -213,7 +213,7 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });

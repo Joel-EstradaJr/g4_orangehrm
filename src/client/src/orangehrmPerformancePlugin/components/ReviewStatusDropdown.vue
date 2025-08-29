@@ -27,13 +27,13 @@
 
 <script>
 export default {
-  name: 'ReviewStatusDropdown',
+  name: "ReviewStatusDropdown",
   data() {
     return {
       statusOpts: [
-        {id: 1, statusId: 2, label: this.$t('performance.activated')},
-        {id: 2, statusId: 3, label: this.$t('performance.in_progress')},
-        {id: 3, statusId: 4, label: this.$t('performance.completed')},
+        { id: 1, statusId: 2, label: this.$t("performance.activated") },
+        { id: 2, statusId: 3, label: this.$t("performance.in_progress") },
+        { id: 3, statusId: 4, label: this.$t("performance.completed") },
       ],
     };
   },

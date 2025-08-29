@@ -33,7 +33,7 @@
     ></edit-education>
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <profile-action-header @click="onClickAdd">
-        {{ $t('general.education') }}
+        {{ $t("general.education") }}
       </profile-action-header>
     </div>
     <table-header
@@ -62,12 +62,12 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import SaveEducation from '@/orangehrmPimPlugin/components/SaveEducation';
-import EditEducation from '@/orangehrmPimPlugin/components/EditEducation';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import SaveEducation from "@/orangehrmPimPlugin/components/SaveEducation";
+import EditEducation from "@/orangehrmPimPlugin/components/EditEducation";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
 
 const educationNormalizer = (data) => {
   return data.map((item) => {
@@ -81,13 +81,13 @@ const educationNormalizer = (data) => {
 };
 
 export default {
-  name: 'EmployeeEducation',
+  name: "EmployeeEducation",
 
   components: {
-    'profile-action-header': ProfileActionHeader,
-    'save-education': SaveEducation,
-    'edit-education': EditEducation,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "profile-action-header": ProfileActionHeader,
+    "save-education": SaveEducation,
+    "edit-education": EditEducation,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -100,10 +100,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.employeeId}/educations`,
+      `/api/v2/pim/employees/${props.employeeId}/educations`
     );
 
-    const educationEndpoint = '/api/v2/admin/educations';
+    const educationEndpoint = "/api/v2/admin/educations";
 
     const {
       showPaginator,
@@ -136,39 +136,39 @@ export default {
     return {
       headers: [
         {
-          name: 'level',
-          slot: 'title',
-          title: this.$t('general.level'),
-          style: {flex: 1},
+          name: "level",
+          slot: "title",
+          title: this.$t("general.level"),
+          style: { flex: 1 },
         },
         {
-          name: 'year',
-          title: this.$t('general.year'),
-          style: {flex: 1},
+          name: "year",
+          title: this.$t("general.year"),
+          style: { flex: 1 },
         },
         {
-          name: 'score',
-          title: this.$t('pim.gpa_score'),
-          style: {flex: 1},
+          name: "score",
+          title: this.$t("pim.gpa_score"),
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {'flex-basis': '10em'},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { "flex-basis": "10em" },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -193,14 +193,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

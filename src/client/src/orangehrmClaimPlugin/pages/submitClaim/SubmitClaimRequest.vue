@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('claim.create_claim_request') }}
+        {{ $t("claim.create_claim_request") }}
       </oxd-text>
 
       <oxd-divider />
@@ -82,10 +82,10 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import ClaimEventDropdownVue from '../../components/ClaimEventDropdown.vue';
+} from "@/core/util/validation/rules";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import ClaimEventDropdownVue from "../../components/ClaimEventDropdown.vue";
 
 const claimRequest = {
   event: null,
@@ -94,10 +94,10 @@ const claimRequest = {
 };
 
 export default {
-  name: 'SubmitClaimRequest',
+  name: "SubmitClaimRequest",
 
   components: {
-    'claim-event-dropdown': ClaimEventDropdownVue,
+    "claim-event-dropdown": ClaimEventDropdownVue,
   },
 
   props: {
@@ -110,7 +110,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/claim/requests',
+      "/api/v2/claim/requests"
     );
 
     return {
@@ -121,7 +121,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      request: {...claimRequest},
+      request: { ...claimRequest },
       id: 0,
       rules: {
         event: [required],
@@ -133,7 +133,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/claim/viewClaim');
+      navigate("/claim/viewClaim");
     },
     onSave() {
       this.isLoading = true;
@@ -148,7 +148,7 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          navigate('/claim/submitClaim/id/{id}', {id: this.id});
+          navigate("/claim/submitClaim/id/{id}", { id: this.id });
         });
     },
   },

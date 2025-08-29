@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('pim.add_immigration') }}
+      {{ $t("pim.add_immigration") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -29,7 +29,7 @@
           <oxd-grid-item>
             <oxd-input-group
               :label="$t('pim.document')"
-              :classes="{wrapper: '--gender-grouped-field'}"
+              :classes="{ wrapper: '--gender-grouped-field' }"
             >
               <oxd-input-field
                 v-model="immigration.type"
@@ -127,23 +127,23 @@ import {
   shouldNotExceedCharLength,
   validDateFormat,
   endDateShouldBeAfterStartDate,
-} from '@ohrm/core/util/validation/rules';
-import {yearRange} from '@ohrm/core/util/helper/year-range';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import { yearRange } from "@ohrm/core/util/helper/year-range";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const immigrationModel = {
-  number: '',
-  issuedDate: '',
-  expiryDate: '',
+  number: "",
+  issuedDate: "",
+  expiryDate: "",
   type: 1,
-  status: '',
-  reviewDate: '',
+  status: "",
+  reviewDate: "",
   countryCode: null,
-  comment: '',
+  comment: "",
 };
 
 export default {
-  name: 'SaveImmigration',
+  name: "SaveImmigration",
 
   props: {
     http: {
@@ -156,10 +156,10 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup() {
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       userDateFormat,
@@ -169,7 +169,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      immigration: {...immigrationModel},
+      immigration: { ...immigrationModel },
       yearArray: [...yearRange()],
       rules: {
         number: [required, shouldNotExceedCharLength(30)],
@@ -177,7 +177,7 @@ export default {
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.immigration.issuedDate,
-            this.$t('pim.expiry_date_should_be_after_issued_date'),
+            this.$t("pim.expiry_date_should_be_after_issued_date")
           ),
         ],
         status: [shouldNotExceedCharLength(30)],
@@ -200,12 +200,12 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          this.immigration = {...immigrationModel};
+          this.immigration = { ...immigrationModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

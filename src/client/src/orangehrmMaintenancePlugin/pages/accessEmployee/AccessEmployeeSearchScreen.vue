@@ -35,15 +35,15 @@
 </template>
 
 <script>
-import EmployeeRecords from '@/orangehrmMaintenancePlugin/components/EmployeeRecords';
-import SelectedEmployee from '@/orangehrmMaintenancePlugin/components/SelectedEmployee';
-import MaintenanceNote from '@/orangehrmMaintenancePlugin/components/MaintenanceNote';
+import EmployeeRecords from "@/orangehrmMaintenancePlugin/components/EmployeeRecords";
+import SelectedEmployee from "@/orangehrmMaintenancePlugin/components/SelectedEmployee";
+import MaintenanceNote from "@/orangehrmMaintenancePlugin/components/MaintenanceNote";
 
 export default {
   components: {
-    'employee-records': EmployeeRecords,
-    'selected-employee': SelectedEmployee,
-    'maintenance-note': MaintenanceNote,
+    "employee-records": EmployeeRecords,
+    "selected-employee": SelectedEmployee,
+    "maintenance-note": MaintenanceNote,
   },
 
   props: {
@@ -65,7 +65,7 @@ export default {
     },
     downloadEmployeeData(employeeNumber) {
       const downUrl = `${window.appGlobal.baseUrl}/maintenance/accessEmployeeData/${employeeNumber}`;
-      window.open(downUrl, '_blank');
+      window.open(downUrl, "_blank");
     },
   },
 };

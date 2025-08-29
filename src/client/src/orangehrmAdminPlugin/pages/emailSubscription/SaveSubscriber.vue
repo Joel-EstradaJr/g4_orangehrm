@@ -20,7 +20,7 @@
 <template>
   <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel">
     <div class="orangehrm-modal-header">
-      <oxd-text type="card-title">{{ $t('admin.add_subscriber') }}</oxd-text>
+      <oxd-text type="card-title">{{ $t("admin.add_subscriber") }}</oxd-text>
     </div>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -57,24 +57,24 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   validEmailFormat,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {OxdDialog} from '@ohrm/oxd';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import { OxdDialog } from "@ohrm/oxd";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const subscriberModel = {
-  name: '',
-  email: '',
+  name: "",
+  email: "",
 };
 
 export default {
-  name: 'SaveSubscriber',
+  name: "SaveSubscriber",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -82,20 +82,20 @@ export default {
       default: () => ({}),
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/admin/email-subscriptions/${props.data.subscriptionId}/subscribers`,
+      `/api/v2/admin/email-subscriptions/${props.data.subscriptionId}/subscribers`
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const subscriberUniqueValidation = createUniqueValidator(
-      'EmailSubscriber',
-      'email',
+      "EmailSubscriber",
+      "email",
       {
-        matchByField: 'emailNotification',
+        matchByField: "emailNotification",
         matchByValue: props.data.subscriptionId,
-      },
+      }
     );
 
     return {
@@ -106,7 +106,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      subscriber: {...subscriberModel},
+      subscriber: { ...subscriberModel },
       rules: {
         name: [required, shouldNotExceedCharLength(100)],
         email: [
@@ -133,8 +133,8 @@ export default {
         });
     },
     onCancel() {
-      this.subscriber = {...subscriberModel};
-      this.$emit('close', true);
+      this.subscriber = { ...subscriberModel };
+      this.$emit("close", true);
     },
   },
 };

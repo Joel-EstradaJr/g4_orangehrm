@@ -25,11 +25,11 @@
       @update:show="onCancel"
     >
       <div class="orangehrm-modal-header">
-        <oxd-text type="card-title">{{ $t('general.are_you_sure') }}</oxd-text>
+        <oxd-text type="card-title">{{ $t("general.are_you_sure") }}</oxd-text>
       </div>
       <div class="orangehrm-text-center-align">
         <oxd-text type="card-body">
-          {{ message || $t('general.delete_confirmation_message') }}
+          {{ message || $t("general.delete_confirmation_message") }}
         </oxd-text>
       </div>
       <div class="orangehrm-modal-footer">
@@ -52,11 +52,11 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     message: {
@@ -82,11 +82,11 @@ export default {
     },
     onDelete() {
       this.show = false;
-      this.resolve && this.resolve('ok');
+      this.resolve && this.resolve("ok");
     },
     onCancel() {
       this.show = false;
-      this.resolve && this.resolve('cancel');
+      this.resolve && this.resolve("cancel");
     },
   },
 };

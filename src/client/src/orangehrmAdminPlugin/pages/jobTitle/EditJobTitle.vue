@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.edit_job_title') }}
+        {{ $t("admin.edit_job_title") }}
       </oxd-text>
 
       <oxd-divider />
@@ -55,7 +55,9 @@
             :file="jobTitle.oldSpecification"
             :rules="rules.specification"
             :url="`admin/viewJobSpecification/attachId`"
-            :hint="$t('general.accepts_up_to_n_mb', {count: formattedFileSize})"
+            :hint="
+              $t('general.accepts_up_to_n_mb', { count: formattedFileSize })
+            "
           />
         </oxd-form-row>
 
@@ -87,29 +89,29 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
   validFileTypes,
   maxFileSize,
-} from '@ohrm/core/util/validation/rules';
-import FileUploadInput from '@/core/components/inputs/FileUploadInput';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import FileUploadInput from "@/core/components/inputs/FileUploadInput";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const initialJobTitle = {
-  title: '',
-  description: '',
-  oldSpecification: '',
+  title: "",
+  description: "",
+  oldSpecification: "",
   newSpecification: null,
-  method: 'keepCurrent',
-  note: '',
+  method: "keepCurrent",
+  note: "",
 };
 
 export default {
   components: {
-    'file-upload-input': FileUploadInput,
+    "file-upload-input": FileUploadInput,
   },
   props: {
     jobTitleId: {
@@ -129,17 +131,17 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/job-titles',
+      "/api/v2/admin/job-titles"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const jobTitleUniqueValidation = createUniqueValidator(
-      'JobTitle',
-      'jobTitleName',
+      "JobTitle",
+      "jobTitleName",
       {
         entityId: props.jobTitleId,
-        matchByField: 'isDeleted',
-        matchByValue: 'false',
-      },
+        matchByField: "isDeleted",
+        matchByValue: "false",
+      }
     );
 
     return {
@@ -151,7 +153,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      jobTitle: {...initialJobTitle},
+      jobTitle: { ...initialJobTitle },
       rules: {
         title: [
           required,
@@ -161,7 +163,7 @@ export default {
         description: [shouldNotExceedCharLength(400)],
         specification: [
           (v) => {
-            if (this.jobTitle.method == 'replaceCurrent') {
+            if (this.jobTitle.method == "replaceCurrent") {
               return required(v);
             } else {
               return true;
@@ -186,7 +188,7 @@ export default {
     this.http
       .get(this.jobTitleId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.jobTitle.title = data.title;
         this.jobTitle.description = data.description;
         this.jobTitle.note = data.note;
@@ -194,7 +196,7 @@ export default {
           ? data.jobSpecification
           : null;
         this.jobTitle.newSpecification = null;
-        this.jobTitle.method = 'keepCurrent';
+        this.jobTitle.method = "keepCurrent";
       })
       .finally(() => {
         this.isLoading = false;
@@ -203,7 +205,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/admin/viewJobTitleList');
+      navigate("/admin/viewJobTitleList");
     },
     onSave() {
       this.isLoading = true;

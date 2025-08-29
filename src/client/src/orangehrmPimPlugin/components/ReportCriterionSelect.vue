@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import {ref, onBeforeMount} from 'vue';
-import {required} from '@ohrm/core/util/validation/rules';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { ref, onBeforeMount } from "vue";
+import { required } from "@ohrm/core/util/validation/rules";
+import { APIService } from "@ohrm/core/util/services/api.service";
 
 export default {
-  name: 'ReportCriterionSelect',
+  name: "ReportCriterionSelect",
   inheritAttrs: false,
   props: {
     api: {
@@ -54,7 +54,7 @@ export default {
       default: () => null,
     },
   },
-  emits: ['update:valueX', 'update:operator'],
+  emits: ["update:valueX", "update:operator"],
   setup(props, context) {
     const opts = ref(props.options);
     const rules = [required];
@@ -64,9 +64,9 @@ export default {
       onBeforeMount(() => {
         http
           .getAll({
-            ...(props.api !== '/api/v2/admin/subunits' && {limit: 0}),
+            ...(props.api !== "/api/v2/admin/subunits" && { limit: 0 }),
           })
-          .then(({data}) => {
+          .then(({ data }) => {
             opts.value = data.data.map((item) => {
               return {
                 id: item.id,
@@ -79,12 +79,12 @@ export default {
     }
 
     if (
-      props.api === '/api/v2/admin/locations' ||
-      props.api === '/api/v2/admin/subunits'
+      props.api === "/api/v2/admin/locations" ||
+      props.api === "/api/v2/admin/subunits"
     ) {
-      context.emit('update:operator', {id: 'in', label: 'Equal'});
+      context.emit("update:operator", { id: "in", label: "Equal" });
     } else {
-      context.emit('update:operator', {id: 'eq', label: 'Equal'});
+      context.emit("update:operator", { id: "eq", label: "Equal" });
     }
 
     return {

@@ -42,7 +42,7 @@
         :action-button-shown="$can.create(`subordinates`)"
         @click="onClickAdd"
       >
-        {{ $t('pim.assigned_subordinates') }}
+        {{ $t("pim.assigned_subordinates") }}
       </profile-action-header>
     </div>
     <table-header
@@ -71,22 +71,22 @@
 </template>
 
 <script>
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@/core/util/composable/usePaginate';
-import SaveEmployeeReportTo from '@/orangehrmPimPlugin/components/SaveEmployeeReportTo';
-import EditEmployeeReportTo from '@/orangehrmPimPlugin/components/EditEmployeeReportTo';
-import usei18n from '@/core/util/composable/usei18n';
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@/core/util/composable/usePaginate";
+import SaveEmployeeReportTo from "@/orangehrmPimPlugin/components/SaveEmployeeReportTo";
+import EditEmployeeReportTo from "@/orangehrmPimPlugin/components/EditEmployeeReportTo";
+import usei18n from "@/core/util/composable/usei18n";
 
 export default {
-  name: 'EmployeeSubordinates',
+  name: "EmployeeSubordinates",
 
   components: {
-    'edit-employee-report-to': EditEmployeeReportTo,
-    'save-employee-report-to': SaveEmployeeReportTo,
-    'profile-action-header': ProfileActionHeader,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "edit-employee-report-to": EditEmployeeReportTo,
+    "save-employee-report-to": SaveEmployeeReportTo,
+    "profile-action-header": ProfileActionHeader,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -103,21 +103,21 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.empNumber}/subordinates`,
+      `/api/v2/pim/employees/${props.empNumber}/subordinates`
     );
-    const {$t} = usei18n();
+    const { $t } = usei18n();
 
-    const defaultReportingMethods = ['Direct', 'Indirect'];
+    const defaultReportingMethods = ["Direct", "Indirect"];
 
     const subordinateNormalizer = (data) => {
       return data.map((item) => {
         let reportingMethodName = item.reportingMethod.name;
         return {
           name: `${item.subordinate?.firstName} ${item.subordinate?.lastName} ${
-            item.subordinate.terminationId ? $t('general.past_employee') : ''
+            item.subordinate.terminationId ? $t("general.past_employee") : ""
           }`,
           reportingMethod: defaultReportingMethods.includes(reportingMethodName)
-            ? $t('pim.' + reportingMethodName.toLowerCase())
+            ? $t("pim." + reportingMethodName.toLowerCase())
             : reportingMethodName,
           subordinateEmpNumber: item.subordinate.empNumber,
         };
@@ -155,15 +155,15 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.name'),
-          style: {flex: 1},
+          name: "name",
+          slot: "title",
+          title: this.$t("general.name"),
+          style: { flex: 1 },
         },
         {
-          name: 'reportingMethod',
-          title: this.$t('pim.reporting_method'),
-          style: {flex: 1},
+          name: "reportingMethod",
+          title: this.$t("pim.reporting_method"),
+          style: { flex: 1 },
         },
       ],
       checkedItems: [],
@@ -179,19 +179,19 @@ export default {
     },
     tableHeaders() {
       const headerActions = {
-        name: 'actions',
-        slot: 'action',
-        title: this.$t('general.actions'),
-        style: {flex: 1},
-        cellType: 'oxd-table-cell-actions',
+        name: "actions",
+        slot: "action",
+        title: this.$t("general.actions"),
+        style: { flex: 1 },
+        cellType: "oxd-table-cell-actions",
         cellConfig: {},
       };
       if (this.$can.delete(`subordinates`)) {
         headerActions.cellConfig.delete = {
           onClick: this.onClickDelete,
-          component: 'oxd-icon-button',
+          component: "oxd-icon-button",
           props: {
-            name: 'trash',
+            name: "trash",
           },
         };
       }
@@ -199,7 +199,7 @@ export default {
         headerActions.cellConfig.edit = {
           onClick: this.onClickEdit,
           props: {
-            name: 'pencil-fill',
+            name: "pencil-fill",
           },
         };
       }
@@ -215,14 +215,14 @@ export default {
         return this.items?.data[index].subordinateEmpNumber;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.subordinateEmpNumber]);
         }
       });

@@ -22,7 +22,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('general.employment_status') }}
+          {{ $t("general.employment_status") }}
         </oxd-text>
         <div>
           <oxd-button
@@ -64,20 +64,20 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/employment-statuses',
+      "/api/v2/admin/employment-statuses"
     );
     const {
       showPaginator,
@@ -105,29 +105,29 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.employment_status'),
-          style: {'flex-basis': '80%'},
+          name: "name",
+          slot: "title",
+          title: this.$t("general.employment_status"),
+          style: { "flex-basis": "80%" },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {'flex-shrink': 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { "flex-shrink": 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -139,24 +139,24 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/admin/saveEmploymentStatus');
+      navigate("/admin/saveEmploymentStatus");
     },
     onClickEdit(item) {
-      navigate('/admin/saveEmploymentStatus/{id}', {id: item.id});
+      navigate("/admin/saveEmploymentStatus/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = this.checkedItems.map((index) => {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

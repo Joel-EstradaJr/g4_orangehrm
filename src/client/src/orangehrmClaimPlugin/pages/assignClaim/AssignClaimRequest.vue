@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('claim.create_claim_request') }}
+        {{ $t("claim.create_claim_request") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -95,12 +95,12 @@ import {
   required,
   shouldNotExceedCharLength,
   validSelection,
-} from '@/core/util/validation/rules';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import ClaimEventDropdownVue from '@/orangehrmClaimPlugin/components/ClaimEventDropdown.vue';
-import ClaimEmployeeAutocomplete from '@/orangehrmClaimPlugin/components/ClaimEmployeeAutocomplete.vue';
-import {ref} from 'vue';
+} from "@/core/util/validation/rules";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import ClaimEventDropdownVue from "@/orangehrmClaimPlugin/components/ClaimEventDropdown.vue";
+import ClaimEmployeeAutocomplete from "@/orangehrmClaimPlugin/components/ClaimEmployeeAutocomplete.vue";
+import { ref } from "vue";
 
 const claimRequest = {
   event: null,
@@ -109,11 +109,11 @@ const claimRequest = {
 };
 
 export default {
-  name: 'AssignClaimRequest',
+  name: "AssignClaimRequest",
 
   components: {
-    'claim-event-dropdown': ClaimEventDropdownVue,
-    'claim-employee-autocomplete': ClaimEmployeeAutocomplete,
+    "claim-event-dropdown": ClaimEventDropdownVue,
+    "claim-employee-autocomplete": ClaimEmployeeAutocomplete,
   },
 
   props: {
@@ -138,7 +138,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      request: {...claimRequest},
+      request: { ...claimRequest },
       id: 0,
       rules: {
         employee: [required, validSelection],
@@ -151,13 +151,13 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/claim/viewAssignClaim');
+      navigate("/claim/viewAssignClaim");
     },
     onSave() {
       this.isLoading = true;
       const http = new APIService(
         window.appGlobal.baseUrl,
-        `/api/v2/claim/employees/${this.employee.id}/requests`,
+        `/api/v2/claim/employees/${this.employee.id}/requests`
       );
       http
         .create({
@@ -170,7 +170,7 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          navigate('/claim/assignClaim/id/{id}', {
+          navigate("/claim/assignClaim/id/{id}", {
             id: this.id,
           });
         });

@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.edit_employment_status') }}
+        {{ $t("admin.edit_employment_status") }}
       </oxd-text>
 
       <oxd-divider />
@@ -54,13 +54,13 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 export default {
   props: {
@@ -73,14 +73,14 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/employment-statuses',
+      "/api/v2/admin/employment-statuses"
     );
 
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const employmentStatusValidation = createUniqueValidator(
-      'EmploymentStatus',
-      'name',
-      {entityId: props.employmentStatusId},
+      "EmploymentStatus",
+      "name",
+      { entityId: props.employmentStatusId }
     );
 
     return {
@@ -93,8 +93,8 @@ export default {
     return {
       isLoading: false,
       employmentStatus: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -110,7 +110,7 @@ export default {
     this.http
       .get(this.employmentStatusId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.employmentStatus.id = data.id;
         this.employmentStatus.name = data.name;
       })
@@ -133,7 +133,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/admin/employmentStatus');
+      navigate("/admin/employmentStatus");
     },
   },
 };

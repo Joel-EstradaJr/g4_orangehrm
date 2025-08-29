@@ -25,10 +25,10 @@
           403
         </oxd-text>
         <oxd-text tag="h4" class="orangehrm-module-disabled-sub-heading">
-          {{ $t('general.module_forbidden') }}
+          {{ $t("general.module_forbidden") }}
         </oxd-text>
         <oxd-text tag="h6">
-          {{ $t('general.module_access_restriction') }}
+          {{ $t("general.module_access_restriction") }}
         </oxd-text>
       </div>
     </div>

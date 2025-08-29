@@ -16,7 +16,7 @@
  */
 
 class TempStorage {
-  private _tempStorage: {[key: string]: string} = {};
+  private _tempStorage: { [key: string]: string } = {};
 
   clear(): void {
     this._tempStorage = {};
@@ -45,7 +45,7 @@ class TempStorage {
  */
 function isSupported(storage: Storage): boolean {
   try {
-    const x = '__storage_test__';
+    const x = "__storage_test__";
     storage.setItem(x, x);
     storage.removeItem(x);
     return true;
@@ -58,9 +58,9 @@ function isSupported(storage: Storage): boolean {
         e.code === 1014 ||
         // test name field too, because code might not be present
         // everything except Firefox
-        e.name === 'QuotaExceededError' ||
+        e.name === "QuotaExceededError" ||
         // Firefox
-        e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+        e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
       // acknowledge QuotaExceededError only if there's something already stored
       storage &&
       storage.length !== 0

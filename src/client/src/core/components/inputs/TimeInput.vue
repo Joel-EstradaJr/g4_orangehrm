@@ -27,6 +27,6 @@
 
 <script>
 export default {
-  name: 'TimeInput',
+  name: "TimeInput",
 };
 </script>

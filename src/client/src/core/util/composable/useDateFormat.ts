@@ -15,8 +15,8 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {inject, InjectionKey} from 'vue';
-import {convertPHPDateFormat} from '@ohrm/oxd';
+import { inject, InjectionKey } from "vue";
+import { convertPHPDateFormat } from "@ohrm/oxd";
 
 type DateFormat = {
   id: string;
@@ -24,15 +24,15 @@ type DateFormat = {
 };
 
 export const dateFormatKey: InjectionKey<DateFormat | null> =
-  Symbol('dateFormat');
+  Symbol("dateFormat");
 
 export default function useDateFormat() {
   const dateFormat = inject(dateFormatKey);
-  if (!dateFormat) throw new Error('Date format is invalid');
+  if (!dateFormat) throw new Error("Date format is invalid");
   const jsDateFormat = convertPHPDateFormat(dateFormat.id);
   const userDateFormat = dateFormat.label;
-  const timeFormat = 'HH:mm';
-  const jsTimeFormat = 'hh:mm a';
+  const timeFormat = "HH:mm";
+  const jsTimeFormat = "hh:mm a";
 
   return {
     timeFormat,

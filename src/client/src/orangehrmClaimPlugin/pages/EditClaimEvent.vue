@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('claim.edit_event') }}
+        {{ $t("claim.edit_event") }}
       </oxd-text>
 
       <oxd-divider />
@@ -52,7 +52,7 @@
           <oxd-grid-item class="--offset-row-3">
             <div class="orangehrm-sm-field">
               <oxd-text tag="p" class="orangehrm-sm-field-label">
-                {{ $t('general.active') }}
+                {{ $t("general.active") }}
               </oxd-text>
               <oxd-switch-input v-model="claimEvent.status" />
             </div>
@@ -75,24 +75,24 @@
 </template>
 
 <script>
-import {OxdSwitchInput} from '@ohrm/oxd';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { OxdSwitchInput } from "@ohrm/oxd";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const initialClaimEvent = {
-  name: '',
-  description: '',
+  name: "",
+  description: "",
   status: null,
 };
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
+    "oxd-switch-input": OxdSwitchInput,
   },
   props: {
     id: {
@@ -104,13 +104,13 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/claim/events',
+      "/api/v2/claim/events"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const claimEventNameUniqueValidation = createUniqueValidator(
-      'ClaimEvent',
-      'name',
-      {entityId: props.id, matchByField: 'isDeleted', matchByValue: 'false'},
+      "ClaimEvent",
+      "name",
+      { entityId: props.id, matchByField: "isDeleted", matchByValue: "false" }
     );
     return {
       http,
@@ -121,9 +121,9 @@ export default {
   data() {
     return {
       isLoading: false,
-      claimEvent: {...initialClaimEvent},
+      claimEvent: { ...initialClaimEvent },
       canEdit: false,
-      name: '',
+      name: "",
       rules: {
         name: [
           required,
@@ -140,8 +140,8 @@ export default {
     this.http
       .get(this.id)
       .then((response) => {
-        const {data} = response.data;
-        this.claimEvent = {...data};
+        const { data } = response.data;
+        this.claimEvent = { ...data };
         this.name = data.name;
         this.canEdit = response.data.meta.canEdit;
       })
@@ -151,7 +151,7 @@ export default {
   },
   methods: {
     onCancel() {
-      navigate('/claim/viewEvents');
+      navigate("/claim/viewEvents");
     },
     onSave() {
       this.isLoading = true;

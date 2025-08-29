@@ -52,11 +52,11 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     title: {
@@ -78,17 +78,17 @@ export default {
     icon: {
       type: String,
       required: false,
-      default: '',
+      default: "",
     },
     confirmButtonType: {
       type: String,
       required: false,
-      default: 'label-danger',
+      default: "label-danger",
     },
     cancelButtonType: {
       type: String,
       required: false,
-      default: 'text',
+      default: "text",
     },
   },
   data() {
@@ -108,11 +108,11 @@ export default {
     },
     onConfirm() {
       this.show = false;
-      this.resolve && this.resolve('ok');
+      this.resolve && this.resolve("ok");
     },
     onCancel() {
       this.show = false;
-      this.resolve && this.resolve('cancel');
+      this.resolve && this.resolve("cancel");
     },
   },
 };

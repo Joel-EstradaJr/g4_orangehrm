@@ -49,14 +49,14 @@
 </template>
 
 <script>
-import {computed} from 'vue';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import { computed } from "vue";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 const defaultPic = `${window.appGlobal.publicPath}/images/default-photo.png`;
 
 export default {
-  name: 'LeaveComment',
+  name: "LeaveComment",
   props: {
     data: {
       type: Object,
@@ -76,11 +76,11 @@ export default {
       return employee && `${employee.firstName} ${employee.lastName}`;
     });
 
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const commentDate = computed(() => {
-      return formatDate(parseDate(props.data?.date), jsDateFormat, {locale});
+      return formatDate(parseDate(props.data?.date), jsDateFormat, { locale });
     });
 
     return {

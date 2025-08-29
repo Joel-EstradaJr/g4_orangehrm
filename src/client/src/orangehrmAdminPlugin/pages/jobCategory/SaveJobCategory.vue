@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.add_job_category') }}
+        {{ $t("admin.add_job_category") }}
       </oxd-text>
 
       <oxd-divider />
@@ -54,24 +54,24 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/job-categories',
+      "/api/v2/admin/job-categories"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const jobCategoryUniqueValidation = createUniqueValidator(
-      'JobCategory',
-      'name',
+      "JobCategory",
+      "name"
     );
 
     return {
@@ -83,8 +83,8 @@ export default {
     return {
       isLoading: false,
       category: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -112,7 +112,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/admin/jobCategory');
+      navigate("/admin/jobCategory");
     },
   },
 };

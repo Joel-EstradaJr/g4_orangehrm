@@ -21,15 +21,15 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('help.getting_started_with_orangehrm') }}
+        {{ $t("help.getting_started_with_orangehrm") }}
       </oxd-text>
       <oxd-divider />
       <oxd-text tag="p" class="orangehrm-support-text">
-        {{ $t('help.getting_started_with_orangehrm_message_1') }}
+        {{ $t("help.getting_started_with_orangehrm_message_1") }}
       </oxd-text>
       <br />
       <oxd-text tag="p" class="orangehrm-support-text">
-        {{ $t('help.getting_started_with_orangehrm_message_2') }}
+        {{ $t("help.getting_started_with_orangehrm_message_2") }}
       </oxd-text>
       <div class="orangehrm-support">
         <oxd-grid :cols="2" class="orangehrm-support-channel --mail">
@@ -38,17 +38,17 @@
           </oxd-grid-item>
           <oxd-grid-item>
             <oxd-text class="orangehrm-sub-title" tag="p">
-              {{ $t('help.customer_support') }}
+              {{ $t("help.customer_support") }}
             </oxd-text>
             <oxd-text tag="p" class="orangehrm-support-text">
-              {{ $t('help.contact_us_on_message') }}
+              {{ $t("help.contact_us_on_message") }}
               <a
                 class="orangehrm-support-link"
                 href="mailto:ossupport@orangehrm.com"
               >
                 ossupport@orangehrm.com
               </a>
-              {{ $t('help.we_will_be_delighted_to_help') }}
+              {{ $t("help.we_will_be_delighted_to_help") }}
             </oxd-text>
           </oxd-grid-item>
         </oxd-grid>

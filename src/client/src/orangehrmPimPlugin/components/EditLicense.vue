@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-top-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('general.edit_license') }}
+      {{ $t("general.edit_license") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -85,19 +85,19 @@ import {
   validDateFormat,
   shouldNotExceedCharLength,
   endDateShouldBeAfterStartDate,
-} from '@ohrm/core/util/validation/rules';
-import {yearRange} from '@ohrm/core/util/helper/year-range';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import { yearRange } from "@ohrm/core/util/helper/year-range";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const licenseModel = {
-  name: '',
-  licenseNo: '',
-  issuedDate: '',
-  expiryDate: '',
+  name: "",
+  licenseNo: "",
+  issuedDate: "",
+  expiryDate: "",
 };
 
 export default {
-  name: 'EditLicense',
+  name: "EditLicense",
 
   props: {
     http: {
@@ -110,10 +110,10 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup() {
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       userDateFormat,
@@ -123,7 +123,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      license: {...licenseModel},
+      license: { ...licenseModel },
       yearArray: [...yearRange()],
       rules: {
         licenseNo: [shouldNotExceedCharLength(50)],
@@ -132,7 +132,7 @@ export default {
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.license.issuedDate,
-            this.$t('pim.expiry_date_should_be_after_issued_date'),
+            this.$t("pim.expiry_date_should_be_after_issued_date")
           ),
         ],
       },
@@ -144,9 +144,9 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.license.name = data.license.name;
-        this.license.licenseNo = data.licenseNo ? data.licenseNo : '';
+        this.license.licenseNo = data.licenseNo ? data.licenseNo : "";
         this.license.issuedDate = data.issuedDate;
         this.license.expiryDate = data.expiryDate;
       })
@@ -172,7 +172,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

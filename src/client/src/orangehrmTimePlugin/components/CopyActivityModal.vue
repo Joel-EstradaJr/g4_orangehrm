@@ -21,7 +21,7 @@
   <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('time.copy_activity') }}
+        {{ $t("time.copy_activity") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -67,16 +67,16 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {OxdDialog} from '@ohrm/oxd';
-import {required, validSelection} from '@ohrm/core/util/validation/rules';
-import ProjectAutocomplete from '@/orangehrmTimePlugin/components/ProjectAutocomplete.vue';
+import { APIService } from "@/core/util/services/api.service";
+import { OxdDialog } from "@ohrm/oxd";
+import { required, validSelection } from "@ohrm/core/util/validation/rules";
+import ProjectAutocomplete from "@/orangehrmTimePlugin/components/ProjectAutocomplete.vue";
 
 export default {
-  name: 'CopyActivityModal',
+  name: "CopyActivityModal",
   components: {
-    'oxd-dialog': OxdDialog,
-    'project-autocomplete': ProjectAutocomplete,
+    "oxd-dialog": OxdDialog,
+    "project-autocomplete": ProjectAutocomplete,
   },
   props: {
     projectId: {
@@ -84,9 +84,9 @@ export default {
       required: true,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup() {
-    const http = new APIService(window.appGlobal.baseUrl, '');
+    const http = new APIService(window.appGlobal.baseUrl, "");
     return {
       http,
     };
@@ -103,17 +103,17 @@ export default {
           validSelection,
           () => {
             if (this.activities !== null && this.activities.length === 0) {
-              return this.$t('time.no_assigned_activities');
+              return this.$t("time.no_assigned_activities");
             } else if (
               Array.isArray(this.activities) &&
               this.selectedActivities.length === 0
             ) {
               const hasUnique = this.activities.find(
-                (activity) => activity.unique === true,
+                (activity) => activity.unique === true
               );
               return hasUnique
-                ? this.$t('time.no_activities_selected')
-                : this.$t('general.already_exists');
+                ? this.$t("time.no_activities_selected")
+                : this.$t("general.already_exists");
             } else {
               return true;
             }
@@ -130,12 +130,12 @@ export default {
         this.isLoading = true;
         this.http
           .request({
-            method: 'GET',
+            method: "GET",
             url: `/api/v2/time/projects/${this.projectId}/activities/copy/${value.id}`,
-            params: {limit: 0},
+            params: { limit: 0 },
           })
           .then((response) => {
-            const {data} = response.data;
+            const { data } = response.data;
             this.activities = data;
             this.selectedActivities = Array.isArray(data)
               ? data
@@ -152,7 +152,7 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'POST',
+          method: "POST",
           url: `/api/v2/time/projects/${this.projectId}/activities/copy/${this.project.id}`,
           data: {
             activityIds: this.selectedActivities,
@@ -164,7 +164,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

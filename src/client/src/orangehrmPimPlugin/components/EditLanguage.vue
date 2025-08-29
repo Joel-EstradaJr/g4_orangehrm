@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-top-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">{{
-      $t('general.edit_language')
+      $t("general.edit_language")
     }}</oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -90,17 +90,17 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 const languageModel = {
-  name: '',
-  fluency: '',
+  name: "",
+  fluency: "",
   competencyId: null,
-  comment: '',
+  comment: "",
 };
 
 export default {
-  name: 'EditLanguage',
+  name: "EditLanguage",
 
   props: {
     http: {
@@ -121,12 +121,12 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   data() {
     return {
       isLoading: false,
-      language: {...languageModel},
+      language: { ...languageModel },
       rules: {
         competencyId: [required],
         comment: [shouldNotExceedCharLength(100)],
@@ -138,16 +138,16 @@ export default {
     this.isLoading = true;
     this.http
       .request({
-        method: 'GET',
+        method: "GET",
         url: `/api/v2/pim/employees/${this.employeeId}/languages/${this.data.languageId}/fluencies/${this.data.fluencyId}`,
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.language.name = data.language.name;
         this.language.fluency = data.fluency.name;
-        this.language.comment = data.comment ? data.comment : '';
+        this.language.comment = data.comment ? data.comment : "";
         this.language.competencyId = this.competencies.find(
-          (item) => item.id === data.competency?.id,
+          (item) => item.id === data.competency?.id
         );
       })
       .finally(() => {
@@ -160,7 +160,7 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           url: `/api/v2/pim/employees/${this.employeeId}/languages/${this.data.languageId}/fluencies/${this.data.fluencyId}`,
           data: {
             competencyId: this.language.competencyId.id,
@@ -175,7 +175,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

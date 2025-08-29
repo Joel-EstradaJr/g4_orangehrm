@@ -55,27 +55,27 @@
 </template>
 
 <script>
-import {computed, reactive, toRefs} from 'vue';
-import useToast from '@/core/util/composable/useToast';
-import useLocale from '@/core/util/composable/useLocale';
-import {APIService} from '@/core/util/services/api.service';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import PostModal from '@/orangehrmBuzzPlugin/components/PostModal';
-import PhotoFrame from '@/orangehrmBuzzPlugin/components/PhotoFrame';
-import VideoFrame from '@/orangehrmBuzzPlugin/components/VideoFrame';
-import {shouldNotExceedCharLength} from '@/core/util/validation/rules';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import {OxdBuzzPostInput} from '@ohrm/oxd';
+import { computed, reactive, toRefs } from "vue";
+import useToast from "@/core/util/composable/useToast";
+import useLocale from "@/core/util/composable/useLocale";
+import { APIService } from "@/core/util/services/api.service";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import PostModal from "@/orangehrmBuzzPlugin/components/PostModal";
+import PhotoFrame from "@/orangehrmBuzzPlugin/components/PhotoFrame";
+import VideoFrame from "@/orangehrmBuzzPlugin/components/VideoFrame";
+import { shouldNotExceedCharLength } from "@/core/util/validation/rules";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import { OxdBuzzPostInput } from "@ohrm/oxd";
 
 export default {
-  name: 'SharePostModal',
+  name: "SharePostModal",
 
   components: {
-    'post-modal': PostModal,
-    'photo-frame': PhotoFrame,
-    'video-frame': VideoFrame,
-    'oxd-buzz-post-input': OxdBuzzPostInput,
+    "post-modal": PostModal,
+    "photo-frame": PhotoFrame,
+    "video-frame": VideoFrame,
+    "oxd-buzz-post-input": OxdBuzzPostInput,
   },
 
   props: {
@@ -85,19 +85,19 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props, context) {
-    const {locale} = useLocale();
-    const {saveSuccess} = useToast();
-    const {jsDateFormat, jsTimeFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { locale } = useLocale();
+    const { saveSuccess } = useToast();
+    const { jsDateFormat, jsTimeFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
     const rules = {
       text: [shouldNotExceedCharLength(65530)],
     };
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/buzz/shares',
+      "/api/v2/buzz/shares"
     );
 
     const state = reactive({
@@ -116,7 +116,7 @@ export default {
         })
         .then(() => {
           saveSuccess();
-          context.emit('close', true);
+          context.emit("close", true);
         });
     };
 
@@ -124,10 +124,11 @@ export default {
       const originalText = props.data.originalPost?.text || props.data.text;
       const originalEmployee =
         props.data.originalPost?.employee || props.data.employee;
-      const {createdDate, createdTime} = props.data.originalPost || props.data;
+      const { createdDate, createdTime } =
+        props.data.originalPost || props.data;
       const utcDate = parseDate(
         `${createdDate} ${createdTime} +00:00`,
-        'yyyy-MM-dd HH:mm xxx',
+        "yyyy-MM-dd HH:mm xxx"
       );
 
       return {

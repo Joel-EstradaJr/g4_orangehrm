@@ -21,12 +21,12 @@
   <edit-employee-layout :employee-id="empNumber" screen="contact">
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <oxd-text tag="h6" class="orangehrm-main-title">{{
-        $t('pim.contact_details')
+        $t("pim.contact_details")
       }}</oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
         <oxd-text class="orangehrm-sub-title" tag="h6">{{
-          $t('admin.address')
+          $t("admin.address")
         }}</oxd-text>
         <oxd-divider />
         <oxd-form-row>
@@ -78,7 +78,7 @@
         </oxd-form-row>
 
         <oxd-text class="orangehrm-sub-title" tag="h6">{{
-          $t('pim.telephone')
+          $t("pim.telephone")
         }}</oxd-text>
         <oxd-divider />
         <oxd-form-row>
@@ -108,7 +108,7 @@
         </oxd-form-row>
 
         <oxd-text class="orangehrm-sub-title" tag="h6">{{
-          $t('general.email')
+          $t("general.email")
         }}</oxd-text>
         <oxd-divider />
         <oxd-form-row>
@@ -141,32 +141,32 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import EditEmployeeLayout from "@/orangehrmPimPlugin/components/EditEmployeeLayout";
 import {
   shouldNotExceedCharLength,
   validPhoneNumberFormat,
   validEmailFormat,
-} from '@ohrm/core/util/validation/rules';
-import {promiseDebounce} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { promiseDebounce } from "@ohrm/oxd";
 
 const contactDetailsModel = {
-  street1: '',
-  street2: '',
-  city: '',
-  province: '',
+  street1: "",
+  street2: "",
+  city: "",
+  province: "",
   countryCode: [],
-  zipCode: '',
-  homeTelephone: '',
-  workTelephone: '',
-  mobile: '',
-  workEmail: '',
-  otherEmail: '',
+  zipCode: "",
+  homeTelephone: "",
+  workTelephone: "",
+  mobile: "",
+  workEmail: "",
+  otherEmail: "",
 };
 
 export default {
   components: {
-    'edit-employee-layout': EditEmployeeLayout,
+    "edit-employee-layout": EditEmployeeLayout,
   },
 
   props: {
@@ -183,10 +183,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employee/${props.empNumber}/contact-details`,
+      `/api/v2/pim/employee/${props.empNumber}/contact-details`
     );
     http.setIgnorePath(
-      '/api/v2/pim/employees/[0-9]+/contact-details/validation/(work-emails|other-emails)',
+      "/api/v2/pim/employees/[0-9]+/contact-details/validation/(work-emails|other-emails)"
     );
     return {
       http,
@@ -196,7 +196,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      contact: {...contactDetailsModel},
+      contact: { ...contactDetailsModel },
       rules: {
         street1: [shouldNotExceedCharLength(70)],
         street2: [shouldNotExceedCharLength(70)],
@@ -237,7 +237,7 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             ...this.contact,
             countryCode: this.contact.countryCode?.id,
@@ -259,24 +259,24 @@ export default {
             this.contact.workEmail === this.contact.otherEmail;
           this.http
             .request({
-              method: 'GET',
+              method: "GET",
               url: `/api/v2/pim/employees/${this.empNumber}/contact-details/validation/work-emails`,
               params: {
                 workEmail: this.contact.workEmail,
               },
             })
             .then((response) => {
-              const {data} = response.data;
+              const { data } = response.data;
               if (data.valid === true) {
                 return sameAsOtherEmail
                   ? resolve(
                       this.$t(
-                        'pim.work_email_and_other_email_cannot_be_the_same',
-                      ),
+                        "pim.work_email_and_other_email_cannot_be_the_same"
+                      )
                     )
                   : resolve(true);
               }
-              return resolve(this.$t('general.already_exists'));
+              return resolve(this.$t("general.already_exists"));
             });
         } else {
           resolve(true);
@@ -291,24 +291,24 @@ export default {
             this.contact.otherEmail === this.contact.workEmail;
           this.http
             .request({
-              method: 'GET',
+              method: "GET",
               url: `/api/v2/pim/employees/${this.empNumber}/contact-details/validation/other-emails`,
               params: {
                 otherEmail: this.contact.otherEmail,
               },
             })
             .then((response) => {
-              const {data} = response.data;
+              const { data } = response.data;
               if (data.valid === true) {
                 return sameAsWorkEmail
                   ? resolve(
                       this.$t(
-                        'pim.work_email_and_other_email_cannot_be_the_same',
-                      ),
+                        "pim.work_email_and_other_email_cannot_be_the_same"
+                      )
                     )
                   : resolve(true);
               }
-              return resolve(this.$t('general.already_exists'));
+              return resolve(this.$t("general.already_exists"));
             });
         } else {
           resolve(true);
@@ -319,21 +319,21 @@ export default {
     validateEmailDifferent(email) {
       return (v) => {
         const resolvedEmail = email();
-        if (resolvedEmail === null || resolvedEmail === '') {
+        if (resolvedEmail === null || resolvedEmail === "") {
           return true;
         }
         return (
           v !== resolvedEmail ||
-          this.$t('pim.work_email_and_other_email_cannot_be_the_same')
+          this.$t("pim.work_email_and_other_email_cannot_be_the_same")
         );
       };
     },
 
     updateModel(response) {
-      const {data} = response.data;
-      this.contact = {...contactDetailsModel, ...data};
+      const { data } = response.data;
+      this.contact = { ...contactDetailsModel, ...data };
       this.contact.countryCode = this.countries.find(
-        (item) => item.id === data.countryCode,
+        (item) => item.id === data.countryCode
       );
     },
   },

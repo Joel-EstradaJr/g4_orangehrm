@@ -20,7 +20,7 @@
   <div class="orangehrm-background-container orangehrm-save-candidate-page">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('recruitment.add_candidate') }}
+        {{ $t("recruitment.add_candidate") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -98,7 +98,7 @@
                 v-model="candidate.keywords"
                 :label="$t('recruitment.keywords')"
                 :placeholder="`${$t(
-                  'recruitment.enter_comma_seperated_words',
+                  'recruitment.enter_comma_seperated_words'
                 )}...`"
                 :rules="rules.keywords"
               />
@@ -163,23 +163,23 @@ import {
   validPhoneNumberFormat,
   shouldNotExceedCharLength,
   shouldBeCurrentOrPreviousDate,
-} from '@/core/util/validation/rules';
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import SubmitButton from '@/core/components/buttons/SubmitButton';
-import {freshDate, formatDate} from '@ohrm/core/util/helper/datefns';
-import FileUploadInput from '@/core/components/inputs/FileUploadInput';
-import FullNameInput from '@/orangehrmPimPlugin/components/FullNameInput';
-import VacancyDropdown from '@/orangehrmRecruitmentPlugin/components/VacancyDropdown';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@/core/util/validation/rules";
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import SubmitButton from "@/core/components/buttons/SubmitButton";
+import { freshDate, formatDate } from "@ohrm/core/util/helper/datefns";
+import FileUploadInput from "@/core/components/inputs/FileUploadInput";
+import FullNameInput from "@/orangehrmPimPlugin/components/FullNameInput";
+import VacancyDropdown from "@/orangehrmRecruitmentPlugin/components/VacancyDropdown";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 export default {
-  name: 'SaveCandidate',
+  name: "SaveCandidate",
   components: {
-    'submit-button': SubmitButton,
-    'full-name-input': FullNameInput,
-    'vacancy-dropdown': VacancyDropdown,
-    'file-upload-input': FileUploadInput,
+    "submit-button": SubmitButton,
+    "full-name-input": FullNameInput,
+    "vacancy-dropdown": VacancyDropdown,
+    "file-upload-input": FileUploadInput,
   },
   props: {
     maxFileSize: {
@@ -194,9 +194,9 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/candidates',
+      "/api/v2/recruitment/candidates"
     );
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -214,7 +214,7 @@ export default {
         contactNumber: null,
         keywords: null,
         comment: null,
-        dateOfApplication: formatDate(freshDate(), 'yyyy-MM-dd'),
+        dateOfApplication: formatDate(freshDate(), "yyyy-MM-dd"),
         consentToKeepData: false,
         vacancyId: null,
       },
@@ -222,7 +222,7 @@ export default {
         id: null,
         oldAttachment: null,
         newAttachment: null,
-        method: 'keepCurrent',
+        method: "keepCurrent",
       },
       rules: {
         firstName: [required, shouldNotExceedCharLength(30)],
@@ -253,13 +253,13 @@ export default {
       let candidateId;
       this.isLoading = true;
       this.http
-        .create({...this.candidate, vacancyId: this.candidate.vacancyId?.id})
-        .then(({data: {data}}) => {
+        .create({ ...this.candidate, vacancyId: this.candidate.vacancyId?.id })
+        .then(({ data: { data } }) => {
           candidateId = parseInt(data.id);
           if (!this.resume.newAttachment) return;
           return this.http.request({
-            method: 'POST',
-            url: '/api/v2/recruitment/candidate/attachments',
+            method: "POST",
+            url: "/api/v2/recruitment/candidate/attachments",
             data: {
               candidateId,
               attachment: this.resume.newAttachment,
@@ -270,11 +270,11 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          navigate('/recruitment/addCandidate/{id}', {id: candidateId});
+          navigate("/recruitment/addCandidate/{id}", { id: candidateId });
         });
     },
     onCancel() {
-      navigate('/recruitment/viewCandidates');
+      navigate("/recruitment/viewCandidates");
     },
   },
 };

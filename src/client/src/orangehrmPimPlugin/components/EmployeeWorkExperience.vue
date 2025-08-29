@@ -32,7 +32,7 @@
     ></edit-work-experience>
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <profile-action-header @click="onClickAdd">
-        {{ $t('pim.work_experience') }}
+        {{ $t("pim.work_experience") }}
       </profile-action-header>
     </div>
     <table-header
@@ -61,24 +61,24 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import SaveWorkExperience from '@/orangehrmPimPlugin/components/SaveWorkExperience';
-import EditWorkExperience from '@/orangehrmPimPlugin/components/EditWorkExperience';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import SaveWorkExperience from "@/orangehrmPimPlugin/components/SaveWorkExperience";
+import EditWorkExperience from "@/orangehrmPimPlugin/components/EditWorkExperience";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
-  name: 'EmployeeWorkExperience',
+  name: "EmployeeWorkExperience",
 
   components: {
-    'profile-action-header': ProfileActionHeader,
-    'save-work-experience': SaveWorkExperience,
-    'edit-work-experience': EditWorkExperience,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "profile-action-header": ProfileActionHeader,
+    "save-work-experience": SaveWorkExperience,
+    "edit-work-experience": EditWorkExperience,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -91,10 +91,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.employeeId}/work-experiences`,
+      `/api/v2/pim/employees/${props.employeeId}/work-experiences`
     );
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const workExperienceNormalizer = (data) => {
       return data.map((item) => {
@@ -103,7 +103,7 @@ export default {
           fromDate: formatDate(parseDate(item.fromDate), jsDateFormat, {
             locale,
           }),
-          toDate: formatDate(parseDate(item.toDate), jsDateFormat, {locale}),
+          toDate: formatDate(parseDate(item.toDate), jsDateFormat, { locale }),
         };
       });
     };
@@ -138,37 +138,45 @@ export default {
     return {
       headers: [
         {
-          name: 'company',
-          slot: 'title',
-          title: this.$t('pim.company'),
-          style: {flex: 1},
+          name: "company",
+          slot: "title",
+          title: this.$t("pim.company"),
+          style: { flex: 1 },
         },
         {
-          name: 'jobTitle',
-          title: this.$t('general.job_title'),
-          style: {flex: 1},
+          name: "jobTitle",
+          title: this.$t("general.job_title"),
+          style: { flex: 1 },
         },
-        {name: 'fromDate', title: this.$t('general.from'), style: {flex: 1}},
-        {name: 'toDate', title: this.$t('general.to'), style: {flex: 1}},
-        {name: 'comment', title: this.$t('general.comment'), style: {flex: 1}},
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {'flex-basis': '10em'},
-          cellType: 'oxd-table-cell-actions',
+          name: "fromDate",
+          title: this.$t("general.from"),
+          style: { flex: 1 },
+        },
+        { name: "toDate", title: this.$t("general.to"), style: { flex: 1 } },
+        {
+          name: "comment",
+          title: this.$t("general.comment"),
+          style: { flex: 1 },
+        },
+        {
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { "flex-basis": "10em" },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -193,14 +201,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

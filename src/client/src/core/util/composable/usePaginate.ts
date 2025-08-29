@@ -15,10 +15,10 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {onBeforeMount, reactive, toRefs, watch, unref} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import {AxiosResponse} from 'axios';
-import useToast from '@/core/util/composable/useToast';
+import { onBeforeMount, reactive, toRefs, watch, unref } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import { AxiosResponse } from "axios";
+import useToast from "@/core/util/composable/useToast";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface ServerResponse {
@@ -44,7 +44,7 @@ interface DTO {
 
 async function fetchData(
   http: APIService,
-  params: object,
+  params: object
 ): Promise<ServerResponse> {
   try {
     const response: AxiosResponse = await http.getAll(params);
@@ -73,7 +73,7 @@ function getPageParams(pageSize: number, currentPage: number) {
 function getQueryParams(query: any) {
   const params = JSON.parse(JSON.stringify(unref(query)));
   for (const [key, value] of Object.entries(params)) {
-    params[key] = value === null || value === '' ? undefined : value;
+    params[key] = value === null || value === "" ? undefined : value;
   }
   return params;
 }
@@ -99,7 +99,7 @@ export default function usePaginate(
     prefetch = true,
     toastNoRecords = true,
     pageSize = 50,
-  }: usePaginateArgs = {},
+  }: usePaginateArgs = {}
 ) {
   const state = reactive<State>({
     showPaginator: false,
@@ -109,17 +109,17 @@ export default function usePaginate(
     pages: 0,
     currentPage: 1,
   });
-  const {noRecordsFound} = useToast();
+  const { noRecordsFound } = useToast();
 
   const execQuery = async () => {
     state.isLoading = true;
     const pageParams = getPageParams(pageSize, state.currentPage);
     const queryParams = getQueryParams(query);
-    state.response = await fetchData(http, {...pageParams, ...queryParams});
+    state.response = await fetchData(http, { ...pageParams, ...queryParams });
     if (!state.response.error) {
-      const {data, ...rest} = state.response;
+      const { data, ...rest } = state.response;
       const formattedData = normalizer(data);
-      state.response = {data: formattedData, ...rest};
+      state.response = { data: formattedData, ...rest };
     }
     if (state.response.meta) {
       state.total = state.response.meta.total;

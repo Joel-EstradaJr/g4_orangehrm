@@ -22,10 +22,10 @@ interface TruncateArgs {
 
 export const truncate = (
   text: string | undefined,
-  {length = 50, ellipsis = '...'}: TruncateArgs = {},
+  { length = 50, ellipsis = "..." }: TruncateArgs = {}
 ) => {
-  if (typeof text === 'string') {
+  if (typeof text === "string") {
     return text.length > length ? text.substr(0, length) + ellipsis : text;
   }
-  return '';
+  return "";
 };

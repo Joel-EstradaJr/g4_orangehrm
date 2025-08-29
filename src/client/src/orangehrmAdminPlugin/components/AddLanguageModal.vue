@@ -20,7 +20,7 @@
   <oxd-dialog @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('admin.add_language_package') }}
+        {{ $t("admin.add_language_package") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -35,10 +35,10 @@
         <div class="addlanguage-note">
           <div class="addlanguage-note-text">
             <oxd-text class="orangehrm-sub-title">
-              {{ $t('general.note') }}
+              {{ $t("general.note") }}
             </oxd-text>
             <oxd-text class="orangehrm-information-card-text">
-              {{ $t('admin.translate_text_manually') }}
+              {{ $t("admin.translate_text_manually") }}
             </oxd-text>
           </div>
         </div>
@@ -62,22 +62,22 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import LanguagesDropdown from '@/orangehrmAdminPlugin/components/LanguagesDropdown.vue';
-import {required} from '@/core/util/validation/rules';
-import {OxdDialog} from '@ohrm/oxd';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import LanguagesDropdown from "@/orangehrmAdminPlugin/components/LanguagesDropdown.vue";
+import { required } from "@/core/util/validation/rules";
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'AddLanguageModal',
+  name: "AddLanguageModal",
   components: {
-    'oxd-dialog': OxdDialog,
-    'languages-dropdown': LanguagesDropdown,
+    "oxd-dialog": OxdDialog,
+    "languages-dropdown": LanguagesDropdown,
   },
-  emits: ['close'],
+  emits: ["close"],
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/i18n/languages',
+      "/api/v2/admin/i18n/languages"
     );
 
     return {
@@ -104,11 +104,11 @@ export default {
         })
         .then(() => {
           this.isLoading = false;
-          this.$emit('close');
+          this.$emit("close");
         });
     },
     onCancel() {
-      this.$emit('close');
+      this.$emit("close");
     },
   },
 };

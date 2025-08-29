@@ -77,7 +77,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h5" class="orangehrm-employee-tracker-list-header">
-          {{ $t('performance.tracker_logs') }}
+          {{ $t("performance.tracker_logs") }}
         </oxd-text>
         <oxd-button
           :label="$t('performance.add_log')"
@@ -105,7 +105,7 @@
           class="orangehrm-employee-tracker-no-records"
         >
           <oxd-text>
-            {{ $t('general.n_records_found', {count: 0}) }}
+            {{ $t("general.n_records_found", { count: 0 }) }}
           </oxd-text>
         </div>
         <oxd-loading-spinner
@@ -130,29 +130,29 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {reactive, toRefs, computed} from 'vue';
-import {formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import useLocale from '@/core/util/composable/useLocale';
-import useInfiniteScroll from '@/core/util/composable/useInfiniteScroll';
-import AddTrackerLogModal from '@/orangehrmPerformancePlugin/components/AddTrackerLogModal';
-import EditTrackerLogModal from '@/orangehrmPerformancePlugin/components/EditTrackerLogModal';
-import DeleteConfirmationDialog from '@/core/components/dialogs/DeleteConfirmationDialog';
-import EmployeeTrackerLogCard from '@/orangehrmPerformancePlugin/components/EmployeeTrackerLogCard';
-import {OxdIcon, OxdSheet, OxdSpinner} from '@ohrm/oxd';
+import { APIService } from "@/core/util/services/api.service";
+import { reactive, toRefs, computed } from "vue";
+import { formatDate, parseDate } from "@ohrm/core/util/helper/datefns";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import useLocale from "@/core/util/composable/useLocale";
+import useInfiniteScroll from "@/core/util/composable/useInfiniteScroll";
+import AddTrackerLogModal from "@/orangehrmPerformancePlugin/components/AddTrackerLogModal";
+import EditTrackerLogModal from "@/orangehrmPerformancePlugin/components/EditTrackerLogModal";
+import DeleteConfirmationDialog from "@/core/components/dialogs/DeleteConfirmationDialog";
+import EmployeeTrackerLogCard from "@/orangehrmPerformancePlugin/components/EmployeeTrackerLogCard";
+import { OxdIcon, OxdSheet, OxdSpinner } from "@ohrm/oxd";
 
 export default {
-  name: 'ViewEmployeeTrackerLogs',
+  name: "ViewEmployeeTrackerLogs",
   components: {
-    'oxd-icon': OxdIcon,
-    'oxd-sheet': OxdSheet,
-    'oxd-loading-spinner': OxdSpinner,
-    'add-tracker-log-modal': AddTrackerLogModal,
-    'edit-tracker-log-modal': EditTrackerLogModal,
-    'delete-confirmation': DeleteConfirmationDialog,
-    'employee-tracker-log-card': EmployeeTrackerLogCard,
+    "oxd-icon": OxdIcon,
+    "oxd-sheet": OxdSheet,
+    "oxd-loading-spinner": OxdSpinner,
+    "add-tracker-log-modal": AddTrackerLogModal,
+    "edit-tracker-log-modal": EditTrackerLogModal,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "employee-tracker-log-card": EmployeeTrackerLogCard,
   },
   props: {
     trackerId: {
@@ -167,7 +167,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/performance/trackers/${props.trackerId}/logs`,
+      `/api/v2/performance/trackers/${props.trackerId}/logs`
     );
     const limit = 10;
     const state = reactive({
@@ -182,9 +182,9 @@ export default {
       showNoRecordsFound: false,
     });
 
-    const {$tEmpName} = useEmployeeNameTranslate();
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { $tEmpName } = useEmployeeNameTranslate();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const fetchData = () => {
       state.showNoRecordsFound = false;
@@ -195,7 +195,7 @@ export default {
           offset: state.items.length === 0 ? 0 : limit,
         })
         .then((response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
           state.total = meta?.total || 0;
           if (Array.isArray(data)) {
             state.items = [
@@ -208,17 +208,17 @@ export default {
                   addedDate: formatDate(
                     parseDate(item.addedDate),
                     jsDateFormat,
-                    {locale},
+                    { locale }
                   ),
                   modifiedDate: formatDate(
                     parseDate(item.modifiedDate),
                     jsDateFormat,
-                    {locale},
+                    { locale }
                   ),
                 };
               }),
             ];
-            state.meta = {...state.meta, ...meta};
+            state.meta = { ...state.meta, ...meta };
           }
         })
         .finally(() => {
@@ -227,7 +227,7 @@ export default {
         });
     };
 
-    const {scrollerRef} = useInfiniteScroll(() => {
+    const { scrollerRef } = useInfiniteScroll(() => {
       if (state.items.length >= state.total) return;
       fetchData();
     });
@@ -246,8 +246,8 @@ export default {
   },
   data() {
     return {
-      trackerName: '',
-      employeeName: '',
+      trackerName: "",
+      employeeName: "",
       showAddTrackerModal: false,
       showEditTrackerModal: false,
       editTrackerLogId: null,
@@ -256,18 +256,18 @@ export default {
   beforeMount() {
     this.http
       .request({
-        method: 'GET',
+        method: "GET",
         url: `/api/v2/performance/employees/trackers/${this.trackerId}`,
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.trackerName = data.trackerName;
         this.employeeName = `${data.employee.firstName} ${
           data.employee.lastName
         } ${
           data.employee.terminationId
-            ? ` ${this.$t('general.past_employee')}`
-            : ''
+            ? ` ${this.$t("general.past_employee")}`
+            : ""
         }`;
       })
       .then(() => {
@@ -292,7 +292,7 @@ export default {
     },
     onClickDelete(id) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([id]);
         }
       });

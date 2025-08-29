@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('general.edit_language') }}
+        {{ $t("general.edit_language") }}
       </oxd-text>
 
       <oxd-divider />
@@ -54,13 +54,13 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 export default {
   props: {
@@ -72,13 +72,13 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/languages',
+      "/api/v2/admin/languages"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const langugageUniqueValidation = createUniqueValidator(
-      'Language',
-      'name',
-      {entityId: props.qualificationLanguageId},
+      "Language",
+      "name",
+      { entityId: props.qualificationLanguageId }
     );
 
     return {
@@ -91,8 +91,8 @@ export default {
     return {
       isLoading: false,
       language: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -109,7 +109,7 @@ export default {
     this.http
       .get(this.qualificationLanguageId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.language.id = data.id;
         this.language.name = data.name;
       })
@@ -133,7 +133,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/admin/viewLanguages');
+      navigate("/admin/viewLanguages");
     },
   },
 };

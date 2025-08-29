@@ -26,7 +26,7 @@
       class="orangehrm-tabs-wrapper"
     >
       <a
-        :class="{'orangehrm-tabs-item': true, '--active': tab.active}"
+        :class="{ 'orangehrm-tabs-item': true, '--active': tab.active }"
         :href="tab.url"
         >{{ tab.name }}</a
       >
@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: 'TabsNavigation',
+  name: "TabsNavigation",
   props: {
     tabs: {
       type: Array,
@@ -64,7 +64,7 @@ export default {
     font-size: 14px;
     font-family: $oxd-font-family;
     font-weight: 700;
-    @include oxd-respond-to('xs') {
+    @include oxd-respond-to("xs") {
       margin-right: 0.25rem;
       background-color: $oxd-background-pastel-white-color;
       white-space: nowrap;
@@ -74,7 +74,7 @@ export default {
         color: $oxd-white-color;
       }
     }
-    @include oxd-respond-to('md') {
+    @include oxd-respond-to("md") {
       margin-right: unset;
       margin-bottom: 0.25rem;
       background-color: unset;
@@ -86,12 +86,12 @@ export default {
       }
     }
   }
-  @include oxd-respond-to('xs') {
+  @include oxd-respond-to("xs") {
     flex-direction: row;
     overflow: scroll hidden;
     padding-bottom: 5px;
   }
-  @include oxd-respond-to('md') {
+  @include oxd-respond-to("md") {
     flex-direction: column;
     overflow: visible;
     padding-bottom: unset;

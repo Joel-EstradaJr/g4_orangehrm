@@ -19,7 +19,7 @@
 <template>
   <div>
     <oxd-text tag="p" class="orangehrm-social-auth-header">
-      {{ $t('general.or_login_with') }}
+      {{ $t("general.or_login_with") }}
     </oxd-text>
   </div>
   <div class="orangehrm-social-auth">
@@ -40,16 +40,16 @@
 </template>
 
 <script>
-import {computed} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import AuthButton from '@/orangehrmAuthenticationPlugin/components/AuthButton.vue';
-import {navigate} from '@ohrm/core/util/helper/navigation';
+import { computed } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import AuthButton from "@/orangehrmAuthenticationPlugin/components/AuthButton.vue";
+import { navigate } from "@ohrm/core/util/helper/navigation";
 
 export default {
-  name: 'SocialMediaAuth',
+  name: "SocialMediaAuth",
 
   components: {
-    'auth-button': AuthButton,
+    "auth-button": AuthButton,
   },
 
   props: {
@@ -60,7 +60,7 @@ export default {
   },
 
   setup(props) {
-    const http = new APIService(window.appGlobal.baseUrl, '');
+    const http = new APIService(window.appGlobal.baseUrl, "");
 
     const socialAuthenticators = computed(() => {
       return props.authenticators.map((authenticator) => ({
@@ -73,15 +73,15 @@ export default {
       const lowercasedUrl = url.toLowerCase();
 
       switch (true) {
-        case lowercasedUrl.includes('google'):
+        case lowercasedUrl.includes("google"):
           return `${window.appGlobal.publicPath}/images/google.svg`;
-        case lowercasedUrl.includes('microsoft'):
+        case lowercasedUrl.includes("microsoft"):
           return `${window.appGlobal.publicPath}/images/microsoft.svg`;
-        case lowercasedUrl.includes('okta'):
+        case lowercasedUrl.includes("okta"):
           return `${window.appGlobal.publicPath}/images/okta.svg`;
-        case lowercasedUrl.includes('keycloak'):
+        case lowercasedUrl.includes("keycloak"):
           return `${window.appGlobal.publicPath}/images/keycloak.svg`;
-        case lowercasedUrl.includes('auth0'):
+        case lowercasedUrl.includes("auth0"):
           return `${window.appGlobal.publicPath}/images/auth0.svg`;
         default:
           return `${window.appGlobal.publicPath}/images/default.svg`;
@@ -96,7 +96,9 @@ export default {
 
   methods: {
     onClickAction(id) {
-      navigate('/openidauth/openIdCredentials/{providerId}', {providerId: id});
+      navigate("/openidauth/openIdCredentials/{providerId}", {
+        providerId: id,
+      });
     },
   },
 };

@@ -45,7 +45,7 @@
 
 <script>
 export default {
-  name: 'PostFilters',
+  name: "PostFilters",
 
   props: {
     filter: {
@@ -58,44 +58,44 @@ export default {
     },
   },
 
-  emits: ['updatePriority'],
+  emits: ["updatePriority"],
 
   computed: {
     isMostRecent() {
-      return this.filter === 'share.createdAtUtc';
+      return this.filter === "share.createdAtUtc";
     },
     isMostLikes() {
-      return this.filter === 'share.numOfLikes';
+      return this.filter === "share.numOfLikes";
     },
     isMostComments() {
-      return this.filter === 'share.numOfComments';
+      return this.filter === "share.numOfComments";
     },
     mostRecentButtonType() {
-      return this.isMostRecent ? 'label-warn' : 'text';
+      return this.isMostRecent ? "label-warn" : "text";
     },
     mostLikesButtonType() {
-      return this.isMostLikes ? 'label-warn' : 'text';
+      return this.isMostLikes ? "label-warn" : "text";
     },
     mostCommentsButtonType() {
-      return this.isMostComments ? 'label-warn' : 'text';
+      return this.isMostComments ? "label-warn" : "text";
     },
     mostRecentButtonLabel() {
       if (this.mobile) {
-        return this.isMostRecent ? this.$t('buzz.most_recent_posts') : '';
+        return this.isMostRecent ? this.$t("buzz.most_recent_posts") : "";
       }
-      return this.$t('buzz.most_recent_posts');
+      return this.$t("buzz.most_recent_posts");
     },
     mostLikesButtonLabel() {
       if (this.mobile) {
-        return this.isMostLikes ? this.$t('buzz.most_liked_posts') : '';
+        return this.isMostLikes ? this.$t("buzz.most_liked_posts") : "";
       }
-      return this.$t('buzz.most_liked_posts');
+      return this.$t("buzz.most_liked_posts");
     },
     mostCommentsButtonLabel() {
       if (this.mobile) {
-        return this.isMostComments ? this.$t('buzz.most_commented_posts') : '';
+        return this.isMostComments ? this.$t("buzz.most_commented_posts") : "";
       }
-      return this.$t('buzz.most_commented_posts');
+      return this.$t("buzz.most_commented_posts");
     },
   },
 };

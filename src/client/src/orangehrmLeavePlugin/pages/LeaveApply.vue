@@ -26,13 +26,13 @@
     ></leave-conflict>
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('leave.apply_leave') }}
+        {{ $t("leave.apply_leave") }}
       </oxd-text>
 
       <oxd-divider />
 
       <oxd-text v-if="!isLoading && leaveTypes.length === 0" type="subtitle-2">
-        {{ $t('leave.no_leave_types_with_leave_balance') }}
+        {{ $t("leave.no_leave_types_with_leave_balance") }}
       </oxd-text>
 
       <oxd-form
@@ -160,6 +160,7 @@
       </oxd-form>
     </div>
   </div>
+  <leave-assistant-widget />
 </template>
 
 <script>
@@ -168,22 +169,23 @@ import {
   validDateFormat,
   shouldNotExceedCharLength,
   endDateShouldBeAfterStartDate,
-} from '@/core/util/validation/rules';
-import {yearRange} from '@ohrm/core/util/helper/year-range';
-import {diffInDays} from '@ohrm/core/util/helper/datefns';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import LeaveDurationInput from '@/orangehrmLeavePlugin/components/LeaveDurationInput';
-import LeaveBalance from '@/orangehrmLeavePlugin/components/LeaveBalance';
-import LeaveConflict from '@/orangehrmLeavePlugin/components/LeaveConflict';
-import useLeaveValidators from '@/orangehrmLeavePlugin/util/composable/useLeaveValidators';
-import useForm from '@ohrm/core/util/composable/useForm';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@/core/util/validation/rules";
+import { yearRange } from "@ohrm/core/util/helper/year-range";
+import { diffInDays } from "@ohrm/core/util/helper/datefns";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import LeaveDurationInput from "@/orangehrmLeavePlugin/components/LeaveDurationInput";
+import LeaveBalance from "@/orangehrmLeavePlugin/components/LeaveBalance";
+import LeaveConflict from "@/orangehrmLeavePlugin/components/LeaveConflict";
+import LeaveAssistantWidget from "@/orangehrmLeavePlugin/components/LeaveAssistantWidget";
+import useLeaveValidators from "@/orangehrmLeavePlugin/util/composable/useLeaveValidators";
+import useForm from "@ohrm/core/util/composable/useForm";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const leaveModel = {
   type: null,
   fromDate: null,
   toDate: null,
-  comment: '',
+  comment: "",
   partialOptions: null,
   duration: {
     type: null,
@@ -198,12 +200,13 @@ const leaveModel = {
 };
 
 export default {
-  name: 'LeaveApply',
+  name: "LeaveApply",
 
   components: {
-    'leave-duration-input': LeaveDurationInput,
-    'leave-balance': LeaveBalance,
-    'leave-conflict': LeaveConflict,
+    LeaveAssistantWidget,
+    "leave-duration-input": LeaveDurationInput,
+    "leave-balance": LeaveBalance,
+    "leave-conflict": LeaveConflict,
   },
 
   props: {
@@ -216,11 +219,11 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/leave-requests',
+      "/api/v2/leave/leave-requests"
     );
-    const {serializeBody, validateOverlapLeaves} = useLeaveValidators(http);
-    const {formRef, reset} = useForm();
-    const {userDateFormat} = useDateFormat();
+    const { serializeBody, validateOverlapLeaves } = useLeaveValidators(http);
+    const { formRef, reset } = useForm();
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -235,7 +238,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      leave: {...leaveModel},
+      leave: { ...leaveModel },
       rules: {
         type: [required],
         fromDate: [required, validDateFormat(this.userDateFormat)],
@@ -244,17 +247,17 @@ export default {
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.leave.fromDate,
-            this.$t('general.to_date_should_be_after_from_date'),
-            {allowSameDate: true},
+            this.$t("general.to_date_should_be_after_from_date"),
+            { allowSameDate: true }
           ),
         ],
         comment: [shouldNotExceedCharLength(250)],
       },
       partialOptions: [
-        {id: 1, label: this.$t('leave.all_days'), key: 'all'},
-        {id: 2, label: this.$t('leave.start_day_only'), key: 'start'},
-        {id: 3, label: this.$t('leave.end_day_only'), key: 'end'},
-        {id: 4, label: this.$t('leave.start_and_end_day'), key: 'start_end'},
+        { id: 1, label: this.$t("leave.all_days"), key: "all" },
+        { id: 2, label: this.$t("leave.start_day_only"), key: "start" },
+        { id: 3, label: this.$t("leave.end_day_only"), key: "end" },
+        { id: 4, label: this.$t("leave.start_and_end_day"), key: "start_end" },
       ],
       showLeaveConflict: false,
       isWorkShiftExceeded: false,
@@ -285,12 +288,16 @@ export default {
   watch: {
     appliedLeaveDuration: function (duration) {
       if (duration === 1) {
-        this.leave.duration.type = {id: 1, label: 'Full Day', key: 'full_day'};
+        this.leave.duration.type = {
+          id: 1,
+          label: "Full Day",
+          key: "full_day",
+        };
       } else {
         this.leave.duration.type = null;
       }
     },
-    'leave.fromDate': function (fromDate) {
+    "leave.fromDate": function (fromDate) {
       if (!fromDate || this.leave.toDate) return;
       this.leave.toDate = fromDate;
     },
@@ -300,11 +307,11 @@ export default {
     this.isLoading = true;
     this.http
       .request({
-        method: 'GET',
-        url: '/api/v2/leave/leave-types/eligible',
+        method: "GET",
+        url: "/api/v2/leave/leave-types/eligible",
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.leaveTypes = data.map((item) => {
           return {
             id: item.id,
@@ -324,7 +331,7 @@ export default {
       this.leaveConflictData = null;
 
       this.validateOverlapLeaves(this.leave)
-        .then(({isConflict, isOverWorkshift, data}) => {
+        .then(({ isConflict, isOverWorkshift, data }) => {
           if (isConflict) {
             this.leaveConflictData = data;
             this.showLeaveConflict = true;
@@ -340,8 +347,8 @@ export default {
         .catch(() => {
           this.showLeaveConflict &&
             this.$toast.warn({
-              title: this.$t('general.warning'),
-              message: this.$t('leave.failed_to_submit'),
+              title: this.$t("general.warning"),
+              message: this.$t("leave.failed_to_submit"),
             });
         })
         .finally(() => {

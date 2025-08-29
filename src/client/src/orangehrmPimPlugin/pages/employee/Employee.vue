@@ -27,7 +27,7 @@
               <employee-autocomplete
                 v-model="filters.employee"
                 :rules="rules.employee"
-                :params="{includeEmployees: filters.includeEmployees?.param}"
+                :params="{ includeEmployees: filters.includeEmployees?.param }"
               />
             </oxd-grid-item>
             <oxd-grid-item>
@@ -145,43 +145,43 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
-import SubunitDropdown from '@/orangehrmPimPlugin/components/SubunitDropdown';
-import EmploymentStatusDropdown from '@/orangehrmPimPlugin/components/EmploymentStatusDropdown';
-import IncludeEmployeeDropdown from '@/core/components/dropdown/IncludeEmployeeDropdown';
-import useSort from '@ohrm/core/util/composable/useSort';
+import { computed, ref } from "vue";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import JobtitleDropdown from "@/orangehrmPimPlugin/components/JobtitleDropdown";
+import SubunitDropdown from "@/orangehrmPimPlugin/components/SubunitDropdown";
+import EmploymentStatusDropdown from "@/orangehrmPimPlugin/components/EmploymentStatusDropdown";
+import IncludeEmployeeDropdown from "@/core/components/dropdown/IncludeEmployeeDropdown";
+import useSort from "@ohrm/core/util/composable/useSort";
 import {
   shouldNotExceedCharLength,
   validSelection,
-} from '@/core/util/validation/rules';
-import usei18n from '@/core/util/composable/usei18n';
+} from "@/core/util/validation/rules";
+import usei18n from "@/core/util/composable/usei18n";
 
 const defaultSortOrder = {
-  'employee.employeeId': 'DEFAULT',
-  'employee.firstName': 'ASC',
-  'employee.lastName': 'DEFAULT',
-  'jobTitle.jobTitleName': 'DEFAULT',
-  'empStatus.name': 'DEFAULT',
-  'subunit.name': 'DEFAULT',
-  'supervisor.firstName': 'DEFAULT',
+  "employee.employeeId": "DEFAULT",
+  "employee.firstName": "ASC",
+  "employee.lastName": "DEFAULT",
+  "jobTitle.jobTitleName": "DEFAULT",
+  "empStatus.name": "DEFAULT",
+  "subunit.name": "DEFAULT",
+  "supervisor.firstName": "DEFAULT",
 };
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
-    'employee-autocomplete': EmployeeAutocomplete,
-    'jobtitle-dropdown': JobtitleDropdown,
-    'subunit-dropdown': SubunitDropdown,
-    'employment-status-dropdown': EmploymentStatusDropdown,
-    'include-employee-dropdown': IncludeEmployeeDropdown,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "jobtitle-dropdown": JobtitleDropdown,
+    "subunit-dropdown": SubunitDropdown,
+    "employment-status-dropdown": EmploymentStatusDropdown,
+    "include-employee-dropdown": IncludeEmployeeDropdown,
   },
 
   props: {
@@ -192,11 +192,11 @@ export default {
   },
 
   setup(props) {
-    const {$t} = usei18n();
+    const { $t } = usei18n();
     const dataNormalizer = (data) => {
       return data.map((item) => {
         const selectable = props.unselectableEmpNumbers.findIndex(
-          (empNumber) => empNumber == item.empNumber,
+          (empNumber) => empNumber == item.empNumber
         );
         return {
           id: item.empNumber,
@@ -204,9 +204,9 @@ export default {
           firstAndMiddleName: `${item.firstName} ${item.middleName}`,
           lastName:
             item.lastName +
-            (item.terminationId ? ` ${$t('general.past_employee')}` : ''),
+            (item.terminationId ? ` ${$t("general.past_employee")}` : ""),
           jobTitle: item.jobTitle?.isDeleted
-            ? item.jobTitle.title + $t('general.deleted')
+            ? item.jobTitle.title + $t("general.deleted")
             : item.jobTitle?.title,
           empStatus: item.empStatus?.name,
           subunit: item.subunit?.name,
@@ -214,10 +214,10 @@ export default {
             ? item.supervisors
                 .map(
                   (supervisor) =>
-                    `${supervisor.firstName} ${supervisor.lastName}`,
+                    `${supervisor.firstName} ${supervisor.lastName}`
                 )
-                .join(',')
-            : '',
+                .join(",")
+            : "",
           isSelectable: selectable === -1,
         };
       });
@@ -225,25 +225,25 @@ export default {
 
     const filters = ref({
       employee: null,
-      employeeId: '',
+      employeeId: "",
       empStatusId: null,
       supervisor: null,
       jobTitleId: null,
       subunitId: null,
       includeEmployees: {
         id: 1,
-        param: 'onlyCurrent',
-        label: $t('general.current_employees_only'),
+        param: "onlyCurrent",
+        label: $t("general.current_employees_only"),
       },
     });
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
     const serializedFilters = computed(() => {
       return {
-        model: 'detailed',
+        model: "detailed",
         nameOrId:
-          typeof filters.value.employee === 'string'
+          typeof filters.value.employee === "string"
             ? filters.value.employee
             : undefined,
         empNumber: filters.value.employee?.id,
@@ -262,7 +262,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/employees',
+      "/api/v2/pim/employees"
     );
     const {
       showPaginator,
@@ -309,54 +309,54 @@ export default {
     headers() {
       return [
         {
-          name: 'employeeId',
-          slot: 'title',
-          title: this.$t('general.id'),
-          sortField: 'employee.employeeId',
-          style: {flex: 1},
+          name: "employeeId",
+          slot: "title",
+          title: this.$t("general.id"),
+          sortField: "employee.employeeId",
+          style: { flex: 1 },
         },
         {
-          name: 'firstAndMiddleName',
-          title: this.$t('pim.first_middle_name'),
-          sortField: 'employee.firstName',
-          style: {flex: 1},
+          name: "firstAndMiddleName",
+          title: this.$t("pim.first_middle_name"),
+          sortField: "employee.firstName",
+          style: { flex: 1 },
         },
         {
-          name: 'lastName',
-          title: this.$t('general.last_name'),
-          sortField: 'employee.lastName',
-          style: {flex: 1},
+          name: "lastName",
+          title: this.$t("general.last_name"),
+          sortField: "employee.lastName",
+          style: { flex: 1 },
         },
         {
-          name: 'jobTitle',
-          title: this.$t('general.job_title'),
-          sortField: 'jobTitle.jobTitleName',
-          style: {flex: 1},
+          name: "jobTitle",
+          title: this.$t("general.job_title"),
+          sortField: "jobTitle.jobTitleName",
+          style: { flex: 1 },
         },
         {
-          name: 'empStatus',
-          title: this.$t('general.employment_status'),
-          sortField: 'empStatus.name',
-          style: {flex: 1},
+          name: "empStatus",
+          title: this.$t("general.employment_status"),
+          sortField: "empStatus.name",
+          style: { flex: 1 },
         },
         {
-          name: 'subunit',
-          title: this.$t('general.sub_unit'),
-          sortField: 'subunit.name',
-          style: {flex: 1},
+          name: "subunit",
+          title: this.$t("general.sub_unit"),
+          sortField: "subunit.name",
+          style: { flex: 1 },
         },
         {
-          name: 'supervisor',
-          title: this.$t('pim.supervisor'),
-          sortField: 'supervisor.firstName',
-          style: {flex: 1},
+          name: "supervisor",
+          title: this.$t("pim.supervisor"),
+          sortField: "supervisor.firstName",
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellRenderer: this.cellRenderer,
         },
       ];
@@ -365,11 +365,11 @@ export default {
 
   mounted() {
     // Close dropdown when clicking outside
-    document.addEventListener('click', this.handleClickOutside);
+    document.addEventListener("click", this.handleClickOutside);
   },
 
   beforeUnmount() {
-    document.removeEventListener('click', this.handleClickOutside);
+    document.removeEventListener("click", this.handleClickOutside);
   },
 
   methods: {
@@ -387,36 +387,36 @@ export default {
       }
     },
 
-    async onClickExport(format = 'csv') {
+    async onClickExport(format = "csv") {
       this.showExportDropdown = false; // Close dropdown
       this.isExporting = true;
 
       try {
         if (!this.items?.data || this.items.data.length === 0) {
           this.$toast.error({
-            title: 'Error',
-            message: 'No employees to export',
+            title: "Error",
+            message: "No employees to export",
           });
           return;
         }
 
-        if (format === 'csv') {
+        if (format === "csv") {
           this.downloadCSV(this.items.data);
-        } else if (format === 'pdf') {
+        } else if (format === "pdf") {
           this.downloadPDF(this.items.data);
         }
 
         this.$toast.success({
-          title: 'Success',
+          title: "Success",
           message: `${
             this.items.data.length
           } employees exported as ${format.toUpperCase()} successfully`,
         });
       } catch (error) {
-        console.error('Export error:', error);
+        console.error("Export error:", error);
         this.$toast.error({
-          title: 'Error',
-          message: 'Failed to export employees',
+          title: "Error",
+          message: "Failed to export employees",
         });
       } finally {
         this.isExporting = false;
@@ -431,34 +431,34 @@ export default {
     // Existing CSV download method
     downloadCSV(employees) {
       const headers = [
-        'Employee ID',
-        'First & Middle Name',
-        'Last Name',
-        'Job Title',
-        'Employment Status',
-        'Sub Unit',
-        'Supervisor',
+        "Employee ID",
+        "First & Middle Name",
+        "Last Name",
+        "Job Title",
+        "Employment Status",
+        "Sub Unit",
+        "Supervisor",
       ];
 
       const rows = employees.map((emp) => [
-        emp.employeeId || '',
-        emp.firstAndMiddleName || '',
-        emp.lastName || '',
-        emp.jobTitle || '',
-        emp.empStatus || '',
-        emp.subunit || '',
-        emp.supervisor || '',
+        emp.employeeId || "",
+        emp.firstAndMiddleName || "",
+        emp.lastName || "",
+        emp.jobTitle || "",
+        emp.empStatus || "",
+        emp.subunit || "",
+        emp.supervisor || "",
       ]);
 
       const csvContent = [headers, ...rows]
-        .map((row) => row.map((field) => `"${field}"`).join(','))
-        .join('\n');
+        .map((row) => row.map((field) => `"${field}"`).join(","))
+        .join("\n");
 
-      const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.download = `employees_${new Date().toISOString().split('T')[0]}.csv`;
+      link.download = `employees_${new Date().toISOString().split("T")[0]}.csv`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -470,7 +470,7 @@ export default {
 
       // Add title
       doc.setFontSize(18);
-      doc.text('Employee List Report', 14, 22);
+      doc.text("Employee List Report", 14, 22);
 
       // Add date
       doc.setFontSize(12);
@@ -479,23 +479,23 @@ export default {
 
       // Prepare table data
       const headers = [
-        'Employee ID',
-        'First & Middle Name',
-        'Last Name',
-        'Job Title',
-        'Employment Status',
-        'Sub Unit',
-        'Supervisor',
+        "Employee ID",
+        "First & Middle Name",
+        "Last Name",
+        "Job Title",
+        "Employment Status",
+        "Sub Unit",
+        "Supervisor",
       ];
 
       const data = employees.map((emp) => [
-        emp.employeeId || '',
-        emp.firstAndMiddleName || '',
-        emp.lastName || '',
-        emp.jobTitle || '',
-        emp.empStatus || '',
-        emp.subunit || '',
-        emp.supervisor || '',
+        emp.employeeId || "",
+        emp.firstAndMiddleName || "",
+        emp.lastName || "",
+        emp.jobTitle || "",
+        emp.empStatus || "",
+        emp.subunit || "",
+        emp.supervisor || "",
       ]);
 
       // Add table using autoTable function
@@ -510,31 +510,31 @@ export default {
         headStyles: {
           fillColor: [41, 128, 185],
           textColor: 255,
-          fontStyle: 'bold',
+          fontStyle: "bold",
         },
         alternateRowStyles: {
           fillColor: [245, 245, 245],
         },
-        margin: {top: 50},
+        margin: { top: 50 },
       });
 
       // Save the PDF
-      doc.save(`employees_${new Date().toISOString().split('T')[0]}.pdf`);
+      doc.save(`employees_${new Date().toISOString().split("T")[0]}.pdf`);
     },
 
     onClickAdd() {
-      navigate('/pim/addEmployee');
+      navigate("/pim/addEmployee");
     },
     onClickEdit($event) {
       const id = $event.id ? $event.id : $event.item?.id;
-      navigate('/pim/viewPersonalDetails/empNumber/{id}', {id});
+      navigate("/pim/viewPersonalDetails/empNumber/{id}", { id });
     },
     onClickDeleteSelected() {
       const ids = this.checkedItems.map((index) => {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
@@ -543,13 +543,13 @@ export default {
     onClickDelete(item, $event) {
       $event.stopImmediatePropagation();
       const isSelectable = this.unselectableEmpNumbers.findIndex(
-        (empNumber) => empNumber == item.id,
+        (empNumber) => empNumber == item.id
       );
       if (isSelectable > -1) {
         return this.$toast.cannotDelete();
       }
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -582,20 +582,20 @@ export default {
         edit: {
           onClick: this.onClickEdit,
           props: {
-            name: 'pencil-fill',
+            name: "pencil-fill",
           },
         },
       };
 
       if (
-        this.$can.delete('employee_list') &&
+        this.$can.delete("employee_list") &&
         !this.unselectableEmpNumbers.includes(row.id)
       ) {
         cellConfig.delete = {
           onClick: this.onClickDelete,
-          component: 'oxd-icon-button',
+          component: "oxd-icon-button",
           props: {
-            name: 'trash',
+            name: "trash",
           },
         };
       }

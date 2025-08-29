@@ -28,18 +28,18 @@
 </template>
 
 <script>
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import {APIService} from '@/core/util/services/api.service';
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import { APIService } from "@/core/util/services/api.service";
 
 export default {
-  name: 'ReviewersAutoComplete',
+  name: "ReviewersAutoComplete",
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
   props: {
     includeEmployees: {
       type: String,
-      default: 'onlyCurrent',
+      default: "onlyCurrent",
     },
     excludeEmployee: {
       type: Object,
@@ -50,7 +50,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/performance/trackers/reviewers',
+      "/api/v2/performance/trackers/reviewers"
     );
     return {
       http,
@@ -66,7 +66,7 @@ export default {
               empNumber:
                 this.excludeEmployee == null ? null : this.excludeEmployee.id, //to be added back when a seperate API is created for reviewers
             })
-            .then(({data}) => {
+            .then(({ data }) => {
               resolve(
                 data.data.map((employee) => {
                   return {
@@ -74,7 +74,7 @@ export default {
                     label: `${employee.firstName} ${employee.middleName} ${employee.lastName}`,
                     isPastEmployee: employee.terminationId ? true : false,
                   };
-                }),
+                })
               );
             });
         } else {

@@ -21,7 +21,7 @@
   <oxd-dialog @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('claim.edit_expense') }}
+        {{ $t("claim.edit_expense") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -89,17 +89,17 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {required, validDateFormat} from '@/core/util/validation/rules';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {OxdDialog} from '@ohrm/oxd';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { required, validDateFormat } from "@/core/util/validation/rules";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { OxdDialog } from "@ohrm/oxd";
 import {
   shouldNotExceedCharLength,
   digitsOnlyWithDecimalPoint,
   maxCurrency,
   digitsOnlyWithTwoDecimalPoints,
-} from '@ohrm/core/util/validation/rules';
-import ClaimExpenseTypeDropdown from './ClaimExpenseTypeDropdown.vue';
+} from "@ohrm/core/util/validation/rules";
+import ClaimExpenseTypeDropdown from "./ClaimExpenseTypeDropdown.vue";
 
 const expenseModel = {
   expenseType: null,
@@ -109,11 +109,11 @@ const expenseModel = {
 };
 
 export default {
-  name: 'EditExpense',
+  name: "EditExpense",
 
   components: {
-    'oxd-dialog': OxdDialog,
-    'claim-expense-type-dropdown': ClaimExpenseTypeDropdown,
+    "oxd-dialog": OxdDialog,
+    "claim-expense-type-dropdown": ClaimExpenseTypeDropdown,
   },
 
   props: {
@@ -127,14 +127,14 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/claim/requests/${props.requestId}/expenses`,
+      `/api/v2/claim/requests/${props.requestId}/expenses`
     );
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -168,15 +168,15 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.expense = data;
         this.expense.amount = parseFloat(data.amount).toFixed(2);
         this.selectedOption = {
           id: data.expenseType.id,
           label: data.expenseType.isDeleted
-            ? `${data.expenseType.name} (${this.$t('general.deleted')})`
+            ? `${data.expenseType.name} (${this.$t("general.deleted")})`
             : !data.expenseType.status
-            ? `${data.expenseType.name} (${this.$t('performance.inactive')})`
+            ? `${data.expenseType.name} (${this.$t("performance.inactive")})`
             : data.expenseType.name,
         };
       })
@@ -199,12 +199,12 @@ export default {
           return this.$toast.updateSuccess();
         })
         .then(() => {
-          this.expense = {...expenseModel};
+          this.expense = { ...expenseModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

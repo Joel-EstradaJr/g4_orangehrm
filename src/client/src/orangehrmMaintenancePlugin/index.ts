@@ -15,12 +15,12 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import PurgeEmployee from './pages/PurgeEmployee.vue';
-import PurgeCandidate from './pages/PurgeCandidate.vue';
-import AccessEmployeeSearchScreen from '../orangehrmMaintenancePlugin/pages/accessEmployee/AccessEmployeeSearchScreen.vue';
+import PurgeEmployee from "./pages/PurgeEmployee.vue";
+import PurgeCandidate from "./pages/PurgeCandidate.vue";
+import AccessEmployeeSearchScreen from "../orangehrmMaintenancePlugin/pages/accessEmployee/AccessEmployeeSearchScreen.vue";
 
 export default {
-  'purge-employee': PurgeEmployee,
-  'purge-candidate': PurgeCandidate,
-  'access-employee-search': AccessEmployeeSearchScreen,
+  "purge-employee": PurgeEmployee,
+  "purge-candidate": PurgeCandidate,
+  "access-employee-search": AccessEmployeeSearchScreen,
 };

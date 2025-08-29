@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">{{
-        $t('pim.edit_reporting_method')
+        $t("pim.edit_reporting_method")
       }}</oxd-text>
 
       <oxd-divider />
@@ -54,12 +54,12 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 export default {
   props: {
@@ -71,7 +71,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/reporting-methods',
+      "/api/v2/pim/reporting-methods"
     );
     return {
       http,
@@ -82,8 +82,8 @@ export default {
     return {
       isLoading: false,
       reportingMethod: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [required, shouldNotExceedCharLength(100)],
@@ -96,20 +96,20 @@ export default {
     this.http
       .get(this.reportingMethodId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.reportingMethod.id = data.id;
         this.reportingMethod.name = data.name;
         // Fetch list data for unique test
-        return this.http.getAll({limit: 0});
+        return this.http.getAll({ limit: 0 });
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.rules.name.push((v) => {
           const index = data.findIndex((item) => item.name === v);
           if (index > -1) {
-            const {id} = data[index];
+            const { id } = data[index];
             return id !== this.reportingMethod.id
-              ? this.$t('general.already_exists')
+              ? this.$t("general.already_exists")
               : true;
           } else {
             return true;
@@ -136,7 +136,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/pim/viewReportingMethods');
+      navigate("/pim/viewReportingMethods");
     },
   },
 };

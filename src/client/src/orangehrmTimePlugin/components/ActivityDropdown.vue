@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import {ref, watchEffect} from 'vue';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { ref, watchEffect } from "vue";
+import { APIService } from "@ohrm/core/util/services/api.service";
 
 export default {
-  name: 'ActivityDropdown',
+  name: "ActivityDropdown",
   props: {
     projectId: {
       type: Number,
@@ -36,17 +36,17 @@ export default {
   },
   setup(props) {
     const options = ref([]);
-    const http = new APIService(window.appGlobal.baseUrl, '');
+    const http = new APIService(window.appGlobal.baseUrl, "");
 
     watchEffect(async () => {
       if (props.projectId) {
         http
           .request({
-            method: 'GET',
+            method: "GET",
             url: `/api/v2/time/project/${props.projectId}/activities`,
-            params: {limit: 0},
+            params: { limit: 0 },
           })
-          .then(({data}) => {
+          .then(({ data }) => {
             options.value = data.data.map((item) => {
               return {
                 id: item.id,

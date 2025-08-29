@@ -15,10 +15,10 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {AxiosResponse} from 'axios';
-import {promiseDebounce} from '@ohrm/oxd';
-import {APIService} from '@/core/util/services/api.service';
-import {translate as translatorFactory} from '@/core/plugins/i18n/translate';
+import { AxiosResponse } from "axios";
+import { promiseDebounce } from "@ohrm/oxd";
+import { APIService } from "@/core/util/services/api.service";
+import { translate as translatorFactory } from "@/core/plugins/i18n/translate";
 
 type useServerValidationOptions = {
   debounce?: boolean;
@@ -42,7 +42,7 @@ interface UniqueValidationResponse {
 
 export default function useServerValidation(
   http: APIService,
-  options: useServerValidationOptions = {debounce: true, debounceOffset: 500},
+  options: useServerValidationOptions = { debounce: true, debounceOffset: 500 }
 ) {
   const translate = translatorFactory();
 
@@ -50,16 +50,16 @@ export default function useServerValidation(
     entityName: string,
     attributeName: string,
     validationOptions: createUniqueValidatorOptions = {
-      translateKey: 'general.already_exists',
-    },
+      translateKey: "general.already_exists",
+    }
   ) => {
     const validationRequest = (value: string) => {
       return new Promise((resolve, reject) => {
         if (value.trim()) {
           http
             .request({
-              method: 'GET',
-              url: 'api/v2/core/validation/unique',
+              method: "GET",
+              url: "api/v2/core/validation/unique",
               params: {
                 value,
                 entityName,
@@ -70,14 +70,14 @@ export default function useServerValidation(
               },
             })
             .then((response: AxiosResponse<UniqueValidationResponse>) => {
-              const {data} = response.data;
+              const { data } = response.data;
               if (data.valid === true) {
                 resolve(true);
               } else {
                 resolve(
                   translate(
-                    validationOptions.translateKey ?? 'general.already_exists',
-                  ),
+                    validationOptions.translateKey ?? "general.already_exists"
+                  )
                 );
               }
             })

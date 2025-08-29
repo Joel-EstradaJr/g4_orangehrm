@@ -128,16 +128,16 @@
 </template>
 
 <script>
-import {computed, ref, inject} from 'vue';
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { computed, ref, inject } from "vue";
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   validSelection,
   validDateFormat,
   endDateShouldBeAfterStartDate,
   startDateShouldBeBeforeEndDate,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
+} from "@/core/util/validation/rules";
 import {
   viewIcon,
   editIcon,
@@ -145,39 +145,39 @@ import {
   viewLabel,
   editLabel,
   evaluateLabel,
-} from '@/orangehrmPerformancePlugin/util/composable/useReviewActions';
-import {formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
-import useSort from '@ohrm/core/util/composable/useSort';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import usei18n from '@/core/util/composable/usei18n';
-import useLocale from '@/core/util/composable/useLocale';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import ReviewStatusDropdown from '@/orangehrmPerformancePlugin/components/ReviewStatusDropdown';
-import IncludeEmployeeDropdown from '@/core/components/dropdown/IncludeEmployeeDropdown';
-import ReviewPeriodCell from '@/orangehrmPerformancePlugin/components/ReviewPeriodCell';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import {tableScreenStateKey} from '@ohrm/oxd';
+} from "@/orangehrmPerformancePlugin/util/composable/useReviewActions";
+import { formatDate, parseDate } from "@ohrm/core/util/helper/datefns";
+import useSort from "@ohrm/core/util/composable/useSort";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import usei18n from "@/core/util/composable/usei18n";
+import useLocale from "@/core/util/composable/useLocale";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import JobtitleDropdown from "@/orangehrmPimPlugin/components/JobtitleDropdown";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import ReviewStatusDropdown from "@/orangehrmPerformancePlugin/components/ReviewStatusDropdown";
+import IncludeEmployeeDropdown from "@/core/components/dropdown/IncludeEmployeeDropdown";
+import ReviewPeriodCell from "@/orangehrmPerformancePlugin/components/ReviewPeriodCell";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import { tableScreenStateKey } from "@ohrm/oxd";
 
 const defaultSortOrder = {
-  'employee.lastName': 'DEFAULT',
-  'performanceReview.reviewPeriodStart': 'DEFAULT',
-  'performanceReview.dueDate': 'DEFAULT',
-  'performanceReview.statusId': 'ASC',
-  'jobTitle.jobTitleName': 'DEFAULT',
-  'reviewerEmployee.lastName': 'DEFAULT',
+  "employee.lastName": "DEFAULT",
+  "performanceReview.reviewPeriodStart": "DEFAULT",
+  "performanceReview.dueDate": "DEFAULT",
+  "performanceReview.statusId": "ASC",
+  "jobTitle.jobTitleName": "DEFAULT",
+  "reviewerEmployee.lastName": "DEFAULT",
 };
 
 export default {
-  name: 'ReviewSearch',
+  name: "ReviewSearch",
   components: {
-    'include-employee-dropdown': IncludeEmployeeDropdown,
-    'review-status-dropdown': ReviewStatusDropdown,
-    'jobtitle-dropdown': JobtitleDropdown,
-    'employee-autocomplete': EmployeeAutocomplete,
-    'delete-confirmation-dialog': DeleteConfirmationDialog,
+    "include-employee-dropdown": IncludeEmployeeDropdown,
+    "review-status-dropdown": ReviewStatusDropdown,
+    "jobtitle-dropdown": JobtitleDropdown,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "delete-confirmation-dialog": DeleteConfirmationDialog,
   },
   props: {
     fromDate: {
@@ -192,18 +192,18 @@ export default {
     },
   },
   setup(props) {
-    const {$t} = usei18n();
-    const {jsDateFormat, userDateFormat} = useDateFormat();
-    const {locale} = useLocale();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $t } = usei18n();
+    const { jsDateFormat, userDateFormat } = useDateFormat();
+    const { locale } = useLocale();
+    const { $tEmpName } = useEmployeeNameTranslate();
     const reviewListDateFormat = (date) =>
-      formatDate(parseDate(date), jsDateFormat, {locale});
+      formatDate(parseDate(date), jsDateFormat, { locale });
 
     const statusOpts = [
-      {id: 1, label: $t('performance.inactive')},
-      {id: 2, label: $t('performance.activated')},
-      {id: 3, label: $t('performance.in_progress')},
-      {id: 4, label: $t('performance.completed')},
+      { id: 1, label: $t("performance.inactive") },
+      { id: 2, label: $t("performance.activated") },
+      { id: 3, label: $t("performance.in_progress") },
+      { id: 4, label: $t("performance.completed") },
     ];
 
     const reviewListNormalizer = (data) => {
@@ -236,17 +236,17 @@ export default {
       toDate: null,
       includeEmployees: {
         id: 1,
-        param: 'onlyCurrent',
-        label: $t('general.current_employees_only'),
+        param: "onlyCurrent",
+        label: $t("general.current_employees_only"),
       },
     };
 
     const filters = ref({
       ...defaultFilters,
-      ...(props.fromDate && {fromDate: props.fromDate}),
-      ...(props.toDate && {toDate: props.toDate}),
+      ...(props.fromDate && { fromDate: props.fromDate }),
+      ...(props.toDate && { toDate: props.toDate }),
     });
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
     const serializedFilters = computed(() => {
@@ -265,7 +265,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/performance/manage/reviews',
+      "/api/v2/performance/manage/reviews"
     );
 
     const {
@@ -304,50 +304,50 @@ export default {
     return {
       headers: [
         {
-          name: 'employee',
-          title: this.$t('general.employee'),
-          slot: 'title',
-          sortField: 'employee.lastName',
-          style: {flex: '14%'},
+          name: "employee",
+          title: this.$t("general.employee"),
+          slot: "title",
+          sortField: "employee.lastName",
+          style: { flex: "14%" },
         },
         {
-          name: 'jobTitle',
-          title: this.$t('general.job_title'),
-          sortField: 'jobTitle.jobTitleName',
-          style: {flex: '14%'},
+          name: "jobTitle",
+          title: this.$t("general.job_title"),
+          sortField: "jobTitle.jobTitleName",
+          style: { flex: "14%" },
         },
         {
-          name: 'reviewPeriod',
-          title: this.$t('performance.review_period'),
-          sortField: 'performanceReview.reviewPeriodStart',
-          style: {flex: '14%'},
+          name: "reviewPeriod",
+          title: this.$t("performance.review_period"),
+          sortField: "performanceReview.reviewPeriodStart",
+          style: { flex: "14%" },
           cellRenderer: this.reviewPeriodCellRenderer,
         },
         {
-          name: 'dueDate',
-          title: this.$t('performance.due_date'),
-          sortField: 'performanceReview.dueDate',
-          style: {flex: '14%'},
+          name: "dueDate",
+          title: this.$t("performance.due_date"),
+          sortField: "performanceReview.dueDate",
+          style: { flex: "14%" },
         },
         {
-          name: 'reviewer',
-          title: this.$t('performance.reviewer'),
-          sortField: 'reviewerEmployee.lastName',
-          style: {flex: '14%'},
+          name: "reviewer",
+          title: this.$t("performance.reviewer"),
+          sortField: "reviewerEmployee.lastName",
+          style: { flex: "14%" },
         },
         {
-          name: 'status',
-          title: this.$t('performance.review_status'),
-          sortField: 'performanceReview.statusId',
-          style: {flex: '14%'},
+          name: "status",
+          title: this.$t("performance.review_status"),
+          sortField: "performanceReview.statusId",
+          style: { flex: "14%" },
         },
         {
-          name: 'action',
-          slot: 'footer',
-          title: this.$t('general.actions'),
-          cellType: 'oxd-table-cell-actions',
+          name: "action",
+          slot: "footer",
+          title: this.$t("general.actions"),
+          cellType: "oxd-table-cell-actions",
           cellRenderer: this.actionButtonCellRenderer,
-          style: {flex: '16%'},
+          style: { flex: "16%" },
         },
       ],
       checkedItems: [],
@@ -357,16 +357,16 @@ export default {
           validDateFormat(this.userDateFormat),
           startDateShouldBeBeforeEndDate(
             () => this.filters.toDate,
-            this.$t('general.from_date_should_be_before_to_date'),
-            {allowSameDate: true},
+            this.$t("general.from_date_should_be_before_to_date"),
+            { allowSameDate: true }
           ),
         ],
         toDate: [
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.filters.fromDate,
-            this.$t('general.to_date_should_be_after_from_date'),
-            {allowSameDate: true},
+            this.$t("general.to_date_should_be_after_from_date"),
+            { allowSameDate: true }
           ),
         ],
       },
@@ -379,38 +379,38 @@ export default {
 
       cellConfig.delete = {
         onClick: this.onClickDelete,
-        component: 'oxd-icon-button',
+        component: "oxd-icon-button",
         props: {
-          name: 'trash',
+          name: "trash",
         },
       };
 
-      if (screenState.screenType === 'lg' || screenState.screenType === 'xl') {
+      if (screenState.screenType === "lg" || screenState.screenType === "xl") {
         if (row.statusId === 4) {
           cellConfig.view = viewIcon;
-          cellConfig.view.props.title = this.$t('general.view');
+          cellConfig.view.props.title = this.$t("general.view");
           cellConfig.view.onClick = this.onClickEvaluate;
         } else if (row.statusId === 1) {
           cellConfig.edit = editIcon;
-          cellConfig.edit.props.title = this.$t('general.edit');
+          cellConfig.edit.props.title = this.$t("general.edit");
           cellConfig.edit.onClick = this.onClickEdit;
         } else {
           cellConfig.evaluate = evaluateIcon;
-          cellConfig.evaluate.props.title = this.$t('performance.evaluate');
+          cellConfig.evaluate.props.title = this.$t("performance.evaluate");
           cellConfig.evaluate.onClick = this.onClickEvaluate;
         }
       } else {
         if (row.statusId === 4) {
           cellConfig.view = viewLabel;
-          cellConfig.view.props.label = this.$t('general.view');
+          cellConfig.view.props.label = this.$t("general.view");
           cellConfig.view.onClick = this.onClickEvaluate;
         } else if (row.statusId === 1) {
           cellConfig.edit = editLabel;
-          cellConfig.edit.props.label = this.$t('general.edit');
+          cellConfig.edit.props.label = this.$t("general.edit");
           cellConfig.edit.onClick = this.onClickEdit;
         } else {
           cellConfig.evaluate = evaluateLabel;
-          cellConfig.evaluate.props.label = this.$t('performance.evaluate');
+          cellConfig.evaluate.props.label = this.$t("performance.evaluate");
           cellConfig.evaluate.onClick = this.onClickEvaluate;
         }
       }
@@ -434,13 +434,13 @@ export default {
       };
     },
     onClickEdit(item) {
-      navigate('/performance/saveReview/{id}', {id: item.id});
+      navigate("/performance/saveReview/{id}", { id: item.id });
     },
     onClickAdd() {
-      navigate('/performance/saveReview');
+      navigate("/performance/saveReview");
     },
     onClickEvaluate(item) {
-      navigate('/performance/reviewEvaluateByAdmin/{id}', {id: item.id});
+      navigate("/performance/reviewEvaluateByAdmin/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = [];
@@ -448,14 +448,14 @@ export default {
         ids.push(this.items?.data[index].id);
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

@@ -47,10 +47,10 @@
         <thead class="orangehrm-timesheet-table-header">
           <tr class="orangehrm-timesheet-table-header-row">
             <th :class="fixedColumnClasses">
-              {{ $t('time.project') }}
+              {{ $t("time.project") }}
             </th>
             <th class="orangehrm-timesheet-table-header-cell">
-              {{ $t('time.activity') }}
+              {{ $t("time.activity") }}
             </th>
 
             <!-- timesheet days of week -->
@@ -72,7 +72,7 @@
               v-if="!editable"
               class="orangehrm-timesheet-table-header-cell --center --freeze-right"
             >
-              {{ $t('general.total') }}
+              {{ $t("general.total") }}
             </th>
           </tr>
         </thead>
@@ -96,7 +96,7 @@
                 {{
                   record.project
                     ? `${record.customer.name} - ${record.project.name}`
-                    : ''
+                    : ""
                 }}
               </span>
             </td>
@@ -137,7 +137,7 @@
                 @update:model-value="updateTime($event, i, date)"
               />
               <span v-else>
-                {{ getDuration(record.dates[date]) ?? '00:00' }}
+                {{ getDuration(record.dates[date]) ?? "00:00" }}
               </span>
             </td>
             <td
@@ -167,7 +167,7 @@
             <td
               class="orangehrm-timesheet-table-body-cell --freeze-left --highlight"
             >
-              {{ $t('general.total') }}
+              {{ $t("general.total") }}
             </td>
             <td></td>
             <!-- total per day -->
@@ -196,7 +196,7 @@
                 @click="addRow"
               />
               <oxd-text type="subtitle-2">
-                {{ $t('time.add_row') }}
+                {{ $t("time.add_row") }}
               </oxd-text>
             </td>
           </tr>
@@ -207,7 +207,7 @@
             class="orangehrm-timesheet-table-body-row"
           >
             <td colspan="9" class="orangehrm-timesheet-table-body-cell">
-              {{ $t('general.no_records_found') }}
+              {{ $t("general.no_records_found") }}
             </td>
           </tr>
         </tbody>
@@ -234,22 +234,22 @@
 </template>
 
 <script>
-import {validSelection} from '@/core/util/validation/rules';
-import {parseDate, parseTimeInSeconds} from '@ohrm/core/util/helper/datefns';
-import ActivityDropdown from '@/orangehrmTimePlugin/components/ActivityDropdown.vue';
-import ProjectAutocomplete from '@/orangehrmTimePlugin/components/ProjectAutocomplete.vue';
-import TimesheetCommentModal from '@/orangehrmTimePlugin/components/TimesheetCommentModal.vue';
-import {OxdAlert, OxdSpinner} from '@ohrm/oxd';
+import { validSelection } from "@/core/util/validation/rules";
+import { parseDate, parseTimeInSeconds } from "@ohrm/core/util/helper/datefns";
+import ActivityDropdown from "@/orangehrmTimePlugin/components/ActivityDropdown.vue";
+import ProjectAutocomplete from "@/orangehrmTimePlugin/components/ProjectAutocomplete.vue";
+import TimesheetCommentModal from "@/orangehrmTimePlugin/components/TimesheetCommentModal.vue";
+import { OxdAlert, OxdSpinner } from "@ohrm/oxd";
 
 export default {
-  name: 'Timesheet',
+  name: "Timesheet",
 
   components: {
-    'oxd-alert': OxdAlert,
-    'oxd-loading-spinner': OxdSpinner,
-    'activity-dropdown': ActivityDropdown,
-    'project-autocomplete': ProjectAutocomplete,
-    'timesheet-comment-modal': TimesheetCommentModal,
+    "oxd-alert": OxdAlert,
+    "oxd-loading-spinner": OxdSpinner,
+    "activity-dropdown": ActivityDropdown,
+    "project-autocomplete": ProjectAutocomplete,
+    "timesheet-comment-modal": TimesheetCommentModal,
   },
 
   props: {
@@ -281,7 +281,7 @@ export default {
     },
   },
 
-  emits: ['update:records'],
+  emits: ["update:records"],
 
   data() {
     return {
@@ -291,13 +291,13 @@ export default {
       rules: {
         project: [
           validSelection,
-          (v) => v !== null || this.$t('time.select_a_project'),
+          (v) => v !== null || this.$t("time.select_a_project"),
         ],
         activity: [
-          (v) => v !== null || this.$t('time.select_an_activity'),
+          (v) => v !== null || this.$t("time.select_an_activity"),
           (v) =>
             this.records.filter((record) => record.activity?.id === v?.id)
-              .length < 2 || this.$t('time.duplicate_record'),
+              .length < 2 || this.$t("time.duplicate_record"),
         ],
       },
     };
@@ -319,16 +319,16 @@ export default {
     },
     daysOfWeek() {
       const days = [
-        this.$t('general.sun'),
-        this.$t('general.mon'),
-        this.$t('general.tue'),
-        this.$t('general.wed'),
-        this.$t('general.thu'),
-        this.$t('general.fri'),
-        this.$t('general.sat'),
+        this.$t("general.sun"),
+        this.$t("general.mon"),
+        this.$t("general.tue"),
+        this.$t("general.wed"),
+        this.$t("general.thu"),
+        this.$t("general.fri"),
+        this.$t("general.sat"),
       ];
       return this.days.map((day) => {
-        const date = parseDate(day, 'yyyy-MM-dd');
+        const date = parseDate(day, "yyyy-MM-dd");
         return {
           id: date.valueOf(),
           day: date.getDate(),
@@ -338,20 +338,20 @@ export default {
     },
     tableClasses() {
       return {
-        'orangehrm-timesheet-table': true,
-        '--editable': this.editable,
+        "orangehrm-timesheet-table": true,
+        "--editable": this.editable,
       };
     },
     fixedColumnClasses() {
       return {
-        'orangehrm-timesheet-table-header-cell': true,
-        '--freeze-left': !this.editable,
+        "orangehrm-timesheet-table-header-cell": true,
+        "--freeze-left": !this.editable,
       };
     },
     fixedCellClasses() {
       return {
-        'orangehrm-timesheet-table-body-cell': true,
-        '--freeze-left': !this.editable,
+        "orangehrm-timesheet-table-body-cell": true,
+        "--freeze-left": !this.editable,
       };
     },
   },
@@ -386,7 +386,7 @@ export default {
               comment: record.dates[date]?.comment,
             },
           };
-          record.dates = {...record.dates, ..._date};
+          record.dates = { ...record.dates, ..._date };
         }
         return record;
       });
@@ -403,7 +403,7 @@ export default {
               duration: record.dates[date]?.duration,
             },
           };
-          record.dates = {...record.dates, ..._date};
+          record.dates = { ...record.dates, ..._date };
         }
         return record;
       });
@@ -423,7 +423,9 @@ export default {
     updateActivity($value, index) {
       const updated = this.records.map((record, i) => {
         if (i === index) {
-          record.activity = $value ? {id: $value.id, name: $value.label} : null;
+          record.activity = $value
+            ? { id: $value.id, name: $value.label }
+            : null;
         }
         return record;
       });
@@ -431,7 +433,7 @@ export default {
     },
     syncRecords(updated) {
       if (!this.editable) return;
-      this.$emit('update:records', updated);
+      this.$emit("update:records", updated);
     },
     viewComment(record, entry, index, date) {
       if (record.project?.id && record.activity?.id) {
@@ -446,22 +448,22 @@ export default {
         this.showCommentModal = true;
       } else {
         this.$toast.warn({
-          title: this.$t('general.warning'),
-          message: this.$t('time.select_a_project_and_an_activity'),
+          title: this.$t("general.warning"),
+          message: this.$t("time.select_a_project_and_an_activity"),
         });
       }
     },
     onCommentModalClose($event) {
       if ($event) {
-        const {id, comment} = $event;
-        const {index, date} = this.commentModalState;
+        const { id, comment } = $event;
+        const { index, date } = this.commentModalState;
         this.updateComment(id, comment, index, date);
       }
       this.showCommentModal = false;
       this.commentModalState = null;
     },
     getProject(record) {
-      const {project, customer} = record;
+      const { project, customer } = record;
       if (project && project.label) {
         return project;
       }
@@ -474,14 +476,14 @@ export default {
       return null;
     },
     getActivity(activity) {
-      return activity ? {id: activity.id, label: activity.name} : null;
+      return activity ? { id: activity.id, label: activity.name } : null;
     },
     getDuration(entry) {
       // TODO: convert to format from user config
       return entry?.duration ? entry.duration : null;
     },
     getCommentIcon(entry) {
-      return entry?.comment ? 'chat-dots-fill' : 'chat-dots';
+      return entry?.comment ? "chat-dots-fill" : "chat-dots";
     },
     isCommentVisible(entry, index, date) {
       if (entry?.comment) return true;
@@ -495,7 +497,7 @@ export default {
       return false;
     },
     onDurationFocus(index, date) {
-      this.focusedField = {index, date};
+      this.focusedField = { index, date };
     },
     onDurationBlur() {
       this.focusedField = null;
@@ -503,16 +505,16 @@ export default {
     validateDuration(date) {
       const validateFormat = (v) => {
         return (
-          v === '' ||
+          v === "" ||
           v === null ||
           parseTimeInSeconds(v) >= 0 ||
-          this.$t('time.should_be_less_than_24_and_in_hh_mm_or_decimal_format')
+          this.$t("time.should_be_less_than_24_and_in_hh_mm_or_decimal_format")
         );
       };
 
       const validateTotal = () => {
         return this.dailyTotals[date] > 86400
-          ? this.$t('time.total_should_be_less_than_24_hours')
+          ? this.$t("time.total_should_be_less_than_24_hours")
           : true;
       };
 

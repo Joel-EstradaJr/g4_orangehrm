@@ -41,7 +41,7 @@
       </template>
       <template #footer-title>
         <oxd-text v-show="timesheetStatus" type="subtitle-2">
-          {{ $t('general.status') }}: {{ employeeTimesheetStatus }}
+          {{ $t("general.status") }}: {{ employeeTimesheetStatus }}
         </oxd-text>
       </template>
       <template #footer-options>
@@ -92,21 +92,21 @@
 </template>
 
 <script>
-import {toRefs} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import Timesheet from '@/orangehrmTimePlugin/components/Timesheet.vue';
-import useTimesheet from '@/orangehrmTimePlugin/util/composable/useTimesheet';
-import TimesheetPeriod from '@/orangehrmTimePlugin/components/TimesheetPeriod.vue';
-import TimesheetActions from '@/orangehrmTimePlugin/components/TimesheetActions.vue';
-import SaveTimesheetAction from '@/orangehrmTimePlugin/components/SaveTimesheetAction.vue';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
+import { toRefs } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import Timesheet from "@/orangehrmTimePlugin/components/Timesheet.vue";
+import useTimesheet from "@/orangehrmTimePlugin/util/composable/useTimesheet";
+import TimesheetPeriod from "@/orangehrmTimePlugin/components/TimesheetPeriod.vue";
+import TimesheetActions from "@/orangehrmTimePlugin/components/TimesheetActions.vue";
+import SaveTimesheetAction from "@/orangehrmTimePlugin/components/SaveTimesheetAction.vue";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
 
 export default {
   components: {
     timesheet: Timesheet,
-    'timesheet-period': TimesheetPeriod,
-    'timesheet-actions': TimesheetActions,
-    'save-timesheet-action': SaveTimesheetAction,
+    "timesheet-period": TimesheetPeriod,
+    "timesheet-actions": TimesheetActions,
+    "save-timesheet-action": SaveTimesheetAction,
   },
 
   props: {
@@ -124,7 +124,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/time/timesheets',
+      "/api/v2/time/timesheets"
     );
 
     const {
@@ -148,8 +148,8 @@ export default {
     } = useTimesheet(http, props.startDate, props.employee.empNumber);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const {employee, ...rest} = toRefs(state);
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { employee, ...rest } = toRefs(state);
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     return {
       ...rest,
@@ -175,10 +175,10 @@ export default {
   data() {
     return {
       statuses: [
-        {id: 1, label: this.$t('time.submitted'), name: 'Submitted'},
-        {id: 2, label: this.$t('leave.rejected'), name: 'Rejected'},
-        {id: 3, label: this.$t('time.not_submitted'), name: 'Not Submitted'},
-        {id: 4, label: this.$t('time.approved'), name: 'Approved'},
+        { id: 1, label: this.$t("time.submitted"), name: "Submitted" },
+        { id: 2, label: this.$t("leave.rejected"), name: "Rejected" },
+        { id: 3, label: this.$t("time.not_submitted"), name: "Not Submitted" },
+        { id: 4, label: this.$t("time.approved"), name: "Approved" },
       ],
     };
   },
@@ -188,7 +188,7 @@ export default {
         includeMiddle: false,
         excludePastEmpTag: false,
       });
-      return `${this.$t('time.timesheet_for')} ${empName}`;
+      return `${this.$t("time.timesheet_for")} ${empName}`;
     },
     employeeTimesheetStatus() {
       return (

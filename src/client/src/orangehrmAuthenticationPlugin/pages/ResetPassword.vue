@@ -28,7 +28,7 @@
           @submit-valid="onSubmit"
         >
           <oxd-text tag="h6">
-            {{ $t('auth.reset_password') }}
+            {{ $t("auth.reset_password") }}
           </oxd-text>
           <oxd-divider />
           <card-note
@@ -94,20 +94,20 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {promiseDebounce} from '@ohrm/oxd';
-import CardNote from '../components/CardNote';
-import {urlFor} from '@/core/util/helper/url';
-import {APIService} from '@/core/util/services/api.service';
-import usePasswordPolicy from '@/core/util/composable/usePasswordPolicy';
-import PasswordStrengthIndicator from '@/core/components/labels/PasswordStrengthIndicator';
+} from "@ohrm/core/util/validation/rules";
+import { promiseDebounce } from "@ohrm/oxd";
+import CardNote from "../components/CardNote";
+import { urlFor } from "@/core/util/helper/url";
+import { APIService } from "@/core/util/services/api.service";
+import usePasswordPolicy from "@/core/util/composable/usePasswordPolicy";
+import PasswordStrengthIndicator from "@/core/components/labels/PasswordStrengthIndicator";
 
 export default {
-  name: 'ResetPassword',
+  name: "ResetPassword",
 
   components: {
-    'card-note': CardNote,
-    'password-strength-indicator': PasswordStrengthIndicator,
+    "card-note": CardNote,
+    "password-strength-indicator": PasswordStrengthIndicator,
   },
 
   props: {
@@ -122,8 +122,8 @@ export default {
   },
 
   setup() {
-    const http = new APIService(window.appGlobal.baseUrl, '');
-    const {passwordStrength, validatePassword} = usePasswordPolicy(http);
+    const http = new APIService(window.appGlobal.baseUrl, "");
+    const { passwordStrength, validatePassword } = usePasswordPolicy(http);
 
     return {
       http,
@@ -135,9 +135,9 @@ export default {
   data() {
     return {
       user: {
-        username: '',
-        newPassword: '',
-        confirmPassword: '',
+        username: "",
+        newPassword: "",
+        confirmPassword: "",
       },
       rules: {
         newPassword: [
@@ -150,7 +150,7 @@ export default {
           shouldNotExceedCharLength(64),
           (v) =>
             (!!v && v === this.user.newPassword) ||
-            this.$t('general.passwords_do_not_match'),
+            this.$t("general.passwords_do_not_match"),
         ],
       },
     };
@@ -158,7 +158,7 @@ export default {
 
   computed: {
     submitUrl() {
-      return urlFor('/auth/resetPassword');
+      return urlFor("/auth/resetPassword");
     },
   },
 

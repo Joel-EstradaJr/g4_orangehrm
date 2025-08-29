@@ -20,13 +20,13 @@
 <template>
   <div>
     <oxd-text class="orangehrm-performance-review-title">
-      {{ $t('performance.review_finalization') }}
+      {{ $t("performance.review_finalization") }}
     </oxd-text>
     <br />
     <oxd-grid :cols="4" class="orangehrm-performance-review-grid">
       <oxd-grid-item>
         <oxd-text type="subtitle-2">
-          {{ $t('performance.date_of_completion') }}
+          {{ $t("performance.date_of_completion") }}
         </oxd-text>
         <date-input
           v-if="editable"
@@ -40,7 +40,7 @@
       </oxd-grid-item>
       <oxd-grid-item class="orangehrm-performance-review-grid-rating">
         <oxd-text type="subtitle-2">
-          {{ $t('performance.final_rating') }}
+          {{ $t("performance.final_rating") }}
         </oxd-text>
         <oxd-input-field
           v-if="editable"
@@ -54,7 +54,7 @@
       </oxd-grid-item>
       <oxd-grid-item>
         <oxd-text type="subtitle-2">
-          {{ $t('performance.final_comments') }}
+          {{ $t("performance.final_comments") }}
         </oxd-text>
         <oxd-input-field
           v-if="editable"
@@ -73,19 +73,19 @@
 </template>
 
 <script>
-import {computed} from 'vue';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import useLocale from '@/core/util/composable/useLocale';
+import { computed } from "vue";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import useLocale from "@/core/util/composable/useLocale";
 import {
   required,
   validDateFormat,
   greaterThanOrEqual,
   lessThanOrEqual,
-} from '@/core/util/validation/rules';
+} from "@/core/util/validation/rules";
 
 export default {
-  name: 'FinalEvaluation',
+  name: "FinalEvaluation",
   props: {
     completedDate: {
       type: String,
@@ -111,14 +111,14 @@ export default {
       required: true,
     },
   },
-  emits: ['update:finalRating', 'update:finalComment', 'update:completedDate'],
+  emits: ["update:finalRating", "update:finalComment", "update:completedDate"],
   setup(props) {
-    const {locale} = useLocale();
-    const {jsDateFormat, userDateFormat} = useDateFormat();
+    const { locale } = useLocale();
+    const { jsDateFormat, userDateFormat } = useDateFormat();
 
     const editable = computed(() => props.status !== 4);
     const formattedCompletedDate = computed(() =>
-      formatDate(parseDate(props.completedDate), jsDateFormat, {locale}),
+      formatDate(parseDate(props.completedDate), jsDateFormat, { locale })
     );
 
     return {
@@ -139,20 +139,20 @@ export default {
           greaterThanOrEqual(
             0,
             this.$t(
-              'performance.rating_should_be_greater_than_or_equal_to_minValue',
+              "performance.rating_should_be_greater_than_or_equal_to_minValue",
               {
                 minValue: 0,
-              },
-            ),
+              }
+            )
           ),
           lessThanOrEqual(
             100,
             this.$t(
-              'performance.rating_should_be_less_than_or_equal_to_maxValue',
+              "performance.rating_should_be_less_than_or_equal_to_maxValue",
               {
                 maxValue: 100,
-              },
-            ),
+              }
+            )
           ),
           ...(this.isRequired ? [required] : []),
         ],

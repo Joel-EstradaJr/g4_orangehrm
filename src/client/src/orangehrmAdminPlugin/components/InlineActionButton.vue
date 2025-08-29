@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: 'InlineActionButton',
+  name: "InlineActionButton",
   inheritAttrs: false,
 };
 </script>

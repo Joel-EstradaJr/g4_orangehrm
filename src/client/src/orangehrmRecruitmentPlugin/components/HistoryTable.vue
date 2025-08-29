@@ -21,7 +21,7 @@
   <div class="orangehrm-paper-container">
     <div class="orangehrm-header-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('recruitment.candidate_history') }}
+        {{ $t("recruitment.candidate_history") }}
       </oxd-text>
     </div>
     <table-header
@@ -50,14 +50,14 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import useLocale from '@/core/util/composable/useLocale';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import {navigate} from '@/core/util/helper/navigation';
-import usei18n from '@/core/util/composable/usei18n';
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import useLocale from "@/core/util/composable/useLocale";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import { navigate } from "@/core/util/helper/navigation";
+import usei18n from "@/core/util/composable/usei18n";
 
 const ACTION_ASSIGNED_VACANCY = 1;
 const ACTION_SHORTLISTED = 2;
@@ -73,7 +73,7 @@ const ACTION_ADDED = 16;
 const ACTION_APPLIED = 17;
 
 export default {
-  name: 'HistoryTable',
+  name: "HistoryTable",
   props: {
     candidate: {
       type: Object,
@@ -81,26 +81,26 @@ export default {
     },
   },
   setup(props) {
-    const {$t} = usei18n();
-    const {locale} = useLocale();
-    const {jsDateFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $t } = usei18n();
+    const { locale } = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/recruitment/candidates/${props.candidate?.id}/history`,
+      `/api/v2/recruitment/candidates/${props.candidate?.id}/history`
     );
 
     const historyDataNormalizer = (data) => {
       const candidateName = `${props.candidate?.firstName} ${
-        props.candidate?.middleName || ''
+        props.candidate?.middleName || ""
       } ${props.candidate?.lastName}`;
       return data.map((item) => {
         let description = null;
         const interview = {
-          name: '',
-          data: '',
-          interviewers: '',
+          name: "",
+          data: "",
+          interviewers: "",
         };
         const performerName = $tEmpName(item.performedBy, {
           includeMiddle: true,
@@ -115,44 +115,44 @@ export default {
                 includeMiddle: true,
                 excludePastEmpTag: false,
               });
-            },
+            }
           );
-          interview.interviewers = interviewers.join(', ');
+          interview.interviewers = interviewers.join(", ");
         }
 
         switch (item?.action.id) {
           case ACTION_APPLIED:
-            description = $t('recruitment.candidate_applied_for_the_vacancy', {
+            description = $t("recruitment.candidate_applied_for_the_vacancy", {
               candidate: candidateName,
               vacancy: item.vacancyName,
             });
             break;
           case ACTION_ADDED:
-            description = $t('recruitment.employee_added_candidate', {
+            description = $t("recruitment.employee_added_candidate", {
               employee: performerName,
               candidate: candidateName,
             });
             break;
           case ACTION_ASSIGNED_VACANCY:
             description = $t(
-              'recruitment.employee_assigned_vacancy_to_candidate',
+              "recruitment.employee_assigned_vacancy_to_candidate",
               {
                 employee: performerName,
                 vacancy: item.vacancyName,
-              },
+              }
             );
             break;
           case ACTION_SHORTLISTED:
             description = $t(
-              'recruitment.candidate_shortlisted_for_vacancy_by_employee',
+              "recruitment.candidate_shortlisted_for_vacancy_by_employee",
               {
                 vacancy: item.vacancyName,
                 employee: performerName,
-              },
+              }
             );
             break;
           case ACTION_REJECTED:
-            description = $t('recruitment.employee_rejected_the_candidate', {
+            description = $t("recruitment.employee_rejected_the_candidate", {
               employee: performerName,
               candidate: candidateName,
               vacancy: item.vacancyName,
@@ -160,44 +160,44 @@ export default {
             break;
           case ACTION_INTERVIEW_SCHEDULED:
             description = $t(
-              'recruitment.employee_schedule_interview_with_interviewers',
+              "recruitment.employee_schedule_interview_with_interviewers",
               {
                 employee: performerName,
                 interview: interview.name,
                 interviewDate: interview.date,
                 interviewers: interview.interviewers,
                 vacancy: item.vacancyName,
-              },
+              }
             );
             break;
           case ACTION_INTERVIEW_PASSED:
-            description = $t('recruitment.employee_marked_interveiw_passed', {
+            description = $t("recruitment.employee_marked_interveiw_passed", {
               employee: performerName,
               interview: interview.name,
               vacancy: item.vacancyName,
             });
             break;
           case ACTION_INTERVIEW_FAILED:
-            description = $t('recruitment.employee_marked_interveiw_failed', {
+            description = $t("recruitment.employee_marked_interveiw_failed", {
               employee: performerName,
               interview: interview.name,
               vacancy: item.vacancyName,
             });
             break;
           case ACTION_JOB_OFFERED:
-            description = $t('recruitment.employee_offered_the_job', {
+            description = $t("recruitment.employee_offered_the_job", {
               employee: performerName,
               vacancy: item.vacancyName,
             });
             break;
           case ACTION_OFFER_DECLINED:
-            description = $t('recruitment.employee_marked_the_offer_declined', {
+            description = $t("recruitment.employee_marked_the_offer_declined", {
               employee: performerName,
               vacancy: item.vacancyName,
             });
             break;
           case ACTION_HIRED:
-            description = $t('recruitment.employee_hired_the_candidate', {
+            description = $t("recruitment.employee_hired_the_candidate", {
               employee: performerName,
               candidate: candidateName,
               vacancy: item.vacancyName,
@@ -205,12 +205,12 @@ export default {
             break;
           case ACTION_REMOVED:
             description = $t(
-              'recruitment.employee_removed_candidate_from_vacancy',
+              "recruitment.employee_removed_candidate_from_vacancy",
               {
                 employee: performerName,
                 candidate: candidateName,
                 vacancy: item.vacancyName,
-              },
+              }
             );
             break;
         }
@@ -223,7 +223,7 @@ export default {
             jsDateFormat,
             {
               locale,
-            },
+            }
           ),
         };
       });
@@ -238,7 +238,7 @@ export default {
       response,
       isLoading,
       execQuery,
-    } = usePaginate(http, {normalizer: historyDataNormalizer});
+    } = usePaginate(http, { normalizer: historyDataNormalizer });
 
     return {
       http,
@@ -257,22 +257,22 @@ export default {
     return {
       headers: [
         {
-          name: 'performedDate',
-          slot: 'title',
-          title: this.$t('recruitment.performed_date'),
-          style: {flex: '20%'},
+          name: "performedDate",
+          slot: "title",
+          title: this.$t("recruitment.performed_date"),
+          style: { flex: "20%" },
         },
         {
-          name: 'description',
-          title: this.$t('general.description'),
-          style: {flex: '65%'},
+          name: "description",
+          title: this.$t("general.description"),
+          style: { flex: "65%" },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: '15%'},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: "15%" },
+          cellType: "oxd-table-cell-actions",
           cellRenderer: this.cellRenderer,
         },
       ],
@@ -297,7 +297,7 @@ export default {
         cellConfig.edit = {
           onClick: this.onClickEdit,
           props: {
-            name: 'pencil-fill',
+            name: "pencil-fill",
           },
         };
       }
@@ -311,7 +311,7 @@ export default {
         cellConfig.attachment = {
           onClick: this.onClickAttachment,
           props: {
-            name: 'paperclip',
+            name: "paperclip",
           },
         };
       }
@@ -326,14 +326,14 @@ export default {
     },
 
     onClickEdit(item) {
-      navigate('/recruitment/candidateHistory/{candidateId}/{historyId}', {
+      navigate("/recruitment/candidateHistory/{candidateId}/{historyId}", {
         candidateId: this.candidate.id,
         historyId: item.id,
       });
     },
 
     onClickAttachment(item) {
-      navigate('/recruitment/interviewAttachments/{interviewId}', {
+      navigate("/recruitment/interviewAttachments/{interviewId}", {
         interviewId: item.interview?.id,
       });
     },

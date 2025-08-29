@@ -34,20 +34,20 @@
 </template>
 
 <script>
-import {ref} from 'vue';
-import ReportCriterionAutocomplete from '@/orangehrmPimPlugin/components/ReportCriterionAutocomplete';
-import ReportCriterionSelect from '@/orangehrmPimPlugin/components/ReportCriterionSelect';
-import ReportCriterionRange from '@/orangehrmPimPlugin/components/ReportCriterionRange';
-import ReportCriterionDateRange from '@/orangehrmPimPlugin/components/ReportCriterionDateRange';
+import { ref } from "vue";
+import ReportCriterionAutocomplete from "@/orangehrmPimPlugin/components/ReportCriterionAutocomplete";
+import ReportCriterionSelect from "@/orangehrmPimPlugin/components/ReportCriterionSelect";
+import ReportCriterionRange from "@/orangehrmPimPlugin/components/ReportCriterionRange";
+import ReportCriterionDateRange from "@/orangehrmPimPlugin/components/ReportCriterionDateRange";
 
 export default {
-  name: 'ReportCriterion',
+  name: "ReportCriterion",
 
   components: {
-    'report-criterion-autocomplete': ReportCriterionAutocomplete,
-    'report-criterion-select': ReportCriterionSelect,
-    'report-criterion-range': ReportCriterionRange,
-    'report-criterion-date-range': ReportCriterionDateRange,
+    "report-criterion-autocomplete": ReportCriterionAutocomplete,
+    "report-criterion-select": ReportCriterionSelect,
+    "report-criterion-range": ReportCriterionRange,
+    "report-criterion-date-range": ReportCriterionDateRange,
   },
   inheritAttrs: false,
 
@@ -58,117 +58,117 @@ export default {
     },
   },
 
-  emits: ['delete'],
+  emits: ["delete"],
 
   setup(props, context) {
     const field = ref(null);
 
     // map the field type according to criterion
     switch (props.criterion.key) {
-      case 'employee_name':
+      case "employee_name":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-autocomplete',
+          component: "report-criterion-autocomplete",
           api: null,
           options: [],
         };
         break;
 
-      case 'pay_grade':
+      case "pay_grade":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-select',
-          api: '/api/v2/admin/pay-grades',
+          component: "report-criterion-select",
+          api: "/api/v2/admin/pay-grades",
           options: [],
         };
         break;
 
-      case 'education':
+      case "education":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-select',
-          api: '/api/v2/admin/educations',
+          component: "report-criterion-select",
+          api: "/api/v2/admin/educations",
           options: [],
         };
         break;
 
-      case 'employment_status':
+      case "employment_status":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-select',
-          api: '/api/v2/admin/employment-statuses',
+          component: "report-criterion-select",
+          api: "/api/v2/admin/employment-statuses",
           options: [],
         };
         break;
 
-      case 'service_period':
+      case "service_period":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-range',
+          component: "report-criterion-range",
           api: null,
           options: [],
         };
         break;
 
-      case 'joined_date':
+      case "joined_date":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-date-range',
+          component: "report-criterion-date-range",
           api: null,
           options: [],
         };
         break;
 
-      case 'job_title':
+      case "job_title":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-select',
-          api: '/api/v2/admin/job-titles',
+          component: "report-criterion-select",
+          api: "/api/v2/admin/job-titles",
           options: [],
         };
         break;
 
-      case 'language':
+      case "language":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-select',
-          api: '/api/v2/admin/languages',
+          component: "report-criterion-select",
+          api: "/api/v2/admin/languages",
           options: [],
         };
         break;
 
-      case 'skill':
+      case "skill":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-select',
-          api: '/api/v2/admin/skills',
+          component: "report-criterion-select",
+          api: "/api/v2/admin/skills",
           options: [],
         };
         break;
 
-      case 'age_group':
+      case "age_group":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-range',
+          component: "report-criterion-range",
           api: null,
           options: [],
         };
         break;
 
-      case 'sub_unit':
+      case "sub_unit":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-select',
-          api: '/api/v2/admin/subunits',
+          component: "report-criterion-select",
+          api: "/api/v2/admin/subunits",
           options: [],
         };
         break;
 
-      case 'location':
+      case "location":
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-select',
-          api: '/api/v2/admin/locations',
+          component: "report-criterion-select",
+          api: "/api/v2/admin/locations",
           options: [],
         };
         break;
@@ -177,17 +177,17 @@ export default {
         // gender
         field.value = {
           name: props.criterion.label,
-          component: 'report-criterion-select',
+          component: "report-criterion-select",
           api: null,
           options: [
-            {id: 1, label: 'Male'},
-            {id: 2, label: 'Female'},
+            { id: 1, label: "Male" },
+            { id: 2, label: "Female" },
           ],
         };
     }
 
     const onClickDelete = ($event) => {
-      context.emit('delete', $event);
+      context.emit("delete", $event);
     };
 
     return {

@@ -32,7 +32,7 @@
     ></edit-dependent>
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <profile-action-header @click="onClickAdd">
-        {{ $t('pim.assigned_dependents') }}
+        {{ $t("pim.assigned_dependents") }}
       </profile-action-header>
     </div>
     <table-header
@@ -65,24 +65,24 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import SaveDependent from '@/orangehrmPimPlugin/components/SaveDependent';
-import EditDependent from '@/orangehrmPimPlugin/components/EditDependent';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import EditEmployeeLayout from "@/orangehrmPimPlugin/components/EditEmployeeLayout";
+import SaveDependent from "@/orangehrmPimPlugin/components/SaveDependent";
+import EditDependent from "@/orangehrmPimPlugin/components/EditDependent";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
   components: {
-    'profile-action-header': ProfileActionHeader,
-    'edit-employee-layout': EditEmployeeLayout,
-    'save-dependent': SaveDependent,
-    'edit-dependent': EditDependent,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "profile-action-header": ProfileActionHeader,
+    "edit-employee-layout": EditEmployeeLayout,
+    "save-dependent": SaveDependent,
+    "edit-dependent": EditDependent,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -99,10 +99,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.empNumber}/dependents`,
+      `/api/v2/pim/employees/${props.empNumber}/dependents`
     );
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const dependentNormalizer = (data) => {
       return data.map((item) => {
@@ -113,7 +113,7 @@ export default {
             locale,
           }),
           relationship:
-            item.relationshipType == 'other' ? item.relationship : 'Child',
+            item.relationshipType == "other" ? item.relationship : "Child",
         };
       });
     };
@@ -148,39 +148,39 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.name'),
-          style: {flex: 1},
+          name: "name",
+          slot: "title",
+          title: this.$t("general.name"),
+          style: { flex: 1 },
         },
         {
-          name: 'relationship',
-          title: this.$t('pim.relationship'),
-          style: {flex: 1},
+          name: "relationship",
+          title: this.$t("pim.relationship"),
+          style: { flex: 1 },
         },
         {
-          name: 'dateOfBirth',
-          title: this.$t('pim.date_of_birth'),
-          style: {flex: 1},
+          name: "dateOfBirth",
+          title: this.$t("pim.date_of_birth"),
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: '0.5'},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: "0.5" },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -205,14 +205,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

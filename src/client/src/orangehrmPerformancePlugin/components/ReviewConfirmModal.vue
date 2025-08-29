@@ -26,12 +26,12 @@
     >
       <div class="orangehrm-modal-header">
         <oxd-text type="card-title">
-          {{ $t('performance.confirm_review_submission') }}
+          {{ $t("performance.confirm_review_submission") }}
         </oxd-text>
       </div>
       <div class="orangehrm-text-center-align">
         <oxd-text type="subtitle-2">
-          {{ $t('performance.confirm_review_submission_message') }}
+          {{ $t("performance.confirm_review_submission_message") }}
         </oxd-text>
       </div>
       <div class="orangehrm-modal-footer">
@@ -53,12 +53,12 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'ReviewConfirmModal',
+  name: "ReviewConfirmModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   data() {
     return {
@@ -77,11 +77,11 @@ export default {
     },
     onConfirm() {
       this.show = false;
-      this.resolve && this.resolve('ok');
+      this.resolve && this.resolve("ok");
     },
     onCancel() {
       this.show = false;
-      this.resolve && this.resolve('cancel');
+      this.resolve && this.resolve("cancel");
     },
   },
 };

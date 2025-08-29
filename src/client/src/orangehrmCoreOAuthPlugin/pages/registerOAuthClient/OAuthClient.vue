@@ -22,7 +22,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('admin.oauth_client_list') }}
+          {{ $t("admin.oauth_client_list") }}
         </oxd-text>
         <div>
           <oxd-button
@@ -64,15 +64,15 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog.vue';
-import usei18n from '@/core/util/composable/usei18n';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog.vue";
+import usei18n from "@/core/util/composable/usei18n";
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
   props: {
     unselectableClientIds: {
@@ -82,20 +82,20 @@ export default {
   },
 
   setup(props) {
-    const {$t} = usei18n();
+    const { $t } = usei18n();
 
     const oAuthClientNormalizer = (data) => {
       return data.map((item) => {
         const selectable = props.unselectableClientIds.findIndex(
-          (id) => id === item.clientId,
+          (id) => id === item.clientId
         );
         return {
           id: item.id,
           name: item.name,
           redirectUri: item.redirectUri,
           enabled: item.enabled
-            ? $t('general.enabled')
-            : $t('general.disabled'),
+            ? $t("general.enabled")
+            : $t("general.disabled"),
           isSelectable: selectable === -1,
           isDisabled: selectable !== -1,
         };
@@ -104,7 +104,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/oauth-clients',
+      "/api/v2/admin/oauth-clients"
     );
     const {
       showPaginator,
@@ -115,7 +115,7 @@ export default {
       response,
       isLoading,
       execQuery,
-    } = usePaginate(http, {normalizer: oAuthClientNormalizer});
+    } = usePaginate(http, { normalizer: oAuthClientNormalizer });
     return {
       http,
       showPaginator,
@@ -133,39 +133,39 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.name'),
-          style: {flex: 2},
+          name: "name",
+          slot: "title",
+          title: this.$t("general.name"),
+          style: { flex: 2 },
         },
         {
-          name: 'redirectUri',
-          title: this.$t('admin.redirect_uri'),
-          style: {flex: 3},
+          name: "redirectUri",
+          title: this.$t("admin.redirect_uri"),
+          style: { flex: 3 },
         },
         {
-          name: 'enabled',
-          title: this.$t('general.status'),
-          style: {flex: 2},
+          name: "enabled",
+          title: this.$t("general.status"),
+          style: { flex: 2 },
         },
         {
-          name: 'actions',
-          title: this.$t('general.actions'),
-          slot: 'action',
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          title: this.$t("general.actions"),
+          slot: "action",
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -177,10 +177,10 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/admin/saveOAuthClient');
+      navigate("/admin/saveOAuthClient");
     },
     onClickEdit(item) {
-      navigate('/admin/editOAuthClient', {}, {id: item.id});
+      navigate("/admin/editOAuthClient", {}, { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = [];
@@ -188,14 +188,14 @@ export default {
         ids.push(this.items?.data[index].id);
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

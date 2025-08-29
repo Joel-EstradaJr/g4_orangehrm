@@ -77,21 +77,21 @@ import {
   DEVICE_TYPES,
   useResponsive,
   OxdTabContainer,
-} from '@ohrm/oxd';
-import {computed, ref} from 'vue';
-import usei18n from '@/core/util/composable/usei18n';
-import useSwipe from '@/core/util/composable/useSwipe';
-import NewsFeed from '@/orangehrmBuzzPlugin/components/NewsFeed.vue';
-import PostFilters from '@/orangehrmBuzzPlugin/components/PostFilters.vue';
-import UpcomingAnniversaries from '@/orangehrmBuzzPlugin/components/UpcomingAnniversaries.vue';
+} from "@ohrm/oxd";
+import { computed, ref } from "vue";
+import usei18n from "@/core/util/composable/usei18n";
+import useSwipe from "@/core/util/composable/useSwipe";
+import NewsFeed from "@/orangehrmBuzzPlugin/components/NewsFeed.vue";
+import PostFilters from "@/orangehrmBuzzPlugin/components/PostFilters.vue";
+import UpcomingAnniversaries from "@/orangehrmBuzzPlugin/components/UpcomingAnniversaries.vue";
 
 export default {
   components: {
-    'news-feed': NewsFeed,
-    'oxd-tab-panel': OxdTabPanel,
-    'post-filters': PostFilters,
-    'oxd-tab-container': OxdTabContainer,
-    'upcoming-anniversaries': UpcomingAnniversaries,
+    "news-feed": NewsFeed,
+    "oxd-tab-panel": OxdTabPanel,
+    "post-filters": PostFilters,
+    "oxd-tab-container": OxdTabContainer,
+    "upcoming-anniversaries": UpcomingAnniversaries,
   },
 
   props: {
@@ -102,10 +102,10 @@ export default {
   },
 
   setup() {
-    const {$t} = usei18n();
+    const { $t } = usei18n();
     const tabSelector = ref(null);
     const responsiveState = useResponsive();
-    const sortField = ref('share.createdAtUtc');
+    const sortField = ref("share.createdAtUtc");
 
     const isMobile = computed(() => {
       return !(
@@ -116,16 +116,16 @@ export default {
 
     const width = computed(() => responsiveState.windowWidth);
 
-    const {swipeContainer} = useSwipe(($event) => {
+    const { swipeContainer } = useSwipe(($event) => {
       const direction = $event.offsetDirection;
       // swipe right
       if (direction === 2) {
-        tabSelector.value = $t('buzz.upcoming_anniversaries');
+        tabSelector.value = $t("buzz.upcoming_anniversaries");
       }
 
       // swipe left
       if (direction === 4) {
-        tabSelector.value = $t('buzz.buzz_newsfeed');
+        tabSelector.value = $t("buzz.buzz_newsfeed");
       }
     });
 

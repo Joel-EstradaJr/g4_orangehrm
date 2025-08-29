@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete.vue';
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete.vue";
 
 export default {
-  name: 'InterviewerAutocomplete',
+  name: "InterviewerAutocomplete",
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
   inheritAttrs: false,
   props: {
@@ -51,7 +51,7 @@ export default {
     },
     includeEmployee: {
       type: String,
-      default: 'currentAndPast',
+      default: "currentAndPast",
     },
     disabled: {
       type: Boolean,
@@ -59,10 +59,10 @@ export default {
       default: false,
     },
   },
-  emits: ['remove'],
+  emits: ["remove"],
   methods: {
     remove() {
-      this.$emit('remove');
+      this.$emit("remove");
     },
   },
 };

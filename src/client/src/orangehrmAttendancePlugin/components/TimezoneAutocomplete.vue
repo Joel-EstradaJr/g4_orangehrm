@@ -24,20 +24,20 @@
     :label="$t('attendance.timezone')"
     :create-options="loadTimezones"
   >
-    <template #option="{data}">
+    <template #option="{ data }">
       <span>{{ data.label }}</span>
     </template>
   </oxd-input-field>
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'TimezoneAutocomplete',
+  name: "TimezoneAutocomplete",
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/attendance/timezones',
+      "/api/v2/attendance/timezones"
     );
 
     return {
@@ -52,7 +52,7 @@ export default {
             .getAll({
               timezoneName: serachParam.trim(),
             })
-            .then(({data}) => {
+            .then(({ data }) => {
               resolve(
                 data.data.map((timezone) => {
                   return {
@@ -60,7 +60,7 @@ export default {
                     label: `(GMT${timezone.label}) ${timezone.name}`,
                     _offset: parseFloat(timezone.offset),
                   };
-                }),
+                })
               );
             });
         } else {

@@ -15,9 +15,9 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {ref} from 'vue';
-import {AxiosResponse} from 'axios';
-import {APIService} from '@/core/util/services/api.service';
+import { ref } from "vue";
+import { AxiosResponse } from "axios";
+import { APIService } from "@/core/util/services/api.service";
 
 export interface PasswordValidationResponse {
   data: {
@@ -33,17 +33,17 @@ export default function usePasswordPolicy(http: APIService) {
 
   const validatePassword = (password: string) => {
     return new Promise((resolve) => {
-      if (password.trim() !== '') {
+      if (password.trim() !== "") {
         http
           .request({
-            method: 'POST',
+            method: "POST",
             url: `/api/v2/auth/public/validation/password`,
             data: {
               password,
             },
           })
           .then((response: AxiosResponse<PasswordValidationResponse>) => {
-            const {data, meta} = response.data;
+            const { data, meta } = response.data;
             passwordStrength.value = meta?.strength || 0;
             if (Array.isArray(data?.messages) && data.messages.length > 0) {
               resolve(data.messages[0]);

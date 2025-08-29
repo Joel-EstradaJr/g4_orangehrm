@@ -22,7 +22,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('performance.my_performance_trackers') }}
+          {{ $t("performance.my_performance_trackers") }}
         </oxd-text>
       </div>
       <table-header :selected="0" :total="total" :loading="isLoading">
@@ -47,24 +47,24 @@
   </div>
 </template>
 <script>
-import {computed} from 'vue';
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import useSort from '@ohrm/core/util/composable/useSort';
-import {formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import useLocale from '@/core/util/composable/useLocale';
+import { computed } from "vue";
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import useSort from "@ohrm/core/util/composable/useSort";
+import { formatDate, parseDate } from "@ohrm/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import useLocale from "@/core/util/composable/useLocale";
 
 const defaultSortOrder = {
-  'performanceTracker.trackerName': 'DEFAULT',
-  'performanceTracker.addedDate': 'DEFAULT',
-  'performanceTracker.modifiedDate': 'DESC',
+  "performanceTracker.trackerName": "DEFAULT",
+  "performanceTracker.addedDate": "DEFAULT",
+  "performanceTracker.modifiedDate": "DESC",
 };
 
 export default {
   setup() {
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
 
@@ -77,10 +77,10 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/performance/trackers',
+      "/api/v2/performance/trackers"
     );
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const trackerNormalizer = (data) => {
       return data.map((item) => {
@@ -131,38 +131,38 @@ export default {
     return {
       headers: [
         {
-          name: 'tracker',
-          slot: 'title',
-          title: this.$t('performance.tracker'),
-          sortField: 'performanceTracker.trackerName',
-          style: {flex: '30%'},
+          name: "tracker",
+          slot: "title",
+          title: this.$t("performance.tracker"),
+          sortField: "performanceTracker.trackerName",
+          style: { flex: "30%" },
         },
         {
-          name: 'addedDate',
-          title: this.$t('performance.added_date'),
-          sortField: 'performanceTracker.addedDate',
-          style: {flex: 1},
+          name: "addedDate",
+          title: this.$t("performance.added_date"),
+          sortField: "performanceTracker.addedDate",
+          style: { flex: 1 },
         },
         {
-          name: 'modifiedDate',
-          title: this.$t('performance.modified_date'),
-          sortField: 'performanceTracker.modifiedDate',
-          style: {flex: 1},
+          name: "modifiedDate",
+          title: this.$t("performance.modified_date"),
+          sortField: "performanceTracker.modifiedDate",
+          style: { flex: 1 },
         },
         {
-          name: 'action',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "action",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             view: {
               onClick: this.onClickView,
-              component: 'oxd-button',
+              component: "oxd-button",
               props: {
-                name: 'view',
-                label: this.$t('general.view'),
-                displayType: 'text',
+                name: "view",
+                label: this.$t("general.view"),
+                displayType: "text",
               },
             },
           },
@@ -173,7 +173,7 @@ export default {
 
   methods: {
     onClickView(item) {
-      navigate('/performance/addPerformanceTrackerLog/trackId/{id}?mode=my', {
+      navigate("/performance/addPerformanceTrackerLog/trackId/{id}?mode=my", {
         id: item.id,
       });
     },

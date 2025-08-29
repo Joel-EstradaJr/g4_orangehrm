@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">
-        {{ $t('leave.work_week') }}
+        {{ $t("leave.work_week") }}
       </oxd-text>
 
       <oxd-divider />
@@ -140,8 +140,8 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {required} from '@/core/util/validation/rules';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { required } from "@/core/util/validation/rules";
 
 const workWeekModel = {
   monday: null,
@@ -164,7 +164,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/workweek',
+      "/api/v2/leave/workweek"
     );
     return {
       http,
@@ -173,7 +173,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      workWeek: {...workWeekModel},
+      workWeek: { ...workWeekModel },
       rules: {
         monday: [required],
         tuesday: [required],
@@ -190,30 +190,30 @@ export default {
     this.isLoading = true;
     this.http
       .request({
-        method: 'GET',
+        method: "GET",
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.workWeek.monday = this.dayTypes.find(
-          (dayType) => dayType.id === data.monday,
+          (dayType) => dayType.id === data.monday
         );
         this.workWeek.tuesday = this.dayTypes.find(
-          (dayType) => dayType.id === data.tuesday,
+          (dayType) => dayType.id === data.tuesday
         );
         this.workWeek.wednesday = this.dayTypes.find(
-          (dayType) => dayType.id === data.wednesday,
+          (dayType) => dayType.id === data.wednesday
         );
         this.workWeek.thursday = this.dayTypes.find(
-          (dayType) => dayType.id === data.thursday,
+          (dayType) => dayType.id === data.thursday
         );
         this.workWeek.friday = this.dayTypes.find(
-          (dayType) => dayType.id === data.friday,
+          (dayType) => dayType.id === data.friday
         );
         this.workWeek.saturday = this.dayTypes.find(
-          (dayType) => dayType.id === data.saturday,
+          (dayType) => dayType.id === data.saturday
         );
         this.workWeek.sunday = this.dayTypes.find(
-          (dayType) => dayType.id === data.sunday,
+          (dayType) => dayType.id === data.sunday
         );
       })
       .finally(() => {
@@ -225,20 +225,20 @@ export default {
     onSave() {
       // check if workweek contains at least one working day
       const noWorkingDays = Object.values(this.workWeek).find(
-        (dayType) => dayType.id !== 8,
+        (dayType) => dayType.id !== 8
       );
 
       if (noWorkingDays === undefined) {
         return this.$toast.warn({
-          title: this.$t('general.warning'),
-          message: this.$t('leave.at_least_one_day_should_be_a_working_day'),
+          title: this.$t("general.warning"),
+          message: this.$t("leave.at_least_one_day_should_be_a_working_day"),
         });
       }
 
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             monday: this.workWeek.monday.id,
             tuesday: this.workWeek.tuesday.id,

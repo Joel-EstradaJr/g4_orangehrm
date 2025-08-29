@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.add_provider') }}
+        {{ $t("admin.add_provider") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -80,37 +80,37 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const initialAuthProvider = {
-  name: '',
-  url: '',
-  clientId: '',
-  clientSecret: '',
+  name: "",
+  url: "",
+  clientId: "",
+  clientSecret: "",
 };
 
 export default {
-  name: 'AddProvider',
+  name: "AddProvider",
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/auth/openid-providers',
+      "/api/v2/auth/openid-providers"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const providerNameUniqueValidation = createUniqueValidator(
-      'OpenIdProvider',
-      'providerName',
+      "OpenIdProvider",
+      "providerName",
       {
-        matchByField: 'status',
+        matchByField: "status",
         matchByValue: 1,
-      },
+      }
     );
     return {
       http,
@@ -120,7 +120,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      authProvider: {...initialAuthProvider},
+      authProvider: { ...initialAuthProvider },
       rules: {
         name: [
           required,
@@ -135,7 +135,7 @@ export default {
   },
   methods: {
     onCancel() {
-      navigate('/admin/openIdProvider');
+      navigate("/admin/openIdProvider");
     },
     onSave() {
       this.isLoading = true;

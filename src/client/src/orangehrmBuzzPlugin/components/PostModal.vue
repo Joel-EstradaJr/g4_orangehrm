@@ -49,15 +49,15 @@
 </template>
 
 <script>
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
-import {OxdDialog} from '@ohrm/oxd';
+import ProfileImage from "@/orangehrmBuzzPlugin/components/ProfileImage";
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'PostModal',
+  name: "PostModal",
 
   components: {
-    'oxd-dialog': OxdDialog,
-    'profile-image': ProfileImage,
+    "oxd-dialog": OxdDialog,
+    "profile-image": ProfileImage,
   },
 
   props: {
@@ -84,15 +84,15 @@ export default {
     },
   },
 
-  emits: ['close', 'submit'],
+  emits: ["close", "submit"],
 
   setup(_, context) {
     const onSubmit = () => {
-      context.emit('submit');
+      context.emit("submit");
     };
 
     const onCancel = () => {
-      context.emit('close');
+      context.emit("close");
     };
 
     return {

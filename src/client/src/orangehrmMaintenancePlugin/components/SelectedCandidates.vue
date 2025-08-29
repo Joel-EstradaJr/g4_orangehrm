@@ -54,20 +54,20 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import useLocale from '@/core/util/composable/useLocale';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import CandidateRecords from '@/orangehrmMaintenancePlugin/components/CandidateRecords';
+import { computed, ref } from "vue";
+import useLocale from "@/core/util/composable/useLocale";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@ohrm/core/util/helper/datefns";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import CandidateRecords from "@/orangehrmMaintenancePlugin/components/CandidateRecords";
 
 export default {
-  name: 'SelectedCandidates',
+  name: "SelectedCandidates",
 
   components: {
-    'purge-candidate-records': CandidateRecords,
+    "purge-candidate-records": CandidateRecords,
   },
 
   props: {
@@ -77,17 +77,17 @@ export default {
     },
   },
 
-  emits: ['purge'],
+  emits: ["purge"],
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/maintenance/candidates',
+      "/api/v2/maintenance/candidates"
     );
     const vacancy = ref(null);
-    const {locale} = useLocale();
-    const {jsDateFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { locale } = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     const serializedFilters = computed(() => {
       return {
@@ -105,7 +105,7 @@ export default {
               lastName: item.lastName,
               terminationId: null,
             },
-            {includeMiddle: true},
+            { includeMiddle: true }
           ),
           date: formatDate(parseDate(item.dateOfApplication), jsDateFormat, {
             locale,
@@ -146,19 +146,19 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          title: this.$t('recruitment.candidate_name'),
-          style: {flex: '45%'},
+          name: "name",
+          title: this.$t("recruitment.candidate_name"),
+          style: { flex: "45%" },
         },
         {
-          name: 'date',
-          title: this.$t('recruitment.date_of_application'),
-          style: {flex: '45%'},
+          name: "date",
+          title: this.$t("recruitment.date_of_application"),
+          style: { flex: "45%" },
         },
         {
-          name: 'status',
-          title: this.$t('general.status'),
-          style: {flex: '10%'},
+          name: "status",
+          title: this.$t("general.status"),
+          style: { flex: "10%" },
         },
       ],
     };
@@ -170,7 +170,7 @@ export default {
       this.execQuery();
     },
     onClickPurge() {
-      if (this.vacancy) this.$emit('purge', this.vacancy);
+      if (this.vacancy) this.$emit("purge", this.vacancy);
     },
   },
 };

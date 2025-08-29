@@ -94,43 +94,43 @@
 </template>
 
 <script>
-import {ref, computed} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import useSort from '@ohrm/core/util/composable/useSort';
-import {navigate} from '@/core/util/helper/navigation';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog.vue';
-import usei18n from '@/core/util/composable/usei18n';
-import ExpenseTypeAutocomplete from '@/orangehrmClaimPlugin/components/ExpenseTypeAutocomplete.vue';
+import { ref, computed } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import useSort from "@ohrm/core/util/composable/useSort";
+import { navigate } from "@/core/util/helper/navigation";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog.vue";
+import usei18n from "@/core/util/composable/usei18n";
+import ExpenseTypeAutocomplete from "@/orangehrmClaimPlugin/components/ExpenseTypeAutocomplete.vue";
 
 const defaultFilters = {
-  name: '',
+  name: "",
   status: null,
 };
 
 const defaultSortOrder = {
-  'expenseType.name': 'ASC',
-  'expenseType.status': 'DESC',
+  "expenseType.name": "ASC",
+  "expenseType.status": "DESC",
 };
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
-    'expense-type-autocomplete': ExpenseTypeAutocomplete,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "expense-type-autocomplete": ExpenseTypeAutocomplete,
   },
   setup() {
-    const filters = ref({...defaultFilters});
-    const {$t} = usei18n();
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const filters = ref({ ...defaultFilters });
+    const { $t } = usei18n();
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
 
     const serializedFilters = computed(() => {
       return {
         expenseTypeId:
-          typeof filters.value.name === 'object' ? filters.value.name.id : null,
+          typeof filters.value.name === "object" ? filters.value.name.id : null,
         name:
-          typeof filters.value.name === 'string' ? filters.value.name : null,
+          typeof filters.value.name === "string" ? filters.value.name : null,
         status: filters.value.status ? filters.value.status?.id === 1 : null,
         sortField: sortField.value,
         sortOrder: sortOrder.value,
@@ -144,15 +144,15 @@ export default {
           name: item.name,
           description: item.description,
           status: item.status
-            ? $t('general.active')
-            : $t('performance.inactive'),
+            ? $t("general.active")
+            : $t("performance.inactive"),
         };
       });
     };
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/claim/expenses/types',
+      "/api/v2/claim/expenses/types"
     );
     const {
       showPaginator,
@@ -188,36 +188,36 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          title: this.$t('general.name'),
-          slot: 'title',
-          sortField: 'expenseType.name',
-          style: {flex: 3},
+          name: "name",
+          title: this.$t("general.name"),
+          slot: "title",
+          sortField: "expenseType.name",
+          style: { flex: 3 },
         },
         {
-          name: 'status',
-          title: this.$t('general.status'),
-          sortField: 'expenseType.status',
-          style: {flex: 2},
+          name: "status",
+          title: this.$t("general.status"),
+          sortField: "expenseType.status",
+          style: { flex: 2 },
         },
         {
-          name: 'actions',
-          title: this.$t('general.actions'),
-          slot: 'action',
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          title: this.$t("general.actions"),
+          slot: "action",
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -225,8 +225,8 @@ export default {
       ],
       checkedItems: [],
       ExpenseTypeStatuses: [
-        {id: 1, label: this.$t('general.active')},
-        {id: 0, label: this.$t('performance.inactive')},
+        { id: 1, label: this.$t("general.active") },
+        { id: 0, label: this.$t("performance.inactive") },
       ],
     };
   },
@@ -240,11 +240,11 @@ export default {
       await this.execQuery();
     },
     onClickReset() {
-      this.filters = {...defaultFilters};
+      this.filters = { ...defaultFilters };
       this.filterItems();
     },
     onClickAdd() {
-      navigate('/claim/saveExpense');
+      navigate("/claim/saveExpense");
     },
     onClickDeleteSelected() {
       const ids = [];
@@ -252,7 +252,7 @@ export default {
         ids.push(this.items?.data[index].id);
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
@@ -275,13 +275,13 @@ export default {
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
     },
     onClickEdit(item) {
-      navigate('/claim/saveExpense/{id}', {id: item.id});
+      navigate("/claim/saveExpense/{id}", { id: item.id });
     },
   },
 };

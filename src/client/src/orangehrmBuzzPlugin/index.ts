@@ -15,8 +15,8 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import ViewBuzz from '@/orangehrmBuzzPlugin/pages/ViewBuzz.vue';
+import ViewBuzz from "@/orangehrmBuzzPlugin/pages/ViewBuzz.vue";
 
 export default {
-  'view-buzz': ViewBuzz,
+  "view-buzz": ViewBuzz,
 };

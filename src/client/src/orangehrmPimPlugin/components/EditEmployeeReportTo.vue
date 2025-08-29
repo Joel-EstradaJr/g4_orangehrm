@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-top-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('general.edit') }} {{ type }}
+      {{ $t("general.edit") }} {{ type }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -69,18 +69,18 @@ import {
   required,
   shouldNotExceedCharLength,
   validSelection,
-} from '@ohrm/core/util/validation/rules';
-import ReportToEmployeeAutocomplete from '@/orangehrmPimPlugin/components/ReportToEmployeeAutocomplete';
+} from "@ohrm/core/util/validation/rules";
+import ReportToEmployeeAutocomplete from "@/orangehrmPimPlugin/components/ReportToEmployeeAutocomplete";
 
 const reportToModel = {
   employee: null,
   reportingMethod: null,
 };
 export default {
-  name: 'EditEmployeeReportTo',
+  name: "EditEmployeeReportTo",
 
   components: {
-    'report-to-employee-autocomplete': ReportToEmployeeAutocomplete,
+    "report-to-employee-autocomplete": ReportToEmployeeAutocomplete,
   },
 
   props: {
@@ -110,7 +110,7 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
   setup(props) {
     const allowedEmployeesApi = `/api/v2/pim/employees/${props.empNumber}/report-to/allowed`;
     return {
@@ -121,7 +121,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      reportTo: {...reportToModel},
+      reportTo: { ...reportToModel },
       rules: {
         employee: [required, shouldNotExceedCharLength(100), validSelection],
         reportingMethod: [required],
@@ -133,30 +133,30 @@ export default {
     this.isLoading = true;
     this.http
       .request({
-        method: 'GET',
+        method: "GET",
         url:
-          this.type === 'Supervisor'
+          this.type === "Supervisor"
             ? `${this.api}${this.data.supervisorEmpNumber}`
             : `${this.api}${this.data.subordinateEmpNumber}`,
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.reportTo.employee = {
           id:
-            this.type === 'Supervisor'
+            this.type === "Supervisor"
               ? data.supervisor.empNumber
               : data.subordinate.empNumber,
           label:
-            this.type === 'Supervisor'
+            this.type === "Supervisor"
               ? `${data.supervisor.firstName} ${data.supervisor.middleName} ${data.supervisor.lastName}`
               : `${data.subordinate.firstName} ${data.subordinate.middleName} ${data.subordinate.lastName}`,
           isPastEmployee:
-            this.type === 'Supervisor'
+            this.type === "Supervisor"
               ? data.supervisor.terminationId
               : data.subordinate.terminationId,
         };
         this.reportTo.reportingMethod = this.reportingMethods.find(
-          (item) => item.id === data.reportingMethod.id,
+          (item) => item.id === data.reportingMethod.id
         );
       })
       .finally(() => {
@@ -167,7 +167,7 @@ export default {
     onSave() {
       this.isLoading = true;
       const id =
-        this.type === 'Supervisor'
+        this.type === "Supervisor"
           ? this.data.supervisorEmpNumber
           : this.data.subordinateEmpNumber;
       this.http
@@ -182,7 +182,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

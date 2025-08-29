@@ -21,7 +21,7 @@
   <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel(false)">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('pim.terminate_employment') }}
+        {{ $t("pim.terminate_employment") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -70,25 +70,25 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {OxdDialog} from '@ohrm/oxd';
+import { APIService } from "@/core/util/services/api.service";
+import { OxdDialog } from "@ohrm/oxd";
 import {
   required,
   shouldNotExceedCharLength,
   validDateFormat,
-} from '@ohrm/core/util/validation/rules';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const terminationModel = {
   terminationReason: null,
-  date: '',
+  date: "",
   note: null,
 };
 
 export default {
-  name: 'TerminateModal',
+  name: "TerminateModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     employeeId: {
@@ -105,13 +105,13 @@ export default {
       default: null,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.employeeId}/terminations`,
+      `/api/v2/pim/employees/${props.employeeId}/terminations`
     );
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -121,7 +121,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      termination: {...terminationModel},
+      termination: { ...terminationModel },
       rules: {
         terminationReason: [required],
         date: [required, validDateFormat(this.userDateFormat)],
@@ -136,9 +136,9 @@ export default {
       this.http
         .get(this.terminationId)
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.termination.terminationReason = this.terminationReasons.find(
-            (item) => item.id === data.terminationReason?.id,
+            (item) => item.id === data.terminationReason?.id
           );
           this.termination.date = data.date;
           this.termination.note = data.note;
@@ -168,7 +168,7 @@ export default {
       return !id ? this.http.create(payload) : this.http.update(id, payload);
     },
     onCancel(reload) {
-      this.$emit('close', reload);
+      this.$emit("close", reload);
     },
   },
 };

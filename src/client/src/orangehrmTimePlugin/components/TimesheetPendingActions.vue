@@ -21,7 +21,7 @@
   <div class="orangehrm-paper-container">
     <div class="orangehrm-header-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('time.timesheets_pending_action') }}
+        {{ $t("time.timesheets_pending_action") }}
       </oxd-text>
     </div>
     <table-header
@@ -50,25 +50,25 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import usei18n from '@/core/util/composable/usei18n';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import usei18n from "@/core/util/composable/usei18n";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
-  name: 'TimesheetPendingActions',
+  name: "TimesheetPendingActions",
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/time/employees/timesheets/list',
+      "/api/v2/time/employees/timesheets/list"
     );
-    const {$t} = usei18n();
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { $t } = usei18n();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const actionsNormalizer = (data) => {
       return data.map((item) => {
@@ -80,7 +80,7 @@ export default {
         });
         const empName = `${item.employee?.firstName} ${item.employee?.middleName} ${item.employee?.lastName}`;
         if (item.employee?.terminationId) {
-          empName + ` (${$t('general.past_employee')})`;
+          empName + ` (${$t("general.past_employee")})`;
         }
         return {
           id: item.id,
@@ -121,30 +121,30 @@ export default {
     return {
       headers: [
         {
-          name: 'employee',
-          slot: 'title',
-          title: this.$t('general.employee_name'),
-          style: {flex: '40%'},
+          name: "employee",
+          slot: "title",
+          title: this.$t("general.employee_name"),
+          style: { flex: "40%" },
         },
         {
-          name: 'period',
-          title: this.$t('time.timesheet_period'),
-          style: {flex: '40%'},
+          name: "period",
+          title: this.$t("time.timesheet_period"),
+          style: { flex: "40%" },
         },
         {
-          name: 'actions',
-          slot: 'footer',
-          title: this.$t('general.actions'),
-          style: {flex: '20%'},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "footer",
+          title: this.$t("general.actions"),
+          style: { flex: "20%" },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             view: {
               onClick: this.onClickView,
-              component: 'oxd-button',
+              component: "oxd-button",
               props: {
-                label: this.$t('general.view'),
-                displayType: 'text',
-                size: 'medium',
+                label: this.$t("general.view"),
+                displayType: "text",
+                size: "medium",
               },
             },
           },
@@ -156,9 +156,9 @@ export default {
   methods: {
     onClickView(item) {
       navigate(
-        '/time/viewTimesheet/employeeId/{empNumber}',
-        {empNumber: item.empNumber},
-        {startDate: item.startDate},
+        "/time/viewTimesheet/employeeId/{empNumber}",
+        { empNumber: item.empNumber },
+        { startDate: item.startDate }
       );
     },
   },

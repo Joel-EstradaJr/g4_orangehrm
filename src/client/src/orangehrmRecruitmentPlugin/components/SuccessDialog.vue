@@ -27,13 +27,13 @@
     >
       <div class="orangehrm-modal-header">
         <oxd-text type="card-title">
-          {{ $t('recruitment.application_received') }}
+          {{ $t("recruitment.application_received") }}
         </oxd-text>
       </div>
       <div class="orangehrm-text-center-align">
         <oxd-text type="card-body">
           {{
-            $t('recruitment.your_application_has_been_submitted_successfully')
+            $t("recruitment.your_application_has_been_submitted_successfully")
           }}
         </oxd-text>
       </div>
@@ -50,12 +50,12 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'SuccessDialog',
+  name: "SuccessDialog",
   components: {
-    'simple-dialog': OxdDialog,
+    "simple-dialog": OxdDialog,
   },
   data() {
     return {
@@ -72,7 +72,7 @@ export default {
     },
     onSuccess() {
       this.show = false;
-      this.resolve && this.resolve('ok');
+      this.resolve && this.resolve("ok");
     },
   },
 };

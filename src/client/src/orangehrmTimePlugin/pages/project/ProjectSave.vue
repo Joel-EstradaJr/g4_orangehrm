@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('time.add_project') }}
+        {{ $t("time.add_project") }}
       </oxd-text>
       <oxd-divider />
 
@@ -108,13 +108,13 @@ import {
   required,
   validSelection,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {promiseDebounce} from '@ohrm/oxd';
-import AddCustomerModal from '@/orangehrmTimePlugin/components/AddCustomerModal.vue';
-import CustomerAutocomplete from '@/orangehrmTimePlugin/components/CustomerAutocomplete.vue';
-import ProjectAdminAutocomplete from '@/orangehrmTimePlugin/components/ProjectAdminAutocomplete.vue';
+} from "@ohrm/core/util/validation/rules";
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { promiseDebounce } from "@ohrm/oxd";
+import AddCustomerModal from "@/orangehrmTimePlugin/components/AddCustomerModal.vue";
+import CustomerAutocomplete from "@/orangehrmTimePlugin/components/CustomerAutocomplete.vue";
+import ProjectAdminAutocomplete from "@/orangehrmTimePlugin/components/ProjectAdminAutocomplete.vue";
 
 const defaultProjectModel = {
   name: null,
@@ -124,18 +124,18 @@ const defaultProjectModel = {
 };
 
 export default {
-  name: 'ProjectSave',
+  name: "ProjectSave",
   components: {
-    'add-customer-modal': AddCustomerModal,
-    'customer-autocomplete': CustomerAutocomplete,
-    'project-admin-autocomplete': ProjectAdminAutocomplete,
+    "add-customer-modal": AddCustomerModal,
+    "customer-autocomplete": CustomerAutocomplete,
+    "project-admin-autocomplete": ProjectAdminAutocomplete,
   },
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/time/projects',
+      "/api/v2/time/projects"
     );
-    http.setIgnorePath('/api/v2/time/validation/project-name');
+    http.setIgnorePath("/api/v2/time/validation/project-name");
     return {
       http,
     };
@@ -144,8 +144,8 @@ export default {
     return {
       isLoading: false,
       showCustomerModal: false,
-      projectAdmins: [{value: null}],
-      project: {...defaultProjectModel},
+      projectAdmins: [{ value: null }],
+      project: { ...defaultProjectModel },
       projectId: null,
       rules: {
         name: [
@@ -159,10 +159,10 @@ export default {
           validSelection,
           (value) => {
             return this.projectAdmins.filter(
-              ({value: admin}) => admin && admin.id === value?.id,
+              ({ value: admin }) => admin && admin.id === value?.id
             ).length < 2
               ? true
-              : this.$t('general.already_exists');
+              : this.$t("general.already_exists");
           },
         ],
       },
@@ -174,7 +174,7 @@ export default {
     },
     onCustomerModalClose(data) {
       if (data !== undefined) {
-        const {id, name} = data;
+        const { id, name } = data;
         this.project.customer = {
           id,
           label: name,
@@ -184,14 +184,14 @@ export default {
     },
     onAddAnother() {
       if (this.projectAdmins.length < 5) {
-        this.projectAdmins.push({value: null});
+        this.projectAdmins.push({ value: null });
       }
     },
     onRemoveAdmin(index) {
       this.projectAdmins.splice(index, 1);
     },
     onCancel() {
-      navigate('/time/viewProjects');
+      navigate("/time/viewProjects");
     },
     onSave() {
       this.isLoading = true;
@@ -201,7 +201,7 @@ export default {
           description: this.project.description,
           customerId: this.project.customer.id,
           projectAdminsEmpNumbers: this.projectAdmins
-            .map(({value}) => value && value.id)
+            .map(({ value }) => value && value.id)
             .filter(Number),
         })
         .then((result) => {
@@ -209,7 +209,7 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          navigate('/time/saveProject/{id}', {id: this.projectId});
+          navigate("/time/saveProject/{id}", { id: this.projectId });
         });
     },
     validateProjectName(project) {
@@ -217,7 +217,7 @@ export default {
         if (project) {
           this.http
             .request({
-              method: 'GET',
+              method: "GET",
               url: `/api/v2/time/validation/project-name`,
               params: {
                 projectName: this.project.name.trim(),
@@ -225,10 +225,10 @@ export default {
               },
             })
             .then((response) => {
-              const {data} = response.data;
+              const { data } = response.data;
               return data.valid === true
                 ? resolve(true)
-                : resolve(this.$t('general.already_exists'));
+                : resolve(this.$t("general.already_exists"));
             });
         } else {
           resolve(true);

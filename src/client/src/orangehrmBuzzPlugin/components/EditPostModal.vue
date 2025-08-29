@@ -73,31 +73,31 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
-import {computed, reactive, toRefs} from 'vue';
-import usei18n from '@/core/util/composable/usei18n';
-import useToast from '@/core/util/composable/useToast';
-import useLocale from '@/core/util/composable/useLocale';
-import {APIService} from '@/core/util/services/api.service';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import PostModal from '@/orangehrmBuzzPlugin/components/PostModal';
-import PhotoFrame from '@/orangehrmBuzzPlugin/components/PhotoFrame';
-import VideoFrame from '@/orangehrmBuzzPlugin/components/VideoFrame';
-import PhotoInput from '@/orangehrmBuzzPlugin/components/PhotoInput';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import {OxdBuzzPostInput, promiseDebounce} from '@ohrm/oxd';
+} from "@/core/util/validation/rules";
+import { computed, reactive, toRefs } from "vue";
+import usei18n from "@/core/util/composable/usei18n";
+import useToast from "@/core/util/composable/useToast";
+import useLocale from "@/core/util/composable/useLocale";
+import { APIService } from "@/core/util/services/api.service";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import PostModal from "@/orangehrmBuzzPlugin/components/PostModal";
+import PhotoFrame from "@/orangehrmBuzzPlugin/components/PhotoFrame";
+import VideoFrame from "@/orangehrmBuzzPlugin/components/VideoFrame";
+import PhotoInput from "@/orangehrmBuzzPlugin/components/PhotoInput";
+import useBuzzAPIs from "@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import { OxdBuzzPostInput, promiseDebounce } from "@ohrm/oxd";
 
 export default {
-  name: 'EditPostModal',
+  name: "EditPostModal",
 
   components: {
-    'post-modal': PostModal,
-    'photo-frame': PhotoFrame,
-    'photo-input': PhotoInput,
-    'video-frame': VideoFrame,
-    'oxd-buzz-post-input': OxdBuzzPostInput,
+    "post-modal": PostModal,
+    "photo-frame": PhotoFrame,
+    "photo-input": PhotoInput,
+    "video-frame": VideoFrame,
+    "oxd-buzz-post-input": OxdBuzzPostInput,
   },
 
   props: {
@@ -107,16 +107,16 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props, context) {
-    const {$t} = usei18n();
-    const {locale} = useLocale();
-    const {jsDateFormat, jsTimeFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
-    const http = new APIService(window.appGlobal.baseUrl, '');
-    const {updateSuccess} = useToast();
-    const {updatePost, updateSharedPost} = useBuzzAPIs(http);
+    const { $t } = usei18n();
+    const { locale } = useLocale();
+    const { jsDateFormat, jsTimeFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
+    const http = new APIService(window.appGlobal.baseUrl, "");
+    const { updateSuccess } = useToast();
+    const { updatePost, updateSharedPost } = useBuzzAPIs(http);
 
     const state = reactive({
       post: {
@@ -130,14 +130,14 @@ export default {
     });
 
     const onSubmit = () => {
-      let type = 'text';
+      let type = "text";
       state.isLoading = true;
 
       if (state.post.photos.length > 0) {
-        type = 'photo';
+        type = "photo";
       }
       if (state.post.video) {
-        type = 'video';
+        type = "video";
       }
 
       new Promise((resolve) => {
@@ -149,18 +149,18 @@ export default {
               type: type,
               text: state.post.text,
               link: state.post.video,
-              photos: state.post.photos.filter((id) => typeof id === 'object'),
+              photos: state.post.photos.filter((id) => typeof id === "object"),
               deletedPhotos: (props.data.photoIds || []).filter((id) => {
                 return (
                   state.post.photos.findIndex((photo) => photo === id) === -1
                 );
               }),
-            }),
+            })
           );
         }
       }).then((response) => {
         updateSuccess();
-        context.emit('close', response.data);
+        context.emit("close", response.data);
       });
     };
 
@@ -171,25 +171,25 @@ export default {
           if (!value) return true;
           state.embedURL = null;
           const response = await http.request({
-            method: 'GET',
-            url: '/api/v2/buzz/validation/links',
+            method: "GET",
+            url: "/api/v2/buzz/validation/links",
             params: {
               url: value,
             },
           });
-          const {data} = response.data;
+          const { data } = response.data;
           if (data?.valid === true) {
             state.embedURL = data.embeddedURL;
             return true;
           } else {
-            return $t('general.invalid_video_url_message');
+            return $t("general.invalid_video_url_message");
           }
         }, 500),
       ],
       text: [
         shouldNotExceedCharLength(65530),
         (value) => {
-          if (props.data.type === 'video' || state.post.photos.length > 0) {
+          if (props.data.type === "video" || state.post.photos.length > 0) {
             return true;
           }
           return required(value);
@@ -200,10 +200,10 @@ export default {
     const originalPost = computed(() => {
       const originalText = props.data.originalPost?.text;
       const originalEmployee = props.data.originalPost?.employee;
-      const {createdDate, createdTime} = props.data.originalPost;
+      const { createdDate, createdTime } = props.data.originalPost;
       const utcDate = parseDate(
         `${createdDate} ${createdTime} +00:00`,
-        'yyyy-MM-dd HH:mm xxx',
+        "yyyy-MM-dd HH:mm xxx"
       );
 
       return {

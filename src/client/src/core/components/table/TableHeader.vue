@@ -23,7 +23,7 @@
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <div v-if="selected > 0">
         <oxd-text tag="span">
-          {{ $t('general.n_records_selected', {count: selected}) }}
+          {{ $t("general.n_records_selected", { count: selected }) }}
         </oxd-text>
         <oxd-button
           :label="$t('general.delete_selected')"
@@ -34,7 +34,7 @@
         />
       </div>
       <oxd-text v-else tag="span">
-        {{ $t(recordsFoundLangString, {count: total}) }}
+        {{ $t(recordsFoundLangString, { count: total }) }}
       </oxd-text>
     </div>
   </div>
@@ -42,7 +42,7 @@
 
 <script>
 export default {
-  name: 'TableHeader',
+  name: "TableHeader",
 
   props: {
     loading: {
@@ -65,11 +65,11 @@ export default {
     recordsFoundLangString: {
       type: String,
       required: false,
-      default: 'general.n_records_found',
+      default: "general.n_records_found",
     },
   },
 
-  emits: ['delete'],
+  emits: ["delete"],
 };
 </script>
 

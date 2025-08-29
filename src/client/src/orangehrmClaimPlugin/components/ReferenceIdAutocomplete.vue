@@ -24,16 +24,16 @@
     :label="$t('claim.reference_id')"
     :create-options="loadTypes"
   >
-    <template #option="{data}">
+    <template #option="{ data }">
       <span> {{ data.label }} </span>
     </template>
   </oxd-input-field>
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'ReferenceIdAutocomplete',
+  name: "ReferenceIdAutocomplete",
   props: {
     isAssigned: {
       default: false,
@@ -45,8 +45,8 @@ export default {
     const http = new APIService(
       window.appGlobal.baseUrl,
       props.isAssigned
-        ? '/api/v2/claim/employees/requests?model=summary'
-        : '/api/v2/claim/requests?model=summary',
+        ? "/api/v2/claim/employees/requests?model=summary"
+        : "/api/v2/claim/requests?model=summary"
     );
     return {
       http,
@@ -59,14 +59,14 @@ export default {
           const params = {
             referenceId: serachParam.trim(),
           };
-          this.http.getAll(params).then(({data}) => {
+          this.http.getAll(params).then(({ data }) => {
             resolve(
               data.data.map((claimRequest) => {
                 return {
                   id: claimRequest.referenceId,
                   label: claimRequest.referenceId,
                 };
-              }),
+              })
             );
           });
         } else {

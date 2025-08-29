@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">{{
-        $t('pim.edit_termination_reason')
+        $t("pim.edit_termination_reason")
       }}</oxd-text>
 
       <oxd-divider />
@@ -54,13 +54,13 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 export default {
   props: {
@@ -72,13 +72,13 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/termination-reasons',
+      "/api/v2/pim/termination-reasons"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const terminationReasonUniqueValidation = createUniqueValidator(
-      'TerminationReason',
-      'name',
-      {entityId: props.terminationReasonId},
+      "TerminationReason",
+      "name",
+      { entityId: props.terminationReasonId }
     );
     return {
       http,
@@ -90,8 +90,8 @@ export default {
     return {
       isLoading: false,
       termination: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -108,7 +108,7 @@ export default {
     this.http
       .get(this.terminationReasonId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.termination.id = data.id;
         this.termination.name = data.name;
       })
@@ -132,7 +132,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/pim/viewTerminationReasons');
+      navigate("/pim/viewTerminationReasons");
     },
   },
 };

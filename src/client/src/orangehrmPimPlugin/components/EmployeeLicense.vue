@@ -33,7 +33,7 @@
     ></edit-license>
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <profile-action-header @click="onClickAdd">
-        {{ $t('pim.license') }}
+        {{ $t("pim.license") }}
       </profile-action-header>
     </div>
     <table-header
@@ -62,24 +62,24 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import SaveLicense from '@/orangehrmPimPlugin/components/SaveLicense';
-import EditLicense from '@/orangehrmPimPlugin/components/EditLicense';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import SaveLicense from "@/orangehrmPimPlugin/components/SaveLicense";
+import EditLicense from "@/orangehrmPimPlugin/components/EditLicense";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
-  name: 'EmployeeLicense',
+  name: "EmployeeLicense",
 
   components: {
-    'profile-action-header': ProfileActionHeader,
-    'save-license': SaveLicense,
-    'edit-license': EditLicense,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "profile-action-header": ProfileActionHeader,
+    "save-license": SaveLicense,
+    "edit-license": EditLicense,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -92,10 +92,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.employeeId}/licenses`,
+      `/api/v2/pim/employees/${props.employeeId}/licenses`
     );
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const licenceEndpoint = `/api/v2/pim/employees/${props.employeeId}/licenses/allowed`;
 
@@ -146,39 +146,39 @@ export default {
     return {
       headers: [
         {
-          name: 'type',
-          slot: 'title',
-          title: this.$t('pim.license_type'),
-          style: {flex: 1},
+          name: "type",
+          slot: "title",
+          title: this.$t("pim.license_type"),
+          style: { flex: 1 },
         },
         {
-          name: 'issuedDate',
-          title: this.$t('pim.issued_date'),
-          style: {flex: 1},
+          name: "issuedDate",
+          title: this.$t("pim.issued_date"),
+          style: { flex: 1 },
         },
         {
-          name: 'expiryDate',
-          title: this.$t('general.expiry_date'),
-          style: {flex: 1},
+          name: "expiryDate",
+          title: this.$t("general.expiry_date"),
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {'flex-basis': '10em'},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { "flex-basis": "10em" },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -203,14 +203,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

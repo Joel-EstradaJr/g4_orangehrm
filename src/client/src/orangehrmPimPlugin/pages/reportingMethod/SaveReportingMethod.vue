@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">{{
-        $t('pim.add_reporting_method')
+        $t("pim.add_reporting_method")
       }}</oxd-text>
 
       <oxd-divider />
@@ -54,18 +54,18 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/reporting-methods',
+      "/api/v2/pim/reporting-methods"
     );
     return {
       http,
@@ -75,8 +75,8 @@ export default {
     return {
       isLoading: false,
       reportingMethod: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [required, shouldNotExceedCharLength(100)],
@@ -91,10 +91,10 @@ export default {
         limit: 0,
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.rules.name.push((v) => {
           const index = data.findIndex((item) => item.name === v);
-          return index === -1 || this.$t('general.already_exists');
+          return index === -1 || this.$t("general.already_exists");
         });
       })
       .finally(() => {
@@ -117,7 +117,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/pim/viewReportingMethods');
+      navigate("/pim/viewReportingMethods");
     },
   },
 };

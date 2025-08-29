@@ -54,7 +54,7 @@
           <oxd-text
             tag="h3"
             class="orangehrm-offboarding-number orangehrm-turnover-rate"
-            :style="{color: turnoverAlertColor}"
+            :style="{ color: turnoverAlertColor }"
           >
             {{ analytics.turnoverRate || 0 }}%
           </oxd-text>
@@ -147,22 +147,22 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import BaseWidget from '@/orangehrmDashboardPlugin/components/BaseWidget.vue';
-import {OxdPieChart, CHART_COLORS} from '@ohrm/oxd';
+import { APIService } from "@/core/util/services/api.service";
+import BaseWidget from "@/orangehrmDashboardPlugin/components/BaseWidget.vue";
+import { OxdPieChart, CHART_COLORS } from "@ohrm/oxd";
 
 export default {
-  name: 'OffboardingAnalyticsWidget',
+  name: "OffboardingAnalyticsWidget",
 
   components: {
-    'base-widget': BaseWidget,
-    'oxd-pie-chart': OxdPieChart,
+    "base-widget": BaseWidget,
+    "oxd-pie-chart": OxdPieChart,
   },
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/dashboard/offboarding',
+      "/api/v2/dashboard/offboarding"
     );
 
     return {
@@ -197,7 +197,7 @@ export default {
 
     // Checks and sets the turnoverrate data
     turnoverAlertLevel() {
-      return this.bpoMetrics.alertLevel || 'good';
+      return this.bpoMetrics.alertLevel || "good";
     },
 
     // Sets the turnoverrate message in each rates
@@ -206,13 +206,13 @@ export default {
       const level = this.turnoverAlertLevel;
 
       switch (level) {
-        case 'critical':
+        case "critical":
           return `🚨 ${rate}% turnover requires immediate BPO retention intervention`;
-        case 'high':
+        case "high":
           return `⚠️ ${rate}% turnover is above BPO industry standards (${
             this.bpoMetrics.industryAverage || 35
           }%)`;
-        case 'moderate':
+        case "moderate":
           return `📊 ${rate}% turnover is within BPO industry range - monitor trends`;
         default:
           return `✅ ${rate}% turnover is excellent for BPO operations`;
@@ -221,36 +221,36 @@ export default {
 
     turnoverAlertColor() {
       switch (this.turnoverAlertLevel) {
-        case 'critical':
-          return '#dc3545'; // Red
-        case 'high':
-          return '#fd7e14'; // Orange
-        case 'moderate':
-          return '#ffc107'; // Yellow
+        case "critical":
+          return "#dc3545"; // Red
+        case "high":
+          return "#fd7e14"; // Orange
+        case "moderate":
+          return "#ffc107"; // Yellow
         default:
-          return '#28a745'; // Green
+          return "#28a745"; // Green
       }
     },
 
     turnoverAlertIcon() {
       switch (this.turnoverAlertLevel) {
-        case 'critical':
-          return 'exclamation-triangle';
-        case 'high':
-          return 'exclamation-circle';
-        case 'moderate':
-          return 'info-circle';
+        case "critical":
+          return "exclamation-triangle";
+        case "high":
+          return "exclamation-circle";
+        case "moderate":
+          return "info-circle";
         default:
-          return 'check-circle';
+          return "check-circle";
       }
     },
 
     bpoRecommendations() {
       return (
         this.bpoMetrics.recommendations || [
-          'Implement employee recognition programs',
-          'Enhance training and development opportunities',
-          'Review workplace culture and management practices',
+          "Implement employee recognition programs",
+          "Enhance training and development opportunities",
+          "Review workplace culture and management practices",
         ]
       );
     },
@@ -269,39 +269,39 @@ export default {
         totalOffboarded: 1, // Mikayla Tandog terminated 2025-08-19
         turnoverRate: 100.0, // 1 terminated / 1 total = 100%
         totalActiveEmployees: 0, // No active employees found
-        reasonBreakdown: [{reason: 'Punched a rude client', count: 1}],
+        reasonBreakdown: [{ reason: "Punched a rude client", count: 1 }],
         recentDepartures: [
           {
             empNumber: 3,
-            firstName: 'Mikayla',
-            lastName: 'Tandog',
-            jobTitle: 'Customer Service Representative',
-            terminationDate: '2025-08-19',
-            reason: 'Punched a rude client',
+            firstName: "Mikayla",
+            lastName: "Tandog",
+            jobTitle: "Customer Service Representative",
+            terminationDate: "2025-08-19",
+            reason: "Punched a rude client",
           },
         ],
-        monthlyTrend: [{period: '2025-08', count: 1}],
+        monthlyTrend: [{ period: "2025-08", count: 1 }],
         departmentBreakdown: [],
         jobTitleBreakdown: [
-          {jobTitle: 'Customer Service Representative', count: 1},
+          { jobTitle: "Customer Service Representative", count: 1 },
         ],
         averageTenureMonths: 12,
         bpoMetrics: {
-          alertLevel: 'critical',
-          benchmarks: {low: 25, moderate: 35, high: 50, critical: 50},
+          alertLevel: "critical",
+          benchmarks: { low: 25, moderate: 35, high: 50, critical: 50 },
           recommendations: [
-            'Implement immediate retention bonuses',
-            'Conduct urgent exit interviews',
-            'Review and adjust compensation packages',
-            'Enhance work-life balance programs',
-            'Improve conflict resolution training',
-            'Launch employee stress management initiatives',
+            "Implement immediate retention bonuses",
+            "Conduct urgent exit interviews",
+            "Review and adjust compensation packages",
+            "Enhance work-life balance programs",
+            "Improve conflict resolution training",
+            "Launch employee stress management initiatives",
           ],
           industryAverage: 35,
           riskFactors: [
-            'High stress environment',
-            'Customer conflict issues',
-            'Need anger management training',
+            "High stress environment",
+            "Customer conflict issues",
+            "Need anger management training",
           ],
         },
       };
@@ -351,15 +351,15 @@ export default {
           label: item.reason,
           data: item.count,
           backgroundColor: colors[index % colors.length],
-        }),
+        })
       );
     },
 
     formatDate(dateString) {
       const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
       });
     },
   },
@@ -467,10 +467,10 @@ export default {
   transition: background-color 0.2s ease;
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
 
@@ -516,10 +516,10 @@ export default {
   line-height: 1.1; // Tighter line height for large numbers
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
 
@@ -535,10 +535,10 @@ export default {
   line-height: 1.4;
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
 }
@@ -558,10 +558,10 @@ export default {
   color: var(--oxd-primary-one-color, #0b6449);
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
 }
@@ -577,10 +577,10 @@ export default {
   color: var(--oxd-primary-one-color, #0b6449);
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
 }
@@ -636,7 +636,7 @@ export default {
 
 // Theme-specific overrides
 :root {
-  &[data-theme='blue'] {
+  &[data-theme="blue"] {
     .orangehrm-offboarding-number {
       color: var(--oxd-primary-one-color, #2196f3);
     }
@@ -647,7 +647,7 @@ export default {
     }
   }
 
-  &[data-theme='green'] {
+  &[data-theme="green"] {
     .orangehrm-offboarding-number {
       color: var(--oxd-primary-one-color, #4caf50);
     }
@@ -658,7 +658,7 @@ export default {
     }
   }
 
-  &[data-theme='purple'] {
+  &[data-theme="purple"] {
     .orangehrm-offboarding-number {
       color: var(--oxd-primary-one-color, #9c27b0);
     }
@@ -669,7 +669,7 @@ export default {
     }
   }
 
-  &[data-theme='red'] {
+  &[data-theme="red"] {
     .orangehrm-offboarding-number {
       color: var(--oxd-primary-one-color, #f44336);
     }
@@ -686,10 +686,10 @@ export default {
 .orangehrm-recommendations-title {
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
   font-size: 1.125rem; // Slightly larger for better hierarchy
@@ -703,10 +703,10 @@ export default {
 .orangehrm-offboarding-number {
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
   font-size: 2.25rem; // Larger number display
@@ -723,10 +723,10 @@ export default {
 .orangehrm-offboarding-label {
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
   font-size: 0.875rem;
@@ -741,10 +741,10 @@ export default {
 .orangehrm-bpo-benchmark {
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
   font-size: 0.8125rem;
@@ -755,10 +755,10 @@ export default {
 .orangehrm-recommendation-item {
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
   font-size: 0.875rem;
@@ -770,10 +770,10 @@ export default {
 .orangehrm-offboarding-name {
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
   font-weight: 600;
@@ -786,10 +786,10 @@ export default {
 .orangehrm-offboarding-date {
   font-family: var(
     --oxd-font-family,
-    'Inter',
+    "Inter",
     -apple-system,
     BlinkMacSystemFont,
-    'Segoe UI',
+    "Segoe UI",
     sans-serif
   );
   font-size: 0.8125rem;

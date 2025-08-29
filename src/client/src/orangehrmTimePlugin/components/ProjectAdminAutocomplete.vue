@@ -38,12 +38,12 @@
 </template>
 
 <script>
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete.vue';
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete.vue";
 
 export default {
-  name: 'ProjectAdminAutocomplete',
+  name: "ProjectAdminAutocomplete",
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
   inheritAttrs: false,
   props: {
@@ -53,13 +53,13 @@ export default {
     },
     includeEmployees: {
       type: String,
-      default: 'currentAndPast',
+      default: "currentAndPast",
     },
   },
-  emits: ['remove'],
+  emits: ["remove"],
   methods: {
     remove() {
-      this.$emit('remove');
+      this.$emit("remove");
     },
   },
 };

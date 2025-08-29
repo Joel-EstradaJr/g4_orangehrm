@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">{{
-        $t('admin.edit_user')
+        $t("admin.edit_user")
       }}</oxd-text>
       <oxd-divider />
 
@@ -105,33 +105,33 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import PasswordInput from '@/core/components/inputs/PasswordInput';
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import PasswordInput from "@/core/components/inputs/PasswordInput";
 import {
   required,
   validSelection,
   shouldNotExceedCharLength,
   shouldNotLessThanCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {promiseDebounce} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { promiseDebounce } from "@ohrm/oxd";
 
 const userModel = {
-  id: '',
-  username: '',
+  id: "",
+  username: "",
   role: null,
   employee: null,
   status: null,
   changePassword: false,
-  password: '',
-  passwordConfirm: '',
+  password: "",
+  passwordConfirm: "",
 };
 
 export default {
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
-    'password-input': PasswordInput,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "password-input": PasswordInput,
   },
   props: {
     systemUserId: {
@@ -147,9 +147,9 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/users',
+      "/api/v2/admin/users"
     );
-    http.setIgnorePath('/api/v2/admin/validation/user-name');
+    http.setIgnorePath("/api/v2/admin/validation/user-name");
     return {
       http,
     };
@@ -158,7 +158,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      user: {...userModel},
+      user: { ...userModel },
       rules: {
         username: [
           required,
@@ -171,12 +171,12 @@ export default {
         status: [required],
       },
       userRoles: [
-        {id: 1, label: this.$t('general.admin')},
-        {id: 2, label: this.$t('general.ess')},
+        { id: 1, label: this.$t("general.admin") },
+        { id: 2, label: this.$t("general.ess") },
       ],
       userStatuses: [
-        {id: 1, label: this.$t('general.enabled')},
-        {id: 2, label: this.$t('general.disabled')},
+        { id: 1, label: this.$t("general.enabled") },
+        { id: 2, label: this.$t("general.disabled") },
       ],
     };
   },
@@ -185,11 +185,11 @@ export default {
     this.http
       .get(this.systemUserId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.user.id = data.id;
         this.user.username = data.userName;
         this.user.role = this.userRoles.find(
-          (item) => item.id === data.userRole.id,
+          (item) => item.id === data.userRole.id
         );
         this.user.employee = {
           id: data.employee.empNumber,
@@ -197,9 +197,9 @@ export default {
           isPastEmployee: data.employee.terminationId,
         };
         if (data.status) {
-          this.user.status = {id: 1, label: this.$t('general.enabled')};
+          this.user.status = { id: 1, label: this.$t("general.enabled") };
         } else {
-          this.user.status = {id: 2, label: this.$t('general.disabled')};
+          this.user.status = { id: 2, label: this.$t("general.disabled") };
         }
       })
       .finally(() => {
@@ -209,7 +209,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/admin/viewSystemUsers');
+      navigate("/admin/viewSystemUsers");
     },
     onSave() {
       this.isLoading = true;
@@ -234,7 +234,7 @@ export default {
         if (user) {
           this.http
             .request({
-              method: 'GET',
+              method: "GET",
               url: `/api/v2/admin/validation/user-name`,
               params: {
                 userName: this.user.username.trim(),
@@ -242,10 +242,10 @@ export default {
               },
             })
             .then((response) => {
-              const {data} = response.data;
+              const { data } = response.data;
               return data.valid === true
                 ? resolve(true)
-                : resolve(this.$t('general.already_exists'));
+                : resolve(this.$t("general.already_exists"));
             });
         } else {
           resolve(true);

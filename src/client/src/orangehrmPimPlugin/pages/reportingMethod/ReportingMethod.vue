@@ -22,7 +22,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text class="orangehrm-main-title">{{
-          $t('pim.reporting_methods')
+          $t("pim.reporting_methods")
         }}</oxd-text>
         <div>
           <oxd-button
@@ -64,14 +64,14 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
   props: {
     unselectableIds: {
@@ -84,7 +84,7 @@ export default {
     const reportingMethodNormalizer = (data) => {
       return data.map((item) => {
         const selectable = props.unselectableIds.findIndex(
-          (id) => id == item.id,
+          (id) => id == item.id
         );
         return {
           id: item.id,
@@ -96,7 +96,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/reporting-methods',
+      "/api/v2/pim/reporting-methods"
     );
     const {
       showPaginator,
@@ -107,7 +107,7 @@ export default {
       response,
       isLoading,
       execQuery,
-    } = usePaginate(http, {normalizer: reportingMethodNormalizer});
+    } = usePaginate(http, { normalizer: reportingMethodNormalizer });
     return {
       http,
       showPaginator,
@@ -125,29 +125,29 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.name'),
-          style: {'flex-basis': '80%'},
+          name: "name",
+          slot: "title",
+          title: this.$t("general.name"),
+          style: { "flex-basis": "80%" },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {'flex-shrink': 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { "flex-shrink": 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -159,10 +159,10 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/pim/saveReportingMethod');
+      navigate("/pim/saveReportingMethod");
     },
     onClickEdit(item) {
-      navigate('/pim/saveReportingMethod/{id}', {id: item.id});
+      navigate("/pim/saveReportingMethod/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = [];
@@ -170,23 +170,23 @@ export default {
         ids.push(this.items?.data[index].id);
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       const isSelectable = this.unselectableIds.findIndex(
-        (id) => id == item.id,
+        (id) => id == item.id
       );
       if (isSelectable > -1) {
         return this.$toast.error({
-          title: this.$t('general.error'),
-          message: this.$t('pim.reporting_methods_in_use'),
+          title: this.$t("general.error"),
+          message: this.$t("pim.reporting_methods_in_use"),
         });
       }
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

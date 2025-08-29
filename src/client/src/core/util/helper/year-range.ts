@@ -17,7 +17,7 @@
 
 export const yearRange = function (
   range = 100,
-  fromYear = new Date().getFullYear(),
+  fromYear = new Date().getFullYear()
 ) {
   const numberOfYears = new Array(range);
   for (let i = 0; i < numberOfYears.length; i++) {

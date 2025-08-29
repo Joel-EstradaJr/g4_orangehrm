@@ -27,19 +27,19 @@
 </template>
 
 <script>
-import {ref, onBeforeMount} from 'vue';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { ref, onBeforeMount } from "vue";
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'TimezoneDropdown',
+  name: "TimezoneDropdown",
   setup() {
     const options = ref([]);
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/attendance/timezones',
+      "/api/v2/attendance/timezones"
     );
 
     onBeforeMount(() => {
-      http.getAll().then(({data}) => {
+      http.getAll().then(({ data }) => {
         options.value = data.data.map((timezone) => {
           return {
             id: timezone.name,

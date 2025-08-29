@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import {OxdIcon} from '@ohrm/oxd';
+import { OxdIcon } from "@ohrm/oxd";
 
 export default {
-  name: 'TrackerLogRatingButton',
+  name: "TrackerLogRatingButton",
   components: {
-    'oxd-icon': OxdIcon,
+    "oxd-icon": OxdIcon,
   },
   props: {
     label: {
@@ -51,24 +51,24 @@ export default {
       type: String,
       required: true,
       validator: function (value) {
-        return ['positive', 'negative'].indexOf(value) !== -1;
+        return ["positive", "negative"].indexOf(value) !== -1;
       },
     },
   },
-  emits: ['click'],
+  emits: ["click"],
   computed: {
     iconName() {
-      return `thumbs${this.type === 'positive' ? 'up' : 'down'}`;
+      return `thumbs${this.type === "positive" ? "up" : "down"}`;
     },
     buttonClasses() {
       return {
-        'orangehrm-tracker-rating-button': true,
-        '--deselected': !this.selected,
+        "orangehrm-tracker-rating-button": true,
+        "--deselected": !this.selected,
       };
     },
     iconClasses() {
       return {
-        'orangehrm-tracker-rating-icon': true,
+        "orangehrm-tracker-rating-icon": true,
         [`--${this.type}`]: true,
       };
     },

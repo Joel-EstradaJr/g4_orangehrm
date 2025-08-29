@@ -11,12 +11,12 @@
           class="oxd-userdropdown-link"
           @click="openAboutModel"
         >
-          {{ $t('general.about') }}
+          {{ $t("general.about") }}
         </a>
       </li>
       <li>
         <a :href="supportUrl" role="menuitem" class="oxd-userdropdown-link">
-          {{ $t('general.support') }}
+          {{ $t("general.support") }}
         </a>
       </li>
       <li v-if="updatePasswordUrl">
@@ -25,12 +25,12 @@
           role="menuitem"
           class="oxd-userdropdown-link"
         >
-          {{ $t('general.change_password') }}
+          {{ $t("general.change_password") }}
         </a>
       </li>
       <li>
         <a :href="logoutUrl" role="menuitem" class="oxd-userdropdown-link">
-          {{ $t('general.logout') }}
+          {{ $t("general.logout") }}
         </a>
       </li>
     </template>
@@ -46,15 +46,15 @@
 </template>
 
 <script>
-import {provide, readonly, ref} from 'vue';
-import About from '@/core/pages/About.vue';
-import {OxdLayout} from '@ohrm/oxd';
-import {dateFormatKey} from '@/core/util/composable/useDateFormat';
+import { provide, readonly, ref } from "vue";
+import About from "@/core/pages/About.vue";
+import { OxdLayout } from "@ohrm/oxd";
+import { dateFormatKey } from "@/core/util/composable/useDateFormat";
 
 export default {
   components: {
     about: About,
-    'oxd-layout': OxdLayout,
+    "oxd-layout": OxdLayout,
   },
   inheritAttrs: false,
   props: {
@@ -64,15 +64,15 @@ export default {
     },
     logoutUrl: {
       type: String,
-      default: '#',
+      default: "#",
     },
     supportUrl: {
       type: String,
-      default: '#',
+      default: "#",
     },
     updatePasswordUrl: {
       type: String,
-      default: '#',
+      default: "#",
     },
     dateFormat: {
       type: Object,
@@ -85,7 +85,7 @@ export default {
   },
   setup(props) {
     const showAboutModel = ref(false);
-    provide('permissions', readonly(props.permissions));
+    provide("permissions", readonly(props.permissions));
     provide(dateFormatKey, readonly(props.dateFormat));
 
     const openAboutModel = () => {
@@ -97,7 +97,7 @@ export default {
     };
 
     const onClickSupport = () => {
-      if (props.helpUrl) window.open(props.helpUrl, '_blank');
+      if (props.helpUrl) window.open(props.helpUrl, "_blank");
     };
 
     return {

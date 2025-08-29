@@ -133,20 +133,20 @@
 </template>
 
 <script>
-import {reactive, toRefs} from 'vue';
-import usei18n from '@/core/util/composable/usei18n';
-import useToast from '@/core/util/composable/useToast';
-import {APIService} from '@/core/util/services/api.service';
+import { reactive, toRefs } from "vue";
+import usei18n from "@/core/util/composable/usei18n";
+import useToast from "@/core/util/composable/useToast";
+import { APIService } from "@/core/util/services/api.service";
 import {
   shouldNotExceedCharLength,
   validSelection,
-} from '@/core/util/validation/rules';
-import useInfiniteScroll from '@ohrm/core/util/composable/useInfiniteScroll';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import SummaryCard from '@/orangehrmCorporateDirectoryPlugin/components/SummaryCard';
-import EmployeeDetails from '@/orangehrmCorporateDirectoryPlugin/components/EmployeeDetails';
-import SummaryCardDetails from '@/orangehrmCorporateDirectoryPlugin/components/SummaryCardDetails';
-import {OxdSpinner, useResponsive} from '@ohrm/oxd';
+} from "@/core/util/validation/rules";
+import useInfiniteScroll from "@ohrm/core/util/composable/useInfiniteScroll";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import SummaryCard from "@/orangehrmCorporateDirectoryPlugin/components/SummaryCard";
+import EmployeeDetails from "@/orangehrmCorporateDirectoryPlugin/components/EmployeeDetails";
+import SummaryCardDetails from "@/orangehrmCorporateDirectoryPlugin/components/SummaryCardDetails";
+import { OxdSpinner, useResponsive } from "@ohrm/oxd";
 
 const defaultFilters = {
   employeeNumber: null,
@@ -155,14 +155,14 @@ const defaultFilters = {
 };
 
 export default {
-  name: 'CorporateDirectory',
+  name: "CorporateDirectory",
 
   components: {
-    'summary-card': SummaryCard,
-    'oxd-loading-spinner': OxdSpinner,
-    'employee-details': EmployeeDetails,
-    'summary-card-details': SummaryCardDetails,
-    'employee-autocomplete': EmployeeAutocomplete,
+    "summary-card": SummaryCard,
+    "oxd-loading-spinner": OxdSpinner,
+    "employee-details": EmployeeDetails,
+    "summary-card-details": SummaryCardDetails,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
 
   props: {
@@ -177,8 +177,8 @@ export default {
   },
 
   setup() {
-    const {$t} = usei18n();
-    const {noRecordsFound} = useToast();
+    const { $t } = usei18n();
+    const { noRecordsFound } = useToast();
     const responsiveState = useResponsive();
 
     const rules = {
@@ -191,9 +191,9 @@ export default {
           id: item.empNumber,
           employeeName:
             `${item.firstName} ${item.middleName} ${item.lastName} ` +
-            (item.terminationId ? $t('general.past_employee') : ''),
+            (item.terminationId ? $t("general.past_employee") : ""),
           employeeJobTitle: item.jobTitle?.isDeleted
-            ? `${item.jobTitle?.title} ` + $t('general.deleted')
+            ? `${item.jobTitle?.title} ` + $t("general.deleted")
             : item.jobTitle?.title,
           employeeSubUnit: item.subunit?.name,
           employeeLocation: item.location?.name,
@@ -203,7 +203,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/directory/employees',
+      "/api/v2/directory/employees"
     );
 
     const limit = 14;
@@ -230,7 +230,7 @@ export default {
           jobTitleId: state.filters.jobTitleId?.id,
         })
         .then((response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
           state.total = meta?.total || 0;
           if (Array.isArray(data)) {
             state.employees = [
@@ -245,7 +245,7 @@ export default {
         .finally(() => (state.isLoading = false));
     };
 
-    const {scrollerRef} = useInfiniteScroll(() => {
+    const { scrollerRef } = useInfiniteScroll(() => {
       if (state.employees.length >= state.total) return;
       state.offset += limit;
       fetchData();
@@ -269,8 +269,8 @@ export default {
     },
     oxdGridClasses() {
       return {
-        'orangehrm-container': true,
-        'orangehrm-container-min-display': this.isEmployeeSelected,
+        "orangehrm-container": true,
+        "orangehrm-container-min-display": this.isEmployeeSelected,
       };
     },
     colSize() {
@@ -306,7 +306,7 @@ export default {
       this.hideEmployeeDetails();
       this.employees = [];
       this.offset = 0;
-      this.filters = {...defaultFilters};
+      this.filters = { ...defaultFilters };
       this.fetchData();
     },
   },

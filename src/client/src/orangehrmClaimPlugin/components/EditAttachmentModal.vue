@@ -20,7 +20,7 @@
   <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('general.edit_attachment') }}
+        {{ $t("general.edit_attachment") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -49,7 +49,9 @@
               :placeholder="$t('general.no_file_selected')"
             />
             <oxd-text class="orangehrm-input-hint" tag="p">
-              {{ $t('general.accepts_up_to_n_mb', {count: formattedFileSize}) }}
+              {{
+                $t("general.accepts_up_to_n_mb", { count: formattedFileSize })
+              }}
             </oxd-text>
           </oxd-grid-item>
         </oxd-grid>
@@ -85,25 +87,25 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {OxdDialog} from '@ohrm/oxd';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { OxdDialog } from "@ohrm/oxd";
 import {
   maxFileSize,
   shouldNotExceedCharLength,
   validFileTypes,
-} from '@ohrm/core/util/validation/rules';
-import {truncate} from '@ohrm/core/util/helper/truncate';
+} from "@ohrm/core/util/validation/rules";
+import { truncate } from "@ohrm/core/util/helper/truncate";
 
 const attachmentModel = {
   attachment: null,
-  description: '',
+  description: "",
 };
 
 export default {
-  name: 'SaveAttachment',
+  name: "SaveAttachment",
 
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
 
   props: {
@@ -125,12 +127,12 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/claim/requests/${props.requestId}/attachments`,
+      `/api/v2/claim/requests/${props.requestId}/attachments`
     );
     return {
       http,
@@ -140,7 +142,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      currentFile: '',
+      currentFile: "",
       attachment: {
         ...attachmentModel,
       },
@@ -165,7 +167,7 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.currentFile = truncate(data.attachment.fileName);
         this.attachment.description = data.attachment.description;
       })
@@ -178,17 +180,17 @@ export default {
     onSave() {
       this.isLoading = true;
       this.http
-        .update(this.data.id, {...this.attachment})
+        .update(this.data.id, { ...this.attachment })
         .then(() => {
           return this.$toast.updateSuccess();
         })
         .then(() => {
-          this.attachment = {...attachmentModel};
+          this.attachment = { ...attachmentModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

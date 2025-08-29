@@ -90,37 +90,37 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import useSort from '@ohrm/core/util/composable/useSort';
-import {formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import useLocale from '@/core/util/composable/useLocale';
-import usei18n from '@/core/util/composable/usei18n';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import IncludeEmployeeDropdown from '@/core/components/dropdown/IncludeEmployeeDropdown';
+import { computed, ref } from "vue";
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import useSort from "@ohrm/core/util/composable/useSort";
+import { formatDate, parseDate } from "@ohrm/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import useLocale from "@/core/util/composable/useLocale";
+import usei18n from "@/core/util/composable/usei18n";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import IncludeEmployeeDropdown from "@/core/components/dropdown/IncludeEmployeeDropdown";
 import {
   shouldNotExceedCharLength,
   validSelection,
-} from '@/core/util/validation/rules';
+} from "@/core/util/validation/rules";
 
 const defaultSortOrder = {
-  'employee.lastName': 'DEFAULT',
-  'tracker.trackerName': 'DEFAULT',
-  'tracker.modifiedDate': 'DESC',
-  'tracker.addedDate': 'DEFAULT',
+  "employee.lastName": "DEFAULT",
+  "tracker.trackerName": "DEFAULT",
+  "tracker.modifiedDate": "DESC",
+  "tracker.addedDate": "DEFAULT",
 };
 export default {
   components: {
-    'include-employee-dropdown': IncludeEmployeeDropdown,
-    'employee-autocomplete': EmployeeAutocomplete,
+    "include-employee-dropdown": IncludeEmployeeDropdown,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
   setup() {
-    const {$t} = usei18n();
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { $t } = usei18n();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
     const employeeTrackerNormalizer = (data) => {
       return data.map((item) => {
         return {
@@ -128,8 +128,8 @@ export default {
           title: item.title,
           empName: `${item.employee?.firstName} ${item.employee?.lastName} ${
             item.employee?.terminationId
-              ? ` ${$t('general.past_employee')}`
-              : ''
+              ? ` ${$t("general.past_employee")}`
+              : ""
           }`,
           modifiedDate: formatDate(parseDate(item.modifiedDate), jsDateFormat, {
             locale,
@@ -145,14 +145,14 @@ export default {
       empName: null,
       includeEmployees: {
         id: 1,
-        param: 'onlyCurrent',
-        label: $t('general.current_employees_only'),
+        param: "onlyCurrent",
+        label: $t("general.current_employees_only"),
       },
     };
 
-    const filters = ref({...defaultFilters});
+    const filters = ref({ ...defaultFilters });
 
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
 
@@ -165,7 +165,7 @@ export default {
       };
     });
 
-    const api = '/api/v2/performance/employees/trackers';
+    const api = "/api/v2/performance/employees/trackers";
     const http = new APIService(window.appGlobal.baseUrl, api);
 
     const {
@@ -204,45 +204,45 @@ export default {
     return {
       headers: [
         {
-          name: 'empName',
-          slot: 'title',
-          title: this.$t('general.employee_name'),
-          sortField: 'employee.lastName',
-          style: {flex: 2},
+          name: "empName",
+          slot: "title",
+          title: this.$t("general.employee_name"),
+          sortField: "employee.lastName",
+          style: { flex: 2 },
         },
         {
-          name: 'title',
-          title: this.$t('general.trackers'),
-          sortField: 'tracker.trackerName',
-          style: {flex: 2},
+          name: "title",
+          title: this.$t("general.trackers"),
+          sortField: "tracker.trackerName",
+          style: { flex: 2 },
         },
         {
-          name: 'addedDate',
-          title: this.$t('performance.added_date'),
-          sortField: 'tracker.addedDate',
-          style: {flex: 1},
+          name: "addedDate",
+          title: this.$t("performance.added_date"),
+          sortField: "tracker.addedDate",
+          style: { flex: 1 },
         },
         {
-          name: 'modifiedDate',
-          title: this.$t('performance.modified_date'),
-          sortField: 'tracker.modifiedDate',
-          style: {flex: 1},
+          name: "modifiedDate",
+          title: this.$t("performance.modified_date"),
+          sortField: "tracker.modifiedDate",
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          title: this.$t('general.actions'),
-          slot: 'action',
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          title: this.$t("general.actions"),
+          slot: "action",
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             view: {
               onClick: this.onClickView,
-              component: 'oxd-button',
+              component: "oxd-button",
               props: {
-                name: 'view',
-                label: this.$t('general.view'),
-                class: 'orangehrm-left-space',
-                displayType: 'text',
+                name: "view",
+                label: this.$t("general.view"),
+                class: "orangehrm-left-space",
+                displayType: "text",
               },
             },
           },
@@ -262,7 +262,7 @@ export default {
       await this.execQuery();
     },
     onClickView(item) {
-      navigate('/performance/addPerformanceTrackerLog/trackId/{id}', {
+      navigate("/performance/addPerformanceTrackerLog/trackId/{id}", {
         id: item.id,
       });
     },

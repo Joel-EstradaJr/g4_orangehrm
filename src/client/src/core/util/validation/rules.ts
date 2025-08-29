@@ -23,8 +23,8 @@ import {
   isBefore,
   isEqual,
   parseDate,
-} from '../helper/datefns';
-import {translate as translatorFactory} from '@/core/plugins/i18n/translate';
+} from "../helper/datefns";
+import { translate as translatorFactory } from "@/core/plugins/i18n/translate";
 
 const translate = translatorFactory();
 
@@ -41,18 +41,18 @@ export type File = {
  */
 export const required = function (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value: string | number | Array<any>,
+  value: string | number | Array<any>
 ): boolean | string {
-  if (typeof value === 'string') {
-    return (!!value && value.trim() !== '') || translate('general.required');
-  } else if (typeof value === 'number') {
-    return !Number.isNaN(value) || 'general.required';
+  if (typeof value === "string") {
+    return (!!value && value.trim() !== "") || translate("general.required");
+  } else if (typeof value === "number") {
+    return !Number.isNaN(value) || "general.required";
   } else if (Array.isArray(value)) {
-    return (!!value && value.length !== 0) || translate('general.required');
-  } else if (typeof value === 'object') {
-    return value !== null || translate('general.required');
+    return (!!value && value.length !== 0) || translate("general.required");
+  } else if (typeof value === "object") {
+    return value !== null || translate("general.required");
   } else {
-    return translate('general.required');
+    return translate("general.required");
   }
 };
 
@@ -64,21 +64,21 @@ export const shouldNotExceedCharLength = function (charLength: number) {
     return (
       !value ||
       new String(value).length <= charLength ||
-      translate('general.should_be_less_n_characters', {amount: charLength})
+      translate("general.should_be_less_n_characters", { amount: charLength })
     );
   };
 };
 
 export const validDateFormat = function (
-  displayFormat = 'yyyy-mm-dd',
-  dateFormat = 'yyyy-MM-dd',
+  displayFormat = "yyyy-mm-dd",
+  dateFormat = "yyyy-MM-dd"
 ) {
   return function (value: string): boolean | string {
     if (!value) return true;
     const parsed = parseDate(value, dateFormat);
     return parsed
       ? true
-      : translate('general.should_be_a_valid_date_in_x_format', {
+      : translate("general.should_be_a_valid_date_in_x_format", {
           format: displayFormat,
         });
   };
@@ -87,21 +87,21 @@ export const validDateFormat = function (
 export const shouldBeCurrentOrPreviousDate = function () {
   return function (value: string): boolean | string {
     if (!value) return true;
-    const dateFormat = 'yyyy-MM-dd';
-    const currentDate = formatDate(new Date(), dateFormat) || '';
+    const dateFormat = "yyyy-MM-dd";
+    const currentDate = formatDate(new Date(), dateFormat) || "";
     const isValid = diffInDays(value, currentDate, dateFormat);
     return isValid > 0
       ? true
-      : translate('recruitment.should_be_current_date_previous_date');
+      : translate("recruitment.should_be_current_date_previous_date");
   };
 };
 
 export const validTimeFormat = function (value: string): boolean | string {
   if (!value) return true;
-  const parsed = parseDate(value, 'HH:mm');
+  const parsed = parseDate(value, "HH:mm");
   return parsed
     ? true
-    : translate('general.should_be_a_valid_date_in_hh:mm_format');
+    : translate("general.should_be_a_valid_date_in_hh:mm_format");
 };
 
 export const max = function (maxValue: number) {
@@ -109,44 +109,44 @@ export const max = function (maxValue: number) {
     return (
       Number.isNaN(parseFloat(value)) ||
       parseFloat(value) < maxValue ||
-      translate('general.should_be_less_than_n', {amount: maxValue})
+      translate("general.should_be_less_than_n", { amount: maxValue })
     );
   };
 };
 
 export const digitsOnly = function (value: string): boolean | string {
   return (
-    value == '' ||
+    value == "" ||
     (/^\d+$/.test(value) && !Number.isNaN(parseFloat(value))) ||
-    translate('general.should_be_a_number')
+    translate("general.should_be_a_number")
   );
 };
 
 export const numericOnly = function (value: string): boolean | string {
   return (
-    value == '' ||
+    value == "" ||
     (/^\d+$/.test(value) && !Number.isNaN(parseFloat(value))) ||
-    translate('general.should_be_a_numeric_value')
+    translate("general.should_be_a_numeric_value")
   );
 };
 
 export const digitsOnlyWithDecimalPoint = function (
-  value: string,
+  value: string
 ): boolean | string {
   return (
-    value == '' ||
+    value == "" ||
     (/^\d*\.?\d*$/.test(value) && !Number.isNaN(parseFloat(value))) ||
-    translate('general.should_be_a_number')
+    translate("general.should_be_a_number")
   );
 };
 
 export const digitsOnlyWithDecimalPointAndMinusSign = function (
-  value: string,
+  value: string
 ): boolean | string {
   return (
-    value == '' ||
+    value == "" ||
     (/^-?\d*\.?\d*$/.test(value) && !Number.isNaN(parseFloat(value))) ||
-    translate('general.should_be_a_number')
+    translate("general.should_be_a_number")
   );
 };
 
@@ -159,7 +159,7 @@ export const digitsOnlyWithDecimalPointAndMinusSign = function (
 export const beforeDate = function (
   date1: string,
   date2: string,
-  dateFormat = 'yyyy-MM-dd',
+  dateFormat = "yyyy-MM-dd"
 ) {
   // Skip assertion on unset values
   if (!date1 || !date2) {
@@ -177,7 +177,7 @@ export const beforeDate = function (
 export const afterDate = function (
   date1: string,
   date2: string,
-  dateFormat = 'yyyy-MM-dd',
+  dateFormat = "yyyy-MM-dd"
 ) {
   // Skip assertion on unset values
   if (!date1 || !date2) {
@@ -195,7 +195,7 @@ export const afterDate = function (
 export const sameDate = function (
   date1: string,
   date2: string,
-  dateFormat = 'yyyy-MM-dd',
+  dateFormat = "yyyy-MM-dd"
 ) {
   // Skip assertion on unset values
   if (!date1 || !date2) {
@@ -217,16 +217,16 @@ export const endDateShouldBeAfterStartDate = (
     dateFormat?: string;
   } = {
     allowSameDate: false,
-    dateFormat: 'yyyy-MM-dd',
-  },
+    dateFormat: "yyyy-MM-dd",
+  }
 ) => {
   return (value: string): boolean | string => {
     const resolvedStartDate =
-      typeof startDate === 'function' ? startDate() : startDate;
+      typeof startDate === "function" ? startDate() : startDate;
     const resolvedMessage =
-      typeof message === 'string'
+      typeof message === "string"
         ? message
-        : translate('general.end_date_should_be_after_start_date');
+        : translate("general.end_date_should_be_after_start_date");
     if (options.allowSameDate) {
       return (
         sameDate(value, resolvedStartDate) ||
@@ -251,7 +251,7 @@ export const endDateShouldBeAfterStartDate = (
 export const beforeTime = function (
   time1: string,
   time2: string,
-  timeFormat = 'yyyy-MM-dd',
+  timeFormat = "yyyy-MM-dd"
 ) {
   // Skip assertion on unset values
   if (!time1 || !time2) {
@@ -269,7 +269,7 @@ export const beforeTime = function (
 export const afterTime = function (
   time1: string,
   time2: string,
-  timeFormat = 'HH:mm',
+  timeFormat = "HH:mm"
 ) {
   // Skip assertion on unset values
   if (!time1 || !time2) {
@@ -287,7 +287,7 @@ export const afterTime = function (
 export const sameTime = function (
   time1: string,
   time2: string,
-  timeFormat = 'HH:mm',
+  timeFormat = "HH:mm"
 ) {
   // Skip assertion on unset values
   if (!time1 || !time2) {
@@ -309,16 +309,16 @@ export const endTimeShouldBeAfterStartTime = (
     timeFormat?: string;
   } = {
     allowSameTime: false,
-    timeFormat: 'HH:mm',
-  },
+    timeFormat: "HH:mm",
+  }
 ) => {
   return (value: string): boolean | string => {
     const resolvedStartTime =
-      typeof startTime === 'function' ? startTime() : startTime;
+      typeof startTime === "function" ? startTime() : startTime;
     const resolvedMessage =
-      typeof message === 'string'
+      typeof message === "string"
         ? message
-        : translate('general.end_time_should_be_after_start_time');
+        : translate("general.end_time_should_be_after_start_time");
     if (options.allowSameTime) {
       return (
         sameTime(value, resolvedStartTime) ||
@@ -342,7 +342,7 @@ export const maxFileSize = function (size: number) {
     return (
       file === null ||
       (file.size && file.size <= size) ||
-      translate('general.attachment_size_exceeded')
+      translate("general.attachment_size_exceeded")
     );
   };
 };
@@ -352,7 +352,7 @@ export const validFileTypes = function (fileTypes: string[]) {
     return (
       file === null ||
       (file && fileTypes.findIndex((item) => item === file.type) > -1) ||
-      translate('general.file_type_not_allowed')
+      translate("general.file_type_not_allowed")
     );
   };
 };
@@ -361,19 +361,19 @@ export const validEmailFormat = function (value: string): boolean | string {
   return (
     !value ||
     /^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(
-      value,
+      value
     ) ||
-    translate('general.expected_email_address_format_not_matched')
+    translate("general.expected_email_address_format_not_matched")
   );
 };
 
 export const validPhoneNumberFormat = function (
-  value: string,
+  value: string
 ): boolean | string {
   return (
     !value ||
     /^[0-9+\-/() ]+$/.test(value) ||
-    translate('general.allows_phone_numbers_only')
+    translate("general.allows_phone_numbers_only")
   );
 };
 
@@ -390,15 +390,15 @@ export const startDateShouldBeBeforeEndDate = (
     dateFormat?: string;
   } = {
     allowSameDate: false,
-    dateFormat: 'yyyy-MM-dd',
-  },
+    dateFormat: "yyyy-MM-dd",
+  }
 ) => {
   return (value: string): boolean | string => {
-    const resolvedEndDate = typeof endDate === 'function' ? endDate() : endDate;
+    const resolvedEndDate = typeof endDate === "function" ? endDate() : endDate;
     const resolvedMessage =
-      typeof message === 'string'
+      typeof message === "string"
         ? message
-        : translate('general.start_date_should_be_before_end_date');
+        : translate("general.start_date_should_be_before_end_date");
     if (options.allowSameDate) {
       return (
         sameDate(value, resolvedEndDate) ||
@@ -419,8 +419,8 @@ export const maxCurrency = function (maxValue: number) {
     return (
       Number.isNaN(parseFloat(value)) ||
       parseFloat(value) < maxValue ||
-      translate('general.should_be_less_than_n', {
-        amount: maxValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      translate("general.should_be_less_than_n", {
+        amount: maxValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
       })
     );
   };
@@ -439,15 +439,15 @@ export const startTimeShouldBeBeforeEndTime = (
     timeFormat?: string;
   } = {
     allowSameTime: false,
-    timeFormat: 'HH:mm',
-  },
+    timeFormat: "HH:mm",
+  }
 ) => {
   return (value: string): boolean | string => {
-    const resolvedEndTime = typeof endTime === 'function' ? endTime() : endTime;
+    const resolvedEndTime = typeof endTime === "function" ? endTime() : endTime;
     const resolvedMessage =
-      typeof message === 'string'
+      typeof message === "string"
         ? message
-        : translate('general.start_time_should_be_before_end_time');
+        : translate("general.start_time_should_be_before_end_time");
     if (options.allowSameTime) {
       return (
         sameTime(value, resolvedEndTime) ||
@@ -471,7 +471,7 @@ export const shouldNotLessThanCharLength = function (charLength: number) {
     return (
       !value ||
       String(value).length >= charLength ||
-      translate('general.should_be_least_n_characters', {amount: charLength})
+      translate("general.should_be_least_n_characters", { amount: charLength })
     );
   };
 };
@@ -482,22 +482,22 @@ export const shouldNotLessThanCharLength = function (charLength: number) {
  */
 export const maxValueShouldBeGreaterThanMinValue = (
   minValue: string | (() => string),
-  message?: string,
+  message?: string
 ) => {
   return (value: string): boolean | string => {
     const resolvedMinValue =
-      typeof minValue === 'function' ? minValue() : minValue;
+      typeof minValue === "function" ? minValue() : minValue;
     const resolvedMessage =
-      typeof message === 'string'
+      typeof message === "string"
         ? message
-        : translate('general.should_be_higher_than_minimum_value');
+        : translate("general.should_be_higher_than_minimum_value");
     // If the minimum is not given, null or 0 => return true
     // If the value is not given, then return true only if the minimum is not given, null or 0
     if (resolvedMinValue === null) return true;
     if (resolvedMinValue === undefined) return true;
-    if (resolvedMinValue === '' || (resolvedMinValue === '' && value === ''))
+    if (resolvedMinValue === "" || (resolvedMinValue === "" && value === ""))
       return true;
-    if (resolvedMinValue === '0' || (resolvedMinValue === '0' && value === '0'))
+    if (resolvedMinValue === "0" || (resolvedMinValue === "0" && value === "0"))
       return true;
     return parseFloat(resolvedMinValue) < parseFloat(value) || resolvedMessage;
   };
@@ -509,19 +509,19 @@ export const maxValueShouldBeGreaterThanMinValue = (
  */
 export const minValueShouldBeLowerThanMaxValue = (
   maxValue: string | (() => string),
-  message?: string,
+  message?: string
 ) => {
   return (value: string): boolean | string => {
     const resolvedMaxValue =
-      typeof maxValue === 'function' ? maxValue() : maxValue;
+      typeof maxValue === "function" ? maxValue() : maxValue;
     const resolvedMessage =
-      typeof message === 'string'
+      typeof message === "string"
         ? message
-        : translate('general.should_be_lower_than_maximum_value');
+        : translate("general.should_be_lower_than_maximum_value");
     if (resolvedMaxValue === null || value === null) return true;
     if (resolvedMaxValue === undefined || value === undefined) return true;
-    if (resolvedMaxValue === '' || value === '') return true;
-    if (resolvedMaxValue === '0' || value === '0') return true;
+    if (resolvedMaxValue === "" || value === "") return true;
+    if (resolvedMaxValue === "0" || value === "0") return true;
     return parseFloat(resolvedMaxValue) > parseFloat(value) || resolvedMessage;
   };
 };
@@ -534,13 +534,13 @@ export const minValueShouldBeLowerThanMaxValue = (
 export const numberShouldBeBetweenMinAndMaxValue = (
   minValue: number,
   maxValue: number,
-  message?: string,
+  message?: string
 ) => {
   return (value: string): boolean | string => {
     const resolvedMessage =
-      typeof message === 'string'
+      typeof message === "string"
         ? message
-        : translate('general.should_be_a_number_between_min_and_max', {
+        : translate("general.should_be_a_number_between_min_and_max", {
             min: minValue,
             max: maxValue,
           });
@@ -562,7 +562,7 @@ export const validHexFormat = function (value: string): boolean | string {
   if (!value) return true;
   return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(value)
     ? true
-    : translate('general.invalid');
+    : translate("general.invalid");
 };
 
 /**
@@ -573,18 +573,18 @@ export const validHexFormat = function (value: string): boolean | string {
  */
 export const imageShouldHaveDimensions = function (
   aspectRatio: number,
-  tolerance = 0.1,
+  tolerance = 0.1
 ) {
   return function (file: File | null): Promise<boolean | string> {
     return new Promise((resolve) => {
-      if (file === null || file.type === 'image/svg+xml') return resolve(true);
+      if (file === null || file.type === "image/svg+xml") return resolve(true);
       const image = new Image();
       image.src = `data:${file.type};base64, ${file.base64}`;
       image.decode().then(() => {
         if (Math.abs(image.width / image.height - aspectRatio) < tolerance) {
           resolve(true);
         } else {
-          resolve(translate('general.incorrect_dimensions'));
+          resolve(translate("general.incorrect_dimensions"));
         }
       });
     });
@@ -593,14 +593,14 @@ export const imageShouldHaveDimensions = function (
 
 export const greaterThanOrEqual = function (
   minValue: number,
-  message?: string,
+  message?: string
 ) {
   const resolvedMessage =
-    typeof message === 'string'
+    typeof message === "string"
       ? message
-      : translate('general.greater_than_or_equal_to_n', {minValue: minValue});
+      : translate("general.greater_than_or_equal_to_n", { minValue: minValue });
   return function (value: string): boolean | string {
-    if (value === null || value === '') return true;
+    if (value === null || value === "") return true;
     if (digitsOnlyWithDecimalPointAndMinusSign(value) !== true) {
       return resolvedMessage;
     }
@@ -610,11 +610,11 @@ export const greaterThanOrEqual = function (
 
 export const lessThanOrEqual = function (maxValue: number, message?: string) {
   const resolvedMessage =
-    typeof message === 'string'
+    typeof message === "string"
       ? message
-      : translate('general.less_than_or_equal_to_n', {maxValue: maxValue});
+      : translate("general.less_than_or_equal_to_n", { maxValue: maxValue });
   return function (value: string): boolean | string {
-    if (value === null || value === '') return true;
+    if (value === null || value === "") return true;
     if (digitsOnlyWithDecimalPointAndMinusSign(value) !== true) {
       return resolvedMessage;
     }
@@ -623,15 +623,15 @@ export const lessThanOrEqual = function (maxValue: number, message?: string) {
 };
 
 export const validLangString = function (value: string) {
-  if (value === null || value === '') {
+  if (value === null || value === "") {
     return true;
   }
-  return value.split('').reduce((accumulator, currentValue) => {
-    if (currentValue === '{') accumulator++;
-    if (currentValue === '}') accumulator--;
+  return value.split("").reduce((accumulator, currentValue) => {
+    if (currentValue === "{") accumulator++;
+    if (currentValue === "}") accumulator--;
     return accumulator;
   }, 0) !== 0
-    ? translate('general.invalid')
+    ? translate("general.invalid")
     : true;
 };
 
@@ -641,7 +641,7 @@ export const validLangString = function (value: string) {
  * @returns {boolean|string}
  */
 export const validSelection = function (value: string | object | null) {
-  return typeof value === 'string' ? translate('general.invalid') : true;
+  return typeof value === "string" ? translate("general.invalid") : true;
 };
 
 export const validHostnameFormat = function (value: string): boolean | string {
@@ -656,13 +656,13 @@ export const validHostnameFormat = function (value: string): boolean | string {
       /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
   }
 
-  return !value || fqdnRegex.test(value) || translate('general.invalid');
+  return !value || fqdnRegex.test(value) || translate("general.invalid");
 };
 
 export const validPortRange = function (
   charLength: number,
   rangeFrom: number,
-  rangeTo: number,
+  rangeTo: number
 ) {
   return function (value: string): boolean | string {
     return (
@@ -672,7 +672,7 @@ export const validPortRange = function (
         String(value).length <= charLength &&
         parseInt(value) >= rangeFrom &&
         parseInt(value) <= rangeTo) ||
-      translate('general.enter_valid_port_between_a_to_b', {
+      translate("general.enter_valid_port_between_a_to_b", {
         minValue: rangeFrom,
         maxValue: rangeTo,
       })
@@ -689,18 +689,18 @@ export const validVideoURL = function (value: string): boolean | string {
   return (
     !value ||
     /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:shorts\/|embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(\?\S*)?$/.test(
-      value,
+      value
     ) ||
-    translate('general.invalid_video_url_message')
+    translate("general.invalid_video_url_message")
   );
 };
 
 export const digitsOnlyWithTwoDecimalPoints = function (
-  value: string,
+  value: string
 ): boolean | string {
   return (
-    value == '' ||
+    value == "" ||
     /^\d+?(?:\.\d{1,2})?$/.test(value) ||
-    translate('claim.should_be_a_valid_number')
+    translate("claim.should_be_a_valid_number")
   );
 };

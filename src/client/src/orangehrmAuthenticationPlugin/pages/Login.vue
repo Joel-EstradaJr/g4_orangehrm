@@ -20,7 +20,7 @@
 <template>
   <login-layout>
     <oxd-text class="orangehrm-login-title" tag="h5">
-      {{ $t('auth.login') }}
+      {{ $t("auth.login") }}
     </oxd-text>
     <div class="orangehrm-login-form">
       <div class="orangehrm-login-error">
@@ -80,7 +80,7 @@
         </oxd-form-actions>
         <div class="orangehrm-login-forgot">
           <oxd-text class="orangehrm-login-forgot-header" @click="navigateUrl">
-            {{ $t('auth.forgot_password') }}?
+            {{ $t("auth.forgot_password") }}?
           </oxd-text>
         </div>
       </oxd-form>
@@ -113,20 +113,20 @@
 </template>
 
 <script>
-import {urlFor} from '@ohrm/core/util/helper/url';
-import {OxdAlert, OxdIcon, OxdSheet} from '@ohrm/oxd';
-import {required} from '@ohrm/core/util/validation/rules';
-import {navigate, reloadPage} from '@ohrm/core/util/helper/navigation';
-import LoginLayout from '@/orangehrmAuthenticationPlugin/components/LoginLayout.vue';
-import SocialMediaAuth from '@/orangehrmAuthenticationPlugin/components/SocialMediaAuth.vue';
+import { urlFor } from "@ohrm/core/util/helper/url";
+import { OxdAlert, OxdIcon, OxdSheet } from "@ohrm/oxd";
+import { required } from "@ohrm/core/util/validation/rules";
+import { navigate, reloadPage } from "@ohrm/core/util/helper/navigation";
+import LoginLayout from "@/orangehrmAuthenticationPlugin/components/LoginLayout.vue";
+import SocialMediaAuth from "@/orangehrmAuthenticationPlugin/components/SocialMediaAuth.vue";
 
 export default {
   components: {
-    'oxd-icon': OxdIcon,
-    'oxd-alert': OxdAlert,
-    'oxd-sheet': OxdSheet,
-    'login-layout': LoginLayout,
-    'social-media-auth': SocialMediaAuth,
+    "oxd-icon": OxdIcon,
+    "oxd-alert": OxdAlert,
+    "oxd-sheet": OxdSheet,
+    "login-layout": LoginLayout,
+    "social-media-auth": SocialMediaAuth,
   },
 
   props: {
@@ -154,8 +154,8 @@ export default {
 
   data() {
     return {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       rules: {
         username: [required],
         password: [required],
@@ -166,7 +166,7 @@ export default {
 
   computed: {
     submitUrl() {
-      return urlFor('/auth/validate');
+      return urlFor("/auth/validate");
     },
   },
 
@@ -184,7 +184,7 @@ export default {
       }
     },
     navigateUrl() {
-      navigate('/auth/requestPasswordResetCode');
+      navigate("/auth/requestPasswordResetCode");
     },
   },
 };

@@ -27,14 +27,14 @@
         @submit-valid="onSubmit"
       >
         <oxd-text tag="h6" class="orangehrm-admin-access-title">
-          {{ $t('auth.admin_access') }}
+          {{ $t("auth.admin_access") }}
         </oxd-text>
 
         <br />
 
         <div :class="noteContainerClass">
           <oxd-text tag="toast-message">
-            {{ $t('auth.admin_access_note') }}
+            {{ $t("auth.admin_access_note") }}
           </oxd-text>
         </div>
 
@@ -90,16 +90,16 @@
 </template>
 
 <script>
-import {urlFor} from '@ohrm/core/util/helper/url';
-import {navigate} from '@/core/util/helper/navigation';
-import {required} from '@/core/util/validation/rules';
-import {OxdAlert} from '@ohrm/oxd';
+import { urlFor } from "@ohrm/core/util/helper/url";
+import { navigate } from "@/core/util/helper/navigation";
+import { required } from "@/core/util/validation/rules";
+import { OxdAlert } from "@ohrm/oxd";
 
 export default {
-  name: 'AdministratorAccess',
+  name: "AdministratorAccess",
 
   components: {
-    'oxd-alert': OxdAlert,
+    "oxd-alert": OxdAlert,
   },
 
   props: {
@@ -123,23 +123,23 @@ export default {
 
   data() {
     return {
-      password: '',
+      password: "",
       rules: {
         password: [required],
       },
       noteClasses: {
-        'orangehrm-admin-access-note': true,
-        '--padding': this.error === null,
+        "orangehrm-admin-access-note": true,
+        "--padding": this.error === null,
       },
       noteContainerClass: {
-        'orangehrm-admin-access-note-container': this.error === null,
+        "orangehrm-admin-access-note-container": this.error === null,
       },
     };
   },
 
   computed: {
     submitUrl() {
-      return urlFor('/auth/adminVerify');
+      return urlFor("/auth/adminVerify");
     },
   },
 
@@ -168,7 +168,7 @@ export default {
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    @include oxd-respond-to('md') {
+    @include oxd-respond-to("md") {
       margin: 0 auto;
       max-width: 450px;
     }
@@ -183,7 +183,7 @@ export default {
     flex: 1;
     &:nth-child(2) {
       margin-top: 0.5rem;
-      @include oxd-respond-to('md') {
+      @include oxd-respond-to("md") {
         margin: 0;
         margin-left: 0.5rem;
       }
@@ -192,7 +192,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      @include oxd-respond-to('md') {
+      @include oxd-respond-to("md") {
         flex-direction: row;
       }
     }

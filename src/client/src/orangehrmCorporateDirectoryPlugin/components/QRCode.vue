@@ -18,11 +18,11 @@
  -->
 
 <script>
-import {toDataURL} from 'qrcode';
-import {h, ref, watch, onBeforeMount} from 'vue';
+import { toDataURL } from "qrcode";
+import { h, ref, watch, onBeforeMount } from "vue";
 
 export default {
-  name: 'QRCode',
+  name: "QRCode",
   props: {
     value: {
       type: String,
@@ -30,14 +30,14 @@ export default {
     },
   },
   setup(props) {
-    const qrImgSrc = ref('');
+    const qrImgSrc = ref("");
 
     const generateQR = async () => {
       const url = await toDataURL(String(props.value), {
-        type: 'image/png',
+        type: "image/png",
         width: 140,
       });
-      qrImgSrc.value = url || '';
+      qrImgSrc.value = url || "";
     };
 
     watch(() => props.value, generateQR);
@@ -45,9 +45,9 @@ export default {
     onBeforeMount(generateQR);
 
     return () =>
-      h('img', {
+      h("img", {
         src: qrImgSrc.value,
-        class: 'orangehrm-qr-code',
+        class: "orangehrm-qr-code",
       });
   },
 };

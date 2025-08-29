@@ -24,20 +24,20 @@
     :label="$t('time.customer_name')"
     :create-options="loadCustomers"
   >
-    <template #option="{data}">
+    <template #option="{ data }">
       <span>{{ data.label }}</span>
     </template>
   </oxd-input-field>
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'CustomerAutocomplete',
+  name: "CustomerAutocomplete",
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/time/customers',
+      "/api/v2/time/customers"
     );
     return {
       http,
@@ -51,14 +51,14 @@ export default {
             .getAll({
               name: serachParam.trim(),
             })
-            .then(({data}) => {
+            .then(({ data }) => {
               resolve(
                 data.data.map((customer) => {
                   return {
                     id: customer.id,
                     label: customer.name,
                   };
-                }),
+                })
               );
             });
         } else {

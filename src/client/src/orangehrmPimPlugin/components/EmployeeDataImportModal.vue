@@ -20,7 +20,7 @@
 <template>
   <oxd-dialog class="orangehrm-dialog-popup" @update:show="onClose">
     <div class="orangehrm-modal-header">
-      <oxd-text type="card-title">{{ $t('pim.import_details') }}</oxd-text>
+      <oxd-text type="card-title">{{ $t("pim.import_details") }}</oxd-text>
     </div>
     <div class="orangehrm-text-center-align">
       <oxd-text
@@ -29,14 +29,14 @@
           'orangehrm-success-message': data.success > 0,
         }"
       >
-        {{ $t('pim.n_records_successfully_imported', {count: data.success}) }}
+        {{ $t("pim.n_records_successfully_imported", { count: data.success }) }}
       </oxd-text>
       <template v-if="data.failed > 0">
         <oxd-text type="card-body" class="orangehrm-error-message">
-          {{ $t('pim.n_records_failed_to_import', {count: data.failed}) }}
+          {{ $t("pim.n_records_failed_to_import", { count: data.failed }) }}
         </oxd-text>
         <oxd-text type="card-body" class="orangehrm-error-message">
-          {{ $t('pim.failed_rows') }}
+          {{ $t("pim.failed_rows") }}
         </oxd-text>
         <oxd-text type="card-body" class="orangehrm-error-message">
           {{ data.failedRows.toString() }}
@@ -54,12 +54,12 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'EmployeeDataImportModal',
+  name: "EmployeeDataImportModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -67,10 +67,10 @@ export default {
       required: true,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   methods: {
     onClose() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

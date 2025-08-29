@@ -72,22 +72,22 @@
 </template>
 
 <script>
-import {OxdIcon} from '@ohrm/oxd';
+import { OxdIcon } from "@ohrm/oxd";
 
 export default {
-  name: 'FileUploadInput',
+  name: "FileUploadInput",
   components: {
-    'oxd-icon': OxdIcon,
+    "oxd-icon": OxdIcon,
   },
   inheritAttrs: false,
   props: {
     label: {
       type: String,
-      default: '',
+      default: "",
     },
     hint: {
       type: String,
-      default: '',
+      default: "",
     },
     url: {
       type: [String, Function],
@@ -116,14 +116,14 @@ export default {
       default: true,
     },
   },
-  emits: ['update:method', 'update:newFile'],
+  emits: ["update:method", "update:newFile"],
   computed: {
     fileSelected() {
       return this.file && Object.keys(this.file).length > 0;
     },
     fieldLabel() {
-      return this.method === 'replaceCurrent' && this.fileSelected
-        ? this.$t('general.upload_n_file', {
+      return this.method === "replaceCurrent" && this.fileSelected
+        ? this.$t("general.upload_n_file", {
             fileName: this.label,
           })
         : this.label;
@@ -132,13 +132,13 @@ export default {
   methods: {
     downloadFile() {
       let downUrl;
-      if (typeof this.url === 'function') {
+      if (typeof this.url === "function") {
         downUrl = this.url(this.$props);
       } else {
         if (!this.file?.id) return;
         downUrl = `${window.appGlobal.baseUrl}/${this.url}/${this.file.id}`;
       }
-      window.open(downUrl, '_blank');
+      window.open(downUrl, "_blank");
     },
   },
 };

@@ -27,7 +27,7 @@
           @submit-valid="onSubmit"
         >
           <oxd-text tag="h6" class="orangehrm-forgot-password-title">
-            {{ $t('auth.reset_password') }}
+            {{ $t("auth.reset_password") }}
           </oxd-text>
           <oxd-divider />
           <card-note
@@ -70,15 +70,15 @@
 </template>
 
 <script>
-import {navigate} from '@/core/util/helper/navigation';
-import {required} from '@/core/util/validation/rules';
-import CardNote from '../components/CardNote';
-import {urlFor} from '@/core/util/helper/url';
+import { navigate } from "@/core/util/helper/navigation";
+import { required } from "@/core/util/validation/rules";
+import CardNote from "../components/CardNote";
+import { urlFor } from "@/core/util/helper/url";
 
 export default {
-  name: 'RequestResetPassword',
+  name: "RequestResetPassword",
   components: {
-    'card-note': CardNote,
+    "card-note": CardNote,
   },
   props: {
     token: {
@@ -88,7 +88,7 @@ export default {
   },
   data() {
     return {
-      username: '',
+      username: "",
       rules: {
         username: [required],
       },
@@ -96,12 +96,12 @@ export default {
   },
   computed: {
     submitUrl() {
-      return urlFor('/auth/requestResetPassword');
+      return urlFor("/auth/requestResetPassword");
     },
   },
   methods: {
     onCancel() {
-      navigate('/auth/login');
+      navigate("/auth/login");
     },
     onSubmit() {
       this.$refs.resetForm.$el.submit();

@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title" tag="h6">
-        {{ $t('performance.add_review') }}
+        {{ $t("performance.add_review") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form ref="formRef" :loading="isLoading">
@@ -106,19 +106,19 @@
 </template>
 
 <script>
-import {navigate} from '@/core/util/helper/navigation';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import SupervisorAutoComplete from '@/orangehrmPerformancePlugin/components/SupervisorAutoComplete';
-import {APIService} from '@/core/util/services/api.service';
+import { navigate } from "@/core/util/helper/navigation";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import SupervisorAutoComplete from "@/orangehrmPerformancePlugin/components/SupervisorAutoComplete";
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   validSelection,
   validDateFormat,
   endDateShouldBeAfterStartDate,
   startDateShouldBeBeforeEndDate,
-} from '@/core/util/validation/rules';
-import useForm from '@/core/util/composable/useForm';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@/core/util/validation/rules";
+import useForm from "@/core/util/composable/useForm";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const reviewModel = {
   employee: null,
@@ -130,17 +130,17 @@ const reviewModel = {
 
 export default {
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
-    'supervisor-autocomplete': SupervisorAutoComplete,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "supervisor-autocomplete": SupervisorAutoComplete,
   },
   setup() {
-    const {formRef, invalid, validate} = useForm();
-    const {userDateFormat} = useDateFormat();
+    const { formRef, invalid, validate } = useForm();
+    const { userDateFormat } = useDateFormat();
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/performance/manage/reviews',
+      "/api/v2/performance/manage/reviews"
     );
-    http.setIgnorePath('/api/v2/performance/manage/reviews');
+    http.setIgnorePath("/api/v2/performance/manage/reviews");
     return {
       formRef,
       invalid,
@@ -152,7 +152,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      review: {...reviewModel},
+      review: { ...reviewModel },
       rules: {
         employee: [required, validSelection],
         supervisorReviewer: [required, validSelection],
@@ -162,8 +162,8 @@ export default {
           startDateShouldBeBeforeEndDate(
             () => this.review.endDate,
             this.$t(
-              'performance.review_period_start_date_should_be_before_end_date',
-            ),
+              "performance.review_period_start_date_should_be_before_end_date"
+            )
           ),
         ],
         endDate: [
@@ -172,8 +172,8 @@ export default {
           endDateShouldBeAfterStartDate(
             () => this.review.startDate,
             this.$t(
-              'performance.review_period_end_date_should_be_after_start_date',
-            ),
+              "performance.review_period_end_date_should_be_after_start_date"
+            )
           ),
         ],
         dueDate: [
@@ -182,8 +182,8 @@ export default {
           endDateShouldBeAfterStartDate(
             () => this.review.endDate,
             this.$t(
-              'performance.due_date_should_be_after_review_period_end_date',
-            ),
+              "performance.due_date_should_be_after_review_period_end_date"
+            )
           ),
         ],
       },
@@ -191,7 +191,7 @@ export default {
   },
   methods: {
     onCancel() {
-      navigate('/performance/searchPerformanceReview');
+      navigate("/performance/searchPerformanceReview");
     },
     onSave(activate = false) {
       this.validate().then(() => {
@@ -209,8 +209,8 @@ export default {
           .then(() => {
             if (activate === true) {
               return this.$toast.success({
-                title: this.$t('general.success'),
-                message: this.$t('general.successfully_activated'),
+                title: this.$t("general.success"),
+                message: this.$t("general.successfully_activated"),
               });
             } else {
               return this.$toast.updateSuccess();
@@ -221,7 +221,7 @@ export default {
           })
           .catch((response) => {
             return this.$toast.warn({
-              title: this.$t('general.warning'),
+              title: this.$t("general.warning"),
               message: response?.data.error.message,
             });
           })

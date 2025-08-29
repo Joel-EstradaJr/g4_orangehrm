@@ -25,7 +25,7 @@
   >
     <div class="orangehrm-dialog-header-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('leave.insufficient_leave_balance') }}
+        {{ $t("leave.insufficient_leave_balance") }}
       </oxd-text>
     </div>
     <oxd-divider
@@ -83,15 +83,15 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import { OxdDialog } from "@ohrm/oxd";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
-  name: 'LeaveBalanceInsufficientModal',
+  name: "LeaveBalanceInsufficientModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -103,10 +103,10 @@ export default {
       default: () => null,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup() {
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     return {
       locale,
@@ -117,19 +117,19 @@ export default {
     return {
       headers: [
         {
-          title: this.$t('leave.leave_period'),
-          name: 'period',
-          style: {flex: 1},
+          title: this.$t("leave.leave_period"),
+          name: "period",
+          style: { flex: 1 },
         },
         {
-          title: this.$t('general.date'),
-          name: 'date',
-          style: {flex: 1},
+          title: this.$t("general.date"),
+          name: "date",
+          style: { flex: 1 },
         },
         {
-          title: this.$t('leave.available_balance'),
-          name: 'balance',
-          style: {flex: 1},
+          title: this.$t("leave.available_balance"),
+          name: "balance",
+          style: { flex: 1 },
         },
       ],
     };
@@ -143,17 +143,17 @@ export default {
             const startDate = formatDate(
               parseDate(period.startDate),
               this.jsDateFormat,
-              {locale: this.locale},
+              { locale: this.locale }
             );
             const endDate = formatDate(
               parseDate(period.endDate),
               this.jsDateFormat,
-              {locale: this.locale},
+              { locale: this.locale }
             );
             const leaveDate = formatDate(
               parseDate(leave.date),
               this.jsDateFormat,
-              {locale: this.locale},
+              { locale: this.locale }
             );
 
             return {
@@ -173,19 +173,19 @@ export default {
       const employee = this.meta?.employee;
       if (employee) {
         return `${employee.firstName} ${employee.lastName}
-          ${employee.terminationId ? this.$t('general.past_employee') : ''}`;
+          ${employee.terminationId ? this.$t("general.past_employee") : ""}`;
       }
-      return '';
+      return "";
     },
     leaveBalance() {
       return this.data[0]?.balance
         ? `${parseFloat(this.data[0].balance.balance).toFixed(2)} Day(s)`
-        : '0.00 Day(s)';
+        : "0.00 Day(s)";
     },
   },
   methods: {
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

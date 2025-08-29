@@ -86,24 +86,24 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
+import { computed, ref } from "vue";
 import {
   required,
   shouldNotExceedCharLength,
   validDateFormat,
-} from '@/core/util/validation/rules';
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {freshDate, formatDate} from '@ohrm/core/util/helper/datefns';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import {yearRange} from '@/core/util/helper/year-range';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
+} from "@/core/util/validation/rules";
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { freshDate, formatDate } from "@ohrm/core/util/helper/datefns";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import { yearRange } from "@/core/util/helper/year-range";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
 
 export default {
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
 
   props: {
@@ -114,8 +114,8 @@ export default {
   },
 
   setup(props) {
-    const {$tEmpName} = useEmployeeNameTranslate();
-    const {userDateFormat} = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
+    const { userDateFormat } = useDateFormat();
 
     const rules = {
       date: [required, validDateFormat(userDateFormat)],
@@ -123,7 +123,7 @@ export default {
     };
 
     const filters = ref({
-      date: props.date ? props.date : formatDate(freshDate(), 'yyyy-MM-dd'),
+      date: props.date ? props.date : formatDate(freshDate(), "yyyy-MM-dd"),
       employee: null,
     });
 
@@ -149,7 +149,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/attendance/employees/summary',
+      "/api/v2/attendance/employees/summary"
     );
     const {
       total,
@@ -183,30 +183,30 @@ export default {
       yearArray: [...yearRange()],
       headers: [
         {
-          name: 'empName',
-          slot: 'title',
-          title: this.$t('general.employee_name'),
-          style: {flex: '40%'},
+          name: "empName",
+          slot: "title",
+          title: this.$t("general.employee_name"),
+          style: { flex: "40%" },
         },
         {
-          name: 'duration',
-          title: this.$t('time.total_duration'),
-          style: {flex: '40%'},
+          name: "duration",
+          title: this.$t("time.total_duration"),
+          style: { flex: "40%" },
         },
         {
-          name: 'actions',
-          slot: 'footer',
-          title: this.$t('general.actions'),
-          style: {flex: '20%'},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "footer",
+          title: this.$t("general.actions"),
+          style: { flex: "20%" },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             view: {
               onClick: this.onClickView,
-              component: 'oxd-button',
+              component: "oxd-button",
               props: {
-                label: this.$t('general.view'),
-                displayType: 'text',
-                size: 'medium',
+                label: this.$t("general.view"),
+                displayType: "text",
+                size: "medium",
               },
             },
           },
@@ -221,7 +221,7 @@ export default {
     },
     async filterItems() {
       if (this.filters.employee && this.filters.date) {
-        return navigate('/attendance/viewAttendanceRecord', undefined, {
+        return navigate("/attendance/viewAttendanceRecord", undefined, {
           employeeId: this.filters.employee.id,
           date: this.filters.date,
         });
@@ -229,7 +229,7 @@ export default {
       await this.execQuery();
     },
     onClickView(item) {
-      navigate('/attendance/viewAttendanceRecord', undefined, {
+      navigate("/attendance/viewAttendanceRecord", undefined, {
         employeeId: item.id,
         date: this.filters.date,
       });

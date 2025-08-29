@@ -20,24 +20,24 @@
 <template>
   <oxd-dialog class="orangehrm-dialog-popup" @update:show="onClose">
     <div class="orangehrm-modal-header">
-      <oxd-text type="card-title">{{ $t('pim.import_details') }}</oxd-text>
+      <oxd-text type="card-title">{{ $t("pim.import_details") }}</oxd-text>
     </div>
     <div class="orangehrm-text-center-align">
       <oxd-text
         v-if="data.success > 0"
         type="card-body"
-        :class="{'orangehrm-success-message': data.success > 0}"
+        :class="{ 'orangehrm-success-message': data.success > 0 }"
       >
-        {{ $t('pim.n_records_successfully_imported', {count: data.success}) }}
+        {{ $t("pim.n_records_successfully_imported", { count: data.success }) }}
       </oxd-text>
       <template v-if="data.failed > 0">
         <oxd-text type="card-body" class="orangehrm-error-message">
-          {{ $t('pim.n_records_failed_to_import', {count: data.failed}) }}
+          {{ $t("pim.n_records_failed_to_import", { count: data.failed }) }}
         </oxd-text>
       </template>
       <template v-if="data.skipped > 0">
         <oxd-text type="card-body" class="orangehrm-warn-message">
-          {{ $t('admin.n_records_skipped', {count: data.skipped}) }}
+          {{ $t("admin.n_records_skipped", { count: data.skipped }) }}
         </oxd-text>
       </template>
     </div>
@@ -51,7 +51,7 @@
       <oxd-button
         v-if="data.failed > 0"
         display-type="secondary"
-        :label="$t('admin.fix_errors', {count: data.failed})"
+        :label="$t('admin.fix_errors', { count: data.failed })"
         @click="onClickFixErrors"
       />
     </div>
@@ -59,13 +59,13 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
-import {navigate} from '@/core/util/helper/navigation';
+import { OxdDialog } from "@ohrm/oxd";
+import { navigate } from "@/core/util/helper/navigation";
 
 export default {
-  name: 'LanguageStringsImportModal',
+  name: "LanguageStringsImportModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -77,13 +77,13 @@ export default {
       required: true,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   methods: {
     onClose() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
     onClickFixErrors() {
-      navigate('/admin/fixLanguageStringErrors/{languageId}', {
+      navigate("/admin/fixLanguageStringErrors/{languageId}", {
         languageId: this.languageId,
       });
     },

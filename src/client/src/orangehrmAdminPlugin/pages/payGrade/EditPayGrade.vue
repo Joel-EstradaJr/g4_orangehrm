@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.edit_pay_grade') }}
+        {{ $t("admin.edit_pay_grade") }}
       </oxd-text>
 
       <oxd-divider />
@@ -59,18 +59,18 @@
 </template>
 
 <script>
-import {navigate, reloadPage} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate, reloadPage } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
-import PayGradeCurrency from '@/orangehrmAdminPlugin/pages/payGrade/PayGradeCurrency.vue';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
+import PayGradeCurrency from "@/orangehrmAdminPlugin/pages/payGrade/PayGradeCurrency.vue";
 
 export default {
   components: {
-    'pay-grade-currency': PayGradeCurrency,
+    "pay-grade-currency": PayGradeCurrency,
   },
 
   props: {
@@ -83,10 +83,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/pay-grades',
+      "/api/v2/admin/pay-grades"
     );
-    const {createUniqueValidator} = useServerValidation(http);
-    const payGradeUniqueValidation = createUniqueValidator('PayGrade', 'name', {
+    const { createUniqueValidator } = useServerValidation(http);
+    const payGradeUniqueValidation = createUniqueValidator("PayGrade", "name", {
       entityId: props.payGradeId,
     });
     return {
@@ -99,8 +99,8 @@ export default {
     return {
       isLoading: false,
       grade: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -117,7 +117,7 @@ export default {
     this.http
       .get(this.payGradeId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.grade.id = data.id;
         this.grade.name = data.name;
       })
@@ -141,7 +141,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/admin/viewPayGrades');
+      navigate("/admin/viewPayGrades");
     },
   },
 };

@@ -33,7 +33,7 @@
   </div>
   <div class="orangehrm-paper-container">
     <oxd-text tag="p" class="orangehrm-vacancy-list-poweredby">
-      {{ $t('recruitment.powered_by') }}
+      {{ $t("recruitment.powered_by") }}
     </oxd-text>
     <img
       :src="defaultPic"
@@ -45,16 +45,16 @@
 </template>
 
 <script>
-import VacancyCard from '@/orangehrmRecruitmentPlugin/components/VacancyCard';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@/core/util/composable/usePaginate';
-import {OxdSpinner} from '@ohrm/oxd';
+import VacancyCard from "@/orangehrmRecruitmentPlugin/components/VacancyCard";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@/core/util/composable/usePaginate";
+import { OxdSpinner } from "@ohrm/oxd";
 
 export default {
-  name: 'VacancyList',
+  name: "VacancyList",
   components: {
-    'vacancy-card': VacancyCard,
-    'oxd-loading-spinner': OxdSpinner,
+    "vacancy-card": VacancyCard,
+    "oxd-loading-spinner": OxdSpinner,
   },
   setup() {
     const defaultPic = `${window.appGlobal.publicPath}/images/ohrm_branding.png`;
@@ -69,9 +69,9 @@ export default {
     };
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/public/vacancies',
+      "/api/v2/recruitment/public/vacancies"
     );
-    const {showPaginator, currentPage, total, pages, response, isLoading} =
+    const { showPaginator, currentPage, total, pages, response, isLoading } =
       usePaginate(http, {
         normalizer: vacancyDataNormalizer,
         pageSize: 8,

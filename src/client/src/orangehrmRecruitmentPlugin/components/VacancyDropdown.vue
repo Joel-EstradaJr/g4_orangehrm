@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import {ref, onBeforeMount} from 'vue';
-import usei18n from '@/core/util/composable/usei18n';
-import {APIService} from '@/core/util/services/api.service';
+import { ref, onBeforeMount } from "vue";
+import usei18n from "@/core/util/composable/usei18n";
+import { APIService } from "@/core/util/services/api.service";
 
 export default {
-  name: 'VacancyDropdown',
+  name: "VacancyDropdown",
   props: {
     status: {
       type: Boolean,
@@ -46,24 +46,24 @@ export default {
   },
   setup(props) {
     const options = ref([]);
-    const {$t} = usei18n();
+    const { $t } = usei18n();
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/vacancies',
+      "/api/v2/recruitment/vacancies"
     );
     onBeforeMount(() => {
-      const params = {model: 'summary', limit: 0};
+      const params = { model: "summary", limit: 0 };
       if (props.status !== null) {
         params.status = props.status;
       }
       params.excludeInterviewers = props.excludeInterviewers;
-      http.getAll(params).then(({data}) => {
+      http.getAll(params).then(({ data }) => {
         options.value = data.data.map((item) => {
           return {
             id: item.id,
             label:
               item.status === false
-                ? `${item.name} (${$t('general.closed')})`
+                ? `${item.name} (${$t("general.closed")})`
                 : item.name,
           };
         });

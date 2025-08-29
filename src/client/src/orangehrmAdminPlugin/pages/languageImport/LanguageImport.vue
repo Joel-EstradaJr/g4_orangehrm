@@ -21,38 +21,38 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">
-        {{ $t('admin.import_language_package') }}: {{ languageName }}
+        {{ $t("admin.import_language_package") }}: {{ languageName }}
       </oxd-text>
       <oxd-divider />
       <div class="orangehrm-information-card-container">
         <oxd-text class="orangehrm-sub-title">
-          {{ $t('general.note') }}:
+          {{ $t("general.note") }}:
         </oxd-text>
         <ul>
           <li>
             <oxd-text class="orangehrm-information-card-text">
-              {{ $t('admin.use_the_sample_template') }}
+              {{ $t("admin.use_the_sample_template") }}
             </oxd-text>
           </li>
           <li>
             <oxd-text class="orangehrm-information-card-text">
-              {{ $t('admin.only_edit_the_target_field') }}
+              {{ $t("admin.only_edit_the_target_field") }}
             </oxd-text>
           </li>
           <li>
             <oxd-text class="orangehrm-information-card-text">
-              {{ $t('admin.do_not_change_the_template') }}
+              {{ $t("admin.do_not_change_the_template") }}
             </oxd-text>
           </li>
           <li>
             <oxd-text class="orangehrm-information-card-text">
-              {{ $t('admin.sample_xliff') }}:
+              {{ $t("admin.sample_xliff") }}:
               <a
                 href="#"
                 class="download-link"
                 @click.prevent="onClickDownload"
               >
-                {{ $t('general.download') }}
+                {{ $t("general.download") }}
               </a>
             </oxd-text>
           </li>
@@ -75,7 +75,7 @@
               />
               <oxd-text class="orangehrm-input-hint" tag="p">
                 {{
-                  $t('general.accepts_up_to_n_mb', {count: formattedFileSize})
+                  $t("general.accepts_up_to_n_mb", { count: formattedFileSize })
                 }}
               </oxd-text>
             </oxd-grid-item>
@@ -102,12 +102,12 @@ import {
   maxFileSize,
   required,
   validFileTypes,
-} from '@/core/util/validation/rules';
-import useForm from '@/core/util/composable/useForm';
-import {APIService} from '@/core/util/services/api.service';
-import LanguageStringsImportModal from '@/orangehrmAdminPlugin/components/LanguageStringsImportModal.vue';
-import RequiredText from '@/core/components/labels/RequiredText.vue';
-import SubmitButton from '@/core/components/buttons/SubmitButton.vue';
+} from "@/core/util/validation/rules";
+import useForm from "@/core/util/composable/useForm";
+import { APIService } from "@/core/util/services/api.service";
+import LanguageStringsImportModal from "@/orangehrmAdminPlugin/components/LanguageStringsImportModal.vue";
+import RequiredText from "@/core/components/labels/RequiredText.vue";
+import SubmitButton from "@/core/components/buttons/SubmitButton.vue";
 
 const attachmentModel = {
   attachment: null,
@@ -116,7 +116,7 @@ export default {
   components: {
     SubmitButton,
     RequiredText,
-    'language-string-import-modal': LanguageStringsImportModal,
+    "language-string-import-modal": LanguageStringsImportModal,
   },
   props: {
     languageId: {
@@ -139,9 +139,9 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/admin/i18n/languages/${props.languageId}/import`,
+      `/api/v2/admin/i18n/languages/${props.languageId}/import`
     );
-    const {formRef, reset} = useForm();
+    const { formRef, reset } = useForm();
     return {
       http,
       reset,
@@ -177,7 +177,7 @@ export default {
           ...this.attachment,
         })
         .then((response) => {
-          const {meta} = response.data;
+          const { meta } = response.data;
           this.importModalState = meta;
         })
         .finally(() => {
@@ -187,7 +187,7 @@ export default {
     },
     onClickDownload() {
       const downUrl = `${window.appGlobal.baseUrl}/admin/viewLanguagePackage/languageId/${this.languageId}`;
-      window.open(downUrl, '_blank');
+      window.open(downUrl, "_blank");
     },
     onImportModalClose() {
       this.importModalState = null;

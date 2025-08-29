@@ -26,7 +26,7 @@
   >
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('pim.job_details') }}
+        {{ $t("pim.job_details") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -97,7 +97,7 @@
 
         <oxd-form-row class="user-form-header">
           <oxd-text class="user-form-header-text" tag="p">
-            {{ $t('pim.include_employment_contract_details') }}
+            {{ $t("pim.include_employment_contract_details") }}
           </oxd-text>
           <oxd-switch-input v-model="showContractDetails" />
         </oxd-form-row>
@@ -136,7 +136,9 @@
                   :rules="rules.contractAttachment"
                   :url="`pim/viewAttachment/empNumber/${empNumber}/attachId`"
                   :hint="
-                    $t('general.accepts_up_to_n_mb', {count: formattedFileSize})
+                    $t('general.accepts_up_to_n_mb', {
+                      count: formattedFileSize,
+                    })
                   "
                   :disabled="!hasUpdatePermissions"
                 />
@@ -168,14 +170,14 @@
         class="--termination-button"
         @click="onClickTerminate"
       >
-        {{ $t('pim.employee_termination_activation') }}
+        {{ $t("pim.employee_termination_activation") }}
         <oxd-text
           v-if="termination && termination.id"
           tag="p"
           class="orangehrm-terminate-date"
           @click="openTerminateModal"
         >
-          {{ $t('pim.terminated_on') }}: {{ terminationDate }}
+          {{ $t("pim.terminated_on") }}: {{ terminationDate }}
         </oxd-text>
       </profile-action-header>
     </div>
@@ -190,26 +192,26 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import FileUploadInput from '@/core/components/inputs/FileUploadInput';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import JobSpecDownload from '@/orangehrmPimPlugin/components/JobSpecDownload';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import TerminateModal from '@/orangehrmPimPlugin/components/TerminateModal';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import FileUploadInput from "@/core/components/inputs/FileUploadInput";
+import EditEmployeeLayout from "@/orangehrmPimPlugin/components/EditEmployeeLayout";
+import JobSpecDownload from "@/orangehrmPimPlugin/components/JobSpecDownload";
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import TerminateModal from "@/orangehrmPimPlugin/components/TerminateModal";
 import {
   required,
   maxFileSize,
   validFileTypes,
   validDateFormat,
   endDateShouldBeAfterStartDate,
-} from '@ohrm/core/util/validation/rules';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
-import {OxdSwitchInput} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const jobDetailsModel = {
-  joinedDate: '',
+  joinedDate: "",
   jobTitleId: [],
   empStatusId: [],
   jobCategoryId: [],
@@ -218,21 +220,21 @@ const jobDetailsModel = {
 };
 
 const contractDetailsModel = {
-  startDate: '',
-  endDate: '',
+  startDate: "",
+  endDate: "",
   oldAttachment: null,
   newAttachment: null,
-  method: 'keepCurrent',
+  method: "keepCurrent",
 };
 
 export default {
   components: {
-    'edit-employee-layout': EditEmployeeLayout,
-    'oxd-switch-input': OxdSwitchInput,
-    'job-spec-download': JobSpecDownload,
-    'file-upload-input': FileUploadInput,
-    'profile-action-header': ProfileActionHeader,
-    'terminate-modal': TerminateModal,
+    "edit-employee-layout": EditEmployeeLayout,
+    "oxd-switch-input": OxdSwitchInput,
+    "job-spec-download": JobSpecDownload,
+    "file-upload-input": FileUploadInput,
+    "profile-action-header": ProfileActionHeader,
+    "terminate-modal": TerminateModal,
   },
 
   props: {
@@ -277,10 +279,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.empNumber}/job-details`,
+      `/api/v2/pim/employees/${props.empNumber}/job-details`
     );
-    const {jsDateFormat, userDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat, userDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     return {
       http,
@@ -294,8 +296,8 @@ export default {
     return {
       isLoading: false,
       showContractDetails: false,
-      job: {...jobDetailsModel},
-      contract: {...contractDetailsModel},
+      job: { ...jobDetailsModel },
+      contract: { ...contractDetailsModel },
       termination: null,
       showTerminateModal: false,
       rules: {
@@ -307,7 +309,7 @@ export default {
         ],
         contractAttachment: [
           (v) => {
-            if (this.contract.method == 'replaceCurrent') {
+            if (this.contract.method == "replaceCurrent") {
               return required(v);
             } else {
               return true;
@@ -327,11 +329,11 @@ export default {
     },
     terminationActionLabel() {
       return this.termination?.id
-        ? this.$t('pim.activate_employment')
-        : this.$t('pim.terminate_employment');
+        ? this.$t("pim.activate_employment")
+        : this.$t("pim.terminate_employment");
     },
     terminationActionType() {
-      return this.termination?.id ? 'ghost-success' : 'label-danger';
+      return this.termination?.id ? "ghost-success" : "label-danger";
     },
     hasUpdatePermissions() {
       return this.$can.update(`job_details`);
@@ -341,7 +343,7 @@ export default {
         return {
           id: jobTitle.id,
           label: jobTitle?.deleted
-            ? jobTitle.label + this.$t('general.deleted')
+            ? jobTitle.label + this.$t("general.deleted")
             : jobTitle.label,
         };
       });
@@ -367,7 +369,7 @@ export default {
       })
       .then(() => {
         return this.http.request({
-          method: 'GET',
+          method: "GET",
           url: `/api/v2/pim/employees/${this.empNumber}/employment-contract`,
         });
       })
@@ -384,7 +386,7 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             ...this.job,
             jobTitleId: this.job.jobTitleId?.id,
@@ -397,7 +399,7 @@ export default {
         .then((response) => {
           this.updateJobModel(response);
           return this.http.request({
-            method: 'PUT',
+            method: "PUT",
             url: `/api/v2/pim/employees/${this.empNumber}/employment-contract`,
             data: {
               startDate: this.contract.startDate,
@@ -427,7 +429,7 @@ export default {
         this.isLoading = true;
         this.http
           .request({
-            method: 'DELETE',
+            method: "DELETE",
             url: `/api/v2/pim/employees/${this.empNumber}/terminations`,
           })
           .then(() => {
@@ -453,14 +455,14 @@ export default {
     },
 
     updateContractModel(response) {
-      const {data} = response.data;
+      const { data } = response.data;
       this.contract.startDate = data.startDate;
       this.contract.endDate = data.endDate;
       this.contract.oldAttachment = data.contractAttachment?.id
         ? data.contractAttachment
         : null;
       this.contract.newAttachment = null;
-      this.contract.method = 'keepCurrent';
+      this.contract.method = "keepCurrent";
       if (data.startDate || data.endDate || data.contractAttachment?.id) {
         this.showContractDetails = true;
       } else {
@@ -469,22 +471,22 @@ export default {
     },
 
     updateJobModel(response) {
-      const {data} = response.data;
+      const { data } = response.data;
       this.job.joinedDate = data.joinedDate;
       this.job.jobTitleId = this.normalizedJobTitles.find(
-        (item) => item.id === data.jobTitle?.id,
+        (item) => item.id === data.jobTitle?.id
       );
       this.job.jobCategoryId = this.jobCategories.find(
-        (item) => item.id === data.jobCategory?.id,
+        (item) => item.id === data.jobCategory?.id
       );
       this.job.subunitId = this.subunits.find(
-        (item) => item.id === data.subunit?.id,
+        (item) => item.id === data.subunit?.id
       );
       this.job.empStatusId = this.employmentStatuses.find(
-        (item) => item.id === data.empStatus?.id,
+        (item) => item.id === data.empStatus?.id
       );
       this.job.locationId = this.locations.find(
-        (item) => item.id === data.location?.id,
+        (item) => item.id === data.location?.id
       );
       this.termination = data.employeeTerminationRecord;
     },

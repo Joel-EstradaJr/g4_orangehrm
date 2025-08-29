@@ -20,17 +20,17 @@
 <template>
   <div v-if="instanceIdentifier !== null" class="orangehrm-maintenance-note">
     <div class="orangehrm-maintenance-note-header">
-      <oxd-text>{{ $t('general.note') }}</oxd-text>
+      <oxd-text>{{ $t("general.note") }}</oxd-text>
     </div>
     <oxd-text>{{
-      $t('maintenance.gdpr_note', {instanceIdentifier: instanceIdentifier})
+      $t("maintenance.gdpr_note", { instanceIdentifier: instanceIdentifier })
     }}</oxd-text>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MaintenanceNote',
+  name: "MaintenanceNote",
 
   props: {
     instanceIdentifier: {

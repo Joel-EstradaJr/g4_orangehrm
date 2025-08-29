@@ -70,7 +70,7 @@
         @click="onClickAdd"
       />
       <oxd-text class="orangehrm-header-total" tag="span">
-        {{ $t('time.total_duration') }}: {{ totalDuration }}
+        {{ $t("time.total_duration") }}: {{ totalDuration }}
       </oxd-text>
     </div>
     <table-header
@@ -103,13 +103,13 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
+import { computed, ref } from "vue";
 import {
   required,
   validSelection,
   validDateFormat,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
+} from "@/core/util/validation/rules";
 import {
   freshDate,
   parseDate,
@@ -117,21 +117,21 @@ import {
   formatTime,
   formatDate,
   getStandardTimezone,
-} from '@/core/util/helper/datefns';
-import {navigate} from '@/core/util/helper/navigation';
-import {yearRange} from '@/core/util/helper/year-range';
-import useLocale from '@/core/util/composable/useLocale';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import RecordCell from '@/orangehrmAttendancePlugin/components/RecordCell.vue';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
+} from "@/core/util/helper/datefns";
+import { navigate } from "@/core/util/helper/navigation";
+import { yearRange } from "@/core/util/helper/year-range";
+import useLocale from "@/core/util/composable/useLocale";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import RecordCell from "@/orangehrmAttendancePlugin/components/RecordCell.vue";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
 
 export default {
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -151,7 +151,7 @@ export default {
 
   setup(props) {
     const filters = ref({
-      date: props.date ? props.date : formatDate(freshDate(), 'yyyy-MM-dd'),
+      date: props.date ? props.date : formatDate(freshDate(), "yyyy-MM-dd"),
       employee: props.employee
         ? {
             id: props.employee.empNumber,
@@ -170,10 +170,10 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/attendance/employees/${props.employee.empNumber}/records`,
+      `/api/v2/attendance/employees/${props.employee.empNumber}/records`
     );
-    const {locale} = useLocale();
-    const {jsDateFormat, userDateFormat, timeFormat, jsTimeFormat} =
+    const { locale } = useLocale();
+    const { jsDateFormat, userDateFormat, timeFormat, jsTimeFormat } =
       useDateFormat();
 
     const rules = {
@@ -183,24 +183,24 @@ export default {
 
     const attendanceRecordNormalizer = (data) => {
       return data.map((item) => {
-        const {punchIn, punchOut} = item;
+        const { punchIn, punchOut } = item;
         const punchInDate = formatDate(
           parseDate(punchIn?.userDate),
           jsDateFormat,
-          {locale},
+          { locale }
         );
         const punchInTime = formatTime(
           parseTime(punchIn?.userTime, timeFormat),
-          jsTimeFormat,
+          jsTimeFormat
         );
         const punchOutDate = formatDate(
           parseDate(punchOut?.userDate),
           jsDateFormat,
-          {locale},
+          { locale }
         );
         const punchOutTime = formatTime(
           parseTime(punchOut?.userTime, timeFormat),
-          jsTimeFormat,
+          jsTimeFormat
         );
 
         return {
@@ -239,7 +239,7 @@ export default {
 
     const totalDuration = computed(() => {
       const meta = response.value?.meta;
-      return meta ? meta.sum.label : '0.00';
+      return meta ? meta.sum.label : "0.00";
     });
 
     return {
@@ -263,58 +263,58 @@ export default {
       yearArray: [...yearRange()],
       headers: [
         {
-          name: 'punchIn',
-          slot: 'title',
-          title: this.$t('attendance.punch_in'),
-          style: {flex: 1},
+          name: "punchIn",
+          slot: "title",
+          title: this.$t("attendance.punch_in"),
+          style: { flex: 1 },
           cellRenderer: this.cellRenderer,
         },
         {
-          name: 'punchInNote',
-          slot: 'title',
-          cellType: 'oxd-table-cell-truncate',
-          title: this.$t('attendance.punch_in_note'),
-          style: {flex: 1},
+          name: "punchInNote",
+          slot: "title",
+          cellType: "oxd-table-cell-truncate",
+          title: this.$t("attendance.punch_in_note"),
+          style: { flex: 1 },
         },
         {
-          name: 'punchOut',
-          slot: 'title',
-          title: this.$t('attendance.punch_out'),
-          style: {flex: 1},
+          name: "punchOut",
+          slot: "title",
+          title: this.$t("attendance.punch_out"),
+          style: { flex: 1 },
           cellRenderer: this.cellRenderer,
         },
         {
-          name: 'punchOutNote',
-          slot: 'title',
-          cellType: 'oxd-table-cell-truncate',
-          title: this.$t('attendance.punch_out_note'),
-          style: {flex: 1},
+          name: "punchOutNote",
+          slot: "title",
+          cellType: "oxd-table-cell-truncate",
+          title: this.$t("attendance.punch_out_note"),
+          style: { flex: 1 },
         },
         {
-          name: 'duration',
-          slot: 'title',
-          title: this.$t('attendance.duration_hours'),
-          style: {flex: 1},
+          name: "duration",
+          slot: "title",
+          title: this.$t("attendance.duration_hours"),
+          style: { flex: 1 },
         },
         {
           ...(this.isEditable && {
-            name: 'actions',
-            title: this.$t('general.actions'),
-            slot: 'action',
-            style: {flex: 1},
-            cellType: 'oxd-table-cell-actions',
+            name: "actions",
+            title: this.$t("general.actions"),
+            slot: "action",
+            style: { flex: 1 },
+            cellType: "oxd-table-cell-actions",
             cellConfig: {
               delete: {
                 onClick: this.onClickDelete,
-                component: 'oxd-icon-button',
+                component: "oxd-icon-button",
                 props: {
-                  name: 'trash',
+                  name: "trash",
                 },
               },
               edit: {
                 onClick: this.onClickEdit,
                 props: {
-                  name: 'pencil-fill',
+                  name: "pencil-fill",
                 },
               },
             },
@@ -342,14 +342,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -375,19 +375,19 @@ export default {
       await this.execQuery();
     },
     onClickView() {
-      return navigate('/attendance/viewAttendanceRecord', undefined, {
+      return navigate("/attendance/viewAttendanceRecord", undefined, {
         employeeId: this.filters.employee?.id,
         date: this.filters?.date,
       });
     },
     onClickAdd() {
-      return navigate('/attendance/proxyPunchInPunchOut', undefined, {
+      return navigate("/attendance/proxyPunchInPunchOut", undefined, {
         employeeId: this.filters.employee?.id,
         date: this.filters?.date,
       });
     },
     onClickEdit(item) {
-      return navigate('/attendance/editEmployeeAttendanceRecord/{id}', {
+      return navigate("/attendance/editEmployeeAttendanceRecord/{id}", {
         id: item.id,
       });
     },

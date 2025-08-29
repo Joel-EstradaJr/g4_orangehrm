@@ -24,14 +24,14 @@
       tag="h6"
       class="orangehrm-main-title"
     >
-      {{ $t('pim.add_supervisor') }}
+      {{ $t("pim.add_supervisor") }}
     </oxd-text>
     <oxd-text
       v-if="type === 'Subordinate'"
       tag="h6"
       class="orangehrm-main-title"
     >
-      {{ $t('pim.add_subordinate') }}
+      {{ $t("pim.add_subordinate") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -74,12 +74,12 @@
 </template>
 
 <script>
-import ReportToEmployeeAutocomplete from '@/orangehrmPimPlugin/components/ReportToEmployeeAutocomplete';
+import ReportToEmployeeAutocomplete from "@/orangehrmPimPlugin/components/ReportToEmployeeAutocomplete";
 import {
   required,
   shouldNotExceedCharLength,
   validSelection,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 const reportToModel = {
   employee: null,
@@ -87,10 +87,10 @@ const reportToModel = {
 };
 
 export default {
-  name: 'SaveEmployeeReportTo',
+  name: "SaveEmployeeReportTo",
 
   components: {
-    'report-to-employee-autocomplete': ReportToEmployeeAutocomplete,
+    "report-to-employee-autocomplete": ReportToEmployeeAutocomplete,
   },
 
   props: {
@@ -112,7 +112,7 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props) {
     const api = `/api/v2/pim/employees/${props.empNumber}/report-to/allowed`;
@@ -124,7 +124,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      reportTo: {...reportToModel},
+      reportTo: { ...reportToModel },
       rules: {
         employee: [required, shouldNotExceedCharLength(100), validSelection],
         reportingMethod: [required],
@@ -148,7 +148,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

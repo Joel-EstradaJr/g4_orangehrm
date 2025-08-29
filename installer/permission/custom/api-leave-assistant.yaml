@@ -1,0 +1,17 @@
+##########################
+#        Leave
+##########################
+
+apiv2_leave_assistant_chat:
+  description: "Leave - Assistant Chat"
+  api: OrangeHRM\Leave\Api\LeaveAssistantAPI
+  module: leave
+  allowed:
+    read: false
+    create: true
+    update: false
+    delete: false
+  permissions:
+    - { role: Admin, permission: { read: false, create: true, update: false, delete: false } }
+    - { role: ESS, permission: { read: false, create: true, update: false, delete: false } }
+    - { role: Supervisor, permission: { read: false, create: true, update: false, delete: false } }

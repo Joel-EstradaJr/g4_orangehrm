@@ -26,7 +26,7 @@
             <div class="orangehrm-edit-employee-name">
               <oxd-text tag="h6" class="--strong">{{ employeeName }}</oxd-text>
               <oxd-text v-if="!isCurrentEmp" type="subtitle-2">
-                {{ $t('general.past_employee') }}
+                {{ $t("general.past_employee") }}
               </oxd-text>
             </div>
             <div class="orangehrm-edit-employee-image-wrapper">
@@ -65,21 +65,21 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import TabsNavigation from '@/orangehrmPimPlugin/components/TabsNavigation';
-import ProfileAttachments from '@/orangehrmPimPlugin/components/ProfileAttachments';
-import ProfileCustomFields from '@/orangehrmPimPlugin/components/ProfileCustomFields';
+import { computed, ref } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import TabsNavigation from "@/orangehrmPimPlugin/components/TabsNavigation";
+import ProfileAttachments from "@/orangehrmPimPlugin/components/ProfileAttachments";
+import ProfileCustomFields from "@/orangehrmPimPlugin/components/ProfileCustomFields";
 
 const defaultPic = `${window.appGlobal.publicPath}/images/default-photo.png`;
 
 export default {
-  name: 'EditEmployeeLayout',
+  name: "EditEmployeeLayout",
   components: {
-    'tabs-navigation': TabsNavigation,
-    'profile-attachments': ProfileAttachments,
-    'profile-custom-fields': ProfileCustomFields,
+    "tabs-navigation": TabsNavigation,
+    "profile-attachments": ProfileAttachments,
+    "profile-custom-fields": ProfileCustomFields,
   },
   props: {
     employeeId: {
@@ -100,34 +100,34 @@ export default {
     },
     screen: {
       type: String,
-      default: 'default',
+      default: "default",
       validator(value) {
         return [
-          'default',
-          'personal',
-          'contact',
-          'emergency',
-          'dependents',
-          'immigration',
-          'qualifications',
-          'tax',
-          'salary',
-          'job',
-          'report-to',
-          'membership',
+          "default",
+          "personal",
+          "contact",
+          "emergency",
+          "dependents",
+          "immigration",
+          "qualifications",
+          "tax",
+          "salary",
+          "job",
+          "report-to",
+          "membership",
         ].includes(value);
       },
     },
   },
   setup(props) {
-    const employeeName = ref('');
+    const employeeName = ref("");
     const isCurrentEmp = ref(true);
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/employees',
+      "/api/v2/pim/employees"
     );
 
-    http.get(props.employeeId).then(({data}) => {
+    http.get(props.employeeId).then(({ data }) => {
       employeeName.value = `${data.data.firstName} ${data.data.lastName}`;
       isCurrentEmp.value = data.data.terminationId ? false : true;
     });
@@ -139,7 +139,7 @@ export default {
     });
 
     const onClickProfilePic = () => {
-      navigate('/pim/viewPhotograph/empNumber/{empNumber}', {
+      navigate("/pim/viewPhotograph/empNumber/{empNumber}", {
         empNumber: props.employeeId,
       });
     };
@@ -161,23 +161,23 @@ export default {
 
 .orangehrm-edit-employee {
   display: flex;
-  @include oxd-respond-to('xs') {
+  @include oxd-respond-to("xs") {
     flex-direction: column;
   }
-  @include oxd-respond-to('md') {
+  @include oxd-respond-to("md") {
     flex-direction: row;
   }
   &-navigation {
     width: 100%;
     padding: 1rem;
     box-sizing: border-box;
-    @include oxd-respond-to('md') {
+    @include oxd-respond-to("md") {
       width: 220px;
     }
   }
   &-content {
     flex: 1;
-    @include oxd-respond-to('md') {
+    @include oxd-respond-to("md") {
       border-left: $oxd-input-control-border--active;
     }
   }
@@ -193,7 +193,7 @@ export default {
   }
   &-image-wrapper {
     padding-bottom: 1.2rem;
-    @include oxd-respond-to('md') {
+    @include oxd-respond-to("md") {
       padding-top: 1.2rem;
     }
   }
@@ -212,11 +212,11 @@ export default {
   &-imagesection {
     display: flex;
     align-items: center;
-    @include oxd-respond-to('xs') {
+    @include oxd-respond-to("xs") {
       flex-direction: row-reverse;
       justify-content: flex-end;
     }
-    @include oxd-respond-to('md') {
+    @include oxd-respond-to("md") {
       flex-direction: column;
       justify-content: center;
     }

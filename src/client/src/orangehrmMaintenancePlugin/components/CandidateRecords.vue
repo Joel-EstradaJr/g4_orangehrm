@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-card-container">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('maintenance.purge_candidate_records') }}
+      {{ $t("maintenance.purge_candidate_records") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form @submit-valid="$emit('search', vacancy.id)">
@@ -49,17 +49,17 @@
 </template>
 
 <script>
-import {required, validSelection} from '@/core/util/validation/rules';
-import RequiredText from '@/core/components/labels/RequiredText';
-import VacancyAutocomplete from '@/orangehrmMaintenancePlugin/components/VacancyAutocomplete';
+import { required, validSelection } from "@/core/util/validation/rules";
+import RequiredText from "@/core/components/labels/RequiredText";
+import VacancyAutocomplete from "@/orangehrmMaintenancePlugin/components/VacancyAutocomplete";
 
 export default {
-  name: 'CandidateRecords',
+  name: "CandidateRecords",
   components: {
-    'required-text': RequiredText,
-    'vacancy-autocomplete': VacancyAutocomplete,
+    "required-text": RequiredText,
+    "vacancy-autocomplete": VacancyAutocomplete,
   },
-  emits: ['search'],
+  emits: ["search"],
   data() {
     return {
       vacancy: null,

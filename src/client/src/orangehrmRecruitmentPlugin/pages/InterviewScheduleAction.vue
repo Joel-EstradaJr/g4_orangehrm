@@ -106,12 +106,12 @@ import {
   validDateFormat,
   validTimeFormat,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import CandidateActionLayout from '@/orangehrmRecruitmentPlugin/components/CandidateActionLayout.vue';
-import InterviewerAutocomplete from '@/orangehrmRecruitmentPlugin/components/InterviewerAutocomplete.vue';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@/core/util/validation/rules";
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import CandidateActionLayout from "@/orangehrmRecruitmentPlugin/components/CandidateActionLayout.vue";
+import InterviewerAutocomplete from "@/orangehrmRecruitmentPlugin/components/InterviewerAutocomplete.vue";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const interviewModel = {
   interviewName: null,
@@ -122,8 +122,8 @@ const interviewModel = {
 
 export default {
   components: {
-    'candidate-action-layout': CandidateActionLayout,
-    'interviewer-autocomplete': InterviewerAutocomplete,
+    "candidate-action-layout": CandidateActionLayout,
+    "interviewer-autocomplete": InterviewerAutocomplete,
   },
   props: {
     candidateId: {
@@ -135,9 +135,9 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/recruitment/candidates/${props.candidateId}/shedule-interview`,
+      `/api/v2/recruitment/candidates/${props.candidateId}/shedule-interview`
     );
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -147,7 +147,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      interview: {...interviewModel},
+      interview: { ...interviewModel },
       interviewers: [null],
       rules: {
         interviewName: [required, shouldNotExceedCharLength(100)],
@@ -158,10 +158,10 @@ export default {
           validSelection,
           (value) => {
             return this.interviewers.filter(
-              (interviewer) => interviewer && interviewer.id === value?.id,
+              (interviewer) => interviewer && interviewer.id === value?.id
             ).length < 2
               ? true
-              : this.$t('general.already_exists');
+              : this.$t("general.already_exists");
           },
         ],
         note: [shouldNotExceedCharLength(2000)],
@@ -190,11 +190,11 @@ export default {
           return this.$toast.updateSuccess();
         })
         .then(() => {
-          navigate('/recruitment/addCandidate/{id}', {id: this.candidateId});
+          navigate("/recruitment/addCandidate/{id}", { id: this.candidateId });
         });
     },
     onClickBack() {
-      navigate('/recruitment/addCandidate/{id}', {id: this.candidateId});
+      navigate("/recruitment/addCandidate/{id}", { id: this.candidateId });
     },
   },
 };

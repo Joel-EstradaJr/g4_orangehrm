@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-card-container">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('general.edit_attachment') }}
+      {{ $t("general.edit_attachment") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -48,7 +48,9 @@
               :placeholder="$t('general.no_file_selected')"
             />
             <oxd-text class="orangehrm-input-hint" tag="p">
-              {{ $t('general.accepts_up_to_n_mb', {count: formattedFileSize}) }}
+              {{
+                $t("general.accepts_up_to_n_mb", { count: formattedFileSize })
+              }}
             </oxd-text>
           </oxd-grid-item>
         </oxd-grid>
@@ -88,15 +90,15 @@ import {
   maxFileSize,
   shouldNotExceedCharLength,
   validFileTypes,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 const attachmentModel = {
   attachment: null,
-  comment: '',
+  comment: "",
 };
 
 export default {
-  name: 'EditInterviewAttachment',
+  name: "EditInterviewAttachment",
 
   props: {
     http: {
@@ -117,12 +119,12 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   data() {
     return {
       isLoading: false,
-      currentFile: '',
+      currentFile: "",
       attachment: {
         ...attachmentModel,
       },
@@ -147,7 +149,7 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.currentFile = data.attachment.fileName;
         this.attachment.comment = data.comment;
       })
@@ -164,8 +166,8 @@ export default {
           comment: this.attachment.comment,
           currentAttachment:
             this.attachment.attachment !== null
-              ? 'replaceCurrent'
-              : 'keepCurrent',
+              ? "replaceCurrent"
+              : "keepCurrent",
           attachment:
             this.attachment.attachment !== null
               ? this.attachment.attachment
@@ -175,12 +177,12 @@ export default {
           return this.$toast.updateSuccess();
         })
         .then(() => {
-          this.attachment = {...attachmentModel};
+          this.attachment = { ...attachmentModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

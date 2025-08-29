@@ -26,21 +26,21 @@
 </template>
 
 <script>
-import {ref, onBeforeMount} from 'vue';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
+import { ref, onBeforeMount } from "vue";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
 
 export default {
-  name: 'HiringManagerDropdown',
+  name: "HiringManagerDropdown",
   setup() {
     const options = ref([]);
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $tEmpName } = useEmployeeNameTranslate();
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/hiring-managers',
+      "/api/v2/recruitment/hiring-managers"
     );
     onBeforeMount(() => {
-      http.getAll({limit: 0}).then(({data}) => {
+      http.getAll({ limit: 0 }).then(({ data }) => {
         options.value = data.data.map((hiringManager) => {
           return {
             id: hiringManager.empNumber,

@@ -22,7 +22,7 @@
   <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
     <div class="orangehrm-action-header">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('general.attachments') }}
+        {{ $t("general.attachments") }}
       </oxd-text>
       <oxd-button
         v-if="canEdit"
@@ -70,24 +70,24 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog.vue';
-import {convertFilesizeToString} from '@ohrm/core/util/helper/filesize';
-import AddAttachmentModal from './AddAttachmentModal.vue';
-import EditAttachmentModal from './EditAttachmentModal.vue';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import useLocale from '@/core/util/composable/useLocale';
-import {formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog.vue";
+import { convertFilesizeToString } from "@ohrm/core/util/helper/filesize";
+import AddAttachmentModal from "./AddAttachmentModal.vue";
+import EditAttachmentModal from "./EditAttachmentModal.vue";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import useLocale from "@/core/util/composable/useLocale";
+import { formatDate, parseDate } from "@ohrm/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 export default {
-  name: 'ClaimAttachment',
+  name: "ClaimAttachment",
 
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
-    'add-attachment-modal': AddAttachmentModal,
-    'edit-attachment-modal': EditAttachmentModal,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "add-attachment-modal": AddAttachmentModal,
+    "edit-attachment-modal": EditAttachmentModal,
   },
   props: {
     requestId: {
@@ -108,29 +108,29 @@ export default {
     },
   },
   setup(props) {
-    const {locale} = useLocale();
-    const {jsDateFormat} = useDateFormat();
+    const { locale } = useLocale();
+    const { jsDateFormat } = useDateFormat();
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/claim/requests/${props.requestId}/attachments`,
+      `/api/v2/claim/requests/${props.requestId}/attachments`
     );
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     const attachmentDataNormalizer = (data) => {
       return data.map((item) => {
         return {
           id: item.id,
           attachedDate: item.date
-            ? formatDate(parseDate(item.date), jsDateFormat, {locale})
-            : '',
-          filename: item.attachment.fileName ?? '',
+            ? formatDate(parseDate(item.date), jsDateFormat, { locale })
+            : "",
+          filename: item.attachment.fileName ?? "",
           size: item.attachment.size
             ? convertFilesizeToString(item.attachment.size, 2)
-            : '',
-          fileType: item.attachment.fileType ? item.attachment.fileType : '',
+            : "",
+          fileType: item.attachment.fileType ? item.attachment.fileType : "",
           description: item.attachment.description
             ? item.attachment.description
-            : '',
+            : "",
           attachedByName: $tEmpName(item.attachedBy, {
             excludePastEmpTag: false,
           }),
@@ -168,29 +168,33 @@ export default {
     return {
       headers: [
         {
-          name: 'filename',
-          slot: 'title',
-          cellType: 'oxd-table-cell-truncate',
-          title: this.$t('general.file_name'),
-          style: {flex: 1},
+          name: "filename",
+          slot: "title",
+          cellType: "oxd-table-cell-truncate",
+          title: this.$t("general.file_name"),
+          style: { flex: 1 },
         },
         {
-          name: 'description',
-          title: this.$t('general.description'),
-          cellType: 'oxd-table-cell-truncate',
-          style: {flex: 1},
+          name: "description",
+          title: this.$t("general.description"),
+          cellType: "oxd-table-cell-truncate",
+          style: { flex: 1 },
         },
-        {name: 'size', title: this.$t('general.size'), style: {flex: 1}},
-        {name: 'fileType', title: this.$t('general.type'), style: {flex: 1}},
+        { name: "size", title: this.$t("general.size"), style: { flex: 1 } },
         {
-          name: 'attachedDate',
-          title: this.$t('pim.date_added'),
-          style: {flex: 1},
+          name: "fileType",
+          title: this.$t("general.type"),
+          style: { flex: 1 },
         },
         {
-          name: 'attachedByName',
-          title: this.$t('pim.added_by'),
-          style: {flex: 1},
+          name: "attachedDate",
+          title: this.$t("pim.date_added"),
+          style: { flex: 1 },
+        },
+        {
+          name: "attachedByName",
+          title: this.$t("pim.added_by"),
+          style: { flex: 1 },
         },
       ],
       checkedItems: [],
@@ -207,32 +211,32 @@ export default {
         computedHeaders.pop();
       }
       const headerActions = {
-        name: 'actions',
-        slot: 'action',
-        title: this.$t('general.actions'),
-        style: {flex: 1},
-        cellType: 'oxd-table-cell-actions',
+        name: "actions",
+        slot: "action",
+        title: this.$t("general.actions"),
+        style: { flex: 1 },
+        cellType: "oxd-table-cell-actions",
         cellConfig: {},
       };
       if (this.canEdit) {
         headerActions.cellConfig.delete = {
           onClick: this.onClickDelete,
-          component: 'oxd-icon-button',
+          component: "oxd-icon-button",
           props: {
-            name: 'trash',
+            name: "trash",
           },
         };
         headerActions.cellConfig.edit = {
           onClick: this.onClickEdit,
           props: {
-            name: 'pencil-fill',
+            name: "pencil-fill",
           },
         };
       }
       headerActions.cellConfig.download = {
         onClick: this.onClickDownload,
         props: {
-          name: 'download',
+          name: "download",
         },
       };
       computedHeaders.push(headerActions);
@@ -256,7 +260,7 @@ export default {
         ids.push(this.items?.data[index].id);
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
@@ -279,7 +283,7 @@ export default {
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -302,7 +306,7 @@ export default {
     },
     onClickDownload(item) {
       const downUrl = `${window.appGlobal.baseUrl}/claim/requests/${this.requestId}/attachId/${item.id}`;
-      window.open(downUrl, '_blank');
+      window.open(downUrl, "_blank");
     },
   },
 };

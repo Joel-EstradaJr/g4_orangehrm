@@ -37,7 +37,7 @@
     <template v-else>
       <div class="orangehrm-attachment-header">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('general.attachments') }}
+          {{ $t("general.attachments") }}
         </oxd-text>
         <oxd-button
           icon-name="plus"
@@ -76,12 +76,12 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {convertFilesizeToString} from '@ohrm/core/util/helper/filesize';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog.vue';
-import SaveInterviewAttachment from '@/orangehrmRecruitmentPlugin/components/SaveInterviewAttachment.vue';
-import EditInterviewAttachment from '@/orangehrmRecruitmentPlugin/components/EditInterviewAttachment.vue';
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { convertFilesizeToString } from "@ohrm/core/util/helper/filesize";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog.vue";
+import SaveInterviewAttachment from "@/orangehrmRecruitmentPlugin/components/SaveInterviewAttachment.vue";
+import EditInterviewAttachment from "@/orangehrmRecruitmentPlugin/components/EditInterviewAttachment.vue";
 
 const attachmentDataNormalizer = (data) => {
   return data.map((item) => {
@@ -98,9 +98,9 @@ const attachmentDataNormalizer = (data) => {
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
-    'save-interview-attachment': SaveInterviewAttachment,
-    'edit-interview-attachment': EditInterviewAttachment,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "save-interview-attachment": SaveInterviewAttachment,
+    "edit-interview-attachment": EditInterviewAttachment,
   },
   props: {
     interviewId: {
@@ -119,7 +119,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/recruitment/interviews/${props.interviewId}/attachments`,
+      `/api/v2/recruitment/interviews/${props.interviewId}/attachments`
     );
     const {
       showPaginator,
@@ -150,38 +150,46 @@ export default {
     return {
       headers: [
         {
-          name: 'filename',
-          slot: 'title',
-          title: this.$t('general.file_name'),
-          style: {flex: 1},
+          name: "filename",
+          slot: "title",
+          title: this.$t("general.file_name"),
+          style: { flex: 1 },
         },
-        {name: 'size', title: this.$t('general.size'), style: {flex: 1}},
-        {name: 'fileType', title: this.$t('general.type'), style: {flex: 1}},
-        {name: 'comment', title: this.$t('general.comment'), style: {flex: 1}},
+        { name: "size", title: this.$t("general.size"), style: { flex: 1 } },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "fileType",
+          title: this.$t("general.type"),
+          style: { flex: 1 },
+        },
+        {
+          name: "comment",
+          title: this.$t("general.comment"),
+          style: { flex: 1 },
+        },
+        {
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             download: {
               onClick: this.onClickDownload,
               props: {
-                name: 'download',
+                name: "download",
               },
             },
           },
@@ -200,14 +208,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -248,7 +256,7 @@ export default {
     },
     onClickDownload(item) {
       const downUrl = `${window.appGlobal.baseUrl}/recruitment/viewInterviewAttachment/interview/${this.interviewId}/attachment/${item.id}`;
-      window.open(downUrl, '_blank');
+      window.open(downUrl, "_blank");
     },
   },
 };

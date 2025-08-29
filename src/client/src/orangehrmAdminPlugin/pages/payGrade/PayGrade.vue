@@ -22,7 +22,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('admin.pay_grades') }}
+          {{ $t("admin.pay_grades") }}
         </oxd-text>
         <div>
           <oxd-button
@@ -64,10 +64,10 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 
 const currencyNormalizer = (data) => {
   return data.map((item) => {
@@ -77,20 +77,20 @@ const currencyNormalizer = (data) => {
     return {
       id: item.id,
       name: item.name,
-      currency: currencies.join(','),
+      currency: currencies.join(","),
     };
   });
 };
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/pay-grades',
+      "/api/v2/admin/pay-grades"
     );
     const {
       showPaginator,
@@ -121,34 +121,34 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.name'),
-          style: {'flex-basis': '40%'},
+          name: "name",
+          slot: "title",
+          title: this.$t("general.name"),
+          style: { "flex-basis": "40%" },
         },
         {
-          name: 'currency',
-          title: this.$t('general.currency'),
-          style: {'flex-basis': '40%'},
+          name: "currency",
+          title: this.$t("general.currency"),
+          style: { "flex-basis": "40%" },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {'flex-shrink': 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { "flex-shrink": 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -160,24 +160,24 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/admin/payGrade');
+      navigate("/admin/payGrade");
     },
     onClickEdit(item) {
-      navigate('/admin/payGrade/{id}', {id: item.id});
+      navigate("/admin/payGrade/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = this.checkedItems.map((index) => {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

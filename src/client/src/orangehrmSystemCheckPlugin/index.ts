@@ -15,8 +15,8 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import SystemCheckScreen from './pages/SystemCheckScreen.vue';
+import SystemCheckScreen from "./pages/SystemCheckScreen.vue";
 
 export default {
-  'system-check': SystemCheckScreen,
+  "system-check": SystemCheckScreen,
 };

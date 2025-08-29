@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-login-social">
     <oxd-text class="orangehrm-login-social-text" tag="p">
-      {{ $t('general.or_login_with') }}
+      {{ $t("general.or_login_with") }}
     </oxd-text>
     <div class="orangehrm-login-social-icons">
       <oxd-icon-button class="--loginwith" name="google"></oxd-icon-button>
@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'LoginSocial',
+  name: "LoginSocial",
 };
 </script>
 

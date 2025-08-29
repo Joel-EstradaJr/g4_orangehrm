@@ -69,28 +69,28 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {freshDate, formatDate} from '@ohrm/core/util/helper/datefns';
-import BaseWidget from '@/orangehrmDashboardPlugin/components/BaseWidget.vue';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import EmployeesOnLeaveConfigModal from '@/orangehrmDashboardPlugin/components/EmployeesOnLeaveConfigModal.vue';
-import {OxdIcon} from '@ohrm/oxd';
+import { APIService } from "@/core/util/services/api.service";
+import { freshDate, formatDate } from "@ohrm/core/util/helper/datefns";
+import BaseWidget from "@/orangehrmDashboardPlugin/components/BaseWidget.vue";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import EmployeesOnLeaveConfigModal from "@/orangehrmDashboardPlugin/components/EmployeesOnLeaveConfigModal.vue";
+import { OxdIcon } from "@ohrm/oxd";
 
 export default {
-  name: 'EmployeesOnLeaveWidget',
+  name: "EmployeesOnLeaveWidget",
 
   components: {
-    'oxd-icon': OxdIcon,
-    'base-widget': BaseWidget,
-    'employees-on-leave-config-modal': EmployeesOnLeaveConfigModal,
+    "oxd-icon": OxdIcon,
+    "base-widget": BaseWidget,
+    "employees-on-leave-config-modal": EmployeesOnLeaveConfigModal,
   },
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/dashboard/employees/leaves',
+      "/api/v2/dashboard/employees/leaves"
     );
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     return {
       http,
@@ -113,8 +113,8 @@ export default {
     },
     emptyText() {
       return this.leavePeriod
-        ? this.$t('dashboard.no_employees_are_on_leave_today')
-        : this.$t('dashboard.leave_period_not_defined');
+        ? this.$t("dashboard.no_employees_are_on_leave_today")
+        : this.$t("dashboard.leave_period_not_defined");
     },
   },
 
@@ -122,20 +122,20 @@ export default {
     this.isLoading = true;
     this.http
       .getAll({
-        date: formatDate(freshDate(), 'yyyy-MM-dd'),
+        date: formatDate(freshDate(), "yyyy-MM-dd"),
       })
       .then((response) => {
-        const {data, meta} = response.data;
+        const { data, meta } = response.data;
         this.leaveList = data.map((item) => {
-          const {employee, leaveType, duration} = item;
+          const { employee, leaveType, duration } = item;
           let _leaveType = leaveType?.name;
-          if (_leaveType && duration === 'half_day_morning') {
-            _leaveType += ` (${this.$t('leave.half_day_morning')})`;
+          if (_leaveType && duration === "half_day_morning") {
+            _leaveType += ` (${this.$t("leave.half_day_morning")})`;
           }
-          if (_leaveType && duration === 'half_day_afternoon') {
-            _leaveType += ` (${this.$t('leave.half_day_evening')})`;
+          if (_leaveType && duration === "half_day_afternoon") {
+            _leaveType += ` (${this.$t("leave.half_day_evening")})`;
           }
-          if (_leaveType && duration === 'specify_time') {
+          if (_leaveType && duration === "specify_time") {
             _leaveType += ` (${item.startTime} - ${item.endTime})`;
           }
           return {

@@ -24,20 +24,20 @@
     :label="$t('general.name')"
     :create-options="loadTypes"
   >
-    <template #option="{data}">
+    <template #option="{ data }">
       <span> {{ data.label }} </span>
     </template>
   </oxd-input-field>
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'ExpenseTypeAutocomplete',
+  name: "ExpenseTypeAutocomplete",
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/claim/expenses/types',
+      "/api/v2/claim/expenses/types"
     );
     return {
       http,
@@ -50,14 +50,14 @@ export default {
           const params = {
             name: serachParam.trim(),
           };
-          this.http.getAll(params).then(({data}) => {
+          this.http.getAll(params).then(({ data }) => {
             resolve(
               data.data.map((type) => {
                 return {
                   id: type.id,
                   label: type.name,
                 };
-              }),
+              })
             );
           });
         } else {

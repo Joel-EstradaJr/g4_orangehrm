@@ -19,7 +19,7 @@
 
 <template>
   <leave-entitlement-table>
-    <template #default="{filters, filterItems}">
+    <template #default="{ filters, filterItems }">
       <oxd-table-filter :filter-title="$t('leave.my_leave_entitlements')">
         <oxd-form @submit-valid="filterItems">
           <oxd-form-row>
@@ -53,15 +53,15 @@
 </template>
 
 <script>
-import LeaveEntitlementTable from '@/orangehrmLeavePlugin/components/LeaveEntitlementTable';
-import LeaveTypeDropdown from '@/orangehrmLeavePlugin/components/LeaveTypeDropdown';
-import LeavePeriodDropdown from '@/orangehrmLeavePlugin/components/LeavePeriodDropdown';
+import LeaveEntitlementTable from "@/orangehrmLeavePlugin/components/LeaveEntitlementTable";
+import LeaveTypeDropdown from "@/orangehrmLeavePlugin/components/LeaveTypeDropdown";
+import LeavePeriodDropdown from "@/orangehrmLeavePlugin/components/LeavePeriodDropdown";
 
 export default {
   components: {
-    'leave-entitlement-table': LeaveEntitlementTable,
-    'leave-type-dropdown': LeaveTypeDropdown,
-    'leave-period-dropdown': LeavePeriodDropdown,
+    "leave-entitlement-table": LeaveEntitlementTable,
+    "leave-type-dropdown": LeaveTypeDropdown,
+    "leave-period-dropdown": LeavePeriodDropdown,
   },
 };
 </script>

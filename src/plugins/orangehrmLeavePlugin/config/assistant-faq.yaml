@@ -1,0 +1,26 @@
+how_to_apply: |
+  To apply for leave:
+  1) Go to Leave > Apply
+  2) Select the Leave Type
+  3) Pick From and To dates (or a single day)
+  4) Choose duration (Full Day/Half Day/Specify Time)
+  5) Add a comment (optional)
+  6) Click Apply
+
+how_to_cancel: |
+  To cancel a leave request:
+  1) Go to Leave > My Leave
+  2) Locate your request and open it
+  3) Use the Cancel action (if the request is still pending and cancelation is allowed)
+
+how_to_view: |
+  To view your leave history and status:
+  - Go to Leave > My Leave
+  - Filter by dates or type if needed
+  - Click a row to see details and comments
+
+policy_max_consecutive_days: |
+  Maximum consecutive leave days can vary by company policy. Check with HR or your employee handbook. If configured, OrangeHRM will validate overlaps and periods during apply.
+
+policy_carry_forward: |
+  Leave carry forward depends on your organization settings. Check your Leave > My Leave Entitlements page or contact HR for the official policy.

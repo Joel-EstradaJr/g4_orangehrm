@@ -95,13 +95,13 @@
 </template>
 
 <script>
-import {OxdIcon, OxdTableDropdown} from '@ohrm/oxd';
+import { OxdIcon, OxdTableDropdown } from "@ohrm/oxd";
 
 export default {
-  name: 'EmployeeTrackerLogCard',
+  name: "EmployeeTrackerLogCard",
   components: {
-    'oxd-icon': OxdIcon,
-    'oxd-table-dropdown': OxdTableDropdown,
+    "oxd-icon": OxdIcon,
+    "oxd-table-dropdown": OxdTableDropdown,
   },
   props: {
     trackerLog: {
@@ -109,23 +109,23 @@ export default {
       required: true,
     },
   },
-  emits: ['edit', 'delete'],
+  emits: ["edit", "delete"],
   data() {
     return {
       dropdownOptions: [
-        {label: this.$t('general.edit'), context: 'edit'},
-        {label: this.$t('performance.delete'), context: 'delete'},
+        { label: this.$t("general.edit"), context: "edit" },
+        { label: this.$t("performance.delete"), context: "delete" },
       ],
     };
   },
   methods: {
     onTrackerDropdownAction(event, item) {
       switch (event.context) {
-        case 'edit':
-          this.$emit('edit', item.id);
+        case "edit":
+          this.$emit("edit", item.id);
           break;
-        case 'delete':
-          this.$emit('delete', item.id);
+        case "delete":
+          this.$emit("delete", item.id);
           break;
       }
     },

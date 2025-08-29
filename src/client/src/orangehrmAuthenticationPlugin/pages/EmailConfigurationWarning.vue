@@ -22,7 +22,7 @@
     <div class="orangehrm-forgot-password-wrapper">
       <div class="orangehrm-card-container">
         <oxd-text tag="h6" class="orangehrm-forgot-password-title">
-          {{ $t('auth.reset_password') }}
+          {{ $t("auth.reset_password") }}
         </oxd-text>
         <oxd-divider />
         <card-note
@@ -36,9 +36,9 @@
             class="orangehrm-forgot-password-reset--link"
             @click="navigateUrl"
           >
-            {{ $t('general.click_here') }}
+            {{ $t("general.click_here") }}
           </oxd-text>
-          {{ $t('auth.back_to_login') }}
+          {{ $t("auth.back_to_login") }}
         </oxd-text>
       </div>
     </div>
@@ -47,16 +47,16 @@
 </template>
 
 <script>
-import CardNote from '../components/CardNote';
-import {navigate} from '@ohrm/core/util/helper/navigation';
+import CardNote from "../components/CardNote";
+import { navigate } from "@ohrm/core/util/helper/navigation";
 export default {
-  name: 'EmailConfigurationWarning',
+  name: "EmailConfigurationWarning",
   components: {
-    'card-note': CardNote,
+    "card-note": CardNote,
   },
   methods: {
     navigateUrl() {
-      navigate('/auth/login');
+      navigate("/auth/login");
     },
   },
 };

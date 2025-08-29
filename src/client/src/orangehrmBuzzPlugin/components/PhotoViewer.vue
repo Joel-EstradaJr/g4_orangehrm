@@ -59,10 +59,10 @@
 </template>
 
 <script>
-import {computed, onBeforeUnmount, reactive, toRefs} from 'vue';
+import { computed, onBeforeUnmount, reactive, toRefs } from "vue";
 
 export default {
-  name: 'PhotoViewer',
+  name: "PhotoViewer",
 
   props: {
     post: {
@@ -75,7 +75,7 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props, context) {
     const state = reactive({
@@ -92,13 +92,13 @@ export default {
     });
 
     const onClickClose = ($event) => {
-      if ($event.key && $event.key !== 'Escape') return;
-      context.emit('close');
+      if ($event.key && $event.key !== "Escape") return;
+      context.emit("close");
     };
 
-    window.addEventListener('keydown', onClickClose);
+    window.addEventListener("keydown", onClickClose);
 
-    onBeforeUnmount(() => window.removeEventListener('keydown', onClickClose));
+    onBeforeUnmount(() => window.removeEventListener("keydown", onClickClose));
 
     return {
       onClickClose,

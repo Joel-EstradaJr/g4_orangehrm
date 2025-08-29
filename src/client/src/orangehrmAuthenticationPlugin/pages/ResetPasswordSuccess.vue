@@ -22,7 +22,7 @@
     <div class="orangehrm-forgot-password-wrapper">
       <div class="orangehrm-card-container">
         <oxd-text tag="h6" class="orangehrm-forgot-password-title">
-          {{ $t('auth.reset_password_link_sent_successfully') }}
+          {{ $t("auth.reset_password_link_sent_successfully") }}
         </oxd-text>
         <oxd-divider />
         <card-note
@@ -45,12 +45,12 @@
 </template>
 
 <script>
-import CardNote from '../components/CardNote';
+import CardNote from "../components/CardNote";
 
 export default {
-  name: 'ResetPasswordSuccess',
+  name: "ResetPasswordSuccess",
   components: {
-    'card-note': CardNote,
+    "card-note": CardNote,
   },
 };
 </script>

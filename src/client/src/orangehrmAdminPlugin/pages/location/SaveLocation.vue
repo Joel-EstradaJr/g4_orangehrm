@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.add_location') }}
+        {{ $t("admin.add_location") }}
       </oxd-text>
 
       <oxd-divider />
@@ -139,25 +139,25 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
   validPhoneNumberFormat,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const initialLocation = {
-  name: '',
+  name: "",
   countryCode: null,
-  province: '',
-  city: '',
-  address: '',
-  zipCode: '',
-  phone: '',
-  fax: '',
-  note: '',
+  province: "",
+  city: "",
+  address: "",
+  zipCode: "",
+  phone: "",
+  fax: "",
+  note: "",
 };
 
 export default {
@@ -171,10 +171,10 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/locations',
+      "/api/v2/admin/locations"
     );
-    const {createUniqueValidator} = useServerValidation(http);
-    const locationUniqueValidation = createUniqueValidator('Location', 'name');
+    const { createUniqueValidator } = useServerValidation(http);
+    const locationUniqueValidation = createUniqueValidator("Location", "name");
 
     return {
       http,
@@ -185,7 +185,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      location: {...initialLocation},
+      location: { ...initialLocation },
       rules: {
         name: [
           required,
@@ -212,7 +212,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/admin/viewLocations');
+      navigate("/admin/viewLocations");
     },
     onSave() {
       this.isLoading = true;

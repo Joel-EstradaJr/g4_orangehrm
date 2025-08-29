@@ -28,13 +28,13 @@
           :rules="rules"
           @keydown.esc.stop="onCancelComment"
         />
-        <oxd-text tag="span">{{ $t('buzz.press_esc_to') }}&nbsp;</oxd-text>
+        <oxd-text tag="span">{{ $t("buzz.press_esc_to") }}&nbsp;</oxd-text>
         <oxd-text
           tag="span"
           class="orangehrm-post-comment-action --cancel"
           @click="onCancelComment"
         >
-          {{ $t('general.cancel') }}
+          {{ $t("general.cancel") }}
         </oxd-text>
       </oxd-form>
       <div v-else class="orangehrm-post-comment-area">
@@ -56,7 +56,7 @@
           class="orangehrm-post-comment-readmore"
           @click="onClickReadMore"
         >
-          {{ $t('buzz.read_more') }}
+          {{ $t("buzz.read_more") }}
         </oxd-text>
         <oxd-text tag="p" class="orangehrm-post-comment-datetime">
           {{ dateTime }}
@@ -83,7 +83,7 @@
           }"
           @click="onClickLike"
         >
-          {{ $t('buzz.like') }}
+          {{ $t("buzz.like") }}
         </oxd-text>
         <oxd-text
           v-if="data.permission.canUpdate"
@@ -91,7 +91,7 @@
           class="orangehrm-post-comment-action"
           @click="onClickEdit"
         >
-          {{ $t('general.edit') }}
+          {{ $t("general.edit") }}
         </oxd-text>
         <oxd-text
           v-if="data.permission.canDelete"
@@ -99,7 +99,7 @@
           class="orangehrm-post-comment-action"
           @click="onClickDelete"
         >
-          {{ $t('performance.delete') }}
+          {{ $t("performance.delete") }}
         </oxd-text>
       </div>
     </div>
@@ -110,27 +110,27 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
-import {computed, reactive, toRefs} from 'vue';
-import useLocale from '@/core/util/composable/useLocale';
-import {APIService} from '@/core/util/services/api.service';
-import useAutoFocus from '@/core/util/composable/useAutoFocus';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import {OxdIcon} from '@ohrm/oxd';
+} from "@/core/util/validation/rules";
+import { computed, reactive, toRefs } from "vue";
+import useLocale from "@/core/util/composable/useLocale";
+import { APIService } from "@/core/util/services/api.service";
+import useAutoFocus from "@/core/util/composable/useAutoFocus";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import ProfileImage from "@/orangehrmBuzzPlugin/components/ProfileImage";
+import useBuzzAPIs from "@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import { OxdIcon } from "@ohrm/oxd";
 
 export default {
-  name: 'PostComment',
+  name: "PostComment",
 
   components: {
-    'oxd-icon': OxdIcon,
-    'profile-image': ProfileImage,
+    "oxd-icon": OxdIcon,
+    "profile-image": ProfileImage,
   },
 
-  directives: {...useAutoFocus()},
+  directives: { ...useAutoFocus() },
 
   props: {
     postId: {
@@ -143,13 +143,13 @@ export default {
     },
   },
 
-  emits: ['edit', 'delete', 'like'],
+  emits: ["edit", "delete", "like"],
 
   setup(props, context) {
     let loading = false;
-    const {locale} = useLocale();
-    const {jsDateFormat, jsTimeFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { locale } = useLocale();
+    const { jsDateFormat, jsTimeFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
     const rules = [required, shouldNotExceedCharLength(65530)];
     const state = reactive({
       edit: false,
@@ -157,18 +157,18 @@ export default {
       readMore: new String(props.data.comment.text).length < 500,
     });
 
-    const {updatePostComment, updateCommentLike} = useBuzzAPIs(
-      new APIService(window.appGlobal.baseUrl, ''),
+    const { updatePostComment, updateCommentLike } = useBuzzAPIs(
+      new APIService(window.appGlobal.baseUrl, "")
     );
 
     const onSubmit = () => {
       updatePostComment(
         props.postId,
         props.data.comment.id,
-        state.comment,
+        state.comment
       ).then(() => {
         state.edit = false;
-        context.emit('edit', props.data.comment.id);
+        context.emit("edit", props.data.comment.id);
       });
     };
 
@@ -182,13 +182,13 @@ export default {
       updateCommentLike(props.data.comment.id, props.data.comment.liked).then(
         () => {
           loading = false;
-          context.emit('like', props.data.comment.id);
-        },
+          context.emit("like", props.data.comment.id);
+        }
       );
     };
 
     const onClickDelete = () => {
-      context.emit('delete', props.data.comment.id);
+      context.emit("delete", props.data.comment.id);
     };
 
     const onClickReadMore = () => {
@@ -201,10 +201,10 @@ export default {
     };
 
     const dateTime = computed(() => {
-      const {createdDate, createdTime} = props.data.comment;
+      const { createdDate, createdTime } = props.data.comment;
       const utcDate = parseDate(
         `${createdDate} ${createdTime} +00:00`,
-        'yyyy-MM-dd HH:mm xxx',
+        "yyyy-MM-dd HH:mm xxx"
       );
 
       return formatDate(utcDate, `${jsDateFormat} ${jsTimeFormat}`, {

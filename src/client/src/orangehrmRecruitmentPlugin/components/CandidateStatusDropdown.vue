@@ -26,18 +26,18 @@
 </template>
 
 <script>
-import {ref, onBeforeMount} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
+import { ref, onBeforeMount } from "vue";
+import { APIService } from "@/core/util/services/api.service";
 export default {
-  name: 'CandidateStatusDropdown',
+  name: "CandidateStatusDropdown",
   setup() {
     const options = ref([]);
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/candidates/statuses',
+      "/api/v2/recruitment/candidates/statuses"
     );
     onBeforeMount(() => {
-      http.getAll().then(({data}) => {
+      http.getAll().then(({ data }) => {
         options.value = data.data.map((item) => {
           return {
             id: item.id,

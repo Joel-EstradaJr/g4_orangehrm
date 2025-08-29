@@ -24,7 +24,7 @@
     :filters="serializedFilters"
     :column-count="3"
   >
-    <template #default="{generateReport}">
+    <template #default="{ generateReport }">
       <oxd-table-filter :filter-title="$t('time.employee_report')">
         <oxd-form @submit-valid="generateReport">
           <oxd-form-row>
@@ -82,7 +82,7 @@
               </oxd-grid-item>
               <oxd-grid-item class="orangehrm-switch-filter --span-column-2">
                 <oxd-text class="orangehrm-switch-filter-text" tag="p">
-                  {{ $t('time.only_include_approved_timesheets') }}
+                  {{ $t("time.only_include_approved_timesheets") }}
                 </oxd-text>
                 <oxd-switch-input v-model="filters.timesheetState" />
               </oxd-grid-item>
@@ -104,15 +104,15 @@
       <br />
     </template>
 
-    <template #footer="{data}">
-      {{ $t('time.total_duration') }}:
-      {{ data.meta ? data.meta.sum.label : '0.00' }}
+    <template #footer="{ data }">
+      {{ $t("time.total_duration") }}:
+      {{ data.meta ? data.meta.sum.label : "0.00" }}
     </template>
   </reports-table>
 </template>
 
 <script>
-import {computed, ref} from 'vue';
+import { computed, ref } from "vue";
 import {
   required,
   validSelection,
@@ -120,14 +120,14 @@ import {
   endDateShouldBeAfterStartDate,
   startDateShouldBeBeforeEndDate,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
-import ReportsTable from '@/core/components/table/ReportsTable';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import ActivityDropdown from '@/orangehrmTimePlugin/components/ActivityDropdown.vue';
-import ProjectAutocomplete from '@/orangehrmTimePlugin/components/ProjectAutocomplete.vue';
-import usei18n from '@/core/util/composable/usei18n';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {OxdSwitchInput} from '@ohrm/oxd';
+} from "@/core/util/validation/rules";
+import ReportsTable from "@/core/components/table/ReportsTable";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import ActivityDropdown from "@/orangehrmTimePlugin/components/ActivityDropdown.vue";
+import ProjectAutocomplete from "@/orangehrmTimePlugin/components/ProjectAutocomplete.vue";
+import usei18n from "@/core/util/composable/usei18n";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const defaultFilters = {
   employee: null,
@@ -140,17 +140,17 @@ const defaultFilters = {
 
 export default {
   components: {
-    'reports-table': ReportsTable,
-    'oxd-switch-input': OxdSwitchInput,
-    'activity-dropdown': ActivityDropdown,
-    'project-autocomplete': ProjectAutocomplete,
-    'employee-autocomplete': EmployeeAutocomplete,
+    "reports-table": ReportsTable,
+    "oxd-switch-input": OxdSwitchInput,
+    "activity-dropdown": ActivityDropdown,
+    "project-autocomplete": ProjectAutocomplete,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
 
   setup() {
-    const filters = ref({...defaultFilters});
-    const {$t} = usei18n();
-    const {userDateFormat} = useDateFormat();
+    const filters = ref({ ...defaultFilters });
+    const { $t } = usei18n();
+    const { userDateFormat } = useDateFormat();
 
     const rules = {
       project: [validSelection],
@@ -159,16 +159,16 @@ export default {
         validDateFormat(userDateFormat),
         startDateShouldBeBeforeEndDate(
           () => filters.value.toDate,
-          $t('general.from_date_should_be_before_to_date'),
-          {allowSameDate: true},
+          $t("general.from_date_should_be_before_to_date"),
+          { allowSameDate: true }
         ),
       ],
       toDate: [
         validDateFormat(userDateFormat),
         endDateShouldBeAfterStartDate(
           () => filters.value.fromDate,
-          $t('general.to_date_should_be_after_from_date'),
-          {allowSameDate: true},
+          $t("general.to_date_should_be_after_from_date"),
+          { allowSameDate: true }
         ),
       ],
     };
@@ -180,7 +180,7 @@ export default {
         activityId: filters.value.activity?.id,
         fromDate: filters.value.fromDate,
         toDate: filters.value.toDate,
-        timesheetState: filters.value.timesheetState ? 'onlyApproved' : 'all',
+        timesheetState: filters.value.timesheetState ? "onlyApproved" : "all",
       };
     });
 

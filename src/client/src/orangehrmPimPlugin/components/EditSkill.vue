@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-top-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">{{
-      $t('general.edit_skill')
+      $t("general.edit_skill")
     }}</oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -78,16 +78,16 @@ import {
   shouldNotExceedCharLength,
   max,
   digitsOnly,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 const skillModel = {
   yearsOfExperience: 0,
-  comments: '',
-  name: '',
+  comments: "",
+  name: "",
 };
 
 export default {
-  name: 'EditSkill',
+  name: "EditSkill",
 
   props: {
     http: {
@@ -100,12 +100,12 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   data() {
     return {
       isLoading: false,
-      skill: {...skillModel},
+      skill: { ...skillModel },
       rules: {
         yearsOfExperience: [digitsOnly, max(100)],
         comments: [shouldNotExceedCharLength(100)],
@@ -118,7 +118,7 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.skill.name = data.skill.name;
         this.skill.comments = data.comments;
         this.skill.yearsOfExperience = data.yearsOfExperience;
@@ -134,7 +134,7 @@ export default {
       this.http
         .update(this.data.id, {
           yearsOfExperience: parseInt(this.skill.yearsOfExperience),
-          comments: this.skill.comments !== '' ? this.skill.comments : '',
+          comments: this.skill.comments !== "" ? this.skill.comments : "",
         })
         .then(() => {
           return this.$toast.updateSuccess();
@@ -144,7 +144,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

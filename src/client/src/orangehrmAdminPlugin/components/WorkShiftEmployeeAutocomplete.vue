@@ -27,18 +27,18 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
 
 export default {
-  name: 'WorkShiftEmployeeAutocomplete',
+  name: "WorkShiftEmployeeAutocomplete",
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/work-shifts/employees',
+      "/api/v2/admin/work-shifts/employees"
     );
     return {
       http,
@@ -52,7 +52,7 @@ export default {
             .getAll({
               nameOrId: serachParam.trim(),
             })
-            .then(({data}) => {
+            .then(({ data }) => {
               resolve(
                 data.data.map((employee) => {
                   return {
@@ -60,7 +60,7 @@ export default {
                     label: `${employee.firstName} ${employee.middleName} ${employee.lastName}`,
                     isPastEmployee: employee.terminationId ? true : false,
                   };
-                }),
+                })
               );
             });
         } else {

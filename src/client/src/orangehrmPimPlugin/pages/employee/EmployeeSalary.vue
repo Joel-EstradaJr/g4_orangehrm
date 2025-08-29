@@ -43,7 +43,7 @@
         :action-button-shown="$can.update(`salary_details`)"
         @click="onClickAdd"
       >
-        {{ $t('pim.assigned_salary_components') }}
+        {{ $t("pim.assigned_salary_components") }}
       </profile-action-header>
     </div>
     <table-header
@@ -76,13 +76,13 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import SaveSalaryComponent from '@/orangehrmPimPlugin/components/SaveSalaryComponent';
-import EditSalaryComponent from '@/orangehrmPimPlugin/components/EditSalaryComponent';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import EditEmployeeLayout from "@/orangehrmPimPlugin/components/EditEmployeeLayout";
+import SaveSalaryComponent from "@/orangehrmPimPlugin/components/SaveSalaryComponent";
+import EditSalaryComponent from "@/orangehrmPimPlugin/components/EditSalaryComponent";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
 
 const salaryNormalizer = (data) => {
   return data.map((item) => {
@@ -99,11 +99,11 @@ const salaryNormalizer = (data) => {
 
 export default {
   components: {
-    'profile-action-header': ProfileActionHeader,
-    'edit-employee-layout': EditEmployeeLayout,
-    'save-salary-component': SaveSalaryComponent,
-    'edit-salary-component': EditSalaryComponent,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "profile-action-header": ProfileActionHeader,
+    "edit-employee-layout": EditEmployeeLayout,
+    "save-salary-component": SaveSalaryComponent,
+    "edit-salary-component": EditSalaryComponent,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -132,7 +132,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.empNumber}/salary-components`,
+      `/api/v2/pim/employees/${props.empNumber}/salary-components`
     );
 
     const {
@@ -165,26 +165,30 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('pim.salary_component'),
-          style: {flex: 1},
-        },
-        {name: 'amount', title: this.$t('general.amount'), style: {flex: 1}},
-        {
-          name: 'currency',
-          title: this.$t('general.currency'),
-          style: {flex: 1},
+          name: "name",
+          slot: "title",
+          title: this.$t("pim.salary_component"),
+          style: { flex: 1 },
         },
         {
-          name: 'frequency',
-          title: this.$t('pim.pay_frequency'),
-          style: {flex: 1},
+          name: "amount",
+          title: this.$t("general.amount"),
+          style: { flex: 1 },
         },
         {
-          name: 'depositAmount',
-          title: this.$t('pim.direct_deposit_amount'),
-          style: {flex: 1},
+          name: "currency",
+          title: this.$t("general.currency"),
+          style: { flex: 1 },
+        },
+        {
+          name: "frequency",
+          title: this.$t("pim.pay_frequency"),
+          style: { flex: 1 },
+        },
+        {
+          name: "depositAmount",
+          title: this.$t("pim.direct_deposit_amount"),
+          style: { flex: 1 },
         },
       ],
       checkedItems: [],
@@ -200,19 +204,19 @@ export default {
     },
     tableHeaders() {
       const headerActions = {
-        name: 'actions',
-        slot: 'action',
-        title: this.$t('general.actions'),
-        style: {flex: 1},
-        cellType: 'oxd-table-cell-actions',
+        name: "actions",
+        slot: "action",
+        title: this.$t("general.actions"),
+        style: { flex: 1 },
+        cellType: "oxd-table-cell-actions",
         cellConfig: {},
       };
       if (this.$can.delete(`salary_details`)) {
         headerActions.cellConfig.delete = {
           onClick: this.onClickDelete,
-          component: 'oxd-icon-button',
+          component: "oxd-icon-button",
           props: {
-            name: 'trash',
+            name: "trash",
           },
         };
       }
@@ -220,7 +224,7 @@ export default {
         headerActions.cellConfig.edit = {
           onClick: this.onClickEdit,
           props: {
-            name: 'pencil-fill',
+            name: "pencil-fill",
           },
         };
       }
@@ -236,14 +240,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

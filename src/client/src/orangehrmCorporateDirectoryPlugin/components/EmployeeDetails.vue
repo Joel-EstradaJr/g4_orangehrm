@@ -47,7 +47,7 @@
     @mouseover="showTelephoneClip = true"
   >
     <div class="orangehrm-directory-card-hover-body">
-      <oxd-text type="toast-message">{{ $t('pim.work_telephone') }}</oxd-text>
+      <oxd-text type="toast-message">{{ $t("pim.work_telephone") }}</oxd-text>
       <oxd-text ref="cloneTelephone" type="toast-title">
         {{ employeeWorkTelephone }}
       </oxd-text>
@@ -70,7 +70,7 @@
     @mouseover="showEmailClip = true"
   >
     <div class="orangehrm-directory-card-hover-body">
-      <oxd-text type="toast-message">{{ $t('general.work_email') }}</oxd-text>
+      <oxd-text type="toast-message">{{ $t("general.work_email") }}</oxd-text>
       <oxd-text ref="cloneEmail" type="toast-title">
         {{ employeeWorkEmail }}
       </oxd-text>
@@ -93,15 +93,15 @@
 </template>
 
 <script>
-import {OxdDivider} from '@ohrm/oxd';
-import {APIService} from '@/core/util/services/api.service';
-import QRCode from '@/orangehrmCorporateDirectoryPlugin/components/QRCode';
+import { OxdDivider } from "@ohrm/oxd";
+import { APIService } from "@/core/util/services/api.service";
+import QRCode from "@/orangehrmCorporateDirectoryPlugin/components/QRCode";
 
 export default {
-  name: 'EmployeeDetails',
+  name: "EmployeeDetails",
   components: {
-    'qr-code': QRCode,
-    'oxd-divider': OxdDivider,
+    "qr-code": QRCode,
+    "oxd-divider": OxdDivider,
   },
   props: {
     employeeId: {
@@ -116,7 +116,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/directory/employees',
+      "/api/v2/directory/employees"
     );
     return {
       http,
@@ -143,10 +143,10 @@ export default {
   },
   methods: {
     openClientTelephone() {
-      window.location.href = 'tel:' + this.employeeWorkTelephone;
+      window.location.href = "tel:" + this.employeeWorkTelephone;
     },
     openClientEmail() {
-      window.location.href = 'mailto:' + this.employeeWorkEmail;
+      window.location.href = "mailto:" + this.employeeWorkEmail;
     },
     copyEmail() {
       navigator.clipboard?.writeText(this.employeeWorkEmail);
@@ -155,8 +155,8 @@ export default {
       navigator.clipboard?.writeText(this.employeeWorkTelephone);
     },
     callEmployeeDetailsApi() {
-      this.http.get(this.employeeId, {model: 'detailed'}).then((response) => {
-        const {data} = response.data;
+      this.http.get(this.employeeId, { model: "detailed" }).then((response) => {
+        const { data } = response.data;
         this.employeeName = {
           firstName: data.firstName,
           middleName: data.middleName,
@@ -168,10 +168,10 @@ export default {
       });
     },
     generateQrPayload() {
-      let content = '';
-      content += `N:${this.employeeName?.lastName || ''};`;
-      content += `${this.employeeName?.firstName || ''};`;
-      content += `${this.employeeName?.middleName || ''};\n`;
+      let content = "";
+      content += `N:${this.employeeName?.lastName || ""};`;
+      content += `${this.employeeName?.firstName || ""};`;
+      content += `${this.employeeName?.middleName || ""};\n`;
       if (this.employeeWorkTelephone)
         content += `TEL;CELL:${this.employeeWorkTelephone}\n`;
       if (this.employeeWorkEmail)
@@ -188,7 +188,7 @@ export default {
   height: auto;
   overflow: hidden;
   padding: 0.5rem 1rem;
-  @include oxd-respond-to('md') {
+  @include oxd-respond-to("md") {
     min-height: 280px;
   }
 
@@ -210,7 +210,7 @@ export default {
     padding: 0.25rem 0.75rem;
     border-radius: 0.5rem;
     margin: auto;
-    @include oxd-respond-to('md') {
+    @include oxd-respond-to("md") {
       width: auto;
     }
 

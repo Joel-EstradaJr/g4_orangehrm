@@ -22,7 +22,7 @@
     <div class="orangehrm-card-container">
       <div class="orangehrm-module-under-development">
         <oxd-text tag="h4" class="orangehrm-module-under-development-heading">
-          {{ $t('general.launching_soon') }}
+          {{ $t("general.launching_soon") }}
         </oxd-text>
         <img
           :src="moduleUnderDevelopment"
@@ -30,15 +30,15 @@
           alt="this module is under development"
         />
         <oxd-text tag="p" class="orangehrm-module-under-development-text">
-          {{ $t('general.page_under_development') }}
+          {{ $t("general.page_under_development") }}
           <a
             target="_blank"
             class="orangehrm-module-under-development-link"
             href="https://sourceforge.net/projects/orangehrm/files/latest/download"
           >
-            {{ $t('general.click_here') }}
+            {{ $t("general.click_here") }}
           </a>
-          {{ $t('general.download_latest_release') }}
+          {{ $t("general.download_latest_release") }}
         </oxd-text>
       </div>
     </div>

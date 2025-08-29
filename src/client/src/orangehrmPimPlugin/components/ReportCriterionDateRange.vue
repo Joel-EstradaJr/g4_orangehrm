@@ -62,18 +62,18 @@
 </template>
 
 <script>
-import {ref} from 'vue';
+import { ref } from "vue";
 import {
   required,
   validDateFormat,
   endDateShouldBeAfterStartDate,
   startDateShouldBeBeforeEndDate,
-} from '@ohrm/core/util/validation/rules';
-import usei18n from '@/core/util/composable/usei18n';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import usei18n from "@/core/util/composable/usei18n";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 export default {
-  name: 'ReportCriterionDateRange',
+  name: "ReportCriterionDateRange",
   inheritAttrs: false,
   props: {
     operator: {
@@ -92,14 +92,14 @@ export default {
       default: null,
     },
   },
-  emits: ['update:valueX', 'update:valueY', 'update:operator'],
+  emits: ["update:valueX", "update:valueY", "update:operator"],
   setup(props) {
-    const {$t} = usei18n();
-    const {jsDateFormat, userDateFormat} = useDateFormat();
+    const { $t } = usei18n();
+    const { jsDateFormat, userDateFormat } = useDateFormat();
     const operators = ref([
-      {id: 'lt', label: 'Joined before'},
-      {id: 'gt', label: 'Joined after'},
-      {id: 'between', label: 'Joined in between'},
+      { id: "lt", label: "Joined before" },
+      { id: "gt", label: "Joined after" },
+      { id: "between", label: "Joined in between" },
     ]);
 
     const rules = {
@@ -110,7 +110,7 @@ export default {
         validDateFormat(userDateFormat),
         startDateShouldBeBeforeEndDate(
           () => props.valueY,
-          $t('general.from_date_should_be_before_to_date'),
+          $t("general.from_date_should_be_before_to_date")
         ),
       ],
       valueY: [
@@ -118,7 +118,7 @@ export default {
         validDateFormat(userDateFormat),
         endDateShouldBeAfterStartDate(
           () => props.valueX,
-          $t('general.to_date_should_be_after_from_date'),
+          $t("general.to_date_should_be_after_from_date")
         ),
       ],
     };

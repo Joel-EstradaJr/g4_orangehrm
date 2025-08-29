@@ -35,7 +35,7 @@
       {{ leaveBalance }}
     </oxd-text>
     <oxd-text v-else class="orangehrm-leave-balance-text --error" tag="p">
-      {{ $t('leave.balance_not_sufficient') }}
+      {{ $t("leave.balance_not_sufficient") }}
     </oxd-text>
   </oxd-input-group>
   <component
@@ -48,19 +48,19 @@
 </template>
 
 <script>
-import {toRefs, reactive, computed, watchPostEffect} from 'vue';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import LeaveBalanceModal from '@/orangehrmLeavePlugin/components/LeaveBalanceModal';
-import LeaveBalanceInsufficientModal from '@/orangehrmLeavePlugin/components/LeaveBalanceInsufficientModal';
-import useLeaveValidators from '@/orangehrmLeavePlugin/util/composable/useLeaveValidators';
-import {OxdLabel} from '@ohrm/oxd';
+import { toRefs, reactive, computed, watchPostEffect } from "vue";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import LeaveBalanceModal from "@/orangehrmLeavePlugin/components/LeaveBalanceModal";
+import LeaveBalanceInsufficientModal from "@/orangehrmLeavePlugin/components/LeaveBalanceInsufficientModal";
+import useLeaveValidators from "@/orangehrmLeavePlugin/util/composable/useLeaveValidators";
+import { OxdLabel } from "@ohrm/oxd";
 
 export default {
-  name: 'LeaveBalance',
+  name: "LeaveBalance",
   components: {
-    'oxd-label': OxdLabel,
-    'leave-balance-modal': LeaveBalanceModal,
-    'leave-balance-insufficient-modal': LeaveBalanceInsufficientModal,
+    "oxd-label": OxdLabel,
+    "leave-balance-modal": LeaveBalanceModal,
+    "leave-balance-insufficient-modal": LeaveBalanceInsufficientModal,
   },
   inheritAttrs: false,
   props: {
@@ -78,15 +78,15 @@ export default {
     });
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/leave-balance/leave-type',
+      "/api/v2/leave/leave-balance/leave-type"
     );
-    http.setIgnorePath('/api/v2/leave/leave-balance/leave-type');
-    const {validateLeaveBalance} = useLeaveValidators(http);
+    http.setIgnorePath("/api/v2/leave/leave-balance/leave-type");
+    const { validateLeaveBalance } = useLeaveValidators(http);
 
     const leaveBalance = computed(() => {
       return props.leaveData.type?.id
         ? `${state.balance.toFixed(2)} Day(s)`
-        : '0.00 Day(s)';
+        : "0.00 Day(s)";
     });
 
     const onModalOpen = () => {
@@ -99,14 +99,14 @@ export default {
 
     const leaveBalanceModal = computed(() => {
       return Array.isArray(state.data)
-        ? 'leave-balance-insufficient-modal'
-        : 'leave-balance-modal';
+        ? "leave-balance-insufficient-modal"
+        : "leave-balance-modal";
     });
 
     watchPostEffect(async () => {
       if (props.leaveData.type?.id) {
         validateLeaveBalance(props.leaveData)
-          .then(({balance, breakdown, metaData}) => {
+          .then(({ balance, breakdown, metaData }) => {
             state.balance = balance;
             if (breakdown) state.data = breakdown;
             if (metaData) state.meta = metaData;

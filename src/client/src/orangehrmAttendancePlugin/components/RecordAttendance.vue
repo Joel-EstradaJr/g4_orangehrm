@@ -116,7 +116,7 @@ import {
   required,
   validDateFormat,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
+} from "@/core/util/validation/rules";
 import {
   parseTime,
   parseDate,
@@ -125,13 +125,13 @@ import {
   guessTimezone,
   setClockInterval,
   getStandardTimezone,
-} from '@/core/util/helper/datefns';
-import {promiseDebounce} from '@ohrm/oxd';
-import useLocale from '@/core/util/composable/useLocale';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {reloadPage, navigate} from '@/core/util/helper/navigation';
-import TimezoneDropdown from '@/orangehrmAttendancePlugin/components/TimezoneDropdown.vue';
+} from "@/core/util/helper/datefns";
+import { promiseDebounce } from "@ohrm/oxd";
+import useLocale from "@/core/util/composable/useLocale";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { reloadPage, navigate } from "@/core/util/helper/navigation";
+import TimezoneDropdown from "@/orangehrmAttendancePlugin/components/TimezoneDropdown.vue";
 
 const attendanceRecordModal = {
   date: null,
@@ -142,9 +142,9 @@ const attendanceRecordModal = {
 };
 
 export default {
-  name: 'RecordAttendance',
+  name: "RecordAttendance",
   components: {
-    'timezone-dropdown': TimezoneDropdown,
+    "timezone-dropdown": TimezoneDropdown,
   },
   props: {
     isEditable: {
@@ -171,11 +171,11 @@ export default {
   setup(props) {
     const apiPath = props.employeeId
       ? `/api/v2/attendance/employees/${props.employeeId}/records`
-      : '/api/v2/attendance/records';
+      : "/api/v2/attendance/records";
     const http = new APIService(window.appGlobal.baseUrl, apiPath);
-    const {jsDateFormat, userDateFormat, timeFormat, jsTimeFormat} =
+    const { jsDateFormat, userDateFormat, timeFormat, jsTimeFormat } =
       useDateFormat();
-    const {locale} = useLocale();
+    const { locale } = useLocale();
     return {
       http,
       locale,
@@ -188,7 +188,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      attendanceRecord: {...attendanceRecordModal},
+      attendanceRecord: { ...attendanceRecordModal },
       rules: {
         date: [
           required,
@@ -207,7 +207,7 @@ export default {
       return formatDate(
         parseDate(this.attendanceRecord.previousRecord.userDate),
         this.jsDateFormat,
-        {locale: this.locale},
+        { locale: this.locale }
       );
     },
     previousAttendanceRecordTime() {
@@ -215,9 +215,9 @@ export default {
       return formatTime(
         parseTime(
           this.attendanceRecord.previousRecord.userTime,
-          this.timeFormat,
+          this.timeFormat
         ),
-        this.jsTimeFormat,
+        this.jsTimeFormat
       );
     },
   },
@@ -241,24 +241,24 @@ export default {
         !this.date &&
           !this.isEditable &&
           setClockInterval(this.setCurrentDateTime, 60000);
-        let url = '/api/v2/attendance/records/latest';
+        let url = "/api/v2/attendance/records/latest";
         if (this.employeeId) {
           url = `/api/v2/attendance/records/latest?empNumber=${this.employeeId}`;
         }
         return this.attendanceRecordId
-          ? this.http.request({method: 'GET', url})
+          ? this.http.request({ method: "GET", url })
           : null;
       })
 
       .then((response) => {
         if (response) {
-          const {data} = response.data;
+          const { data } = response.data;
           this.attendanceRecord.previousRecord = data.punchIn;
         }
       })
       .then(() => {
         this.previousRecordTimezone = getStandardTimezone(
-          this.attendanceRecord.previousRecord?.offset,
+          this.attendanceRecord.previousRecord?.offset
         );
       })
       .finally(() => {
@@ -273,7 +273,7 @@ export default {
 
       this.http
         .request({
-          method: this.attendanceRecordId ? 'PUT' : 'POST',
+          method: this.attendanceRecordId ? "PUT" : "POST",
           data: {
             date: this.attendanceRecord.date,
             time: this.attendanceRecord.time,
@@ -288,7 +288,7 @@ export default {
         })
         .then(() => {
           this.employeeId
-            ? navigate('/attendance/viewAttendanceRecord', undefined, {
+            ? navigate("/attendance/viewAttendanceRecord", undefined, {
                 employeeId: this.employeeId,
                 date: this.date,
               })
@@ -298,16 +298,19 @@ export default {
     setCurrentDateTime() {
       return new Promise((resolve, reject) => {
         this.http
-          .request({method: 'GET', url: '/api/v2/attendance/current-datetime'})
+          .request({
+            method: "GET",
+            url: "/api/v2/attendance/current-datetime",
+          })
           .then((res) => {
-            const {utcDate, utcTime} = res.data.data;
+            const { utcDate, utcTime } = res.data.data;
             const currentDate = parseDate(
               `${utcDate} ${utcTime} +00:00`,
-              'yyyy-MM-dd HH:mm xxx',
+              "yyyy-MM-dd HH:mm xxx"
             );
             this.attendanceRecord.date =
-              this.date ?? formatDate(currentDate, 'yyyy-MM-dd');
-            this.attendanceRecord.time = formatDate(currentDate, 'HH:mm');
+              this.date ?? formatDate(currentDate, "yyyy-MM-dd");
+            this.attendanceRecord.time = formatDate(currentDate, "HH:mm");
             resolve();
           })
           .catch((error) => reject(error));
@@ -324,9 +327,9 @@ export default {
       return new Promise((resolve) => {
         this.http
           .request({
-            method: 'GET',
+            method: "GET",
             url: `/api/v2/attendance/${
-              this.attendanceRecordId ? 'punch-out' : 'punch-in'
+              this.attendanceRecordId ? "punch-out" : "punch-in"
             }/overlaps`,
             params: {
               date: this.attendanceRecord.date,
@@ -341,13 +344,13 @@ export default {
             },
           })
           .then((res) => {
-            const {data, error} = res.data;
+            const { data, error } = res.data;
             if (error) {
               return resolve(error.message);
             }
             return data.valid === true
               ? resolve(true)
-              : resolve(this.$t('attendance.overlapping_records_found'));
+              : resolve(this.$t("attendance.overlapping_records_found"));
           });
       });
     },

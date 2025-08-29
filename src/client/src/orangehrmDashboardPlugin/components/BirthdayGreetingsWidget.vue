@@ -50,8 +50,8 @@
 
 <script>
 export default {
-  name: 'BirthdayGreetingsWidget',
-  emits: ['birthday-status'],
+  name: "BirthdayGreetingsWidget",
+  emits: ["birthday-status"],
 
   data() {
     return {
@@ -62,11 +62,11 @@ export default {
   },
 
   async mounted() {
-    console.log('🎂 Birthday Widget mounted - DEBUG MODE');
-    console.log('📅 Today is August 20, 2025');
+    console.log("🎂 Birthday Widget mounted - DEBUG MODE");
+    console.log("📅 Today is August 20, 2025");
     await this.getRealUserBirthday();
-    console.log('🎉 Final birthday status:', this.isMyBirthday);
-    this.$emit('birthday-status', this.isMyBirthday);
+    console.log("🎉 Final birthday status:", this.isMyBirthday);
+    this.$emit("birthday-status", this.isMyBirthday);
   },
 
   methods: {
@@ -82,24 +82,24 @@ export default {
           window.appGlobal?.user?.empNumber ||
           window.appGlobal?.user?.id;
 
-        console.log('🔍 Current User:', this.currentUser);
-        console.log('🔍 User ID:', currentUserId);
+        console.log("🔍 Current User:", this.currentUser);
+        console.log("🔍 User ID:", currentUserId);
 
         // Check if we're COLONYXT user by looking at the profile/username
         const username =
           window.appGlobal?.user?.userName ||
           window.appGlobal?.userName ||
-          document.querySelector('[data-username]')?.dataset.username;
+          document.querySelector("[data-username]")?.dataset.username;
 
-        console.log('🔍 Username:', username);
+        console.log("🔍 Username:", username);
 
         // COLONYXT detection fallback - if no user ID but we can detect COLONYXT
         if (
           !currentUserId &&
-          (username === 'Admin' || username === 'COLONYXT')
+          (username === "Admin" || username === "COLONYXT")
         ) {
           console.log(
-            '🎯 COLONYXT user detected via username - using birthday 2004-08-20',
+            "🎯 COLONYXT user detected via username - using birthday 2004-08-20"
           );
           currentUserId = 1; // Set user ID to 1 for COLONYXT
         }
@@ -107,12 +107,12 @@ export default {
         // If still no user ID, assume COLONYXT (since you're logged in)
         if (!currentUserId) {
           console.log(
-            '🎯 No user ID found, assuming COLONYXT user - using birthday 2004-08-20',
+            "🎯 No user ID found, assuming COLONYXT user - using birthday 2004-08-20"
           );
           currentUserId = 1;
         }
 
-        console.log('🔍 Final User ID:', currentUserId);
+        console.log("🔍 Final User ID:", currentUserId);
 
         // Use only the correct API endpoint and field
         const endpoint = `/api/v2/pim/employees/${currentUserId}/personal-details`;
@@ -121,13 +121,13 @@ export default {
           const response = await fetch(
             `${window.appGlobal.baseUrl}${endpoint}`,
             {
-              method: 'GET',
+              method: "GET",
               headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
+                "Content-Type": "application/json",
+                Accept: "application/json",
               },
-              credentials: 'include',
-            },
+              credentials: "include",
+            }
           );
           console.log(`📡 ${endpoint} - Status: ${response.status}`);
           if (response.ok) {
@@ -138,15 +138,15 @@ export default {
               if (birthday) {
                 console.log(`🎂 FOUND BIRTHDAY:`, birthday);
                 this.currentUser.firstName =
-                  userData.data.firstName || 'COLONYXT';
-                this.currentUser.lastName = userData.data.lastName || 'G4';
+                  userData.data.firstName || "COLONYXT";
+                this.currentUser.lastName = userData.data.lastName || "G4";
                 this.checkIfTodayIsBirthday(birthday);
               } else {
-                console.log('❌ No birthday field found in API response');
+                console.log("❌ No birthday field found in API response");
                 this.isMyBirthday = false;
               }
             } else {
-              console.log('❌ No data object in API response');
+              console.log("❌ No data object in API response");
               this.isMyBirthday = false;
             }
           } else {
@@ -158,20 +158,20 @@ export default {
           this.isMyBirthday = false;
         }
 
-        console.log('🎂 Final birthday status before emit:', this.isMyBirthday);
-        this.$emit('birthday-status', this.isMyBirthday);
+        console.log("🎂 Final birthday status before emit:", this.isMyBirthday);
+        this.$emit("birthday-status", this.isMyBirthday);
       } catch (error) {
-        console.error('❌ Error in getRealUserBirthday:', error);
+        console.error("❌ Error in getRealUserBirthday:", error);
         this.isMyBirthday = false;
-        this.$emit('birthday-status', false);
+        this.$emit("birthday-status", false);
       }
     },
 
     checkIfTodayIsBirthday(birthdateString) {
-      console.log('🔍 Checking birthday for:', birthdateString);
+      console.log("🔍 Checking birthday for:", birthdateString);
 
       if (!birthdateString) {
-        console.log('❌ No birthday string provided');
+        console.log("❌ No birthday string provided");
         this.isMyBirthday = false;
         return;
       }
@@ -179,13 +179,13 @@ export default {
       const today = new Date();
       const birthDate = new Date(birthdateString);
 
-      console.log('📅 Today:', today.toDateString());
-      console.log('🎂 Birth Date:', birthDate.toDateString());
-      console.log('📅 Today Month/Day:', today.getMonth(), today.getDate());
+      console.log("📅 Today:", today.toDateString());
+      console.log("🎂 Birth Date:", birthDate.toDateString());
+      console.log("📅 Today Month/Day:", today.getMonth(), today.getDate());
       console.log(
-        '🎂 Birth Month/Day:',
+        "🎂 Birth Month/Day:",
         birthDate.getMonth(),
-        birthDate.getDate(),
+        birthDate.getDate()
       );
 
       // Check if today matches the birthday (month and day)
@@ -193,13 +193,13 @@ export default {
         today.getMonth() === birthDate.getMonth() &&
         today.getDate() === birthDate.getDate();
 
-      console.log('🎉 Birthday Match Result:', isMatch);
+      console.log("🎉 Birthday Match Result:", isMatch);
 
       this.isMyBirthday = isMatch;
       this.userAge = this.calculateAge(birthdateString);
 
-      console.log('🎈 User Age:', this.userAge);
-      console.log('🎯 Final isMyBirthday value:', this.isMyBirthday);
+      console.log("🎈 User Age:", this.userAge);
+      console.log("🎯 Final isMyBirthday value:", this.isMyBirthday);
     },
 
     calculateAge(birthdate) {

@@ -48,28 +48,28 @@
 </template>
 
 <script>
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import SelectedEmployee from '@/orangehrmMaintenancePlugin/components/SelectedEmployee';
-import EmployeeRecords from '@/orangehrmMaintenancePlugin/components/EmployeeRecords';
-import ConfirmationDialog from '@/core/components/dialogs/ConfirmationDialog';
-import MaintenanceNote from '@/orangehrmMaintenancePlugin/components/MaintenanceNote';
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import SelectedEmployee from "@/orangehrmMaintenancePlugin/components/SelectedEmployee";
+import EmployeeRecords from "@/orangehrmMaintenancePlugin/components/EmployeeRecords";
+import ConfirmationDialog from "@/core/components/dialogs/ConfirmationDialog";
+import MaintenanceNote from "@/orangehrmMaintenancePlugin/components/MaintenanceNote";
 
 const selectedEmployeeModel = {
-  firstName: '',
-  middleName: '',
-  lastName: '',
-  employeeId: '',
-  empNumber: '',
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  employeeId: "",
+  empNumber: "",
 };
 
 export default {
-  name: 'PurgeEmployee',
+  name: "PurgeEmployee",
   components: {
-    'purge-confirmation': ConfirmationDialog,
-    'purge-employee-records': EmployeeRecords,
-    'selected-employee': SelectedEmployee,
-    'maintenance-note': MaintenanceNote,
+    "purge-confirmation": ConfirmationDialog,
+    "purge-employee-records": EmployeeRecords,
+    "selected-employee": SelectedEmployee,
+    "maintenance-note": MaintenanceNote,
   },
 
   props: {
@@ -82,7 +82,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/maintenance/purge',
+      "/api/v2/maintenance/purge"
     );
 
     return {
@@ -94,15 +94,15 @@ export default {
     return {
       isLoading: false,
       showPurgeableEmployee: false,
-      selectedEmployee: {...selectedEmployeeModel},
+      selectedEmployee: { ...selectedEmployeeModel },
     };
   },
 
   methods: {
     onClickSearch(employee) {
-      this.selectedEmployee = {...selectedEmployeeModel};
+      this.selectedEmployee = { ...selectedEmployeeModel };
       if (employee) {
-        this.selectedEmployee = {...employee};
+        this.selectedEmployee = { ...employee };
         this.showPurgeableEmployee = true;
       } else {
         this.showPurgeableEmployee = false;
@@ -110,7 +110,7 @@ export default {
     },
     onClickPurge(empNumber) {
       this.$refs.purgeDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.purgeEmployee(empNumber);
         }
       });
@@ -123,15 +123,15 @@ export default {
         })
         .then(() => {
           return this.$toast.success({
-            title: this.$t('general.success'),
-            message: this.$t('maintenance.purge_success'),
+            title: this.$t("general.success"),
+            message: this.$t("maintenance.purge_success"),
           });
         })
         .then(() => {
           this.showPurgeableEmployee = false;
-          this.selectedEmployee = {...selectedEmployeeModel};
+          this.selectedEmployee = { ...selectedEmployeeModel };
           this.isLoading = false;
-          navigate('/maintenance/purgeEmployee');
+          navigate("/maintenance/purgeEmployee");
         });
     },
   },

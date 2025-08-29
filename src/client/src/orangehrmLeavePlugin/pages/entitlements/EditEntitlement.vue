@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">
-        {{ $t('leave.edit_leave_entitlement') }}
+        {{ $t("leave.edit_leave_entitlement") }}
       </oxd-text>
 
       <oxd-divider />
@@ -87,27 +87,27 @@
 </template>
 
 <script>
-import useLocale from '@/core/util/composable/useLocale';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {promiseDebounce} from '@ohrm/oxd';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import {required, max, validSelection} from '@/core/util/validation/rules';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import LeaveTypeDropdown from '@/orangehrmLeavePlugin/components/LeaveTypeDropdown';
+import useLocale from "@/core/util/composable/useLocale";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { promiseDebounce } from "@ohrm/oxd";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import { required, max, validSelection } from "@/core/util/validation/rules";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import LeaveTypeDropdown from "@/orangehrmLeavePlugin/components/LeaveTypeDropdown";
 
 const leaveEntitlementModel = {
   employee: null,
   leaveType: null,
   leavePeriod: null,
-  entitlement: '',
+  entitlement: "",
 };
 
 export default {
   components: {
-    'leave-type-dropdown': LeaveTypeDropdown,
-    'employee-autocomplete': EmployeeAutocomplete,
+    "leave-type-dropdown": LeaveTypeDropdown,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
 
   props: {
@@ -124,13 +124,13 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/leave-entitlements',
+      "/api/v2/leave/leave-entitlements"
     );
     http.setIgnorePath(
-      '/api/v2/leave/leave-entitlements/[0-9]+/validation/entitlements',
+      "/api/v2/leave/leave-entitlements/[0-9]+/validation/entitlements"
     );
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
     return {
       http,
       jsDateFormat,
@@ -141,7 +141,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      leaveEntitlement: {...leaveEntitlementModel},
+      leaveEntitlement: { ...leaveEntitlementModel },
       rules: {
         employee: [required, validSelection],
         leaveType: [required],
@@ -151,7 +151,7 @@ export default {
           (v) => {
             return (
               /^\d+(\.\d{1,2})?$/.test(v) ||
-              this.$t('leave.should_be_a_number_with_2_decimal_places')
+              this.$t("leave.should_be_a_number_with_2_decimal_places")
             );
           },
           max(10000),
@@ -165,18 +165,18 @@ export default {
   beforeMount() {
     this.isLoading = true;
     this.http
-      .request({method: 'GET', url: '/api/v2/leave/leave-periods'})
-      .then(({data}) => {
+      .request({ method: "GET", url: "/api/v2/leave/leave-periods" })
+      .then(({ data }) => {
         this.leavePeriods = data.data.map((item) => {
           const startDate = formatDate(
             parseDate(item.startDate),
             this.jsDateFormat,
-            {locale: this.locale},
+            { locale: this.locale }
           );
           const endDate = formatDate(
             parseDate(item.endDate),
             this.jsDateFormat,
-            {locale: this.locale},
+            { locale: this.locale }
           );
           return {
             id: `${item.startDate}_${item.endDate}`,
@@ -188,7 +188,7 @@ export default {
         return this.http.get(this.entitlementId);
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.leaveEntitlement.employee = {
           id: data.employee.empNumber,
           label: `${data.employee.firstName} ${data.employee.lastName}`,
@@ -210,7 +210,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/leave/viewLeaveEntitlements', undefined, {
+      navigate("/leave/viewLeaveEntitlements", undefined, {
         empNumber: this.leaveEntitlement.employee?.id,
         leaveTypeId: this.leaveEntitlement.leaveType?.id,
         startDate: this.leaveEntitlement.leavePeriod?.startDate,
@@ -238,18 +238,18 @@ export default {
         if (!isNaN(entitlement)) {
           this.http
             .request({
-              method: 'GET',
+              method: "GET",
               url: `/api/v2/leave/leave-entitlements/${this.entitlementId}/validation/entitlements`,
               params: {
                 entitlement,
               },
             })
             .then((response) => {
-              const {data} = response.data;
+              const { data } = response.data;
               return data.valid === true
                 ? resolve(true)
                 : resolve(
-                    this.$t('leave.used_amount_exceeds_the_current_amount'),
+                    this.$t("leave.used_amount_exceeds_the_current_amount")
                   );
             });
         } else {

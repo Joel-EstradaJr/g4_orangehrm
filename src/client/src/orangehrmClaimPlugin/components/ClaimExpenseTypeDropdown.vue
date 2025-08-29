@@ -27,18 +27,18 @@
 </template>
 
 <script>
-import {ref, onBeforeMount} from 'vue';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { ref, onBeforeMount } from "vue";
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'ClaimEventDropdown',
+  name: "ClaimEventDropdown",
   setup() {
     const options = ref([]);
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/claim/expenses/types',
+      "/api/v2/claim/expenses/types"
     );
     onBeforeMount(() => {
-      http.getAll({limit: 0, status: true}).then(({data}) => {
+      http.getAll({ limit: 0, status: true }).then(({ data }) => {
         options.value = data.data.map((item) => {
           return {
             id: item.id,

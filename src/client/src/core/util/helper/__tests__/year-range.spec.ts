@@ -15,9 +15,9 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {yearRange} from '../year-range';
+import { yearRange } from "../year-range";
 
-describe('core/util/helper/year-range', () => {
+describe("core/util/helper/year-range", () => {
   const currentTime = new Date();
   const range = 100;
   const value = new Array(range);
@@ -25,7 +25,7 @@ describe('core/util/helper/year-range', () => {
     value[i] = currentTime.getFullYear() - Math.floor(range / 2) + i;
   }
 
-  test('all the years', () => {
+  test("all the years", () => {
     const result = yearRange();
     expect(result).toStrictEqual(value);
   });

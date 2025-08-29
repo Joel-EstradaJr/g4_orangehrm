@@ -62,19 +62,19 @@
   </div>
 </template>
 <script>
-import PostStatsModal from '@/orangehrmBuzzPlugin/components/PostStatsModal.vue';
-import {clickOutsideDirective, OxdIcon} from '@ohrm/oxd';
+import PostStatsModal from "@/orangehrmBuzzPlugin/components/PostStatsModal.vue";
+import { clickOutsideDirective, OxdIcon } from "@ohrm/oxd";
 
 export default {
-  name: 'PostStats',
+  name: "PostStats",
 
   components: {
-    'oxd-icon': OxdIcon,
-    'post-stats-modal': PostStatsModal,
+    "oxd-icon": OxdIcon,
+    "post-stats-modal": PostStatsModal,
   },
 
   directives: {
-    'click-outside': clickOutsideDirective,
+    "click-outside": clickOutsideDirective,
   },
 
   props: {
@@ -88,7 +88,7 @@ export default {
     },
   },
 
-  emits: ['comment'],
+  emits: ["comment"],
 
   data() {
     return {
@@ -99,36 +99,36 @@ export default {
 
   computed: {
     likesCount() {
-      return this.$t('buzz.n_like', {
+      return this.$t("buzz.n_like", {
         likesCount: this.post.stats?.numOfLikes || 0,
       });
     },
     sharesCount() {
       if (this.post.stats?.numOfShares === null) return null;
-      return this.$t('buzz.n_share', {
+      return this.$t("buzz.n_share", {
         shareCount: this.post.stats?.numOfShares || 0,
       });
     },
     commentsCount() {
-      return this.$t('buzz.n_comment', {
+      return this.$t("buzz.n_comment", {
         commentCount: this.post.stats?.numOfComments || 0,
       });
     },
     likesClasses() {
       return {
-        'orangehrm-buzz-stats-active': this.post.stats?.numOfLikes > 0,
+        "orangehrm-buzz-stats-active": this.post.stats?.numOfLikes > 0,
       };
     },
     sharesClasses() {
       return {
-        'orangehrm-buzz-stats-active': this.post.stats?.numOfShares > 0,
+        "orangehrm-buzz-stats-active": this.post.stats?.numOfShares > 0,
       };
     },
   },
 
   methods: {
     onShowComments() {
-      this.$emit('comment');
+      this.$emit("comment");
     },
     onShowLikeList() {
       this.showSharesList = false;

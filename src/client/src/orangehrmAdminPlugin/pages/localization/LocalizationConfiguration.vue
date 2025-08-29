@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.localization') }}
+        {{ $t("admin.localization") }}
       </oxd-text>
       <oxd-divider />
 
@@ -63,8 +63,8 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {reloadPage} from '@ohrm/core/util/helper/navigation';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { reloadPage } from "@ohrm/core/util/helper/navigation";
 export default {
   props: {
     dateFormatList: {
@@ -79,7 +79,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/localization',
+      "/api/v2/admin/localization"
     );
     return {
       http,
@@ -100,12 +100,12 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.configuration.language = this.languageList.find(
-          (item) => item.id === data.language,
+          (item) => item.id === data.language
         );
         this.configuration.dateFormat = this.dateFormatList.find(
-          (item) => item.id === data.dateFormat,
+          (item) => item.id === data.dateFormat
         );
       })
       .finally(() => (this.isLoading = false));
@@ -116,8 +116,8 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
-          url: '/api/v2/admin/localization',
+          method: "PUT",
+          url: "/api/v2/admin/localization",
           data: {
             language: this.configuration.language?.id,
             dateFormat: this.configuration.dateFormat?.id,

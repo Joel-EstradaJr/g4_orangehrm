@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-top-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">{{
-      $t('general.edit_education')
+      $t("general.edit_education")
     }}</oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -106,21 +106,21 @@ import {
   digitsOnly,
   validDateFormat,
   endDateShouldBeAfterStartDate,
-} from '@ohrm/core/util/validation/rules';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const educationModel = {
-  name: '',
-  institute: '',
-  major: '',
-  year: '',
-  score: '',
-  startDate: '',
-  endDate: '',
+  name: "",
+  institute: "",
+  major: "",
+  year: "",
+  score: "",
+  startDate: "",
+  endDate: "",
 };
 
 export default {
-  name: 'EditEducation',
+  name: "EditEducation",
 
   props: {
     http: {
@@ -133,10 +133,10 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup() {
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       userDateFormat,
@@ -146,7 +146,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      education: {...educationModel},
+      education: { ...educationModel },
       rules: {
         institute: [shouldNotExceedCharLength(100)],
         major: [shouldNotExceedCharLength(100)],
@@ -166,14 +166,14 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.education.name = data.education.name;
         this.education.institute = data.institute;
         this.education.major = data.major;
-        this.education.year = data.year ? data.year : '';
+        this.education.year = data.year ? data.year : "";
         this.education.score = data.score;
-        this.education.startDate = data.startDate ? data.startDate : '';
-        this.education.endDate = data.endDate ? data.endDate : '';
+        this.education.startDate = data.startDate ? data.startDate : "";
+        this.education.endDate = data.endDate ? data.endDate : "";
       })
       .finally(() => {
         this.isLoading = false;
@@ -200,7 +200,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

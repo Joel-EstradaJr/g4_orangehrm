@@ -24,24 +24,24 @@
     :clear="false"
     :create-options="loadEmployees"
   >
-    <template #afterSelected="{data}">
+    <template #afterSelected="{ data }">
       <template v-if="data.isPastEmployee">
-        {{ $t('general.past_employee') }}
+        {{ $t("general.past_employee") }}
       </template>
     </template>
-    <template #option="{data}">
+    <template #option="{ data }">
       <span>{{ data.label }}</span>
       <div v-if="data.isPastEmployee" class="past-employee-tag">
-        {{ $t('general.past_employee') }}
+        {{ $t("general.past_employee") }}
       </div>
     </template>
   </oxd-input-field>
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'ClaimEmployeeAutocomplete',
+  name: "ClaimEmployeeAutocomplete",
   props: {
     params: {
       type: Object,
@@ -49,7 +49,7 @@ export default {
     },
     apiPath: {
       type: String,
-      default: '/api/v2/pim/employees',
+      default: "/api/v2/pim/employees",
     },
     authEmployeeNumber: {
       type: Number,
@@ -71,12 +71,11 @@ export default {
               nameOrId: searchParam.trim(),
               ...this.params,
             })
-            .then(({data}) => {
+            .then(({ data }) => {
               resolve(
                 data.data
                   .filter(
-                    (employee) =>
-                      employee.empNumber !== this.authEmployeeNumber,
+                    (employee) => employee.empNumber !== this.authEmployeeNumber
                   )
                   .map((employee) => {
                     return {
@@ -85,7 +84,7 @@ export default {
                       _employee: employee,
                       isPastEmployee: employee.terminationId ? true : false,
                     };
-                  }),
+                  })
               );
             });
         } else {

@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.edit_work_shift') }}
+        {{ $t("admin.edit_work_shift") }}
       </oxd-text>
       <oxd-divider />
 
@@ -96,30 +96,30 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   validSelection,
   validTimeFormat,
   shouldNotExceedCharLength,
   endTimeShouldBeAfterStartTime,
-} from '@ohrm/core/util/validation/rules';
-import {diffInTime} from '@/core/util/helper/datefns';
-import useServerValidation from '@/core/util/composable/useServerValidation';
-import WorkShiftEmployeeAutocomplete from '@/orangehrmAdminPlugin/components/WorkShiftEmployeeAutocomplete';
+} from "@ohrm/core/util/validation/rules";
+import { diffInTime } from "@/core/util/helper/datefns";
+import useServerValidation from "@/core/util/composable/useServerValidation";
+import WorkShiftEmployeeAutocomplete from "@/orangehrmAdminPlugin/components/WorkShiftEmployeeAutocomplete";
 
 const workShiftModel = {
-  id: '',
-  name: '',
-  hoursPerDay: '',
+  id: "",
+  name: "",
+  hoursPerDay: "",
   startTime: null,
   endTime: null,
   empNumbers: [],
 };
 export default {
   components: {
-    'work-shift-employee-autocomplete': WorkShiftEmployeeAutocomplete,
+    "work-shift-employee-autocomplete": WorkShiftEmployeeAutocomplete,
   },
   props: {
     workShiftId: {
@@ -131,13 +131,13 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/work-shifts',
+      "/api/v2/admin/work-shifts"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const workShiftUniqueValidation = createUniqueValidator(
-      'WorkShift',
-      'name',
-      {entityId: props.workShiftId},
+      "WorkShift",
+      "name",
+      { entityId: props.workShiftId }
     );
 
     return {
@@ -148,7 +148,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      workShift: {...workShiftModel},
+      workShift: { ...workShiftModel },
       rules: {
         name: [
           required,
@@ -161,7 +161,7 @@ export default {
           validTimeFormat,
           endTimeShouldBeAfterStartTime(
             () => this.workShift.startTime,
-            'To time should be after from time',
+            "To time should be after from time"
           ),
         ],
         empNumbers: [validSelection],
@@ -171,7 +171,7 @@ export default {
   computed: {
     selectedTimeDuration() {
       return parseFloat(
-        diffInTime(this.workShift.startTime, this.workShift.endTime) / 3600,
+        diffInTime(this.workShift.startTime, this.workShift.endTime) / 3600
       ).toFixed(2);
     },
   },
@@ -180,7 +180,7 @@ export default {
     this.http
       .get(this.workShiftId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.workShift.id = data.id;
         this.workShift.name = data.name;
         this.workShift.hoursPerDay = data.hoursPerDay;
@@ -218,7 +218,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/admin/workShift');
+      navigate("/admin/workShift");
     },
   },
 };

@@ -22,14 +22,14 @@
     <div class="orangehrm-card-container">
       <div class="orangehrm-header">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('attendance.edit_attendance_records') }}
+          {{ $t("attendance.edit_attendance_records") }}
         </oxd-text>
         <oxd-text
           v-if="totalDuration"
           tag="span"
           class="orangehrm-header-total"
         >
-          {{ $t('time.total_duration') }}: {{ totalDuration }}
+          {{ $t("time.total_duration") }}: {{ totalDuration }}
         </oxd-text>
       </div>
       <oxd-divider />
@@ -41,7 +41,7 @@
               <oxd-grid :cols="2" class="orangehrm-full-width-grid">
                 <oxd-grid-item>
                   <oxd-text type="subtitle-2">
-                    {{ $t('attendance.punch_in') }}
+                    {{ $t("attendance.punch_in") }}
                   </oxd-text>
                 </oxd-grid-item>
 
@@ -94,7 +94,7 @@
               <oxd-grid :cols="2" class="orangehrm-full-width-grid">
                 <oxd-grid-item>
                   <oxd-text type="subtitle-2">
-                    {{ $t('attendance.punch_out') }}
+                    {{ $t("attendance.punch_out") }}
                   </oxd-text>
                 </oxd-grid-item>
 
@@ -162,13 +162,17 @@ import {
   required,
   shouldNotExceedCharLength,
   validDateFormat,
-} from '@/core/util/validation/rules';
-import {diffInTime, parseDate, secondsTohhmm} from '@/core/util/helper/datefns';
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import {promiseDebounce} from '@ohrm/oxd';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import TimezoneDropdown from '@/orangehrmAttendancePlugin/components/TimezoneDropdown.vue';
+} from "@/core/util/validation/rules";
+import {
+  diffInTime,
+  parseDate,
+  secondsTohhmm,
+} from "@/core/util/helper/datefns";
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import { promiseDebounce } from "@ohrm/oxd";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import TimezoneDropdown from "@/orangehrmAttendancePlugin/components/TimezoneDropdown.vue";
 
 const attendanceRecordModal = {
   userDate: null,
@@ -182,7 +186,7 @@ const attendanceRecordModal = {
 
 export default {
   components: {
-    'timezone-dropdown': TimezoneDropdown,
+    "timezone-dropdown": TimezoneDropdown,
   },
   props: {
     attendanceId: {
@@ -201,9 +205,9 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/attendance/records`,
+      `/api/v2/attendance/records`
     );
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -215,8 +219,8 @@ export default {
       isLoading: false,
       attendance: {
         employee: null,
-        punchIn: {...attendanceRecordModal},
-        punchOut: {...attendanceRecordModal},
+        punchIn: { ...attendanceRecordModal },
+        punchOut: { ...attendanceRecordModal },
       },
       rules: {
         punchIn: {
@@ -224,15 +228,15 @@ export default {
             required,
             validDateFormat(this.userDateFormat),
             promiseDebounce(
-              () => this.validateRecord('punch-in-overlaps'),
-              500,
+              () => this.validateRecord("punch-in-overlaps"),
+              500
             ),
           ],
           userTime: [
             required,
             promiseDebounce(
-              () => this.validateRecord('punch-in-overlaps'),
-              500,
+              () => this.validateRecord("punch-in-overlaps"),
+              500
             ),
           ],
           note: [shouldNotExceedCharLength(250)],
@@ -242,15 +246,15 @@ export default {
             required,
             validDateFormat(this.userDateFormat),
             promiseDebounce(
-              () => this.validateRecord('punch-out-overlaps'),
-              500,
+              () => this.validateRecord("punch-out-overlaps"),
+              500
             ),
           ],
           userTime: [
             required,
             promiseDebounce(
-              () => this.validateRecord('punch-out-overlaps'),
-              500,
+              () => this.validateRecord("punch-out-overlaps"),
+              500
             ),
           ],
           note: [shouldNotExceedCharLength(250)],
@@ -273,7 +277,7 @@ export default {
         this.attendance.punchIn.timezone?._offset ??
         parseFloat(this.attendance.punchIn.timezoneOffset);
       const startTimezone =
-        (punchInTz > 0 ? ' +' : ' -') +
+        (punchInTz > 0 ? " +" : " -") +
         secondsTohhmm(Math.abs(punchInTz) * 3600);
 
       const endTime = `${this.attendance.punchOut.userDate} ${this.attendance.punchOut.userTime}`;
@@ -281,7 +285,7 @@ export default {
         this.attendance.punchOut.timezone?._offset ??
         parseFloat(this.attendance.punchOut.timezoneOffset);
       const endTimezone =
-        (punchOutTz > 0 ? ' +' : ' -') +
+        (punchOutTz > 0 ? " +" : " -") +
         secondsTohhmm(Math.abs(punchOutTz) * 3600);
 
       // yyyy-MM-dd HH:mm xxx <=> 2022-03-07 14:26 +05:30
@@ -289,8 +293,8 @@ export default {
         diffInTime(
           startTime + startTimezone,
           endTime + endTimezone,
-          'yyyy-MM-dd HH:mm xxx',
-        ) / 3600,
+          "yyyy-MM-dd HH:mm xxx"
+        ) / 3600
       ).toFixed(2);
     },
   },
@@ -299,7 +303,7 @@ export default {
     this.http
       .get(this.attendanceId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.attendance.employee = data.employee;
         this.attendance.punchIn = {
           ...data.punchIn,
@@ -327,12 +331,12 @@ export default {
   methods: {
     onCancel() {
       if (this.isEmployeeEdit) {
-        navigate('/attendance/viewAttendanceRecord', undefined, {
+        navigate("/attendance/viewAttendanceRecord", undefined, {
           employeeId: this.attendance.employee?.empNumber,
           date: this.attendance.punchIn?.userDate,
         });
       } else {
-        navigate('/attendance/viewMyAttendanceRecord', undefined, {
+        navigate("/attendance/viewMyAttendanceRecord", undefined, {
           date: this.attendance.punchIn?.userDate,
         });
       }
@@ -387,7 +391,7 @@ export default {
       return new Promise((resolve) => {
         this.http
           .request({
-            method: 'GET',
+            method: "GET",
             url: `/api/v2/attendance/records/${apiPath}`,
             params: {
               recordId: this.attendanceId,
@@ -408,13 +412,13 @@ export default {
             },
           })
           .then((res) => {
-            const {data, error} = res.data;
+            const { data, error } = res.data;
             if (error) {
               return resolve(error.message);
             }
             return data.valid === true
               ? resolve(true)
-              : resolve(this.$t('attendance.overlapping_records_found'));
+              : resolve(this.$t("attendance.overlapping_records_found"));
           });
       });
     },

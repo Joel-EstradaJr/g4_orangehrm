@@ -52,7 +52,7 @@
 
 <script>
 export default {
-  name: 'FullNameInput',
+  name: "FullNameInput",
   inheritAttrs: false,
   props: {
     firstName: {
@@ -84,27 +84,27 @@ export default {
       default: null,
     },
   },
-  emits: ['update:firstName', 'update:middleName', 'update:lastName'],
+  emits: ["update:firstName", "update:middleName", "update:lastName"],
   computed: {
     classes() {
       return {
         label: {
-          'oxd-input-field-required': true,
+          "oxd-input-field-required": true,
         },
         wrapper: {
-          '--name-grouped-field': true,
+          "--name-grouped-field": true,
         },
       };
     },
     localizedLabel() {
-      return this.label ? this.label : this.$t('general.employee_full_name');
+      return this.label ? this.label : this.$t("general.employee_full_name");
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@include oxd-respond-to('md') {
+@include oxd-respond-to("md") {
   ::v-deep(.--name-grouped-field) {
     display: flex;
   }

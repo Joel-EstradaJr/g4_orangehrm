@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import {OxdChip} from '@ohrm/oxd';
+import { OxdChip } from "@ohrm/oxd";
 
 export default {
-  name: 'PasswordStrengthIndicator',
+  name: "PasswordStrengthIndicator",
 
   components: {
-    'oxd-chip': OxdChip,
+    "oxd-chip": OxdChip,
   },
 
   props: {
@@ -42,23 +42,23 @@ export default {
     passwordStrengthLabel() {
       switch (this.passwordStrength) {
         case 1:
-          return this.$t('general.weak');
+          return this.$t("general.weak");
         case 2:
-          return this.$t('general.better');
+          return this.$t("general.better");
         case 3:
-          return this.$t('general.strong');
+          return this.$t("general.strong");
         case 4:
-          return this.$t('general.strongest');
+          return this.$t("general.strongest");
         default:
-          return this.$t('general.very_weak');
+          return this.$t("general.very_weak");
       }
     },
     chipClasses() {
       return {
-        'orangehrm-password-chip': true,
-        '--strength-better': this.passwordStrength === 2,
-        '--strength-strong': this.passwordStrength === 3,
-        '--strength-strongest': this.passwordStrength === 4,
+        "orangehrm-password-chip": true,
+        "--strength-better": this.passwordStrength === 2,
+        "--strength-strong": this.passwordStrength === 3,
+        "--strength-strongest": this.passwordStrength === 4,
       };
     },
   },

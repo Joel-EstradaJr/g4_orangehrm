@@ -66,21 +66,21 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import usei18n from '@/core/util/composable/usei18n';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import { computed, ref } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import usei18n from "@/core/util/composable/usei18n";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
-  name: 'LeaveEntitlementTable',
+  name: "LeaveEntitlementTable",
 
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -129,11 +129,11 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/leave-entitlements',
+      "/api/v2/leave/leave-entitlements"
     );
-    const {$t} = usei18n();
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { $t } = usei18n();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const entitlementNormalizer = (data) => {
       return data.map((item) => {
@@ -141,12 +141,12 @@ export default {
           id: item.id,
           leaveType:
             item.leaveType.name +
-            `${item.leaveType.deleted ? $t('general.deleted') : ''}`,
+            `${item.leaveType.deleted ? $t("general.deleted") : ""}`,
           entitlementType: item.entitlementType.name,
           fromDate: formatDate(parseDate(item.fromDate), jsDateFormat, {
             locale,
           }),
-          toDate: formatDate(parseDate(item.toDate), jsDateFormat, {locale}),
+          toDate: formatDate(parseDate(item.toDate), jsDateFormat, { locale }),
           days: item.entitlement,
           isSelectable: item.deletable,
         };
@@ -201,42 +201,42 @@ export default {
     headers() {
       const headers = [
         {
-          name: 'leaveType',
-          slot: 'title',
-          title: this.$t('leave.leave_type'),
-          style: {flex: 1},
+          name: "leaveType",
+          slot: "title",
+          title: this.$t("leave.leave_type"),
+          style: { flex: 1 },
         },
         {
-          name: 'entitlementType',
-          title: this.$t('leave.entitlement_type'),
-          style: {flex: 1},
+          name: "entitlementType",
+          title: this.$t("leave.entitlement_type"),
+          style: { flex: 1 },
         },
         {
-          name: 'fromDate',
-          title: this.$t('leave.valid_from'),
-          style: {flex: 1},
+          name: "fromDate",
+          title: this.$t("leave.valid_from"),
+          style: { flex: 1 },
         },
         {
-          name: 'toDate',
-          title: this.$t('leave.valid_to'),
-          style: {flex: 1},
+          name: "toDate",
+          title: this.$t("leave.valid_to"),
+          style: { flex: 1 },
         },
-        {name: 'days', title: this.$t('leave.days'), style: {flex: 1}},
+        { name: "days", title: this.$t("leave.days"), style: { flex: 1 } },
       ];
       const headerActions = {
-        name: 'actions',
-        slot: 'action',
-        title: this.$t('general.actions'),
-        style: {flex: 1},
-        cellType: 'oxd-table-cell-actions',
+        name: "actions",
+        slot: "action",
+        title: this.$t("general.actions"),
+        style: { flex: 1 },
+        cellType: "oxd-table-cell-actions",
         cellConfig: {},
       };
       if (this.$can.delete(`leave_entitlements`)) {
         headerActions.cellConfig.delete = {
           onClick: this.onClickDelete,
-          component: 'oxd-icon-button',
+          component: "oxd-icon-button",
           props: {
-            name: 'trash',
+            name: "trash",
           },
         };
       }
@@ -244,7 +244,7 @@ export default {
         headerActions.cellConfig.edit = {
           onClick: this.onClickEdit,
           props: {
-            name: 'pencil-fill',
+            name: "pencil-fill",
           },
         };
       }
@@ -256,17 +256,17 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/leave/addLeaveEntitlement');
+      navigate("/leave/addLeaveEntitlement");
     },
     onClickEdit(item) {
-      navigate('/leave/editLeaveEntitlement/{id}', {id: item.id});
+      navigate("/leave/editLeaveEntitlement/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = this.checkedItems.map((index) => {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
@@ -274,14 +274,14 @@ export default {
     onClickDelete(item) {
       if (!item.isSelectable) {
         return this.$toast.error({
-          title: this.$t('general.error'),
+          title: this.$t("general.error"),
           message: this.$t(
-            'leave.entitlements_will_not_be_deleted_since_already_in_use',
+            "leave.entitlements_will_not_be_deleted_since_already_in_use"
           ),
         });
       }
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

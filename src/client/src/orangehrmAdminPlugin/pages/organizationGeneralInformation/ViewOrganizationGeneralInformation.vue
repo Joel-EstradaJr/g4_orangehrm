@@ -22,7 +22,7 @@
     <div class="orangehrm-card-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('admin.general_information') }}
+          {{ $t("admin.general_information") }}
         </oxd-text>
         <oxd-switch-input
           v-model="editable"
@@ -191,18 +191,18 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
   validEmailFormat,
   validPhoneNumberFormat,
-} from '@ohrm/core/util/validation/rules';
-import {OxdSwitchInput} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
+    "oxd-switch-input": OxdSwitchInput,
   },
   props: {
     numberOfEmployees: {
@@ -217,7 +217,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/organization',
+      "/api/v2/admin/organization"
     );
     return {
       http,
@@ -229,20 +229,20 @@ export default {
       editable: false,
       isLoading: false,
       organization: {
-        name: '',
+        name: "",
         noOfEmployees: this.numberOfEmployees,
-        registrationNumber: '',
-        taxId: '',
-        phone: '',
-        fax: '',
-        email: '',
-        street1: '',
-        street2: '',
-        city: '',
-        province: '',
+        registrationNumber: "",
+        taxId: "",
+        phone: "",
+        fax: "",
+        email: "",
+        street1: "",
+        street2: "",
+        city: "",
+        province: "",
         country: null,
-        zipCode: '',
-        note: '',
+        zipCode: "",
+        note: "",
       },
       rules: {
         name: [required, shouldNotExceedCharLength(100)],
@@ -265,9 +265,9 @@ export default {
   created() {
     this.isLoading = true;
     this.http.http
-      .get('/api/v2/admin/organization')
+      .get("/api/v2/admin/organization")
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.organization.name = data.name;
         this.organization.registrationNumber = data.registrationNumber;
         this.organization.taxId = data.taxId;
@@ -278,7 +278,7 @@ export default {
         this.organization.street2 = data.street2;
         this.organization.city = data.city;
         this.organization.province = data.province;
-        if (data.country !== '' && data.country !== null) {
+        if (data.country !== "" && data.country !== null) {
           this.organization.country = this.countryList.find((item) => {
             return item.id === data.country;
           });
@@ -295,7 +295,7 @@ export default {
     onSave() {
       this.isLoading = true;
       this.http.http
-        .put('/api/v2/admin/organization', {
+        .put("/api/v2/admin/organization", {
           name: this.organization.name,
           registrationNumber: this.organization.registrationNumber,
           taxId: this.organization.taxId,

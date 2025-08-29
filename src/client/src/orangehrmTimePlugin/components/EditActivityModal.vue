@@ -21,7 +21,7 @@
   <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('time.edit_project_activity') }}
+        {{ $t("time.edit_project_activity") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -54,14 +54,14 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {APIService} from '@/core/util/services/api.service';
-import {OxdDialog} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { APIService } from "@/core/util/services/api.service";
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'SaveActivityModal',
+  name: "SaveActivityModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     projectId: {
@@ -73,11 +73,11 @@ export default {
       required: true,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/time/project/${props.projectId}/activities`,
+      `/api/v2/time/project/${props.projectId}/activities`
     );
     return {
       http,
@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      name: '',
+      name: "",
       rules: {
         name: [required, shouldNotExceedCharLength(100)],
       },
@@ -97,21 +97,20 @@ export default {
     this.http
       .get(this.activityId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.name = data.name;
-        return this.http.getAll({limit: 0});
+        return this.http.getAll({ limit: 0 });
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.rules.name.push((v) => {
           const index = data.findIndex(
-            (item) =>
-              String(item.name).toLowerCase() == String(v).toLowerCase(),
+            (item) => String(item.name).toLowerCase() == String(v).toLowerCase()
           );
           if (index > -1) {
-            const {id} = data[index];
+            const { id } = data[index];
             return id != this.activityId
-              ? this.$t('general.already_exists')
+              ? this.$t("general.already_exists")
               : true;
           } else {
             return true;
@@ -135,7 +134,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

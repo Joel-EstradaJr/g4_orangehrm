@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'VacancyLinkCard',
+  name: "VacancyLinkCard",
   props: {
     label: {
       type: String,

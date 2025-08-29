@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-card-container">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('time.timesheet_action') }}
+      {{ $t("time.timesheet_action") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form ref="formRef" :loading="isLoading">
@@ -59,12 +59,12 @@
 </template>
 
 <script>
-import {ref} from 'vue';
-import useForm from '@ohrm/core/util/composable/useForm';
-import {shouldNotExceedCharLength} from '@/core/util/validation/rules';
+import { ref } from "vue";
+import useForm from "@ohrm/core/util/composable/useForm";
+import { shouldNotExceedCharLength } from "@/core/util/validation/rules";
 
 export default {
-  name: 'SaveTimesheetAction',
+  name: "SaveTimesheetAction",
 
   props: {
     isLoading: {
@@ -90,9 +90,9 @@ export default {
   },
 
   setup(props) {
-    const {formRef, invalid, validate} = useForm();
+    const { formRef, invalid, validate } = useForm();
 
-    const comment = ref('');
+    const comment = ref("");
 
     const rules = {
       comment: [shouldNotExceedCharLength(250)],
@@ -100,13 +100,13 @@ export default {
 
     const onClickApprove = () => {
       validate().then(
-        () => invalid.value === false && props.approveTimesheet(comment.value),
+        () => invalid.value === false && props.approveTimesheet(comment.value)
       );
     };
 
     const onClickReject = () => {
       validate().then(
-        () => invalid.value === false && props.rejectTimesheet(comment.value),
+        () => invalid.value === false && props.rejectTimesheet(comment.value)
       );
     };
 

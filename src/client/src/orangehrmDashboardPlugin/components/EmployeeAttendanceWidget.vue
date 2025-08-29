@@ -44,7 +44,7 @@
       <div class="orangehrm-attendance-card-bar">
         <oxd-text tag="span" class="orangehrm-attendance-card-fulltime">
           <b>{{ dayTotal.hours }}h</b> <b>{{ dayTotal.minutes }}m</b>
-          {{ $t('general.today') }}
+          {{ $t("general.today") }}
         </oxd-text>
         <oxd-icon-button
           name="stopwatch"
@@ -57,7 +57,7 @@
       <div class="orangehrm-attendance-card-summary">
         <div class="orangehrm-attendance-card-summary-week">
           <oxd-text tag="p">
-            {{ $t('dashboard.this_week') }}
+            {{ $t("dashboard.this_week") }}
           </oxd-text>
           <oxd-text tag="p">
             {{ currentWeek }}
@@ -87,27 +87,27 @@ import {
   freshDate,
   parseDate,
   formatDate,
-} from '@/core/util/helper/datefns';
-import {navigate} from '@/core/util/helper/navigation';
-import useLocale from '@/core/util/composable/useLocale';
-import {APIService} from '@/core/util/services/api.service';
-import BaseWidget from '@/orangehrmDashboardPlugin/components/BaseWidget.vue';
-import {OxdBarChart, OxdIcon, CHART_COLORS} from '@ohrm/oxd';
+} from "@/core/util/helper/datefns";
+import { navigate } from "@/core/util/helper/navigation";
+import useLocale from "@/core/util/composable/useLocale";
+import { APIService } from "@/core/util/services/api.service";
+import BaseWidget from "@/orangehrmDashboardPlugin/components/BaseWidget.vue";
+import { OxdBarChart, OxdIcon, CHART_COLORS } from "@ohrm/oxd";
 
 export default {
-  name: 'EmployeeAttendanceWidget',
+  name: "EmployeeAttendanceWidget",
 
   components: {
-    'oxd-icon': OxdIcon,
-    'base-widget': BaseWidget,
-    'oxd-bar-chart': OxdBarChart,
+    "oxd-icon": OxdIcon,
+    "base-widget": BaseWidget,
+    "oxd-bar-chart": OxdBarChart,
   },
 
   setup() {
-    const {locale} = useLocale();
+    const { locale } = useLocale();
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/dashboard/employees/time-at-work',
+      "/api/v2/dashboard/employees/time-at-work"
     );
 
     return {
@@ -141,29 +141,29 @@ export default {
   computed: {
     lastState() {
       switch (this.state) {
-        case 'PUNCHED IN':
-          return this.$t('attendance.punched_in');
-        case 'PUNCHED OUT':
-          return this.$t('attendance.punched_out');
+        case "PUNCHED IN":
+          return this.$t("attendance.punched_in");
+        case "PUNCHED OUT":
+          return this.$t("attendance.punched_out");
         default:
-          return this.$t('attendance.not_punched_in');
+          return this.$t("attendance.not_punched_in");
       }
     },
     lastRecord() {
       if (!this.userDate || !this.userTime) return null;
       const parsedDate = parseDate(
         `${this.userDate} ${this.userTime}`,
-        'yyyy-MM-dd HH:mm',
+        "yyyy-MM-dd HH:mm"
       );
-      const formattedTime = formatDate(parsedDate, 'hh:mm a', {
+      const formattedTime = formatDate(parsedDate, "hh:mm a", {
         locale: this.locale,
       });
 
       if (!isToday(parsedDate)) {
-        const formattedDate = formatDate(parsedDate, 'MMM do', {
+        const formattedDate = formatDate(parsedDate, "MMM do", {
           locale: this.locale,
         });
-        return this.$t('dashboard.state_date_at_time_timezone_offset', {
+        return this.$t("dashboard.state_date_at_time_timezone_offset", {
           lastState: this.lastState,
           date: formattedDate,
           time: formattedTime,
@@ -171,7 +171,7 @@ export default {
         });
       }
 
-      return this.$t('dashboard.state_today_at_time_timezone_offset', {
+      return this.$t("dashboard.state_today_at_time_timezone_offset", {
         lastState: this.lastState,
         time: formattedTime,
         timezoneOffset: this.timezoneOffset,
@@ -179,10 +179,10 @@ export default {
     },
     currentWeek() {
       if (!this.startDate || !this.endDate) return null;
-      const startDate = formatDate(parseDate(this.startDate), 'MMM dd', {
+      const startDate = formatDate(parseDate(this.startDate), "MMM dd", {
         locale: this.locale,
       });
-      const endDate = formatDate(parseDate(this.endDate), 'MMM dd', {
+      const endDate = formatDate(parseDate(this.endDate), "MMM dd", {
         locale: this.locale,
       });
       return `${startDate} - ${endDate}`;
@@ -195,7 +195,7 @@ export default {
 
   methods: {
     onClickPunchIn() {
-      navigate('/attendance/punchIn');
+      navigate("/attendance/punchIn");
     },
     fetchWidgetData() {
       this.isLoading = true;
@@ -204,20 +204,20 @@ export default {
       this.http
         .getAll({
           timezoneOffset,
-          currentDate: formatDate(currentDate, 'yyyy-MM-dd'),
-          currentTime: formatDate(new Date(), 'HH:mm'),
+          currentDate: formatDate(currentDate, "yyyy-MM-dd"),
+          currentTime: formatDate(new Date(), "HH:mm"),
         })
         .then((response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
           this.dataset = data.map((item) => ({
             value: item.totalTime.hours + item.totalTime.minutes / 60,
             label: this.$t(
-              `general.${new String(item.workDay.day).toLowerCase()}`,
+              `general.${new String(item.workDay.day).toLowerCase()}`
             ),
             color: CHART_COLORS.COLOR_HEAT_WAVE,
           }));
 
-          const {lastAction, currentDay, currentWeek, currentUser} = meta;
+          const { lastAction, currentDay, currentWeek, currentUser } = meta;
           if (lastAction) {
             this.state = lastAction.state;
             this.userDate = lastAction.userDate;

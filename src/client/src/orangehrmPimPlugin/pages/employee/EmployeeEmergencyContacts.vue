@@ -32,7 +32,7 @@
     ></edit-emergency-contact>
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <profile-action-header @click="onClickAdd">
-        {{ $t('pim.assigned_emergency_contacts') }}
+        {{ $t("pim.assigned_emergency_contacts") }}
       </profile-action-header>
     </div>
     <table-header
@@ -65,21 +65,21 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import SaveEmergencyContact from '@/orangehrmPimPlugin/components/SaveEmergencyContact';
-import EditEmergencyContact from '@/orangehrmPimPlugin/components/EditEmergencyContact';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import EditEmployeeLayout from "@/orangehrmPimPlugin/components/EditEmployeeLayout";
+import SaveEmergencyContact from "@/orangehrmPimPlugin/components/SaveEmergencyContact";
+import EditEmergencyContact from "@/orangehrmPimPlugin/components/EditEmergencyContact";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
 
 export default {
   components: {
-    'profile-action-header': ProfileActionHeader,
-    'edit-employee-layout': EditEmployeeLayout,
-    'save-emergency-contact': SaveEmergencyContact,
-    'edit-emergency-contact': EditEmergencyContact,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "profile-action-header": ProfileActionHeader,
+    "edit-employee-layout": EditEmployeeLayout,
+    "save-emergency-contact": SaveEmergencyContact,
+    "edit-emergency-contact": EditEmergencyContact,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -96,7 +96,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.empNumber}/emergency-contacts`,
+      `/api/v2/pim/employees/${props.empNumber}/emergency-contacts`
     );
 
     const {
@@ -108,7 +108,7 @@ export default {
       response,
       isLoading,
       execQuery,
-    } = usePaginate(http, {toastNoRecords: false});
+    } = usePaginate(http, { toastNoRecords: false });
     return {
       http,
       showPaginator,
@@ -126,49 +126,49 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.name'),
-          style: {flex: 1},
+          name: "name",
+          slot: "title",
+          title: this.$t("general.name"),
+          style: { flex: 1 },
         },
         {
-          name: 'relationship',
-          title: this.$t('pim.relationship'),
-          style: {flex: 1},
+          name: "relationship",
+          title: this.$t("pim.relationship"),
+          style: { flex: 1 },
         },
         {
-          name: 'homePhone',
-          title: this.$t('pim.home_telephone'),
-          style: {flex: 1},
+          name: "homePhone",
+          title: this.$t("pim.home_telephone"),
+          style: { flex: 1 },
         },
         {
-          name: 'mobilePhone',
-          title: this.$t('general.mobile'),
-          style: {flex: 1},
+          name: "mobilePhone",
+          title: this.$t("general.mobile"),
+          style: { flex: 1 },
         },
         {
-          name: 'officePhone',
-          title: this.$t('pim.work_telephone'),
-          style: {flex: 1},
+          name: "officePhone",
+          title: this.$t("pim.work_telephone"),
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -193,14 +193,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

@@ -25,10 +25,10 @@
   >
     <div class="orangehrm-dialog-header-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('leave.leave_balance_details') }}
+        {{ $t("leave.leave_balance_details") }}
       </oxd-text>
       <oxd-text type="subtitle-2">
-        {{ $t('leave.as_of_date') }} - {{ asAtDate }}
+        {{ $t("leave.as_of_date") }} - {{ asAtDate }}
       </oxd-text>
     </div>
     <oxd-divider
@@ -92,15 +92,15 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import { OxdDialog } from "@ohrm/oxd";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
-  name: 'LeaveBalanceModal',
+  name: "LeaveBalanceModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -112,10 +112,10 @@ export default {
       default: () => null,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup() {
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     return {
       locale,
@@ -126,19 +126,19 @@ export default {
     return {
       headers: [
         {
-          title: this.$t('leave.leave_status'),
-          name: 'status',
-          slot: 'left',
-          style: {flex: 1},
+          title: this.$t("leave.leave_status"),
+          name: "status",
+          slot: "left",
+          style: { flex: 1 },
         },
         {
-          title: this.$t('leave.days'),
-          name: 'days',
-          slot: 'right',
+          title: this.$t("leave.days"),
+          name: "days",
+          slot: "right",
           style: {
             flex: 1,
-            textAlign: 'right',
-            justifyContent: 'flex-end',
+            textAlign: "right",
+            justifyContent: "flex-end",
           },
         },
       ],
@@ -147,11 +147,14 @@ export default {
   computed: {
     items() {
       if (this.data) {
-        const {taken, scheduled, pending} = this.data;
+        const { taken, scheduled, pending } = this.data;
         return [
-          {status: this.$t('leave.taken'), days: taken.toFixed(2)},
-          {status: this.$t('leave.scheduled'), days: scheduled.toFixed(2)},
-          {status: this.$t('leave.pending_approval'), days: pending.toFixed(2)},
+          { status: this.$t("leave.taken"), days: taken.toFixed(2) },
+          { status: this.$t("leave.scheduled"), days: scheduled.toFixed(2) },
+          {
+            status: this.$t("leave.pending_approval"),
+            days: pending.toFixed(2),
+          },
         ];
       }
       return [];
@@ -168,24 +171,24 @@ export default {
       const employee = this.meta?.employee;
       if (employee) {
         return `${employee.firstName} ${employee.lastName}
-          ${employee.terminationId ? this.$t('general.past_employee') : ''}`;
+          ${employee.terminationId ? this.$t("general.past_employee") : ""}`;
       }
-      return '';
+      return "";
     },
     totalEntitlement() {
       return this.data?.entitled
         ? `${parseFloat(this.data.entitled).toFixed(2)} Day(s)`
-        : '0.00 Day(s)';
+        : "0.00 Day(s)";
     },
     leaveBalance() {
       return this.data?.balance
         ? `${parseFloat(this.data.balance).toFixed(2)} Day(s)`
-        : '0.00 Day(s)';
+        : "0.00 Day(s)";
     },
   },
   methods: {
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

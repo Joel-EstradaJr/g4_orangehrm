@@ -28,7 +28,7 @@
           @submit-valid="onSubmit"
         >
           <oxd-text tag="h6">
-            {{ $t('auth.change_weak_password') }}
+            {{ $t("auth.change_weak_password") }}
           </oxd-text>
           <oxd-divider />
           <div class="orangehrm-login-error">
@@ -116,19 +116,19 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {promiseDebounce, OxdAlert} from '@ohrm/oxd';
-import {urlFor} from '@/core/util/helper/url';
-import {APIService} from '@/core/util/services/api.service';
-import usePasswordPolicy from '@/core/util/composable/usePasswordPolicy';
-import PasswordStrengthIndicator from '@/core/components/labels/PasswordStrengthIndicator';
+} from "@ohrm/core/util/validation/rules";
+import { promiseDebounce, OxdAlert } from "@ohrm/oxd";
+import { urlFor } from "@/core/util/helper/url";
+import { APIService } from "@/core/util/services/api.service";
+import usePasswordPolicy from "@/core/util/composable/usePasswordPolicy";
+import PasswordStrengthIndicator from "@/core/components/labels/PasswordStrengthIndicator";
 
 export default {
-  name: 'ResetWeakPassword',
+  name: "ResetWeakPassword",
 
   components: {
-    'password-strength-indicator': PasswordStrengthIndicator,
-    'oxd-alert': OxdAlert,
+    "password-strength-indicator": PasswordStrengthIndicator,
+    "oxd-alert": OxdAlert,
   },
 
   props: {
@@ -155,8 +155,8 @@ export default {
   },
 
   setup() {
-    const http = new APIService(window.appGlobal.baseUrl, '');
-    const {passwordStrength, validatePassword} = usePasswordPolicy(http);
+    const http = new APIService(window.appGlobal.baseUrl, "");
+    const { passwordStrength, validatePassword } = usePasswordPolicy(http);
 
     return {
       http,
@@ -168,9 +168,9 @@ export default {
   data() {
     return {
       user: {
-        username: '',
-        currentPassword: '',
-        confirmPassword: '',
+        username: "",
+        currentPassword: "",
+        confirmPassword: "",
       },
       rules: {
         currentPassword: [required, shouldNotExceedCharLength(64)],
@@ -184,7 +184,7 @@ export default {
           shouldNotExceedCharLength(64),
           (v) =>
             (!!v && v === this.user.newPassword) ||
-            this.$t('general.passwords_do_not_match'),
+            this.$t("general.passwords_do_not_match"),
         ],
       },
     };
@@ -192,7 +192,7 @@ export default {
 
   computed: {
     submitUrl() {
-      return urlFor('/auth/resetWeakPassword');
+      return urlFor("/auth/resetWeakPassword");
     },
   },
 

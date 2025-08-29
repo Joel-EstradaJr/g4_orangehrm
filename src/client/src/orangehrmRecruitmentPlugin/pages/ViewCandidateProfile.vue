@@ -32,16 +32,16 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import RecruitmentStatus from '@/orangehrmRecruitmentPlugin/components/RecruitmentStatus';
-import CandidateProfile from '@/orangehrmRecruitmentPlugin/components/CandidateProfile';
-import HistoryTable from '@/orangehrmRecruitmentPlugin/components/HistoryTable';
+import { APIService } from "@/core/util/services/api.service";
+import RecruitmentStatus from "@/orangehrmRecruitmentPlugin/components/RecruitmentStatus";
+import CandidateProfile from "@/orangehrmRecruitmentPlugin/components/CandidateProfile";
+import HistoryTable from "@/orangehrmRecruitmentPlugin/components/HistoryTable";
 
 export default {
   components: {
-    'history-table': HistoryTable,
-    'candidate-profile': CandidateProfile,
-    'recruitment-status': RecruitmentStatus,
+    "history-table": HistoryTable,
+    "candidate-profile": CandidateProfile,
+    "recruitment-status": RecruitmentStatus,
   },
   props: {
     candidateId: {
@@ -65,7 +65,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/candidates',
+      "/api/v2/recruitment/candidates"
     );
     return {
       http,
@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     onCandidateUpdate() {
-      this.http.get(this.candidateId).then(({data: {data}}) => {
+      this.http.get(this.candidateId).then(({ data: { data } }) => {
         this.candidate = data;
       });
     },

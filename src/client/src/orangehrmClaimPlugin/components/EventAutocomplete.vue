@@ -24,20 +24,20 @@
     :label="$t('claim.event_name')"
     :create-options="loadEvents"
   >
-    <template #option="{data}">
+    <template #option="{ data }">
       <span> {{ data.label }} </span>
     </template>
   </oxd-input-field>
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'EventAutocomplete',
+  name: "EventAutocomplete",
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/claim/events',
+      "/api/v2/claim/events"
     );
     return {
       http,
@@ -50,14 +50,14 @@ export default {
           const params = {
             name: serachParam.trim(),
           };
-          this.http.getAll(params).then(({data}) => {
+          this.http.getAll(params).then(({ data }) => {
             resolve(
               data.data.map((event) => {
                 return {
                   id: event.id,
                   label: event.name,
                 };
-              }),
+              })
             );
           });
         } else {

@@ -21,7 +21,7 @@
   <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('admin.edit_organization_unit') }}
+        {{ $t("admin.edit_organization_unit") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -68,23 +68,23 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {OxdDialog} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { OxdDialog } from "@ohrm/oxd";
 
 const orgUnitModel = {
-  unitId: '',
-  name: '',
-  description: '',
+  unitId: "",
+  name: "",
+  description: "",
 };
 
 export default {
-  name: 'EditOrgUnit',
+  name: "EditOrgUnit",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -92,11 +92,11 @@ export default {
       default: () => ({}),
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/subunits',
+      "/api/v2/admin/subunits"
     );
     return {
       http,
@@ -105,7 +105,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      orgUnit: {...orgUnitModel},
+      orgUnit: { ...orgUnitModel },
       rules: {
         unitId: [shouldNotExceedCharLength(100)],
         name: [required, shouldNotExceedCharLength(100)],
@@ -118,7 +118,7 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.orgUnit.name = data.name;
         this.orgUnit.description = data.description;
         this.orgUnit.unitId = data.unitId;
@@ -126,17 +126,17 @@ export default {
         return this.http.getAll();
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         if (data) {
           this.rules.name.push((v) => {
             const index = data.findIndex(
               (item) =>
-                String(item.name).toLowerCase() == String(v).toLowerCase(),
+                String(item.name).toLowerCase() == String(v).toLowerCase()
             );
             if (index > -1) {
-              const {id} = data[index];
+              const { id } = data[index];
               return id != this.data.id
-                ? this.$t('admin.organization_unit_name_should_be_unique')
+                ? this.$t("admin.organization_unit_name_should_be_unique")
                 : true;
             } else {
               return true;
@@ -163,7 +163,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

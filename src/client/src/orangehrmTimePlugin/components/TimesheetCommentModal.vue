@@ -19,12 +19,12 @@
 
 <template>
   <oxd-dialog
-    :style="{width: '90%', maxWidth: '450px'}"
+    :style="{ width: '90%', maxWidth: '450px' }"
     @update:show="onCancel"
   >
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('general.comment') }}
+        {{ $t("general.comment") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -32,19 +32,19 @@
       <oxd-form-row>
         <oxd-grid :cols="2" class="orangehrm-timesheet-grid">
           <oxd-text tag="p" class="orangehrm-timesheet-title">
-            {{ $t('time.project') }}:
+            {{ $t("time.project") }}:
           </oxd-text>
           <oxd-text tag="p" class="orangehrm-timesheet-text">
             {{ projectName }}
           </oxd-text>
           <oxd-text tag="p" class="orangehrm-timesheet-title">
-            {{ $t('time.activity') }}:
+            {{ $t("time.activity") }}:
           </oxd-text>
           <oxd-text tag="p" class="orangehrm-timesheet-text">
             {{ data.activity.name }}
           </oxd-text>
           <oxd-text tag="p" class="orangehrm-timesheet-title">
-            {{ $t('general.date') }}:
+            {{ $t("general.date") }}:
           </oxd-text>
           <oxd-text tag="p" class="orangehrm-timesheet-text">
             {{ commentDate }}
@@ -75,17 +75,17 @@
 </template>
 
 <script>
-import {shouldNotExceedCharLength} from '@ohrm/core/util/validation/rules';
-import {APIService} from '@/core/util/services/api.service';
-import {OxdDialog} from '@ohrm/oxd';
-import useLocale from '@/core/util/composable/useLocale';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
+import { shouldNotExceedCharLength } from "@ohrm/core/util/validation/rules";
+import { APIService } from "@/core/util/services/api.service";
+import { OxdDialog } from "@ohrm/oxd";
+import useLocale from "@/core/util/composable/useLocale";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
 
 export default {
-  name: 'TimesheetCommentModal',
+  name: "TimesheetCommentModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -101,14 +101,14 @@ export default {
       required: true,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/time/timesheets`,
+      `/api/v2/time/timesheets`
     );
-    const {locale} = useLocale();
-    const {jsDateFormat} = useDateFormat();
+    const { locale } = useLocale();
+    const { jsDateFormat } = useDateFormat();
     return {
       http,
       locale,
@@ -126,13 +126,13 @@ export default {
   },
   computed: {
     projectName() {
-      const {project, customer} = this.data;
+      const { project, customer } = this.data;
       return project?.label
         ? project.label
         : `${customer?.name} - ${project?.name}`;
     },
     commentDate() {
-      const {date} = this.data;
+      const { date } = this.data;
       return date
         ? formatDate(parseDate(date), this.jsDateFormat, {
             locale: this.locale,
@@ -145,11 +145,11 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'GET',
+          method: "GET",
           url: `/api/v2/time/timesheets/${this.timesheetId}/entries/${this.data.id}/comment`,
         })
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.comment = data?.comment;
         })
         .finally(() => {
@@ -162,7 +162,7 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           url: `/api/v2/time/timesheets/${this.timesheetId}/entries/comment`,
           data: {
             date: this.data.date,
@@ -172,14 +172,14 @@ export default {
           },
         })
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.$toast.saveSuccess();
-          this.$emit('close', data);
+          this.$emit("close", data);
         });
     },
     onCancel() {
       this.comment = null;
-      this.$emit('close');
+      this.$emit("close");
     },
   },
 };

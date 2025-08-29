@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-buzz-newsfeed">
     <oxd-text type="card-title" class="orangehrm-buzz-newsfeed-title">
-      {{ $t('buzz.buzz_newsfeed') }}
+      {{ $t("buzz.buzz_newsfeed") }}
     </oxd-text>
 
     <create-post
@@ -76,7 +76,7 @@
       >
         <img :src="noPostsPic" alt="No Posts" />
         <oxd-text tag="p">
-          {{ $t('buzz.no_posts_available') }}
+          {{ $t("buzz.no_posts_available") }}
         </oxd-text>
       </oxd-grid-item>
     </oxd-grid>
@@ -115,38 +115,38 @@
 </template>
 
 <script>
-import useToast from '@/core/util/composable/useToast';
-import {APIService} from '@/core/util/services/api.service';
-import {onBeforeMount, reactive, ref, toRefs, watch} from 'vue';
-import PostBody from '@/orangehrmBuzzPlugin/components/PostBody.vue';
-import PostStats from '@/orangehrmBuzzPlugin/components/PostStats.vue';
-import CreatePost from '@/orangehrmBuzzPlugin/components/CreatePost.vue';
-import useInfiniteScroll from '@/core/util/composable/useInfiniteScroll';
-import PostActions from '@/orangehrmBuzzPlugin/components/PostActions.vue';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import EditPostModal from '@/orangehrmBuzzPlugin/components/EditPostModal.vue';
-import PhotoCarousel from '@/orangehrmBuzzPlugin/components/PhotoCarousel.vue';
-import PostContainer from '@/orangehrmBuzzPlugin/components/PostContainer.vue';
-import SharePostModal from '@/orangehrmBuzzPlugin/components/SharePostModal.vue';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import PostCommentContainer from '@/orangehrmBuzzPlugin/components/PostCommentContainer.vue';
-import {OxdSpinner} from '@ohrm/oxd';
+import useToast from "@/core/util/composable/useToast";
+import { APIService } from "@/core/util/services/api.service";
+import { onBeforeMount, reactive, ref, toRefs, watch } from "vue";
+import PostBody from "@/orangehrmBuzzPlugin/components/PostBody.vue";
+import PostStats from "@/orangehrmBuzzPlugin/components/PostStats.vue";
+import CreatePost from "@/orangehrmBuzzPlugin/components/CreatePost.vue";
+import useInfiniteScroll from "@/core/util/composable/useInfiniteScroll";
+import PostActions from "@/orangehrmBuzzPlugin/components/PostActions.vue";
+import useBuzzAPIs from "@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs";
+import EditPostModal from "@/orangehrmBuzzPlugin/components/EditPostModal.vue";
+import PhotoCarousel from "@/orangehrmBuzzPlugin/components/PhotoCarousel.vue";
+import PostContainer from "@/orangehrmBuzzPlugin/components/PostContainer.vue";
+import SharePostModal from "@/orangehrmBuzzPlugin/components/SharePostModal.vue";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import PostCommentContainer from "@/orangehrmBuzzPlugin/components/PostCommentContainer.vue";
+import { OxdSpinner } from "@ohrm/oxd";
 
 export default {
-  name: 'NewsFeed',
+  name: "NewsFeed",
 
   components: {
-    'post-body': PostBody,
-    'post-stats': PostStats,
-    'create-post': CreatePost,
-    'post-actions': PostActions,
-    'oxd-loading-spinner': OxdSpinner,
-    'photo-carousel': PhotoCarousel,
-    'post-container': PostContainer,
-    'edit-post-modal': EditPostModal,
-    'share-post-modal': SharePostModal,
-    'post-comment-container': PostCommentContainer,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "post-body": PostBody,
+    "post-stats": PostStats,
+    "create-post": CreatePost,
+    "post-actions": PostActions,
+    "oxd-loading-spinner": OxdSpinner,
+    "photo-carousel": PhotoCarousel,
+    "post-container": PostContainer,
+    "edit-post-modal": EditPostModal,
+    "share-post-modal": SharePostModal,
+    "post-comment-container": PostCommentContainer,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -167,9 +167,9 @@ export default {
   setup(props) {
     const POST_LIMIT = 10;
     const deleteDialog = ref();
-    const {deleteSuccess} = useToast();
-    const {fetchPosts, deletePost} = useBuzzAPIs(
-      new APIService(window.appGlobal.baseUrl, ''),
+    const { deleteSuccess } = useToast();
+    const { fetchPosts, deletePost } = useBuzzAPIs(
+      new APIService(window.appGlobal.baseUrl, "")
     );
     const noPostsPic = `${window.appGlobal.publicPath}/images/buzz_no_posts.svg`;
 
@@ -188,9 +188,9 @@ export default {
 
     const fetchData = () => {
       state.isLoading = true;
-      fetchPosts(POST_LIMIT, state.offset, 'DESC', props.sortField)
+      fetchPosts(POST_LIMIT, state.offset, "DESC", props.sortField)
         .then((response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
           state.total = meta.total || 0;
           if (Array.isArray(data)) {
             state.posts = [...state.posts, ...data];
@@ -220,13 +220,13 @@ export default {
         postIndex: index,
         post: state.posts[index],
       };
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     };
 
     const onShare = (index) => {
       state.showShareModal = true;
       state.shareModalState = state.posts[index];
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     };
 
     const onComment = (index) => {
@@ -250,33 +250,33 @@ export default {
         post: state.posts[index],
       };
       state.showPhotoCarousel = true;
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     };
 
     const onClosePhotoCarousel = () => {
       state.showPhotoCarousel = false;
       state.photoCarouselState = null;
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
 
     const onCloseShareModal = ($event) => {
       state.showShareModal = false;
       state.shareModalState = null;
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
       if ($event) resetFeed();
     };
 
     const onCloseEditModal = ($event) => {
-      const {data} = $event;
-      if (data) state.posts[state.editModalState.postIndex] = {...data};
+      const { data } = $event;
+      if (data) state.posts[state.editModalState.postIndex] = { ...data };
       state.showEditModal = false;
       state.editModalState = null;
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
 
     const onDelete = (index) => {
       deleteDialog.value.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           deletePost(state.posts[index].id).then(() => {
             resetFeed();
             deleteSuccess();
@@ -301,7 +301,7 @@ export default {
         state.posts = [];
         state.offset = 0;
         fetchData();
-      },
+      }
     );
 
     return {

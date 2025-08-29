@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('pim.edit_dependent') }}
+      {{ $t("pim.edit_dependent") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -87,18 +87,18 @@ import {
   required,
   validDateFormat,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const dependentModel = {
-  name: '',
+  name: "",
   relationshipType: null,
-  relationship: '',
-  dateOfBirth: '',
+  relationship: "",
+  dateOfBirth: "",
 };
 
 export default {
-  name: 'EditDependent',
+  name: "EditDependent",
 
   props: {
     http: {
@@ -111,10 +111,10 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup() {
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       userDateFormat,
@@ -124,7 +124,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      dependent: {...dependentModel},
+      dependent: { ...dependentModel },
       rules: {
         name: [required, shouldNotExceedCharLength(100)],
         relationshipType: [required],
@@ -132,15 +132,15 @@ export default {
         dateOfBirth: [validDateFormat(this.userDateFormat)],
       },
       relationshipOptions: [
-        {id: 'child', label: this.$t('pim.child')},
-        {id: 'other', label: this.$t('pim.other')},
+        { id: "child", label: this.$t("pim.child") },
+        { id: "other", label: this.$t("pim.other") },
       ],
     };
   },
 
   computed: {
     showRelationship() {
-      return this.dependent.relationshipType?.id == 'other';
+      return this.dependent.relationshipType?.id == "other";
     },
   },
 
@@ -149,10 +149,10 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
-        this.dependent = {...dependentModel, ...data};
+        const { data } = response.data;
+        this.dependent = { ...dependentModel, ...data };
         this.dependent.relationshipType = this.relationshipOptions.find(
-          (item) => item.id === data.relationshipType,
+          (item) => item.id === data.relationshipType
         );
       })
       .finally(() => {
@@ -172,12 +172,12 @@ export default {
           return this.$toast.updateSuccess();
         })
         .then(() => {
-          this.dependent = {...dependentModel};
+          this.dependent = { ...dependentModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

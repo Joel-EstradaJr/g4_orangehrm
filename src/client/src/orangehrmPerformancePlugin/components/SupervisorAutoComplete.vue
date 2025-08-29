@@ -27,13 +27,13 @@
 </template>
 
 <script>
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import {APIService} from '@/core/util/services/api.service';
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import { APIService } from "@/core/util/services/api.service";
 
 export default {
-  name: 'SupervisorAutoComplete',
+  name: "SupervisorAutoComplete",
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
   props: {
     subordinate: {
@@ -45,7 +45,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/performance/supervisors`,
+      `/api/v2/performance/supervisors`
     );
     return {
       http,
@@ -60,7 +60,7 @@ export default {
               nameOrId: serachParam.trim(),
               empNumber: this.subordinate.id,
             })
-            .then(({data}) => {
+            .then(({ data }) => {
               resolve(
                 data.data.map((employee) => {
                   return {
@@ -68,7 +68,7 @@ export default {
                     label: `${employee.firstName} ${employee.middleName} ${employee.lastName}`,
                     isPastEmployee: employee.terminationId ? true : false,
                   };
-                }),
+                })
               );
             });
         } else {

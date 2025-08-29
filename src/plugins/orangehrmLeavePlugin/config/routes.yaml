@@ -221,6 +221,13 @@ apiv2_leave_employee_leave:
   defaults:
     _api: OrangeHRM\Leave\Api\EmployeeLeaveAPI
 
+apiv2_leave_assistant_chat:
+  path: /api/v2/leave/assistant/chat
+  controller: OrangeHRM\Core\Controller\Rest\V2\GenericRestController::handle
+  methods: [ POST ]
+  defaults:
+    _api: OrangeHRM\Leave\Api\LeaveAssistantAPI
+
 ##########################
 #        Screens
 ##########################

@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-top-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">{{
-      $t('general.add_skill')
+      $t("general.add_skill")
     }}</oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -74,25 +74,25 @@
 </template>
 
 <script>
-import QualificationDropdown from '@/orangehrmPimPlugin/components/QualificationDropdown';
+import QualificationDropdown from "@/orangehrmPimPlugin/components/QualificationDropdown";
 import {
   required,
   shouldNotExceedCharLength,
   max,
   digitsOnly,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 const skillModel = {
-  yearsOfExperience: '',
-  comments: '',
+  yearsOfExperience: "",
+  comments: "",
   skillId: null,
 };
 
 export default {
-  name: 'SaveSkill',
+  name: "SaveSkill",
 
   components: {
-    'qualification-dropdown': QualificationDropdown,
+    "qualification-dropdown": QualificationDropdown,
   },
 
   props: {
@@ -106,12 +106,12 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   data() {
     return {
       isLoading: false,
-      skill: {...skillModel},
+      skill: { ...skillModel },
       rules: {
         skillId: [required],
         yearsOfExperience: [digitsOnly, max(100)],
@@ -127,7 +127,7 @@ export default {
         .create({
           skillId: this.skill.skillId?.id,
           yearsOfExperience: parseInt(this.skill.yearsOfExperience),
-          comments: this.skill.comments !== '' ? this.skill.comments : '',
+          comments: this.skill.comments !== "" ? this.skill.comments : "",
         })
         .then(() => {
           return this.$toast.saveSuccess();
@@ -137,7 +137,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

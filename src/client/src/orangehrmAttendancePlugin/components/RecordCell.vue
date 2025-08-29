@@ -26,7 +26,7 @@
       <oxd-text tag="p">
         {{ date }} {{ time }}
         <oxd-text tag="span" class="timezone">
-          GMT {{ offset ? offset : '00:00' }}
+          GMT {{ offset ? offset : "00:00" }}
         </oxd-text>
       </oxd-text>
     </div>
@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import {useInjectTableProps} from '@ohrm/oxd';
+import { useInjectTableProps } from "@ohrm/oxd";
 
 export default {
-  name: 'RecordCell',
+  name: "RecordCell",
 
   props: {
     header: {
@@ -59,7 +59,7 @@ export default {
   },
 
   setup() {
-    const {screenState} = useInjectTableProps();
+    const { screenState } = useInjectTableProps();
 
     return {
       screenState,
@@ -69,8 +69,8 @@ export default {
   computed: {
     showHeader() {
       return !(
-        this.screenState.screenType === 'lg' ||
-        this.screenState.screenType === 'xl'
+        this.screenState.screenType === "lg" ||
+        this.screenState.screenType === "xl"
       );
     },
   },

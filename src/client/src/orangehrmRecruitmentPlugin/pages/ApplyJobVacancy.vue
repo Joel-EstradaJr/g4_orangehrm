@@ -23,7 +23,7 @@
       <div class="orangehrm-card-container-header">
         <oxd-text class="orangehrm-main-title" tag="h6">
           {{
-            $t('recruitment.apply_for_n_vacancy', {
+            $t("recruitment.apply_for_n_vacancy", {
               vacancyName: vacancyName,
             })
           }}
@@ -33,7 +33,7 @@
       <template v-if="vacancyDescription">
         <oxd-divider />
         <oxd-text class="orangehrm-vacancy-description" tag="p">
-          {{ $t('general.description') }}
+          {{ $t("general.description") }}
         </oxd-text>
         <oxd-text tag="p" :class="descriptionClasses">
           <pre class="orangehrm-applicant-card-pre-tag"
@@ -51,7 +51,7 @@
             @click="onToggleMore"
           >
             {{
-              isViewDetails ? $t('general.show_less') : $t('general.show_more')
+              isViewDetails ? $t("general.show_less") : $t("general.show_more")
             }}
           </oxd-text>
         </div>
@@ -119,7 +119,7 @@
                 />
                 <oxd-text class="orangehrm-input-hint" tag="p">
                   {{
-                    $t('general.accept_custom_format_file_up_to_n_mb', {
+                    $t("general.accept_custom_format_file_up_to_n_mb", {
                       count: formattedFileSize,
                     })
                   }}
@@ -135,7 +135,7 @@
                   name="keywords"
                   :label="$t('recruitment.keywords')"
                   :placeholder="`${$t(
-                    'recruitment.enter_comma_seperated_words',
+                    'recruitment.enter_comma_seperated_words'
                   )}...`"
                   :rules="rules.keywords"
                 />
@@ -186,7 +186,7 @@
   </div>
   <div class="orangehrm-paper-container">
     <oxd-text tag="p" class="orangehrm-vacancy-list-poweredby">
-      {{ $t('recruitment.powered_by') }}
+      {{ $t("recruitment.powered_by") }}
     </oxd-text>
     <img
       :src="defaultPic"
@@ -199,9 +199,9 @@
 </template>
 
 <script>
-import {ref, toRefs} from 'vue';
-import FullNameInput from '@/orangehrmPimPlugin/components/FullNameInput';
-import SuccessDialog from '@/orangehrmRecruitmentPlugin/components/SuccessDialog';
+import { ref, toRefs } from "vue";
+import FullNameInput from "@/orangehrmPimPlugin/components/FullNameInput";
+import SuccessDialog from "@/orangehrmRecruitmentPlugin/components/SuccessDialog";
 import {
   maxFileSize,
   required,
@@ -209,19 +209,19 @@ import {
   validEmailFormat,
   validFileTypes,
   validPhoneNumberFormat,
-} from '@ohrm/core/util/validation/rules';
-import SubmitButton from '@/core/components/buttons/SubmitButton';
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import {urlFor} from '@/core/util/helper/url';
-import {useResponsive} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import SubmitButton from "@/core/components/buttons/SubmitButton";
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import { urlFor } from "@/core/util/helper/url";
+import { useResponsive } from "@ohrm/oxd";
 
 const applicantModel = {
-  firstName: '',
-  middleName: '',
-  lastName: '',
-  contactNumber: '',
-  email: '',
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  contactNumber: "",
+  email: "",
   consentToKeepData: false,
   resume: null,
   keywords: null,
@@ -229,11 +229,11 @@ const applicantModel = {
 };
 
 export default {
-  name: 'ApplyJobVacancy',
+  name: "ApplyJobVacancy",
   components: {
-    'submit-button': SubmitButton,
-    'full-name-input': FullNameInput,
-    'success-dialogue': SuccessDialog,
+    "submit-button": SubmitButton,
+    "full-name-input": FullNameInput,
+    "success-dialogue": SuccessDialog,
   },
   props: {
     allowedFileTypes: {
@@ -269,7 +269,7 @@ export default {
     const responsiveState = useResponsive();
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/public/vacancies',
+      "/api/v2/recruitment/public/vacancies"
     );
 
     return {
@@ -285,7 +285,7 @@ export default {
       subtitle: null,
       successLabel: null,
       isLoading: false,
-      vacancyName: '',
+      vacancyName: "",
       vacancyDescription: null,
       rules: {
         firstName: [required, shouldNotExceedCharLength(30)],
@@ -306,12 +306,12 @@ export default {
   },
   computed: {
     submitUrl() {
-      return urlFor('/recruitment/public/applicants');
+      return urlFor("/recruitment/public/applicants");
     },
     descriptionClasses() {
       return {
-        'orangehrm-vacancy-description': true,
-        'orangehrm-vacancy-card-body': !this.isViewDetails,
+        "orangehrm-vacancy-description": true,
+        "orangehrm-vacancy-card-body": !this.isViewDetails,
       };
     },
     isMobile() {
@@ -327,8 +327,8 @@ export default {
   },
   beforeMount() {
     this.http.get(this.vacancyId).then((response) => {
-      const {data} = response.data;
-      this.vacancyName = data?.name ?? '';
+      const { data } = response.data;
+      this.vacancyName = data?.name ?? "";
       this.vacancyDescription = data?.description;
     });
   },
@@ -342,12 +342,12 @@ export default {
       this.$refs.applicantForm.$el.submit();
     },
     onCancel() {
-      navigate('/recruitmentApply/jobs.html');
+      navigate("/recruitmentApply/jobs.html");
     },
     showDialogue() {
       this.$refs.showDialogueModal.showSuccessDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
-          navigate('/recruitmentApply/jobs.html');
+        if (confirmation === "ok") {
+          navigate("/recruitmentApply/jobs.html");
         }
       });
     },

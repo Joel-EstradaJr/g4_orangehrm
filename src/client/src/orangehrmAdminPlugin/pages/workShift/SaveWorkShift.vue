@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.add_work_shift') }}
+        {{ $t("admin.add_work_shift") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -41,7 +41,7 @@
 
         <oxd-form-row>
           <oxd-text class="orangehrm-sub-title"
-            >{{ $t('admin.working_hours') }} *</oxd-text
+            >{{ $t("admin.working_hours") }} *</oxd-text
           >
           <oxd-grid :cols="4" class="orangehrm-full-width-grid">
             <oxd-grid-item>
@@ -97,30 +97,30 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   validSelection,
   validTimeFormat,
   shouldNotExceedCharLength,
   endTimeShouldBeAfterStartTime,
-} from '@ohrm/core/util/validation/rules';
-import {diffInTime} from '@/core/util/helper/datefns';
-import useServerValidation from '@/core/util/composable/useServerValidation';
-import WorkShiftEmployeeAutocomplete from '@/orangehrmAdminPlugin/components/WorkShiftEmployeeAutocomplete';
+} from "@ohrm/core/util/validation/rules";
+import { diffInTime } from "@/core/util/helper/datefns";
+import useServerValidation from "@/core/util/composable/useServerValidation";
+import WorkShiftEmployeeAutocomplete from "@/orangehrmAdminPlugin/components/WorkShiftEmployeeAutocomplete";
 
 const workShiftModel = {
-  id: '',
-  name: '',
-  hoursPerDay: '',
-  startTime: '',
-  endTime: '',
+  id: "",
+  name: "",
+  hoursPerDay: "",
+  startTime: "",
+  endTime: "",
   empNumbers: [],
 };
 export default {
   components: {
-    'work-shift-employee-autocomplete': WorkShiftEmployeeAutocomplete,
+    "work-shift-employee-autocomplete": WorkShiftEmployeeAutocomplete,
   },
   props: {
     workShiftConfig: {
@@ -132,12 +132,12 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/work-shifts',
+      "/api/v2/admin/work-shifts"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const workShiftUniqueValidation = createUniqueValidator(
-      'WorkShift',
-      'name',
+      "WorkShift",
+      "name"
     );
 
     return {
@@ -148,7 +148,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      workShift: {...workShiftModel},
+      workShift: { ...workShiftModel },
       rules: {
         name: [
           required,
@@ -161,7 +161,7 @@ export default {
           validTimeFormat,
           endTimeShouldBeAfterStartTime(
             () => this.workShift.startTime,
-            this.$t('general.to_time_should_be_after_from_time'),
+            this.$t("general.to_time_should_be_after_from_time")
           ),
         ],
         empNumbers: [validSelection],
@@ -171,7 +171,7 @@ export default {
   computed: {
     selectedTimeDuration() {
       return parseFloat(
-        diffInTime(this.workShift.startTime, this.workShift.endTime) / 3600,
+        diffInTime(this.workShift.startTime, this.workShift.endTime) / 3600
       ).toFixed(2);
     },
   },
@@ -195,12 +195,12 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          this.workShift = {...workShiftModel};
+          this.workShift = { ...workShiftModel };
           this.onCancel();
         });
     },
     onCancel() {
-      navigate('/admin/workShift');
+      navigate("/admin/workShift");
     },
   },
 };

@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-card-container">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('general.add_attachment') }}
+      {{ $t("general.add_attachment") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -37,7 +37,9 @@
               required
             />
             <oxd-text class="orangehrm-input-hint" tag="p">
-              {{ $t('general.accepts_up_to_n_mb', {count: formattedFileSize}) }}
+              {{
+                $t("general.accepts_up_to_n_mb", { count: formattedFileSize })
+              }}
             </oxd-text>
           </oxd-grid-item>
         </oxd-grid>
@@ -78,15 +80,15 @@ import {
   maxFileSize,
   shouldNotExceedCharLength,
   validFileTypes,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 const attachmentModel = {
   attachment: null,
-  comment: '',
+  comment: "",
 };
 
 export default {
-  name: 'SaveInterviewAttachment',
+  name: "SaveInterviewAttachment",
 
   props: {
     http: {
@@ -103,7 +105,7 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   data() {
     return {
@@ -139,12 +141,12 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          this.attachment = {...attachmentModel};
+          this.attachment = { ...attachmentModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

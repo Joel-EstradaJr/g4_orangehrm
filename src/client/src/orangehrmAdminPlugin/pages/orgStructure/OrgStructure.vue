@@ -22,7 +22,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('admin.organization_structure') }}
+          {{ $t("admin.organization_structure") }}
         </oxd-text>
         <oxd-switch-input
           v-if="!isLoading"
@@ -64,7 +64,7 @@
           :show-root="false"
           class="org-structure"
         >
-          <template #content="{nodeData}">
+          <template #content="{ nodeData }">
             <oxd-sheet
               type="pastel-white"
               :class="{
@@ -88,7 +88,7 @@
                       @click="onDelete(nodeData)"
                     >
                       <oxd-text tag="p">
-                        {{ $t('performance.delete') }}
+                        {{ $t("performance.delete") }}
                       </oxd-text>
                     </li>
                     <li
@@ -96,7 +96,7 @@
                       @click="onEditOrglevel(nodeData)"
                     >
                       <oxd-text tag="p">
-                        {{ $t('general.edit') }}
+                        {{ $t("general.edit") }}
                       </oxd-text>
                     </li>
                     <li
@@ -104,7 +104,7 @@
                       @click="onAddOrglevel(nodeData)"
                     >
                       <oxd-text tag="p">
-                        {{ $t('general.add') }}
+                        {{ $t("general.add") }}
                       </oxd-text>
                     </li>
                   </template>
@@ -158,28 +158,28 @@ import {
   useResponsive,
   OxdSwitchInput,
   OxdDropdownMenu,
-} from '@ohrm/oxd';
-import {computed} from 'vue';
-import SaveOrgUnit from './SaveOrgUnit';
-import EditOrgUnit from './EditOrgUnit';
-import {APIService} from '@/core/util/services/api.service';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
+} from "@ohrm/oxd";
+import { computed } from "vue";
+import SaveOrgUnit from "./SaveOrgUnit";
+import EditOrgUnit from "./EditOrgUnit";
+import { APIService } from "@/core/util/services/api.service";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
 
 export default {
   components: {
-    'oxd-sheet': OxdSheet,
-    'save-org-unit': SaveOrgUnit,
-    'edit-org-unit': EditOrgUnit,
-    'oxd-tree-view': OxdTreeView,
-    'oxd-dropdown': OxdDropdownMenu,
-    'oxd-loading-spinner': OxdSpinner,
-    'oxd-switch-input': OxdSwitchInput,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "oxd-sheet": OxdSheet,
+    "save-org-unit": SaveOrgUnit,
+    "edit-org-unit": EditOrgUnit,
+    "oxd-tree-view": OxdTreeView,
+    "oxd-dropdown": OxdDropdownMenu,
+    "oxd-loading-spinner": OxdSpinner,
+    "oxd-switch-input": OxdSwitchInput,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/subunits',
+      "/api/v2/admin/subunits"
     );
     const responsiveState = useResponsive();
     const isMobile = computed(() => {
@@ -211,7 +211,7 @@ export default {
   methods: {
     onDelete(node) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.isLoading = true;
           this.http
             .delete(node.id)
@@ -251,10 +251,10 @@ export default {
       this.isLoading = true;
       this.http
         .getAll({
-          mode: 'tree',
+          mode: "tree",
         })
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.data = data[0];
         })
         .finally(() => {

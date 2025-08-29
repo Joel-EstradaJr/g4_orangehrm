@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('claim.edit_expense_type') }}
+        {{ $t("claim.edit_expense_type") }}
       </oxd-text>
 
       <oxd-divider />
@@ -52,7 +52,7 @@
           <oxd-grid-item class="--offset-row-3">
             <div class="orangehrm-sm-field">
               <oxd-text tag="p" class="orangehrm-sm-field-label">
-                {{ $t('general.active') }}
+                {{ $t("general.active") }}
               </oxd-text>
               <oxd-switch-input v-model="expenseTypes.status" />
             </div>
@@ -75,24 +75,24 @@
 </template>
 
 <script>
-import {OxdSwitchInput} from '@ohrm/oxd';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { OxdSwitchInput } from "@ohrm/oxd";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const initialExpenseTypes = {
-  name: '',
-  description: '',
+  name: "",
+  description: "",
   status: false,
 };
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
+    "oxd-switch-input": OxdSwitchInput,
   },
   props: {
     id: {
@@ -104,13 +104,13 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/claim/expenses/types',
+      "/api/v2/claim/expenses/types"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const expenseTypeNameUniqueValidation = createUniqueValidator(
-      'ExpenseType',
-      'name',
-      {entityId: props.id, matchByField: 'isDeleted', matchByValue: 'false'},
+      "ExpenseType",
+      "name",
+      { entityId: props.id, matchByField: "isDeleted", matchByValue: "false" }
     );
     return {
       http,
@@ -121,9 +121,9 @@ export default {
   data() {
     return {
       isLoading: false,
-      expenseTypes: {...initialExpenseTypes},
+      expenseTypes: { ...initialExpenseTypes },
       canEdit: false,
-      name: '',
+      name: "",
       rules: {
         name: [
           required,
@@ -140,8 +140,8 @@ export default {
     this.http
       .get(this.id)
       .then((response) => {
-        const {data} = response.data;
-        this.expenseTypes = {...data};
+        const { data } = response.data;
+        this.expenseTypes = { ...data };
         this.name = data.name;
         this.canEdit = response.data.meta.canEdit;
       })
@@ -152,7 +152,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/claim/viewExpense');
+      navigate("/claim/viewExpense");
     },
     onSave() {
       this.isLoading = true;

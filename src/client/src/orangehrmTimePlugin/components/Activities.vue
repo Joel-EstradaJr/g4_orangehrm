@@ -21,7 +21,7 @@
   <div class="orangehrm-paper-container">
     <div class="orangehrm-header-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('time.activities') }}
+        {{ $t("time.activities") }}
       </oxd-text>
       <div class="orangehrm-main-actions">
         <oxd-button
@@ -83,21 +83,21 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import CopyActivityModal from '@/orangehrmTimePlugin/components/CopyActivityModal.vue';
-import SaveActivityModal from '@/orangehrmTimePlugin/components/SaveActivityModal.vue';
-import EditActivityModal from '@/orangehrmTimePlugin/components/EditActivityModal.vue';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog.vue';
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import CopyActivityModal from "@/orangehrmTimePlugin/components/CopyActivityModal.vue";
+import SaveActivityModal from "@/orangehrmTimePlugin/components/SaveActivityModal.vue";
+import EditActivityModal from "@/orangehrmTimePlugin/components/EditActivityModal.vue";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog.vue";
 
 export default {
-  name: 'Activities',
+  name: "Activities",
 
   components: {
-    'copy-activity-modal': CopyActivityModal,
-    'save-activity-modal': SaveActivityModal,
-    'edit-activity-modal': EditActivityModal,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "copy-activity-modal": CopyActivityModal,
+    "save-activity-modal": SaveActivityModal,
+    "edit-activity-modal": EditActivityModal,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -114,13 +114,13 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/time/project/${props.projectId}/activities`,
+      `/api/v2/time/project/${props.projectId}/activities`
     );
 
     const activitiesNormalizer = (data) => {
       return data.map((item) => {
         const selectable = props.unselectableIds.findIndex(
-          (id) => id == item.id,
+          (id) => id == item.id
         );
         return {
           ...item,
@@ -159,29 +159,29 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('time.activity_name'),
-          style: {'flex-basis': '80%'},
+          name: "name",
+          slot: "title",
+          title: this.$t("time.activity_name"),
+          style: { "flex-basis": "80%" },
         },
         {
-          name: 'actions',
-          title: this.$t('general.actions'),
-          slot: 'action',
-          style: {'flex-shrink': 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          title: this.$t("general.actions"),
+          slot: "action",
+          style: { "flex-shrink": 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -218,25 +218,25 @@ export default {
         ids.push(this.items?.data[index].id);
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       const isSelectable = this.unselectableIds.findIndex(
-        (id) => id == item.id,
+        (id) => id == item.id
       );
       if (isSelectable > -1) {
         return this.$toast.error({
-          title: this.$t('general.error'),
+          title: this.$t("general.error"),
           message: this.$t(
-            'time.not_allowed_to_delete_project_activities_which_have_time_logged_against',
+            "time.not_allowed_to_delete_project_activities_which_have_time_logged_against"
           ),
         });
       }
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -271,7 +271,7 @@ export default {
   ::v-deep(.oxd-button--medium) {
     width: 100%;
   }
-  @include oxd-respond-to('md') {
+  @include oxd-respond-to("md") {
     flex-direction: row;
     ::v-deep(.oxd-button--medium) {
       width: unset;

@@ -21,7 +21,7 @@
   <edit-employee-layout :employee-id="empNumber" screen="report-to">
     <div class="orangehrm-horizontal-padding orangehrm-top-padding">
       <oxd-text tag="h6" class="orangehrm-main-title">{{
-        $t('pim.report_to')
+        $t("pim.report_to")
       }}</oxd-text>
       <oxd-divider />
     </div>
@@ -37,15 +37,15 @@
 </template>
 
 <script>
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import EmployeeSupervisors from '@/orangehrmPimPlugin/components/EmployeeSupervisors';
-import EmployeeSubordinates from '@/orangehrmPimPlugin/components/EmployeeSubordinates';
+import EditEmployeeLayout from "@/orangehrmPimPlugin/components/EditEmployeeLayout";
+import EmployeeSupervisors from "@/orangehrmPimPlugin/components/EmployeeSupervisors";
+import EmployeeSubordinates from "@/orangehrmPimPlugin/components/EmployeeSubordinates";
 
 export default {
   components: {
-    'edit-employee-layout': EditEmployeeLayout,
-    'employee-supervisors': EmployeeSupervisors,
-    'employee-subordinates': EmployeeSubordinates,
+    "edit-employee-layout": EditEmployeeLayout,
+    "employee-supervisors": EmployeeSupervisors,
+    "employee-subordinates": EmployeeSubordinates,
   },
   props: {
     empNumber: {

@@ -21,7 +21,7 @@
   <div v-if="total > 0" class="orangehrm-paper-container">
     <div class="orangehrm-header-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('time.actions_performed_on_the_timesheet') }}
+        {{ $t("time.actions_performed_on_the_timesheet") }}
       </oxd-text>
     </div>
     <div class="orangehrm-container">
@@ -46,15 +46,15 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@/core/util/services/api.service';
-import usei18n from '@/core/util/composable/usei18n';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@/core/util/services/api.service";
+import usei18n from "@/core/util/composable/usei18n";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
-  name: 'TimesheetActions',
+  name: "TimesheetActions",
 
   props: {
     timesheetId: {
@@ -66,11 +66,11 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/time/timesheets/${props.timesheetId}/action-logs`,
+      `/api/v2/time/timesheets/${props.timesheetId}/action-logs`
     );
-    const {$t} = usei18n();
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { $t } = usei18n();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const actionsNormalizer = (data) => {
       return data.map((item) => {
@@ -80,34 +80,34 @@ export default {
         const lastName = item.performedEmployee?.lastName;
 
         switch (actionName) {
-          case 'Submitted':
-            actionName = $t('time.submitted');
+          case "Submitted":
+            actionName = $t("time.submitted");
             break;
-          case 'Rejected':
-            actionName = $t('leave.rejected');
+          case "Rejected":
+            actionName = $t("leave.rejected");
             break;
-          case 'Not Submitted':
-            actionName = $t('time.not_submitted');
+          case "Not Submitted":
+            actionName = $t("time.not_submitted");
             break;
-          case 'Approved':
-            actionName = $t('time.approved');
+          case "Approved":
+            actionName = $t("time.approved");
             break;
         }
 
         if (firstName && lastName) {
           performedEmployee = `${firstName} ${lastName}`;
         } else {
-          performedEmployee = $t('general.purged_employee');
+          performedEmployee = $t("general.purged_employee");
         }
 
         if (item.performedEmployee?.terminationId) {
-          performedEmployee += ` (${$t('general.past_employee')})`;
+          performedEmployee += ` (${$t("general.past_employee")})`;
         }
 
         return {
           id: item.id,
           action: actionName,
-          date: formatDate(parseDate(item.date), jsDateFormat, {locale}),
+          date: formatDate(parseDate(item.date), jsDateFormat, { locale }),
           comment: item.comment,
           performedBy: performedEmployee,
         };
@@ -144,26 +144,26 @@ export default {
     return {
       headers: [
         {
-          name: 'action',
-          slot: 'title',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
+          name: "action",
+          slot: "title",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
         },
         {
-          name: 'performedBy',
-          title: this.$t('general.performed_by'),
-          style: {flex: 1},
+          name: "performedBy",
+          title: this.$t("general.performed_by"),
+          style: { flex: 1 },
         },
         {
-          name: 'date',
-          title: this.$t('general.date'),
-          style: {flex: 1},
+          name: "date",
+          title: this.$t("general.date"),
+          style: { flex: 1 },
         },
         {
-          name: 'comment',
-          cellType: 'oxd-table-cell-truncate',
-          title: this.$t('general.comment'),
-          style: {flex: 1},
+          name: "comment",
+          cellType: "oxd-table-cell-truncate",
+          title: this.$t("general.comment"),
+          style: { flex: 1 },
         },
       ],
     };

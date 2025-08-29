@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'ProfileActionHeader',
+  name: "ProfileActionHeader",
   inheritAttrs: false,
   props: {
     actionButtonShown: {

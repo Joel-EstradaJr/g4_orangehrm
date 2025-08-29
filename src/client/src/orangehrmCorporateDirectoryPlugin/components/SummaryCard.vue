@@ -63,15 +63,15 @@
 </template>
 
 <script>
-import ProfilePicture from '@/orangehrmCorporateDirectoryPlugin/components/ProfilePicture';
-import {OxdIcon, OxdSheet} from '@ohrm/oxd';
+import ProfilePicture from "@/orangehrmCorporateDirectoryPlugin/components/ProfilePicture";
+import { OxdIcon, OxdSheet } from "@ohrm/oxd";
 
 export default {
-  name: 'SummaryCard',
+  name: "SummaryCard",
   components: {
-    'oxd-icon': OxdIcon,
-    'oxd-sheet': OxdSheet,
-    'profile-picture': ProfilePicture,
+    "oxd-icon": OxdIcon,
+    "oxd-sheet": OxdSheet,
+    "profile-picture": ProfilePicture,
   },
   props: {
     employeeId: {
@@ -89,38 +89,38 @@ export default {
     },
     employeeSubUnit: {
       type: String,
-      default: '',
+      default: "",
     },
     employeeLocation: {
       type: String,
-      default: '',
+      default: "",
     },
     showBackButton: {
       type: Boolean,
       default: false,
     },
   },
-  emits: ['hide-details'],
+  emits: ["hide-details"],
   computed: {
     hasDefaultSlot() {
       return !!this.$slots.default;
     },
     cardTitleClasses() {
       return {
-        'orangehrm-directory-card-header': true,
-        '--break-words': !this.hasDefaultSlot,
+        "orangehrm-directory-card-header": true,
+        "--break-words": !this.hasDefaultSlot,
       };
     },
     cardSubTitleClasses() {
       return {
-        'orangehrm-directory-card-subtitle': true,
-        '--break-words': !this.hasDefaultSlot,
+        "orangehrm-directory-card-subtitle": true,
+        "--break-words": !this.hasDefaultSlot,
       };
     },
     cardDescriptionClasses() {
       return {
-        'orangehrm-directory-card-description': true,
-        '--break-words': !this.hasDefaultSlot,
+        "orangehrm-directory-card-description": true,
+        "--break-words": !this.hasDefaultSlot,
       };
     },
   },
@@ -186,7 +186,7 @@ export default {
     color: $oxd-interface-gray-darken-1-color;
   }
 
-  @include oxd-respond-to('md') {
+  @include oxd-respond-to("md") {
     min-height: 260px;
   }
 }

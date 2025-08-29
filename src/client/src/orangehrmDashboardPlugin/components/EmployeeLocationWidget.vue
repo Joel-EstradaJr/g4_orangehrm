@@ -34,22 +34,22 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import BaseWidget from '@/orangehrmDashboardPlugin/components/BaseWidget.vue';
-import {OxdPieChart, CHART_COLORS} from '@ohrm/oxd';
+import { APIService } from "@/core/util/services/api.service";
+import BaseWidget from "@/orangehrmDashboardPlugin/components/BaseWidget.vue";
+import { OxdPieChart, CHART_COLORS } from "@ohrm/oxd";
 
 export default {
-  name: 'EmployeeLocationWidget',
+  name: "EmployeeLocationWidget",
 
   components: {
-    'base-widget': BaseWidget,
-    'oxd-pie-chart': OxdPieChart,
+    "base-widget": BaseWidget,
+    "oxd-pie-chart": OxdPieChart,
   },
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/dashboard/employees/locations',
+      "/api/v2/dashboard/employees/locations"
     );
 
     return {
@@ -69,7 +69,7 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data, meta} = response.data;
+        const { data, meta } = response.data;
 
         const colors = [
           CHART_COLORS.COLOR_HEAT_WAVE,
@@ -99,7 +99,7 @@ export default {
           this.dataset.push({
             value: meta.otherEmployeeCount,
             color: CHART_COLORS.COLOR_FANDANGO_PINK,
-            label: this.$t('pim.other'),
+            label: this.$t("pim.other"),
           });
         }
 
@@ -107,7 +107,7 @@ export default {
           this.dataset.push({
             value: meta.unassignedEmployeeCount,
             color: CHART_COLORS.COLOR_TART_ORANGE,
-            label: this.$t('dashboard.unassigned'),
+            label: this.$t("dashboard.unassigned"),
           });
         }
       })

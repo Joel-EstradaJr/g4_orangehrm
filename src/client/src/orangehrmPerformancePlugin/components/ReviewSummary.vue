@@ -21,7 +21,7 @@
   <div class="orangehrm-card-container">
     <div class="orangehrm-performance-review-summary">
       <oxd-text tag="h5" class="orangehrm-performance-review-title">
-        {{ $t('performance.review_summary') }}
+        {{ $t("performance.review_summary") }}
       </oxd-text>
       <oxd-form :loading="loading">
         <oxd-form-row class="orangehrm-performance-review-details">
@@ -56,7 +56,7 @@
             <oxd-grid-item v-show="status === 4">
               <div class="orangehrm-performance-review-rating">
                 <oxd-text type="subtitle-2">
-                  {{ $t('performance.final_rating') }}
+                  {{ $t("performance.final_rating") }}
                 </oxd-text>
                 <oxd-text
                   tag="h4"
@@ -73,7 +73,7 @@
           <oxd-grid :cols="3" class="orangehrm-performance-review-details-grid">
             <oxd-grid-item class="orangehrm-performance-review-column">
               <oxd-text type="subtitle-2">
-                {{ $t('performance.review_status') }}
+                {{ $t("performance.review_status") }}
               </oxd-text>
               <oxd-text class="orangehrm-performance-review-bold">
                 {{ reviewStatus }}
@@ -81,7 +81,7 @@
             </oxd-grid-item>
             <oxd-grid-item class="orangehrm-performance-review-column">
               <oxd-text type="subtitle-2">
-                {{ $t('performance.review_period') }}
+                {{ $t("performance.review_period") }}
               </oxd-text>
               <oxd-text class="orangehrm-performance-review-bold">
                 {{ reviewPeriod }}
@@ -89,7 +89,7 @@
             </oxd-grid-item>
             <oxd-grid-item class="orangehrm-performance-review-column">
               <oxd-text type="subtitle-2">
-                {{ $t('performance.review_due_date') }}
+                {{ $t("performance.review_due_date") }}
               </oxd-text>
               <oxd-text class="orangehrm-performance-review-bold">
                 {{ reviewDueDate }}
@@ -103,17 +103,17 @@
 </template>
 
 <script>
-import {computed} from 'vue';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import useLocale from '@/core/util/composable/useLocale';
-import usei18n from '@/core/util/composable/usei18n';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
+import { computed } from "vue";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import useLocale from "@/core/util/composable/useLocale";
+import usei18n from "@/core/util/composable/usei18n";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
 
 const defaultPic = `${window.appGlobal.publicPath}/images/default-photo.png`;
 
 export default {
-  name: 'ReviewSummary',
+  name: "ReviewSummary",
 
   props: {
     employee: {
@@ -150,30 +150,30 @@ export default {
     },
   },
   setup(props) {
-    const {$t} = usei18n();
-    const {locale} = useLocale();
-    const {jsDateFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $t } = usei18n();
+    const { locale } = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     const statusOpts = [
-      {id: 1, label: $t('performance.inactive')},
-      {id: 2, label: $t('performance.activated')},
-      {id: 3, label: $t('performance.in_progress')},
-      {id: 4, label: $t('performance.completed')},
+      { id: 1, label: $t("performance.inactive") },
+      { id: 2, label: $t("performance.activated") },
+      { id: 3, label: $t("performance.in_progress") },
+      { id: 4, label: $t("performance.completed") },
     ];
 
     const reviewDateFormat = (date) =>
-      formatDate(parseDate(date), jsDateFormat, {locale});
+      formatDate(parseDate(date), jsDateFormat, { locale });
 
     const imgSrc = computed(() =>
       props.employee.empNumber
         ? `${window.appGlobal.baseUrl}/pim/viewPhoto/empNumber/${props.employee.empNumber}`
-        : defaultPic,
+        : defaultPic
     );
 
     const reviewStatus = statusOpts.find((el) => el.id === props.status).label;
     const reviewPeriod = `${reviewDateFormat(
-      props.reviewPeriodStart,
+      props.reviewPeriodStart
     )} - ${reviewDateFormat(props.reviewPeriodEnd)}`;
     const reviewDueDate = reviewDateFormat(props.dueDate);
 

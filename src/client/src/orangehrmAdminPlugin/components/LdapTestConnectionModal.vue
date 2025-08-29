@@ -21,7 +21,7 @@
   <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('admin.connection_status') }}
+        {{ $t("admin.connection_status") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'LdapTestConnectionModal',
+  name: "LdapTestConnectionModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -60,15 +60,15 @@ export default {
       default: () => [],
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   methods: {
     getClass(id) {
       return id === 1
-        ? 'orangehrm-ldap-test-value --success'
-        : 'orangehrm-ldap-test-value --error';
+        ? "orangehrm-ldap-test-value --success"
+        : "orangehrm-ldap-test-value --error";
     },
     onCancel() {
-      this.$emit('close');
+      this.$emit("close");
     },
   },
 };

@@ -19,7 +19,7 @@ export default function useAutoFocus() {
   const autofocus = {
     mounted(el: HTMLElement) {
       if (!el) return;
-      el.querySelector('input')?.focus();
+      el.querySelector("input")?.focus();
     },
   };
 

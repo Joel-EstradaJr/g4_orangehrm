@@ -21,7 +21,7 @@
   <oxd-dialog @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('claim.add_expense') }}
+        {{ $t("claim.add_expense") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -89,17 +89,17 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {required, validDateFormat} from '@/core/util/validation/rules';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {yearRange} from '@ohrm/core/util/helper/year-range';
-import {OxdDialog} from '@ohrm/oxd';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { required, validDateFormat } from "@/core/util/validation/rules";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { yearRange } from "@ohrm/core/util/helper/year-range";
+import { OxdDialog } from "@ohrm/oxd";
 import {
   shouldNotExceedCharLength,
   maxCurrency,
   digitsOnlyWithTwoDecimalPoints,
-} from '@ohrm/core/util/validation/rules';
-import ClaimExpenseTypeDropdown from './ClaimExpenseTypeDropdown.vue';
+} from "@ohrm/core/util/validation/rules";
+import ClaimExpenseTypeDropdown from "./ClaimExpenseTypeDropdown.vue";
 
 const expenseModel = {
   type: null,
@@ -109,11 +109,11 @@ const expenseModel = {
 };
 
 export default {
-  name: 'SaveExpense',
+  name: "SaveExpense",
 
   components: {
-    'oxd-dialog': OxdDialog,
-    'claim-expense-type-dropdown': ClaimExpenseTypeDropdown,
+    "oxd-dialog": OxdDialog,
+    "claim-expense-type-dropdown": ClaimExpenseTypeDropdown,
   },
 
   props: {
@@ -123,15 +123,15 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/claim/requests/${props.requestId}/expenses`,
+      `/api/v2/claim/requests/${props.requestId}/expenses`
     );
 
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -174,12 +174,12 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          this.expense = {...expenseModel};
+          this.expense = { ...expenseModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

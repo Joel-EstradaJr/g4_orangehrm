@@ -19,13 +19,13 @@
 
 <template>
   <oxd-text tag="p" class="orangehrm-form-hint">
-    * {{ $t('general.required') }}
+    * {{ $t("general.required") }}
   </oxd-text>
 </template>
 
 <script>
 export default {
-  name: 'RequiredText',
+  name: "RequiredText",
 };
 </script>
 

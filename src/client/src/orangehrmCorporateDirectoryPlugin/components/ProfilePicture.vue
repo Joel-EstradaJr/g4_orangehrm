@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import {computed} from 'vue';
+import { computed } from "vue";
 
 const defaultPic = `${window.appGlobal.publicPath}/images/default-photo.png`;
 
 export default {
-  name: 'ProfilePicture',
+  name: "ProfilePicture",
   props: {
     id: {
       type: Number,

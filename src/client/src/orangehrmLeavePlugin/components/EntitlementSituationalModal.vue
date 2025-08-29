@@ -21,12 +21,12 @@
   <oxd-dialog class="orangehrm-dialog-popup" @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('leave.situational_leave') }}
+        {{ $t("leave.situational_leave") }}
       </oxd-text>
     </div>
     <div class="orangehrm-text-center-align">
       <oxd-text type="card-body">
-        {{ $t('leave.entitlement_situational_description') }}
+        {{ $t("leave.entitlement_situational_description") }}
       </oxd-text>
     </div>
     <div class="orangehrm-modal-footer">
@@ -43,17 +43,17 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'EntitlementSituationalModal',
+  name: "EntitlementSituationalModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
-  emits: ['close'],
+  emits: ["close"],
   methods: {
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

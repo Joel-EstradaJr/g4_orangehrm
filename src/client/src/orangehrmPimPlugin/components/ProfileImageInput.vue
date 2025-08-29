@@ -31,14 +31,14 @@
   </oxd-input-field>
   <oxd-text class="orangehrm-input-hint" tag="p">
     {{
-      $t('general.accept_jpg_png_upto_1mb_recomended_dimentions_200px_x_200px')
+      $t("general.accept_jpg_png_upto_1mb_recomended_dimentions_200px_x_200px")
     }}
   </oxd-text>
 </template>
 
 <script>
 export default {
-  name: 'ProfileImageInput',
+  name: "ProfileImageInput",
   inheritAttrs: false,
   props: {
     imgSrc: {

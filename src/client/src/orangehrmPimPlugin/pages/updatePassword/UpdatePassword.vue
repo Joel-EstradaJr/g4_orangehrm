@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('pim.update_password') }}
+        {{ $t("pim.update_password") }}
       </oxd-text>
       <oxd-divider />
 
@@ -73,20 +73,20 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useForm from '@/core/util/composable/useForm';
-import {APIService} from '@/core/util/services/api.service';
-import PasswordInput from '@/core/components/inputs/PasswordInput';
+} from "@ohrm/core/util/validation/rules";
+import useForm from "@/core/util/composable/useForm";
+import { APIService } from "@/core/util/services/api.service";
+import PasswordInput from "@/core/components/inputs/PasswordInput";
 
 const userModel = {
-  currentPassword: '',
-  password: '',
-  passwordConfirm: '',
+  currentPassword: "",
+  password: "",
+  passwordConfirm: "",
 };
 
 export default {
   components: {
-    'password-input': PasswordInput,
+    "password-input": PasswordInput,
   },
   props: {
     userName: {
@@ -97,9 +97,9 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/core/update-password',
+      "/api/v2/core/update-password"
     );
-    const {formRef, reset} = useForm();
+    const { formRef, reset } = useForm();
     return {
       http,
       formRef,
@@ -110,7 +110,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      user: {...userModel},
+      user: { ...userModel },
       rules: {
         currentPassword: [required, shouldNotExceedCharLength(64)],
       },
@@ -125,8 +125,8 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
-          url: '/api/v2/pim/update-password',
+          method: "PUT",
+          url: "/api/v2/pim/update-password",
           data: {
             newPassword: this.user.password,
             currentPassword: this.user.currentPassword,
@@ -141,8 +141,8 @@ export default {
             return this.$toast.saveSuccess();
           } else {
             return this.$toast.error({
-              title: this.$t('general.error'),
-              message: this.$t('pim.current_password_is_incorrect'),
+              title: this.$t("general.error"),
+              message: this.$t("pim.current_password_is_incorrect"),
             });
           }
         })

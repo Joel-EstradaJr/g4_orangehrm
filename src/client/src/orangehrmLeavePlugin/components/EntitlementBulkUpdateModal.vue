@@ -26,8 +26,8 @@
   >
     <div class="orangehrm-dialog-header-container">
       <oxd-text type="card-title">
-        {{ $t('leave.updating_entitlement') }} -
-        {{ $t('leave.matching_employees') }}
+        {{ $t("leave.updating_entitlement") }} -
+        {{ $t("leave.matching_employees") }}
       </oxd-text>
     </div>
     <oxd-divider
@@ -38,7 +38,7 @@
     >
       <oxd-text type="subtitle-2">
         {{
-          $t('leave.selected_leave_entitlement_applied_to_following_employees')
+          $t("leave.selected_leave_entitlement_applied_to_following_employees")
         }}
       </oxd-text>
     </div>
@@ -67,13 +67,13 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {OxdDialog} from '@ohrm/oxd';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'EntitlementBulkUpdateModal',
+  name: "EntitlementBulkUpdateModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -84,7 +84,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/employees/leave-entitlements',
+      "/api/v2/leave/employees/leave-entitlements"
     );
     return {
       http,
@@ -97,20 +97,20 @@ export default {
       resolve: null,
       headers: [
         {
-          title: this.$t('general.employee'),
-          name: 'employee',
-          slot: 'title',
-          style: {flex: 1},
+          title: this.$t("general.employee"),
+          name: "employee",
+          slot: "title",
+          style: { flex: 1 },
         },
         {
-          title: this.$t('leave.old_entitlement'),
-          name: 'current',
-          style: {flex: 1},
+          title: this.$t("leave.old_entitlement"),
+          name: "current",
+          style: { flex: 1 },
         },
         {
-          title: this.$t('leave.new_entitlement'),
-          name: 'updateAs',
-          style: {flex: 1},
+          title: this.$t("leave.new_entitlement"),
+          name: "updateAs",
+          style: { flex: 1 },
         },
       ],
       items: [],
@@ -128,17 +128,17 @@ export default {
           subunitId: this.data.subunit?.id,
         })
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.items = Array.isArray(data)
             ? data.map((item) => {
                 return {
                   employee: `${item.firstName} ${item.lastName}`,
                   current: item.entitlement?.current
                     ? parseFloat(item.entitlement.current).toFixed(2)
-                    : '0.00',
+                    : "0.00",
                   updateAs: item.entitlement?.updateAs
                     ? parseFloat(item.entitlement.updateAs).toFixed(2)
-                    : '0.00',
+                    : "0.00",
                 };
               })
             : [];
@@ -151,11 +151,11 @@ export default {
     },
     onConfirm() {
       this.show = false;
-      this.resolve && this.resolve('ok');
+      this.resolve && this.resolve("ok");
     },
     onCancel() {
       this.show = false;
-      this.resolve && this.resolve('cancel');
+      this.resolve && this.resolve("cancel");
     },
   },
 };

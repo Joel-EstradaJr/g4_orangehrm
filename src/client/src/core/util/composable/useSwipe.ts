@@ -15,9 +15,9 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import Hammer from 'hammerjs';
-import {onBeforeUnmount, onMounted, ref} from 'vue';
-import {CustomElement} from './useInfiniteScroll';
+import Hammer from "hammerjs";
+import { onBeforeUnmount, onMounted, ref } from "vue";
+import { CustomElement } from "./useInfiniteScroll";
 
 export default function useSwipe(executor: ($event: HammerInput) => void) {
   let manager: HammerManager;
@@ -27,11 +27,11 @@ export default function useSwipe(executor: ($event: HammerInput) => void) {
     if (!swipeContainer.value) return;
 
     manager = new Hammer.Manager(
-      swipeContainer.value?.$el || swipeContainer.value,
+      swipeContainer.value?.$el || swipeContainer.value
     );
     const Swipe = new Hammer.Swipe();
     manager.add(Swipe);
-    manager.on('swipe', executor);
+    manager.on("swipe", executor);
   });
 
   onBeforeUnmount(() => {

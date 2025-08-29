@@ -23,8 +23,8 @@
  */
 export const prepare = function (
   endpoint: string,
-  params: {[key: string]: string | number} = {},
-  query: {[key: string]: string | number | boolean | string[]} = {},
+  params: { [key: string]: string | number } = {},
+  query: { [key: string]: string | number | boolean | string[] } = {}
 ): string {
   let preparedEndpoint = endpoint;
   query = JSON.parse(JSON.stringify(query));
@@ -32,26 +32,26 @@ export const prepare = function (
     const paramPlaceholder = `{${param}}`;
     if (preparedEndpoint.includes(paramPlaceholder)) {
       let paramValue = params[param];
-      if (typeof paramValue === 'number') {
+      if (typeof paramValue === "number") {
         paramValue = paramValue.toString();
       }
       preparedEndpoint = preparedEndpoint.replace(paramPlaceholder, paramValue);
     } else {
       // eslint-disable-next-line no-console
-      console.error('Invalid parameter.');
+      console.error("Invalid parameter.");
     }
   });
-  let preparedQueryString = '?';
+  let preparedQueryString = "?";
   const queryKeys = Object.keys(query);
   queryKeys.forEach((queryKey, index) => {
     if (index !== 0) {
-      preparedQueryString += '&';
+      preparedQueryString += "&";
     }
     const queryValue = query[queryKey];
     if (Array.isArray(queryValue)) {
       queryValue.forEach((queryValueItem, itemIndex) => {
         if (itemIndex !== 0) {
-          preparedQueryString += '&';
+          preparedQueryString += "&";
         }
         preparedQueryString += `${queryKey}[]=${queryValueItem}`;
       });
@@ -60,7 +60,7 @@ export const prepare = function (
     }
   });
   return encodeURI(
-    preparedEndpoint + (queryKeys.length === 0 ? '' : preparedQueryString),
+    preparedEndpoint + (queryKeys.length === 0 ? "" : preparedQueryString)
   );
 };
 
@@ -72,8 +72,8 @@ export const prepare = function (
  */
 export const urlFor = function (
   endpoint: string,
-  params: {[key: string]: string | number} = {},
-  query: {[key: string]: string | number | boolean | string[]} = {},
+  params: { [key: string]: string | number } = {},
+  query: { [key: string]: string | number | boolean | string[] } = {}
 ): string {
   // @ts-expect-error: appGlobal is not in window object by default
   return window.appGlobal.baseUrl + prepare(endpoint, params, query);

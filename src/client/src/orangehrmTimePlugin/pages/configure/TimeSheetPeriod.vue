@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">
-        {{ $t('time.timesheet_period_config') }}
+        {{ $t("time.timesheet_period_config") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -50,10 +50,10 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {required} from '@/core/util/validation/rules';
-import {navigate} from '@/core/util/helper/navigation';
-import useLocale from '@/core/util/composable/useLocale';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { required } from "@/core/util/validation/rules";
+import { navigate } from "@/core/util/helper/navigation";
+import useLocale from "@/core/util/composable/useLocale";
 
 const timeSheetPeriodModel = {
   startDay: null,
@@ -63,9 +63,9 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/time/time-sheet-period',
+      "/api/v2/time/time-sheet-period"
     );
-    const {locale} = useLocale();
+    const { locale } = useLocale();
     return {
       http,
       locale,
@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      timeSheetPeriod: {...timeSheetPeriodModel},
+      timeSheetPeriod: { ...timeSheetPeriodModel },
       rules: {
         startDay: [required],
       },
@@ -83,12 +83,12 @@ export default {
   computed: {
     days() {
       return Array(7)
-        .fill('')
+        .fill("")
         .map((...[, index]) => {
           return {
             id: index === 0 ? 7 : index,
             label: this.locale.localize.day(index, {
-              width: 'wide',
+              width: "wide",
             }),
           };
         });
@@ -98,10 +98,10 @@ export default {
     this.isLoading = true;
     this.http
       .request({
-        method: 'GET',
+        method: "GET",
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.updateTimeSheetPeriodModel(parseInt(data.startDay));
       })
       .finally(() => {
@@ -113,7 +113,7 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             startDay: this.timeSheetPeriod.startDay?.id,
           },
@@ -122,7 +122,7 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          navigate('/time/viewEmployeeTimesheet');
+          navigate("/time/viewEmployeeTimesheet");
         });
     },
     updateTimeSheetPeriodModel(day) {

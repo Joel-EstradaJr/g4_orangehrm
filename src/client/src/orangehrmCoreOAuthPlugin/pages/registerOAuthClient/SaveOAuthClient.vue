@@ -23,8 +23,8 @@
       <oxd-text tag="h6" class="orangehrm-main-title">
         {{
           editMode
-            ? $t('admin.edit_oauth_client')
-            : $t('admin.add_oauth_client')
+            ? $t("admin.edit_oauth_client")
+            : $t("admin.add_oauth_client")
         }}
       </oxd-text>
 
@@ -75,7 +75,7 @@
               <oxd-grid :cols="2" class="orangehrm-full-width-grid">
                 <oxd-grid-item class="orangehrm-field-row">
                   <oxd-text tag="p" class="orangehrm-field-label">
-                    {{ $t('admin.enable_client') }}
+                    {{ $t("admin.enable_client") }}
                   </oxd-text>
                   <oxd-switch-input v-model="oAuthClient.enabled" />
                 </oxd-grid-item>
@@ -85,7 +85,7 @@
               <oxd-grid :cols="2" class="orangehrm-full-width-grid">
                 <oxd-grid-item class="orangehrm-field-row">
                   <oxd-text tag="p" class="orangehrm-field-label">
-                    {{ $t('admin.confidential_client') }}
+                    {{ $t("admin.confidential_client") }}
                   </oxd-text>
                   <oxd-switch-input v-model="oAuthClient.confidential" />
                 </oxd-grid-item>
@@ -111,28 +111,28 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {OxdAlert, OxdSwitchInput} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { OxdAlert, OxdSwitchInput } from "@ohrm/oxd";
 
 const initialOAuthClient = {
   id: null,
-  name: '',
-  redirectUri: '',
+  name: "",
+  redirectUri: "",
   enabled: true,
   clientId: null,
-  clientSecret: '********',
+  clientSecret: "********",
   confidential: false,
 };
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
-    'oxd-alert': OxdAlert,
+    "oxd-switch-input": OxdSwitchInput,
+    "oxd-alert": OxdAlert,
   },
   props: {
     id: {
@@ -144,7 +144,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/oauth-clients',
+      "/api/v2/admin/oauth-clients"
     );
     return {
       http,
@@ -155,7 +155,7 @@ export default {
     return {
       isLoading: false,
       isSecretPlain: false,
-      oAuthClient: {...initialOAuthClient},
+      oAuthClient: { ...initialOAuthClient },
       rules: {
         name: [required, shouldNotExceedCharLength(80)],
         redirectUri: [required, shouldNotExceedCharLength(2000)],
@@ -176,12 +176,12 @@ export default {
     this.isLoading = true;
     this.getClient()
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.rules.name.push((v) => {
           const index = data.findIndex((item) => item.name === v);
           if (index > -1) {
-            const {id} = data[index];
-            return id !== this.id ? this.$t('general.already_exists') : true;
+            const { id } = data[index];
+            return id !== this.id ? this.$t("general.already_exists") : true;
           } else {
             return true;
           }
@@ -196,17 +196,17 @@ export default {
     getClient() {
       if (this.id !== null) {
         return this.http.get(this.id).then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.setDataFromResponse(data);
 
           // Fetch list data for unique test
-          return this.http.getAll({limit: 0});
+          return this.http.getAll({ limit: 0 });
         });
       }
-      return this.http.getAll({limit: 0});
+      return this.http.getAll({ limit: 0 });
     },
     onCancel() {
-      navigate('/admin/registerOAuthClient');
+      navigate("/admin/registerOAuthClient");
     },
     onSave() {
       this.isLoading = true;
@@ -223,7 +223,7 @@ export default {
           confidential: this.oAuthClient.confidential,
         })
         .then((response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
           this.setDataFromResponse(data);
           this.oAuthClient.clientSecret = meta.clientSecret;
           this.isSecretPlain = true;
@@ -240,7 +240,7 @@ export default {
           confidential: this.oAuthClient.confidential,
         })
         .then((response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
           this.setDataFromResponse(data);
           if (data.confidential === true && meta.clientSecret !== null) {
             this.oAuthClient.clientSecret = meta.clientSecret;

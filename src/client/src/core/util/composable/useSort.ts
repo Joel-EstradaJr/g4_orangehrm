@@ -15,9 +15,9 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {computed, ref, watch} from 'vue';
+import { computed, ref, watch } from "vue";
 
-type Order = 'ASC' | 'DESC' | 'DEFAULT';
+type Order = "ASC" | "DESC" | "DEFAULT";
 
 interface SortDefinition {
   [column: string]: Order;
@@ -35,7 +35,7 @@ export default function useSort(sortParams: SortParams) {
   const sortField = computed(() => {
     return Object.keys(sortDefinition.value).filter((column) => {
       const order = sortDefinition.value[column];
-      return order && order != 'DEFAULT';
+      return order && order != "DEFAULT";
     })[0];
   });
 

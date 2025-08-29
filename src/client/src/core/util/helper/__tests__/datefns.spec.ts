@@ -15,35 +15,35 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {formatDate, getStandardTimezone} from '../datefns';
+import { formatDate, getStandardTimezone } from "../datefns";
 
-describe('core/util/helper/datefns', () => {
-  test('format::HH:mm', () => {
-    const result = formatDate(new Date('2021-12-24 10:40'), 'HH:mm');
-    expect(result).toBe('10:40');
+describe("core/util/helper/datefns", () => {
+  test("format::HH:mm", () => {
+    const result = formatDate(new Date("2021-12-24 10:40"), "HH:mm");
+    expect(result).toBe("10:40");
   });
-  test('format::HH.mm', () => {
-    const result = formatDate(new Date('2021-12-24 10:40'), 'HH.mm');
-    expect(result).toBe('10.40');
+  test("format::HH.mm", () => {
+    const result = formatDate(new Date("2021-12-24 10:40"), "HH.mm");
+    expect(result).toBe("10.40");
   });
-  test('format::YY-MM-DD HH.mm', () => {
-    const result = formatDate(new Date('2021-12-24 10.40'), 'HH.mm');
+  test("format::YY-MM-DD HH.mm", () => {
+    const result = formatDate(new Date("2021-12-24 10.40"), "HH.mm");
     expect(result).toBe(null);
   });
-  test('getStandardTimezone:+05:00', () => {
+  test("getStandardTimezone:+05:00", () => {
     const result = getStandardTimezone(5);
-    expect(result).toBe('+05:00');
+    expect(result).toBe("+05:00");
   });
-  test('getStandardTimezone:+05:30', () => {
+  test("getStandardTimezone:+05:30", () => {
     const result = getStandardTimezone(5.5);
-    expect(result).toBe('+05:30');
+    expect(result).toBe("+05:30");
   });
-  test('getStandardTimezone:-05:00', () => {
+  test("getStandardTimezone:-05:00", () => {
     const result = getStandardTimezone(-5);
-    expect(result).toBe('-05:00');
+    expect(result).toBe("-05:00");
   });
-  test('getStandardTimezone:-05:30', () => {
+  test("getStandardTimezone:-05:30", () => {
     const result = getStandardTimezone(-5.5);
-    expect(result).toBe('-05:30');
+    expect(result).toBe("-05:30");
   });
 });

@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('general.edit_skill') }}
+        {{ $t("general.edit_skill") }}
       </oxd-text>
 
       <oxd-divider />
@@ -64,18 +64,18 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const skillModel = {
-  id: '',
-  name: '',
-  description: '',
+  id: "",
+  name: "",
+  description: "",
 };
 
 export default {
@@ -89,10 +89,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/skills',
+      "/api/v2/admin/skills"
     );
-    const {createUniqueValidator} = useServerValidation(http);
-    const skillUniqueValidation = createUniqueValidator('Skill', 'name', {
+    const { createUniqueValidator } = useServerValidation(http);
+    const skillUniqueValidation = createUniqueValidator("Skill", "name", {
       entityId: props.qualificationSkillId,
     });
 
@@ -105,7 +105,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      skill: {...skillModel},
+      skill: { ...skillModel },
       rules: {
         name: [
           required,
@@ -121,7 +121,7 @@ export default {
     this.http
       .get(this.qualificationSkillId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.skill.id = data.id;
         this.skill.name = data.name;
         this.skill.description = data.description;
@@ -147,7 +147,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/admin/viewSkills');
+      navigate("/admin/viewSkills");
     },
   },
 };

@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">
-        {{ $t('leave.leave_period') }}
+        {{ $t("leave.leave_period") }}
       </oxd-text>
 
       <oxd-divider />
@@ -90,12 +90,12 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {reloadPage} from '@ohrm/core/util/helper/navigation';
-import {required} from '@/core/util/validation/rules';
-import {addDays, formatDate, parseDate} from '@/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import useLocale from '@/core/util/composable/useLocale';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { reloadPage } from "@ohrm/core/util/helper/navigation";
+import { required } from "@/core/util/validation/rules";
+import { addDays, formatDate, parseDate } from "@/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import useLocale from "@/core/util/composable/useLocale";
 
 const leavePeriodModel = {
   startMonth: null,
@@ -114,10 +114,10 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/leave-period',
+      "/api/v2/leave/leave-period"
     );
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
     return {
       http,
       jsDateFormat,
@@ -128,7 +128,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      leavePeriod: {...leavePeriodModel},
+      leavePeriod: { ...leavePeriodModel },
       leavePeriodDefined: true,
       rules: {
         startMonth: [required],
@@ -140,12 +140,12 @@ export default {
   computed: {
     months() {
       return Array(12)
-        .fill('')
+        .fill("")
         .map((...[, index]) => {
           return {
             id: index + 1,
             label: this.locale.localize.month(index, {
-              width: 'wide',
+              width: "wide",
             }),
           };
         });
@@ -155,9 +155,9 @@ export default {
         (day) => {
           return {
             id: day,
-            label: String(day).padStart(2, '0'),
+            label: String(day).padStart(2, "0"),
           };
-        },
+        }
       );
     },
     endDay() {
@@ -168,16 +168,16 @@ export default {
         const endDay = addDays(new Date(year, month - 1, date), 364);
         const isFollowingYear = endDay.getFullYear() > year;
         return (
-          formatDate(endDay, 'LLLL dd', {locale: this.locale}) +
-          (isFollowingYear ? ` (${this.$t('leave.following_year')})` : '')
+          formatDate(endDay, "LLLL dd", { locale: this.locale }) +
+          (isFollowingYear ? ` (${this.$t("leave.following_year")})` : "")
         );
       }
-      return '-';
+      return "-";
     },
   },
 
   watch: {
-    'leavePeriod.startMonth': function () {
+    "leavePeriod.startMonth": function () {
       this.leavePeriod.startDay = this.dates.length > 0 ? this.dates[0] : null;
     },
   },
@@ -186,10 +186,10 @@ export default {
     this.isLoading = true;
     this.http
       .request({
-        method: 'GET',
+        method: "GET",
       })
       .then((response) => {
-        const {data, meta} = response.data;
+        const { data, meta } = response.data;
         this.updateLeavePeriodModel(data);
         this.defineLeavePeriod(meta);
         this.resetLeavePeriod();
@@ -204,14 +204,14 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             startMonth: this.leavePeriod.startMonth?.id,
             startDay: this.leavePeriod.startDay?.id,
           },
         })
         .then((response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
           this.updateLeavePeriodModel(data);
           this.defineLeavePeriod(meta);
           this.resetLeavePeriod();
@@ -253,15 +253,15 @@ export default {
         const startDate = formatDate(
           parseDate(meta.currentLeavePeriod.startDate),
           this.jsDateFormat,
-          {locale: this.locale},
+          { locale: this.locale }
         );
         const endDate = formatDate(
           parseDate(meta.currentLeavePeriod.endDate),
           this.jsDateFormat,
-          {locale: this.locale},
+          { locale: this.locale }
         );
         this.leavePeriod.currentPeriod = `${startDate} ${this.$t(
-          'general.to',
+          "general.to"
         ).toLowerCase()} ${endDate}`;
       } else {
         this.leavePeriodDefined = false;

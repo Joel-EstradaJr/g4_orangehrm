@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('time.edit_project') }}
+        {{ $t("time.edit_project") }}
       </oxd-text>
       <oxd-divider />
 
@@ -118,30 +118,30 @@ import {
   required,
   validSelection,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {promiseDebounce} from '@ohrm/oxd';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import Activities from '@/orangehrmTimePlugin/components/Activities.vue';
-import AddCustomerModal from '@/orangehrmTimePlugin/components/AddCustomerModal.vue';
-import CustomerAutocomplete from '@/orangehrmTimePlugin/components/CustomerAutocomplete.vue';
-import ProjectAdminAutocomplete from '@/orangehrmTimePlugin/components/ProjectAdminAutocomplete.vue';
+} from "@ohrm/core/util/validation/rules";
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { promiseDebounce } from "@ohrm/oxd";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import Activities from "@/orangehrmTimePlugin/components/Activities.vue";
+import AddCustomerModal from "@/orangehrmTimePlugin/components/AddCustomerModal.vue";
+import CustomerAutocomplete from "@/orangehrmTimePlugin/components/CustomerAutocomplete.vue";
+import ProjectAdminAutocomplete from "@/orangehrmTimePlugin/components/ProjectAdminAutocomplete.vue";
 
 const defaultProjectModel = {
   name: null,
-  customer: {id: null, label: null},
+  customer: { id: null, label: null },
   description: null,
   projectAdminEmpNumbers: [],
 };
 
 export default {
-  name: 'ProjectEdit',
+  name: "ProjectEdit",
   components: {
     activities: Activities,
-    'add-customer-modal': AddCustomerModal,
-    'customer-autocomplete': CustomerAutocomplete,
-    'project-admin-autocomplete': ProjectAdminAutocomplete,
+    "add-customer-modal": AddCustomerModal,
+    "customer-autocomplete": CustomerAutocomplete,
+    "project-admin-autocomplete": ProjectAdminAutocomplete,
   },
   props: {
     projectId: {
@@ -156,9 +156,9 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/time/projects',
+      "/api/v2/time/projects"
     );
-    http.setIgnorePath('/api/v2/time/validation/project-name');
+    http.setIgnorePath("/api/v2/time/validation/project-name");
     return {
       http,
     };
@@ -166,8 +166,8 @@ export default {
   data() {
     return {
       isLoading: false,
-      projectAdmins: [{value: null}],
-      project: {...defaultProjectModel},
+      projectAdmins: [{ value: null }],
+      project: { ...defaultProjectModel },
       showCustomerModal: false,
       rules: {
         name: [required, shouldNotExceedCharLength(50)],
@@ -177,10 +177,10 @@ export default {
           validSelection,
           (value) => {
             return this.projectAdmins.filter(
-              ({value: admin}) => admin && admin.id === value?.id,
+              ({ value: admin }) => admin && admin.id === value?.id
             ).length < 2
               ? true
-              : this.$t('general.already_exists');
+              : this.$t("general.already_exists");
           },
         ],
       },
@@ -188,11 +188,11 @@ export default {
   },
   beforeMount() {
     this.isLoading = true;
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $tEmpName } = useEmployeeNameTranslate();
     this.http
-      .get(this.projectId, {model: 'detailed'})
+      .get(this.projectId, { model: "detailed" })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.project.name = data.name;
         this.project.description = data.description;
         this.project.customer = {
@@ -228,7 +228,7 @@ export default {
     },
     onCustomerModalClose(data) {
       if (data !== undefined) {
-        const {id, name} = data;
+        const { id, name } = data;
         this.project.customer = {
           id,
           label: name,
@@ -238,14 +238,14 @@ export default {
     },
     onAddAnother() {
       if (this.projectAdmins.length < 5) {
-        this.projectAdmins.push({value: null});
+        this.projectAdmins.push({ value: null });
       }
     },
     onRemoveAdmin(index) {
       this.projectAdmins.splice(index, 1);
     },
     onCancel() {
-      navigate('/time/viewProjects');
+      navigate("/time/viewProjects");
     },
     onSave() {
       this.isLoading = true;
@@ -255,7 +255,7 @@ export default {
           description: this.project.description,
           customerId: this.project.customer.id,
           projectAdminsEmpNumbers: this.projectAdmins
-            .map(({value}) => value && value.id)
+            .map(({ value }) => value && value.id)
             .filter(Number),
         })
         .then(() => {
@@ -270,7 +270,7 @@ export default {
         if (project) {
           this.http
             .request({
-              method: 'GET',
+              method: "GET",
               url: `/api/v2/time/validation/project-name`,
               params: {
                 projectId: this.projectId,
@@ -279,10 +279,10 @@ export default {
               },
             })
             .then((response) => {
-              const {data} = response.data;
+              const { data } = response.data;
               return data.valid === true
                 ? resolve(true)
-                : resolve(this.$t('general.already_exists'));
+                : resolve(this.$t("general.already_exists"));
             });
         } else {
           resolve(true);

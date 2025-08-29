@@ -15,7 +15,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {reactive, toRefs, computed} from 'vue';
+import { reactive, toRefs, computed } from "vue";
 interface Option {
   id: number;
   label: string;
@@ -31,7 +31,7 @@ interface DisplayFieldOption {
   fields: Option[];
 }
 interface Criterion {
-  operator: {id: string; label: string} | null;
+  operator: { id: string; label: string } | null;
   valueX: string | Option | null;
   valueY: string | Option | null;
 }
@@ -75,11 +75,11 @@ interface ReportRequestBody {
 }
 
 const reportModel: ReportModel = {
-  name: '',
+  name: "",
   includeEmployees: {
     id: 1,
-    key: 'onlyCurrent',
-    label: 'Current Employees Only',
+    key: "onlyCurrent",
+    label: "Current Employees Only",
   },
   criterion: null,
   criteriaSelected: [],
@@ -93,13 +93,13 @@ const reportModel: ReportModel = {
 export default function useEmployeeReport(
   selectionCriteria: CriterionOption[],
   displayFields: DisplayFieldOption[],
-  displayFieldGroups: Option[],
+  displayFieldGroups: Option[]
 ) {
-  const state = reactive({report: {...reportModel}});
+  const state = reactive({ report: { ...reportModel } });
 
   const getAllDisplayFieldsByGroupId = (groupId: number) => {
     const fieldGroup = displayFields.find(
-      (group) => group.field_group_id === groupId,
+      (group) => group.field_group_id === groupId
     );
     return fieldGroup ? fieldGroup.fields : [];
   };
@@ -110,7 +110,7 @@ export default function useEmployeeReport(
       ? selectedFieldGroup.fields
       : [];
     return getAllDisplayFieldsByGroupId(groupId).filter(
-      (field) => !usedDisplayFields.find((f) => f.id === field.id),
+      (field) => !usedDisplayFields.find((f) => f.id === field.id)
     );
   };
 
@@ -137,7 +137,7 @@ export default function useEmployeeReport(
     const displayField = state.report.displayField;
     if (fieldGroup) {
       const groupIndex = state.report.fieldGroupSelected.findIndex(
-        (group) => group.id === fieldGroup.id,
+        (group) => group.id === fieldGroup.id
       );
       if (groupIndex === -1) {
         state.report.fieldGroupSelected.push(fieldGroup);
@@ -148,16 +148,16 @@ export default function useEmployeeReport(
       }
       if (displayField) {
         state.report.displayFieldSelected[fieldGroup.id].fields.push(
-          displayField,
+          displayField
         );
         state.report.displayField = null;
       } else {
         getUnusedDisplayFieldsByGroupId(fieldGroup.id).forEach(
           (displayField) => {
             state.report.displayFieldSelected[fieldGroup.id].fields.push(
-              displayField,
+              displayField
             );
-          },
+          }
         );
       }
       // unselect fieldGroup if all fields are used
@@ -177,7 +177,7 @@ export default function useEmployeeReport(
     const fieldGroup = state.report.fieldGroupSelected[index];
     const fields = state.report.displayFieldSelected[fieldGroup.id].fields;
     state.report.displayFieldSelected[fieldGroup.id].fields = fields.filter(
-      (field) => field.id !== item.id,
+      (field) => field.id !== item.id
     );
     // remove field group if no fields
     if (state.report.displayFieldSelected[fieldGroup.id].fields.length === 0) {
@@ -204,13 +204,13 @@ export default function useEmployeeReport(
     reportModel.criteriaSelected.forEach((criterion) => {
       const criteriaField = reportModel.criteriaFieldValues[criterion.id];
       payload.criteria[criterion.id] = {
-        operator: criteriaField.operator ? criteriaField.operator.id : '',
+        operator: criteriaField.operator ? criteriaField.operator.id : "",
         x:
-          typeof criteriaField.valueX === 'object'
+          typeof criteriaField.valueX === "object"
             ? String(criteriaField.valueX?.id)
             : criteriaField.valueX,
         y:
-          typeof criteriaField.valueY === 'object'
+          typeof criteriaField.valueY === "object"
             ? String(criteriaField.valueY?.id)
             : criteriaField.valueY,
       };
@@ -222,13 +222,13 @@ export default function useEmployeeReport(
   const availableCriteria = computed(() => {
     return selectionCriteria.filter(
       (criterion) =>
-        !state.report.criteriaSelected.find((c) => c.id === criterion.id),
+        !state.report.criteriaSelected.find((c) => c.id === criterion.id)
     );
   });
 
   const availableFieldGroups = computed(() => {
     return displayFieldGroups.filter(
-      (group) => getUnusedDisplayFieldsByGroupId(group.id).length !== 0,
+      (group) => getUnusedDisplayFieldsByGroupId(group.id).length !== 0
     );
   });
 

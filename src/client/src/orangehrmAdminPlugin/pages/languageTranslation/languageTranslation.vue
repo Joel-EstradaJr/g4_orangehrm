@@ -142,14 +142,14 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import usei18n from '@/core/util/composable/usei18n';
-import useToast from '@/core/util/composable/useToast';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import EditTranslationTable from '@/orangehrmAdminPlugin/components/EditTranslationTable.vue';
-import GroupListDropdown from '@/orangehrmAdminPlugin/components/LanguageGroupListDropdown.vue';
-import {OxdAlert} from '@ohrm/oxd';
+import { computed, ref } from "vue";
+import usei18n from "@/core/util/composable/usei18n";
+import useToast from "@/core/util/composable/useToast";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import EditTranslationTable from "@/orangehrmAdminPlugin/components/EditTranslationTable.vue";
+import GroupListDropdown from "@/orangehrmAdminPlugin/components/LanguageGroupListDropdown.vue";
+import { OxdAlert } from "@ohrm/oxd";
 
 const defaultFilters = {
   sourceText: null,
@@ -160,11 +160,11 @@ const defaultFilters = {
 };
 
 export default {
-  name: 'LanguageTranslationList',
+  name: "LanguageTranslationList",
   components: {
-    'language-group-list-dropdown': GroupListDropdown,
-    'edit-translations': EditTranslationTable,
-    'oxd-alert': OxdAlert,
+    "language-group-list-dropdown": GroupListDropdown,
+    "edit-translations": EditTranslationTable,
+    "oxd-alert": OxdAlert,
   },
   props: {
     languageId: {
@@ -182,19 +182,19 @@ export default {
   },
 
   setup(props) {
-    const {$t} = usei18n();
+    const { $t } = usei18n();
 
-    const {saveSuccess} = useToast();
+    const { saveSuccess } = useToast();
 
     const translationOptions = ref([
-      {id: 1, label: $t('admin.all'), value: null},
-      {id: 2, label: $t('admin.translated'), value: true},
-      {id: 3, label: $t('admin.not_translated'), value: false},
+      { id: 1, label: $t("admin.all"), value: null },
+      { id: 2, label: $t("admin.translated"), value: true },
+      { id: 3, label: $t("admin.not_translated"), value: false },
     ]);
 
     const sortOptions = ref([
-      {id: 'ASC', label: $t('general.ascending')},
-      {id: 'DESC', label: $t('general.descending')},
+      { id: "ASC", label: $t("general.ascending") },
+      { id: "DESC", label: $t("general.descending") },
     ]);
 
     const filters = ref({
@@ -215,7 +215,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/admin/i18n/languages/${props.languageId}/translations`,
+      `/api/v2/admin/i18n/languages/${props.languageId}/translations`
     );
 
     const {
@@ -226,14 +226,14 @@ export default {
       response: items,
       isLoading,
       execQuery,
-    } = usePaginate(http, {query: serializedFilters});
+    } = usePaginate(http, { query: serializedFilters });
 
     const itemsModified = ref(false);
 
     const onReset = () => {
       currentPage.value = 1;
       itemsModified.value = false;
-      filters.value = {...defaultFilters, sortOrder: sortOptions.value[0]};
+      filters.value = { ...defaultFilters, sortOrder: sortOptions.value[0] };
       execQuery();
     };
 
@@ -249,7 +249,7 @@ export default {
           (item.target !== null &&
             item.oldTarget !== item.target &&
             item.modified === true),
-        false,
+        false
       );
     };
 

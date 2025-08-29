@@ -28,12 +28,12 @@ const GIGA_BYTE = 1000000000; // 1000 * 1000 * 1000
 export const convertFilesizeToString = function (
   value: string | number,
   digits?: number,
-  withSuffix = true,
+  withSuffix = true
 ): string {
   let divisor = BYTE;
-  let suffix = 'B';
+  let suffix = "B";
   let filesize;
-  if (typeof value === 'number') {
+  if (typeof value === "number") {
     filesize = value;
   } else {
     filesize = parseInt(value, 10);
@@ -41,16 +41,16 @@ export const convertFilesizeToString = function (
 
   if (filesize >= GIGA_BYTE) {
     divisor = GIGA_BYTE;
-    suffix = 'GB';
+    suffix = "GB";
   } else if (filesize >= MEGA_BYTE) {
     divisor = MEGA_BYTE;
-    suffix = 'MB';
+    suffix = "MB";
   } else if (filesize >= KILO_BYTE) {
     divisor = KILO_BYTE;
-    suffix = 'kB';
+    suffix = "kB";
   }
 
   return (
-    (filesize / divisor).toFixed(digits) + (withSuffix ? ' ' + suffix : '')
+    (filesize / divisor).toFixed(digits) + (withSuffix ? " " + suffix : "")
   );
 };

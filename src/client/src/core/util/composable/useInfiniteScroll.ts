@@ -15,8 +15,8 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {ref, nextTick, onMounted, onBeforeUnmount} from 'vue';
-import {promiseDebounce} from '@ohrm/oxd';
+import { ref, nextTick, onMounted, onBeforeUnmount } from "vue";
+import { promiseDebounce } from "@ohrm/oxd";
 
 type useInfiniteScrollArgs = {
   refName?: string;
@@ -31,10 +31,10 @@ export interface CustomElement extends HTMLElement {
 export default function useInfiniteScroll(
   executor: () => void,
   {
-    refName = 'scrollerRef',
+    refName = "scrollerRef",
     scrollDistance = 100,
     debounceInterval = 100,
-  }: useInfiniteScrollArgs = {},
+  }: useInfiniteScrollArgs = {}
 ) {
   let scrolledAmount = 0,
     isScrollDown = false;
@@ -45,7 +45,7 @@ export default function useInfiniteScroll(
     let scrollHeight, clientHeight, scrollTop;
 
     if (scrollContainer.value) {
-      ({scrollHeight, clientHeight, scrollTop} =
+      ({ scrollHeight, clientHeight, scrollTop } =
         scrollContainer.value.$el || scrollContainer.value);
     } else {
       scrollTop = window.scrollY;
@@ -70,22 +70,22 @@ export default function useInfiniteScroll(
     await nextTick();
     if (scrollContainer.value) {
       (scrollContainer.value.$el || scrollContainer.value).addEventListener(
-        'scroll',
-        onScrollEvent,
+        "scroll",
+        onScrollEvent
       );
     } else {
-      document.addEventListener('scroll', onScrollEvent);
+      document.addEventListener("scroll", onScrollEvent);
     }
   });
 
   onBeforeUnmount(() => {
     if (scrollContainer.value) {
       (scrollContainer.value.$el || scrollContainer.value).removeEventListener(
-        'scroll',
-        onScrollEvent,
+        "scroll",
+        onScrollEvent
       );
     } else {
-      document.removeEventListener('scroll', onScrollEvent);
+      document.removeEventListener("scroll", onScrollEvent);
     }
   });
 

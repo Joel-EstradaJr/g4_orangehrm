@@ -47,21 +47,21 @@
 import {
   required,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
-import {reactive, toRefs} from 'vue';
-import usei18n from '@/core/util/composable/usei18n';
-import {APIService} from '@/core/util/services/api.service';
-import PostModal from '@/orangehrmBuzzPlugin/components/PostModal.vue';
-import VideoFrame from '@/orangehrmBuzzPlugin/components/VideoFrame.vue';
-import {OxdBuzzPostInput, promiseDebounce} from '@ohrm/oxd';
+} from "@/core/util/validation/rules";
+import { reactive, toRefs } from "vue";
+import usei18n from "@/core/util/composable/usei18n";
+import { APIService } from "@/core/util/services/api.service";
+import PostModal from "@/orangehrmBuzzPlugin/components/PostModal.vue";
+import VideoFrame from "@/orangehrmBuzzPlugin/components/VideoFrame.vue";
+import { OxdBuzzPostInput, promiseDebounce } from "@ohrm/oxd";
 
 export default {
-  name: 'ShareVideoModal',
+  name: "ShareVideoModal",
 
   components: {
-    'post-modal': PostModal,
-    'video-frame': VideoFrame,
-    'oxd-buzz-post-input': OxdBuzzPostInput,
+    "post-modal": PostModal,
+    "video-frame": VideoFrame,
+    "oxd-buzz-post-input": OxdBuzzPostInput,
   },
 
   props: {
@@ -71,11 +71,11 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props, context) {
-    const {$t} = usei18n();
-    const http = new APIService(window.appGlobal.baseUrl, '/api/v2/buzz/posts');
+    const { $t } = usei18n();
+    const http = new APIService(window.appGlobal.baseUrl, "/api/v2/buzz/posts");
 
     const state = reactive({
       post: {
@@ -93,18 +93,18 @@ export default {
           if (!value) return true;
           state.embedURL = null;
           const response = await http.request({
-            method: 'GET',
-            url: '/api/v2/buzz/validation/links',
+            method: "GET",
+            url: "/api/v2/buzz/validation/links",
             params: {
               url: value,
             },
           });
-          const {data} = response.data;
+          const { data } = response.data;
           if (data?.valid === true) {
             state.embedURL = data.embeddedURL;
             return true;
           } else {
-            return $t('general.invalid_video_url_message');
+            return $t("general.invalid_video_url_message");
           }
         }, 500),
       ],
@@ -115,11 +115,11 @@ export default {
       state.isLoading = true;
       http
         .create({
-          type: 'video',
+          type: "video",
           link: state.post.url,
           text: state.post.text,
         })
-        .then(() => context.emit('close', true));
+        .then(() => context.emit("close", true));
     };
 
     return {

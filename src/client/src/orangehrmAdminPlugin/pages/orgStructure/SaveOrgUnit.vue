@@ -21,7 +21,7 @@
   <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('admin.add_organization_unit') }}
+        {{ $t("admin.add_organization_unit") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -51,7 +51,7 @@
         />
       </oxd-form-row>
       <oxd-text tag="p" class="level-label">
-        {{ $t('admin.this_unit_will_be_added_under') }}
+        {{ $t("admin.this_unit_will_be_added_under") }}
         <b>
           {{ data?.unitId ? `${data.unitId}: ${data?.name}` : `${data?.name}` }}
         </b>
@@ -73,23 +73,23 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {OxdDialog} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { OxdDialog } from "@ohrm/oxd";
 
 const orgUnitModel = {
-  unitId: '',
-  name: '',
-  description: '',
+  unitId: "",
+  name: "",
+  description: "",
 };
 
 export default {
-  name: 'SaveOrgUnit',
+  name: "SaveOrgUnit",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -97,11 +97,11 @@ export default {
       default: () => ({}),
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/subunits',
+      "/api/v2/admin/subunits"
     );
     return {
       http,
@@ -110,7 +110,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      orgUnit: {...orgUnitModel},
+      orgUnit: { ...orgUnitModel },
       rules: {
         unitId: [shouldNotExceedCharLength(100)],
         name: [required, shouldNotExceedCharLength(100)],
@@ -123,15 +123,15 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         if (data) {
           this.rules.name.push((v) => {
             const index = data.findIndex(
               (item) =>
-                String(item.name).toLowerCase() == String(v).toLowerCase(),
+                String(item.name).toLowerCase() == String(v).toLowerCase()
             );
             if (index > -1) {
-              return this.$t('admin.organization_unit_name_should_be_unique');
+              return this.$t("admin.organization_unit_name_should_be_unique");
             } else {
               return true;
             }
@@ -158,8 +158,8 @@ export default {
         });
     },
     onCancel() {
-      this.orgUnit = {...orgUnitModel};
-      this.$emit('close', true);
+      this.orgUnit = { ...orgUnitModel };
+      this.$emit("close", true);
     },
   },
 };

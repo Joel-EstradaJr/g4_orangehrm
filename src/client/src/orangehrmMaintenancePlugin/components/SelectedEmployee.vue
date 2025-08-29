@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-card-container">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('maintenance.selected_employee') }}
+      {{ $t("maintenance.selected_employee") }}
     </oxd-text>
 
     <oxd-divider />
@@ -78,14 +78,14 @@
 </template>
 
 <script>
-import FullNameInput from '@/orangehrmPimPlugin/components/FullNameInput';
-import {shouldNotExceedCharLength} from '@/core/util/validation/rules';
-import {computed} from 'vue';
+import FullNameInput from "@/orangehrmPimPlugin/components/FullNameInput";
+import { shouldNotExceedCharLength } from "@/core/util/validation/rules";
+import { computed } from "vue";
 
 export default {
-  name: 'SelectedEmployee',
+  name: "SelectedEmployee",
 
-  components: {'full-name-input': FullNameInput},
+  components: { "full-name-input": FullNameInput },
 
   props: {
     selectedEmployee: {
@@ -101,7 +101,7 @@ export default {
       default: false,
     },
   },
-  emits: ['submit'],
+  emits: ["submit"],
   setup(props) {
     const imgSrc = computed(() => {
       return `${window.appGlobal.baseUrl}/pim/viewPhoto/empNumber/${props.selectedEmployee.empNumber}`;
@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     emitEmpNumber() {
-      this.$emit('submit', this.selectedEmployee.empNumber);
+      this.$emit("submit", this.selectedEmployee.empNumber);
     },
   },
 };
@@ -133,10 +133,10 @@ export default {
 <style lang="scss" scoped>
 .orangehrm-selected-employee {
   display: flex;
-  @include oxd-respond-to('xs') {
+  @include oxd-respond-to("xs") {
     flex-direction: column;
   }
-  @include oxd-respond-to('md') {
+  @include oxd-respond-to("md") {
     flex-direction: row;
   }
 
@@ -146,16 +146,16 @@ export default {
 
   &-image-wrapper {
     padding-bottom: 1.2rem;
-    @include oxd-respond-to('md') {
+    @include oxd-respond-to("md") {
       padding-top: 1.2rem;
       padding-left: 2rem;
       padding-right: 2rem;
     }
-    @include oxd-respond-to('lg') {
+    @include oxd-respond-to("lg") {
       padding-left: 5rem;
       padding-right: 5rem;
     }
-    @include oxd-respond-to('xl') {
+    @include oxd-respond-to("xl") {
       padding-left: 7rem;
       padding-right: 7rem;
     }
@@ -177,11 +177,11 @@ export default {
   &-imagesection {
     display: flex;
     align-items: center;
-    @include oxd-respond-to('xs') {
+    @include oxd-respond-to("xs") {
       flex-direction: row-reverse;
       justify-content: center;
     }
-    @include oxd-respond-to('md') {
+    @include oxd-respond-to("md") {
       flex-direction: column;
       justify-content: center;
     }

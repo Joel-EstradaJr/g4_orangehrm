@@ -77,28 +77,28 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import QuickLaunchWidget from '@/orangehrmDashboardPlugin/components/QuickLaunchWidget.vue';
-import BuzzLatestPostWidget from '@/orangehrmDashboardPlugin/components/BuzzLatestPostWidget.vue';
-import EmployeeSubunitWidget from '@/orangehrmDashboardPlugin/components/EmployeeSubunitWidget.vue';
-import MyActionSummaryWidget from '@/orangehrmDashboardPlugin/components/MyActionSummaryWidget.vue';
-import EmployeeLocationWidget from '@/orangehrmDashboardPlugin/components/EmployeeLocationWidget.vue';
-import EmployeesOnLeaveWidget from '@/orangehrmDashboardPlugin/components/EmployeesOnLeaveWidget.vue';
-import EmployeeAttendanceWidget from '@/orangehrmDashboardPlugin/components/EmployeeAttendanceWidget.vue';
-import BirthdayGreetingsWidget from '@/orangehrmDashboardPlugin/components/BirthdayGreetingsWidget.vue';
-import OffboardingAnalyticsWidget from '@/orangehrmDashboardPlugin/components/OffboardingAnalyticsWidget.vue';
+import { APIService } from "@/core/util/services/api.service";
+import QuickLaunchWidget from "@/orangehrmDashboardPlugin/components/QuickLaunchWidget.vue";
+import BuzzLatestPostWidget from "@/orangehrmDashboardPlugin/components/BuzzLatestPostWidget.vue";
+import EmployeeSubunitWidget from "@/orangehrmDashboardPlugin/components/EmployeeSubunitWidget.vue";
+import MyActionSummaryWidget from "@/orangehrmDashboardPlugin/components/MyActionSummaryWidget.vue";
+import EmployeeLocationWidget from "@/orangehrmDashboardPlugin/components/EmployeeLocationWidget.vue";
+import EmployeesOnLeaveWidget from "@/orangehrmDashboardPlugin/components/EmployeesOnLeaveWidget.vue";
+import EmployeeAttendanceWidget from "@/orangehrmDashboardPlugin/components/EmployeeAttendanceWidget.vue";
+import BirthdayGreetingsWidget from "@/orangehrmDashboardPlugin/components/BirthdayGreetingsWidget.vue";
+import OffboardingAnalyticsWidget from "@/orangehrmDashboardPlugin/components/OffboardingAnalyticsWidget.vue";
 
 export default {
   components: {
-    'quick-launch-widget': QuickLaunchWidget,
-    'buzz-latest-post-widget': BuzzLatestPostWidget,
-    'employee-subunit-widget': EmployeeSubunitWidget,
-    'my-action-summary-widget': MyActionSummaryWidget,
-    'employee-location-widget': EmployeeLocationWidget,
-    'employees-on-leave-widget': EmployeesOnLeaveWidget,
-    'employee-attendance-widget': EmployeeAttendanceWidget,
-    'birthday-greetings-widget': BirthdayGreetingsWidget,
-    'offboarding-analytics-widget': OffboardingAnalyticsWidget,
+    "quick-launch-widget": QuickLaunchWidget,
+    "buzz-latest-post-widget": BuzzLatestPostWidget,
+    "employee-subunit-widget": EmployeeSubunitWidget,
+    "my-action-summary-widget": MyActionSummaryWidget,
+    "employee-location-widget": EmployeeLocationWidget,
+    "employees-on-leave-widget": EmployeesOnLeaveWidget,
+    "employee-attendance-widget": EmployeeAttendanceWidget,
+    "birthday-greetings-widget": BirthdayGreetingsWidget,
+    "offboarding-analytics-widget": OffboardingAnalyticsWidget,
   },
 
   data() {
@@ -108,7 +108,7 @@ export default {
   },
 
   mounted() {
-    const http = new APIService(window.appGlobal.baseUrl, '/events/push');
+    const http = new APIService(window.appGlobal.baseUrl, "/events/push");
     http.create();
   },
 

@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('time.select_employee') }}
+        {{ $t("time.select_employee") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form @submit-valid="viewTimesheet">
@@ -58,15 +58,15 @@ import {
   required,
   shouldNotExceedCharLength,
   validSelection,
-} from '@/core/util/validation/rules';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import TimesheetPendingActions from '@/orangehrmTimePlugin/components/TimesheetPendingActions.vue';
+} from "@/core/util/validation/rules";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import TimesheetPendingActions from "@/orangehrmTimePlugin/components/TimesheetPendingActions.vue";
 
 export default {
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
-    'timesheet-pending-actions': TimesheetPendingActions,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "timesheet-pending-actions": TimesheetPendingActions,
   },
 
   data() {
@@ -80,7 +80,9 @@ export default {
 
   methods: {
     viewTimesheet() {
-      navigate('/time/viewTimesheet/employeeId/{id}', {id: this.employee?.id});
+      navigate("/time/viewTimesheet/employeeId/{id}", {
+        id: this.employee?.id,
+      });
     },
   },
 };

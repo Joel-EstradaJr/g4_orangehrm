@@ -43,12 +43,12 @@
 </template>
 
 <script>
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
-  name: 'LeaveConflict',
+  name: "LeaveConflict",
   props: {
     workshiftExceeded: {
       type: Boolean,
@@ -60,8 +60,8 @@ export default {
     },
   },
   setup() {
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     return {
       locale,
@@ -72,29 +72,29 @@ export default {
     return {
       headers: [
         {
-          name: 'date',
-          title: this.$t('general.date'),
-          style: {flex: 1},
+          name: "date",
+          title: this.$t("general.date"),
+          style: { flex: 1 },
         },
         {
-          name: 'hours',
-          title: this.$t('leave.no_of_hours'),
-          style: {flex: 1},
+          name: "hours",
+          title: this.$t("leave.no_of_hours"),
+          style: { flex: 1 },
         },
         {
-          name: 'type',
-          title: this.$t('leave.leave_type'),
-          style: {flex: 1},
+          name: "type",
+          title: this.$t("leave.leave_type"),
+          style: { flex: 1 },
         },
         {
-          name: 'status',
-          title: this.$t('general.status'),
-          style: {flex: 1},
+          name: "status",
+          title: this.$t("general.status"),
+          style: { flex: 1 },
         },
         {
-          name: 'comments',
-          title: this.$t('general.comments'),
-          style: {flex: 1},
+          name: "comments",
+          title: this.$t("general.comments"),
+          style: { flex: 1 },
         },
       ],
     };
@@ -104,9 +104,9 @@ export default {
     header() {
       return this.workshiftExceeded
         ? this.$t(
-            'leave.workshift_length_exceeded_due_to_the_following_leave_request',
+            "leave.workshift_length_exceeded_due_to_the_following_leave_request"
           )
-        : this.$t('leave.overlapping_leave_request_found');
+        : this.$t("leave.overlapping_leave_request_found");
     },
     items() {
       return this.data.map((item) => {

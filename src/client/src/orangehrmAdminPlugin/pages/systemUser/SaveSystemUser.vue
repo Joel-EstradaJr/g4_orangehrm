@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">{{
-        $t('admin.add_user')
+        $t("admin.add_user")
       }}</oxd-text>
       <oxd-divider />
 
@@ -92,31 +92,31 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import PasswordInput from '@/core/components/inputs/PasswordInput';
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import PasswordInput from "@/core/components/inputs/PasswordInput";
 import {
   required,
   validSelection,
   shouldNotExceedCharLength,
   shouldNotLessThanCharLength,
-} from '@/core/util/validation/rules';
-import {promiseDebounce} from '@ohrm/oxd';
+} from "@/core/util/validation/rules";
+import { promiseDebounce } from "@ohrm/oxd";
 
 const userModel = {
-  username: '',
+  username: "",
   role: null,
   employee: null,
   status: null,
-  password: '',
-  passwordConfirm: '',
+  password: "",
+  passwordConfirm: "",
 };
 
 export default {
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
-    'password-input': PasswordInput,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "password-input": PasswordInput,
   },
 
   props: {
@@ -129,9 +129,9 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/users',
+      "/api/v2/admin/users"
     );
-    http.setIgnorePath('/api/v2/admin/validation/user-name');
+    http.setIgnorePath("/api/v2/admin/validation/user-name");
     return {
       http,
     };
@@ -140,7 +140,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      user: {...userModel},
+      user: { ...userModel },
       rules: {
         username: [
           required,
@@ -153,19 +153,19 @@ export default {
         status: [required],
       },
       userRoles: [
-        {id: 1, label: this.$t('general.admin')},
-        {id: 2, label: this.$t('general.ess')},
+        { id: 1, label: this.$t("general.admin") },
+        { id: 2, label: this.$t("general.ess") },
       ],
       userStatuses: [
-        {id: 1, label: this.$t('general.enabled')},
-        {id: 2, label: this.$t('general.disabled')},
+        { id: 1, label: this.$t("general.enabled") },
+        { id: 2, label: this.$t("general.disabled") },
       ],
     };
   },
 
   methods: {
     onCancel() {
-      navigate('/admin/viewSystemUsers');
+      navigate("/admin/viewSystemUsers");
     },
     onSave() {
       this.isLoading = true;
@@ -190,17 +190,17 @@ export default {
         if (user) {
           this.http
             .request({
-              method: 'GET',
+              method: "GET",
               url: `/api/v2/admin/validation/user-name`,
               params: {
                 userName: this.user.username.trim(),
               },
             })
             .then((response) => {
-              const {data} = response.data;
+              const { data } = response.data;
               return data.valid === true
                 ? resolve(true)
-                : resolve(this.$t('general.already_exists'));
+                : resolve(this.$t("general.already_exists"));
             });
         } else {
           resolve(true);

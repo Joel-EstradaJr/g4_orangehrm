@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'PhotoFrame',
+  name: "PhotoFrame",
   props: {
     media: {
       type: Array,
@@ -42,19 +42,19 @@ export default {
   computed: {
     classes() {
       return {
-        'orangehrm-buzz-photos': true,
-        '--two-thumbnails': this.media.length === 2,
-        '--three-thumbnails': this.media.length === 3,
-        '--four-thumbnails': this.media.length === 4,
-        '--five-thumbnails': this.media.length === 5,
+        "orangehrm-buzz-photos": true,
+        "--two-thumbnails": this.media.length === 2,
+        "--three-thumbnails": this.media.length === 3,
+        "--four-thumbnails": this.media.length === 4,
+        "--five-thumbnails": this.media.length === 5,
       };
     },
     photos() {
       return (this.media || []).map((photo) => {
-        if (typeof photo === 'number') {
+        if (typeof photo === "number") {
           return `${window.appGlobal.baseUrl}/buzz/photo/${photo}`;
         }
-        const {type, base64} = photo;
+        const { type, base64 } = photo;
         return `data:${type};base64,${base64}`;
       });
     },

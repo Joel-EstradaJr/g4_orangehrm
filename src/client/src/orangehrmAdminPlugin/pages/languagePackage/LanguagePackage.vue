@@ -21,7 +21,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('general.language_packages') }}
+          {{ $t("general.language_packages") }}
         </oxd-text>
         <div>
           <oxd-button
@@ -68,35 +68,35 @@
   </div>
 </template>
 <script>
-import {computed, ref} from 'vue';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import useSort from '@ohrm/core/util/composable/useSort';
-import AddLanguageModal from '@/orangehrmAdminPlugin/components/AddLanguageModal.vue';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog.vue';
-import {urlFor} from '@/core/util/helper/url';
+import { computed, ref } from "vue";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import useSort from "@ohrm/core/util/composable/useSort";
+import AddLanguageModal from "@/orangehrmAdminPlugin/components/AddLanguageModal.vue";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog.vue";
+import { urlFor } from "@/core/util/helper/url";
 
 const defaultFilters = {
-  languageName: '',
+  languageName: "",
 };
 
 const defaultSortOrder = {
-  languageName: 'ASC',
+  languageName: "ASC",
 };
 
 export default {
-  name: 'LanguagePackageList',
+  name: "LanguagePackageList",
 
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
-    'add-language-modal': AddLanguageModal,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "add-language-modal": AddLanguageModal,
   },
 
   setup() {
-    const filters = ref({...defaultFilters});
+    const filters = ref({ ...defaultFilters });
 
-    const {sortDefinition, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
 
@@ -109,7 +109,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/i18n/languages',
+      "/api/v2/admin/i18n/languages"
     );
 
     const {
@@ -146,44 +146,44 @@ export default {
       showAddLanguageModal: false,
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.language_packages'),
-          sortField: 'languageName',
-          style: {flex: '70%'},
+          name: "name",
+          slot: "title",
+          title: this.$t("general.language_packages"),
+          sortField: "languageName",
+          style: { flex: "70%" },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          cellType: 'oxd-table-cell-actions',
-          style: {flex: 1},
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          cellType: "oxd-table-cell-actions",
+          style: { flex: 1 },
           cellConfig: {
             import: {
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               onClick: this.onClickImport,
               props: {
-                name: 'upload',
+                name: "upload",
               },
             },
             translate: {
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               onClick: this.onClickTranslate,
               props: {
-                name: 'translate',
+                name: "translate",
               },
             },
             export: {
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'download',
+                name: "download",
               },
               onClick: this.onClickExport,
             },
             delete: {
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
               onClick: this.onClickDelete,
             },
@@ -202,22 +202,22 @@ export default {
       this.reloadLanguages();
     },
     onCancel() {
-      navigate('/admin/languagePackage');
+      navigate("/admin/languagePackage");
     },
     async reloadLanguages() {
       await this.execQuery();
     },
     onClickTranslate(item) {
-      navigate('/admin/languageCustomization/{id}', {id: item.id});
+      navigate("/admin/languageCustomization/{id}", { id: item.id });
     },
     onClickExport(item) {
-      const url = urlFor('/admin/viewLanguagePackage/languageId/{languageId}', {
+      const url = urlFor("/admin/viewLanguagePackage/languageId/{languageId}", {
         languageId: item.id,
       });
-      window.open(url, '_blank');
+      window.open(url, "_blank");
     },
     onClickImport(item) {
-      navigate('/admin/languageImport/{languageId}', {languageId: item.id});
+      navigate("/admin/languageImport/{languageId}", { languageId: item.id });
     },
     onClickDeleteSelected() {
       const ids = [];
@@ -225,14 +225,14 @@ export default {
         ids.push(this.items?.data[index].id);
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

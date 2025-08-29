@@ -21,7 +21,7 @@
   <div class="orangehrm-card-container">
     <oxd-form :loading="isLoading">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('recruitment.application_stage') }}
+        {{ $t("recruitment.application_stage") }}
       </oxd-text>
       <oxd-divider />
       <oxd-grid :cols="3" class="orangehrm-full-width-grid">
@@ -35,14 +35,14 @@
         <oxd-grid-item>
           <oxd-input-group :label="$t('recruitment.vacancy')">
             <oxd-text tag="p">
-              {{ vacancyName ? vacancyName : 'N/A' }}
+              {{ vacancyName ? vacancyName : "N/A" }}
             </oxd-text>
           </oxd-input-group>
         </oxd-grid-item>
         <oxd-grid-item>
           <oxd-input-group :label="$t('recruitment.hiring_manager')">
             <oxd-text tag="p">
-              {{ hiringManagerName ? hiringManagerName : 'N/A' }}
+              {{ hiringManagerName ? hiringManagerName : "N/A" }}
             </oxd-text>
           </oxd-input-group>
         </oxd-grid-item>
@@ -51,7 +51,7 @@
       <div class="orangehrm-recruitment">
         <div v-if="recruitmentStatus" class="orangehrm-recruitment-status">
           <oxd-text type="subtitle-2">
-            {{ $t('general.status') }}: {{ recruitmentStatus }}
+            {{ $t("general.status") }}: {{ recruitmentStatus }}
           </oxd-text>
         </div>
         <div class="orangehrm-recruitment-actions">
@@ -110,12 +110,12 @@
 </template>
 
 <script>
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
 
 export default {
-  name: 'RecruitmentStatus',
+  name: "RecruitmentStatus",
   props: {
     candidate: {
       type: Object,
@@ -125,9 +125,9 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/candidates',
+      "/api/v2/recruitment/candidates"
     );
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     return {
       http,
@@ -138,15 +138,15 @@ export default {
     return {
       isLoading: false,
       statuses: [
-        {id: 1, label: this.$t('recruitment.application_initiated')},
-        {id: 2, label: this.$t('recruitment.shortlisted')},
-        {id: 3, label: this.$t('leave.rejected')},
-        {id: 4, label: this.$t('recruitment.interview_scheduled')},
-        {id: 5, label: this.$t('recruitment.interview_passed')},
-        {id: 6, label: this.$t('recruitment.interview_failed')},
-        {id: 7, label: this.$t('recruitment.job_offered')},
-        {id: 8, label: this.$t('recruitment.offer_declined')},
-        {id: 9, label: this.$t('recruitment.hired')},
+        { id: 1, label: this.$t("recruitment.application_initiated") },
+        { id: 2, label: this.$t("recruitment.shortlisted") },
+        { id: 3, label: this.$t("leave.rejected") },
+        { id: 4, label: this.$t("recruitment.interview_scheduled") },
+        { id: 5, label: this.$t("recruitment.interview_passed") },
+        { id: 6, label: this.$t("recruitment.interview_failed") },
+        { id: 7, label: this.$t("recruitment.job_offered") },
+        { id: 8, label: this.$t("recruitment.offer_declined") },
+        { id: 9, label: this.$t("recruitment.hired") },
       ],
       actions: [],
     };
@@ -159,15 +159,15 @@ export default {
       );
     },
     candidateName() {
-      return `${this.candidate.firstName} ${this.candidate?.middleName || ''} ${
+      return `${this.candidate.firstName} ${this.candidate?.middleName || ""} ${
         this.candidate.lastName
       }`;
     },
     vacancyName() {
-      const {vacancy} = this.candidate;
+      const { vacancy } = this.candidate;
       if (!vacancy) return null;
       return vacancy.status === false
-        ? vacancy.name + ` (${this.$t('general.closed')})`
+        ? vacancy.name + ` (${this.$t("general.closed")})`
         : vacancy.name;
     },
     hiringManagerName() {
@@ -193,23 +193,23 @@ export default {
     },
     doWorkflow(actionId) {
       navigate(
-        '/recruitment/changeCandidateVacancyStatus',
+        "/recruitment/changeCandidateVacancyStatus",
         {},
         {
           candidateId: this.candidate?.id,
           selectedAction: actionId,
-        },
+        }
       );
     },
     getAllowedActions() {
       this.isLoading = true;
       this.http
         .request({
-          method: 'GET',
+          method: "GET",
           url: `/api/v2/recruitment/candidates/${this.candidate?.id}/actions/allowed`,
         })
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.actions = [...data];
         })
         .finally(() => {
@@ -234,7 +234,7 @@ export default {
     ::v-deep(.oxd-button--medium) {
       width: 100%;
     }
-    @include oxd-respond-to('md') {
+    @include oxd-respond-to("md") {
       margin-left: unset;
       max-width: unset;
       ::v-deep(.oxd-button--medium) {
@@ -245,7 +245,7 @@ export default {
 }
 ::v-deep(.oxd-input-group) {
   margin-bottom: 1rem;
-  @include oxd-respond-to('md') {
+  @include oxd-respond-to("md") {
     margin-bottom: 0;
   }
 }

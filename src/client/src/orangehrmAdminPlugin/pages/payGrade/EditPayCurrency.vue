@@ -19,7 +19,7 @@
 <template>
   <div class="orangehrm-card-container">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('admin.edit_currency') }}
+      {{ $t("admin.edit_currency") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -71,23 +71,23 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   maxCurrency,
   digitsOnlyWithTwoDecimalPoints,
   maxValueShouldBeGreaterThanMinValue,
   minValueShouldBeLowerThanMaxValue,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 const payCurrencyModel = {
   currencyId: null,
-  minSalary: '',
-  maxSalary: '',
+  minSalary: "",
+  maxSalary: "",
 };
 
 export default {
-  name: 'EditPayCurrency',
+  name: "EditPayCurrency",
   props: {
     payGradeId: {
       type: Number,
@@ -98,20 +98,20 @@ export default {
       required: true,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/admin/pay-grades/${props.payGradeId}/currencies`,
+      `/api/v2/admin/pay-grades/${props.payGradeId}/currencies`
     );
-    return {http};
+    return { http };
   },
 
   data() {
     return {
       isLoading: false,
-      payCurrency: {...payCurrencyModel},
+      payCurrency: { ...payCurrencyModel },
       rules: {
         currencyId: [required],
         minSalary: [
@@ -119,7 +119,7 @@ export default {
           digitsOnlyWithTwoDecimalPoints,
           minValueShouldBeLowerThanMaxValue(
             () => this.payCurrency.maxSalary,
-            this.$t('admin.should_be_lower_than_maximum_salary'),
+            this.$t("admin.should_be_lower_than_maximum_salary")
           ),
         ],
         maxSalary: [
@@ -127,7 +127,7 @@ export default {
           digitsOnlyWithTwoDecimalPoints,
           maxValueShouldBeGreaterThanMinValue(
             () => this.payCurrency.minSalary,
-            this.$t('admin.should_be_higher_than_minimum_salary'),
+            this.$t("admin.should_be_higher_than_minimum_salary")
           ),
         ],
       },
@@ -138,10 +138,10 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.payCurrency.name = data.currencyType.name;
-        this.payCurrency.minSalary = data.minSalary ? data.minSalary : '0';
-        this.payCurrency.maxSalary = data.maxSalary ? data.maxSalary : '0';
+        this.payCurrency.minSalary = data.minSalary ? data.minSalary : "0";
+        this.payCurrency.maxSalary = data.maxSalary ? data.maxSalary : "0";
       })
       .finally(() => {
         this.isLoading = false;
@@ -163,7 +163,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

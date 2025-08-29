@@ -20,7 +20,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('recruitment.edit_vacancy') }}
+        {{ $t("recruitment.edit_vacancy") }}
       </oxd-text>
       <oxd-divider />
 
@@ -80,7 +80,7 @@
         <oxd-grid :cols="3" class="orangehrm-full-width-grid">
           <oxd-grid-item class="orangerhrm-switch-wrapper">
             <oxd-text class="orangehrm-text" tag="p">
-              {{ $t('general.active') }}
+              {{ $t("general.active") }}
             </oxd-text>
             <oxd-switch-input v-model="vacancy.status" />
           </oxd-grid-item>
@@ -89,7 +89,7 @@
         <oxd-grid :cols="3" class="orangehrm-full-width-grid">
           <oxd-grid-item class="orangerhrm-switch-wrapper">
             <oxd-text class="orangehrm-text" tag="p">
-              {{ $t('recruitment.publish_in_rss_feed_and_web_page') }}
+              {{ $t("recruitment.publish_in_rss_feed_and_web_page") }}
             </oxd-text>
             <oxd-switch-input v-model="vacancy.isPublished" />
           </oxd-grid-item>
@@ -128,7 +128,7 @@
         tag="h6"
         class="orangehrm-main-title orangehrm-attachment-header__title"
       >
-        {{ $t('general.add_attachment') }}
+        {{ $t("general.add_attachment") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoadingAttachment" @submit-valid="onSaveAttachment">
@@ -143,7 +143,7 @@
               :rules="rules.addAttachment"
               :url="`recruitment/vacancyAttachment/attachId`"
               :hint="
-                $t('general.accepts_up_to_n_mb', {count: formattedFileSize})
+                $t('general.accepts_up_to_n_mb', { count: formattedFileSize })
               "
               required
             />
@@ -178,7 +178,7 @@
         tag="h6"
         class="orangehrm-main-title orangehrm-attachment-header__title"
       >
-        {{ $t('general.edit_attachment') }}
+        {{ $t("general.edit_attachment") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form
@@ -196,7 +196,7 @@
               :rules="rules.updateAttachment"
               :url="`recruitment/viewVacancyAttachment/attachId`"
               :hint="
-                $t('general.accepts_up_to_n_mb', {count: formattedFileSize})
+                $t('general.accepts_up_to_n_mb', { count: formattedFileSize })
               "
               :deletable="false"
               required
@@ -234,7 +234,7 @@
           tag="h6"
           class="orangehrm-main-title orangehrm-attachment-header__title"
         >
-          {{ $t('general.attachments') }}
+          {{ $t("general.attachments") }}
         </oxd-text>
         <oxd-button
           v-if="!isAddClicked && !isEditClicked"
@@ -268,10 +268,10 @@
   </div>
 </template>
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import FileUploadInput from '@/core/components/inputs/FileUploadInput';
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import FileUploadInput from "@/core/components/inputs/FileUploadInput";
 import {
   required,
   numericOnly,
@@ -280,29 +280,29 @@ import {
   validFileTypes,
   shouldNotExceedCharLength,
   numberShouldBeBetweenMinAndMaxValue,
-} from '@ohrm/core/util/validation/rules';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
-import VacancyLinkCard from '../components/VacancyLinkCard.vue';
-import {OxdSwitchInput} from '@ohrm/oxd';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import JobtitleDropdown from "@/orangehrmPimPlugin/components/JobtitleDropdown";
+import VacancyLinkCard from "../components/VacancyLinkCard.vue";
+import { OxdSwitchInput } from "@ohrm/oxd";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const vacancyModel = {
   jobTitle: null,
-  name: '',
+  name: "",
   hiringManager: null,
-  numOfPositions: '',
-  description: '',
+  numOfPositions: "",
+  description: "",
   status: false,
   isPublished: false,
 };
 
 const VacancyAttachmentModel = {
   id: null,
-  comment: '',
+  comment: "",
   oldAttachment: {},
   newAttachment: null,
-  method: 'keepCurrent',
+  method: "keepCurrent",
 };
 
 const basePath = `${window.location.protocol}//${window.location.host}${window.appGlobal.baseUrl}`;
@@ -313,7 +313,7 @@ const attachmentNormalizer = (data) => {
       id: item.id,
       vacancyId: item.vacancyId,
       fileName: item.attachment.fileName,
-      fileSize: +(item.attachment.fileSize / 1024).toFixed(2) + ' kb',
+      fileSize: +(item.attachment.fileSize / 1024).toFixed(2) + " kb",
       fileType: item.attachment.fileType,
       comment: item.comment,
       attachmentType: item.attachmentType,
@@ -323,12 +323,12 @@ const attachmentNormalizer = (data) => {
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
-    'employee-autocomplete': EmployeeAutocomplete,
-    'jobtitle-dropdown': JobtitleDropdown,
-    'vacancy-link-card': VacancyLinkCard,
-    'delete-confirmation': DeleteConfirmationDialog,
-    'file-upload-input': FileUploadInput,
+    "oxd-switch-input": OxdSwitchInput,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "jobtitle-dropdown": JobtitleDropdown,
+    "vacancy-link-card": VacancyLinkCard,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "file-upload-input": FileUploadInput,
   },
 
   props: {
@@ -348,17 +348,17 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/vacancies',
+      "/api/v2/recruitment/vacancies"
     );
     const httpAttachments = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/vacancy/attachments',
+      "/api/v2/recruitment/vacancy/attachments"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const vacancyNameUniqueValidation = createUniqueValidator(
-      'Vacancy',
-      'name',
-      {entityId: props.vacancyId},
+      "Vacancy",
+      "name",
+      { entityId: props.vacancyId }
     );
     return {
       http,
@@ -373,9 +373,9 @@ export default {
       isLoadingTable: false,
       isAddClicked: false,
       isEditClicked: false,
-      currentName: '',
-      vacancy: {...vacancyModel},
-      vacancyAttachment: {...VacancyAttachmentModel},
+      currentName: "",
+      vacancy: { ...vacancyModel },
+      vacancyAttachment: { ...VacancyAttachmentModel },
       rules: {
         jobTitle: [required],
         name: [
@@ -386,12 +386,12 @@ export default {
         hiringManager: [
           required,
           validSelection,
-          (v) => (v?.isPastEmployee ? this.$t('general.invalid') : true),
+          (v) => (v?.isPastEmployee ? this.$t("general.invalid") : true),
         ],
         numOfPositions: [
           (value) => {
-            if (value === null || value === '') return true;
-            return typeof numericOnly(value) === 'string'
+            if (value === null || value === "") return true;
+            return typeof numericOnly(value) === "string"
               ? numericOnly(value)
               : numberShouldBeBetweenMinAndMaxValue(1, 99)(value);
           },
@@ -406,7 +406,7 @@ export default {
         ],
         updateAttachment: [
           (v) => {
-            if (this.vacancyAttachment.method == 'replaceCurrent') {
+            if (this.vacancyAttachment.method == "replaceCurrent") {
               return required(v);
             } else {
               return true;
@@ -419,50 +419,50 @@ export default {
       },
       headers: [
         {
-          name: 'fileName',
-          slot: 'title',
-          title: this.$t('general.file_name'),
-          style: {flex: 3},
+          name: "fileName",
+          slot: "title",
+          title: this.$t("general.file_name"),
+          style: { flex: 3 },
         },
         {
-          name: 'fileSize',
-          title: this.$t('general.file_size'),
-          style: {flex: 2},
+          name: "fileSize",
+          title: this.$t("general.file_size"),
+          style: { flex: 2 },
         },
         {
-          name: 'fileType',
-          title: this.$t('general.file_type'),
-          style: {flex: 2},
+          name: "fileType",
+          title: this.$t("general.file_type"),
+          style: { flex: 2 },
         },
         {
-          name: 'comment',
-          title: this.$t('general.comment'),
-          style: {flex: 4},
+          name: "comment",
+          title: this.$t("general.comment"),
+          style: { flex: 4 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 2},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 2 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             download: {
               onClick: this.downloadFile,
               props: {
-                name: 'download',
+                name: "download",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -486,11 +486,11 @@ export default {
     this.http
       .get(this.vacancyId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.currentName = data.name;
         this.vacancy.name = data.name;
         this.vacancy.description = data.description;
-        this.vacancy.numOfPositions = data.numOfPositions || '';
+        this.vacancy.numOfPositions = data.numOfPositions || "";
         this.vacancy.status = data.status;
         this.vacancy.isPublished = data.isPublished;
         this.vacancy.hiringManager = data.hiringManager.id
@@ -499,7 +499,7 @@ export default {
               label: `${data.hiringManager.firstName} ${data.hiringManager.middleName} ${data.hiringManager.lastName}`,
               isPastEmployee: data.hiringManager.terminationId ? true : false,
             }
-          : this.$t('general.deleted');
+          : this.$t("general.deleted");
         this.vacancy.jobTitle = data.jobTitle.isDeleted
           ? null
           : {
@@ -510,11 +510,11 @@ export default {
       .then(() => {
         this.httpAttachments
           .request({
-            method: 'GET',
+            method: "GET",
             url: `/api/v2/recruitment/vacancies/${this.vacancyId}/attachments`,
           })
           .then((response) => {
-            const {data} = response.data;
+            const { data } = response.data;
             this.attachments = attachmentNormalizer(data);
           });
       })
@@ -525,7 +525,7 @@ export default {
   },
   methods: {
     onCancel() {
-      navigate('/recruitment/viewJobVacancy');
+      navigate("/recruitment/viewJobVacancy");
     },
     onSave() {
       this.isLoading = true;
@@ -541,12 +541,12 @@ export default {
         isPublished: this.vacancy.isPublished,
       };
       this.http
-        .update(this.vacancyId, {...this.vacancy})
+        .update(this.vacancyId, { ...this.vacancy })
         .then(() => {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          navigate('/recruitment/addJobVacancy/{id}', {id: this.vacancyId});
+          navigate("/recruitment/addJobVacancy/{id}", { id: this.vacancyId });
         });
     },
     onSaveAttachment() {
@@ -573,7 +573,7 @@ export default {
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteData([item.id]);
         }
       });
@@ -583,7 +583,7 @@ export default {
         return this.attachments[index]?.id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteData(ids);
         }
       });
@@ -609,11 +609,11 @@ export default {
       this.checkedItems = [];
       this.httpAttachments
         .request({
-          method: 'GET',
+          method: "GET",
           url: `/api/v2/recruitment/vacancies/${this.vacancyId}/attachments`,
         })
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.attachments = attachmentNormalizer(data);
         });
     },
@@ -631,7 +631,7 @@ export default {
         fileSize: item.filefileSize,
       };
       this.vacancyAttachment.newAttachment = null;
-      this.vacancyAttachment.method = 'keepCurrent';
+      this.vacancyAttachment.method = "keepCurrent";
       this.isAddClicked = false;
       this.isEditClicked = true;
     },
@@ -640,7 +640,7 @@ export default {
       this.isLoadingTable = true;
       this.httpAttachments
         .request({
-          method: 'PUT',
+          method: "PUT",
           url: `/api/v2/recruitment/vacancies/${this.vacancyId}/attachments/${this.vacancyAttachment.id}`,
           data: {
             vacancyId: parseInt(this.vacancyId),
@@ -667,13 +667,13 @@ export default {
     updateVisibility() {
       this.isAddClicked = false;
       this.isEditClicked = false;
-      this.vacancyAttachment = {...VacancyAttachmentModel};
+      this.vacancyAttachment = { ...VacancyAttachmentModel };
     },
     downloadFile(item) {
       if (!item?.id) return;
-      const fileUrl = 'recruitment/viewVacancyAttachment/attachId';
+      const fileUrl = "recruitment/viewVacancyAttachment/attachId";
       const downUrl = `${window.appGlobal.baseUrl}/${fileUrl}/${item.id}`;
-      window.open(downUrl, '_blank');
+      window.open(downUrl, "_blank");
     },
   },
 };

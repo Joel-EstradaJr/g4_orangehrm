@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('attendance.punch_out') }}
+        {{ $t("attendance.punch_out") }}
       </oxd-text>
 
       <oxd-divider />
@@ -35,10 +35,10 @@
 </template>
 
 <script>
-import RecordAttendance from '@/orangehrmAttendancePlugin/components/RecordAttendance.vue';
+import RecordAttendance from "@/orangehrmAttendancePlugin/components/RecordAttendance.vue";
 export default {
   components: {
-    'record-attendance': RecordAttendance,
+    "record-attendance": RecordAttendance,
   },
   inheritAttrs: false,
 };

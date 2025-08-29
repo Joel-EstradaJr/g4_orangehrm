@@ -24,16 +24,16 @@
     :clear="false"
     :create-options="loadCandidates"
   >
-    <template #option="{data}">
+    <template #option="{ data }">
       <span>{{ data.label }}</span>
     </template>
   </oxd-input-field>
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'CandidateAutocomplete',
+  name: "CandidateAutocomplete",
   props: {
     params: {
       type: Object,
@@ -43,7 +43,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/candidates',
+      "/api/v2/recruitment/candidates"
     );
     return {
       http,
@@ -58,17 +58,17 @@ export default {
               candidateName: serachParam.trim(),
               ...this.params,
             })
-            .then(({data}) => {
+            .then(({ data }) => {
               resolve(
                 data.data.map((candidate) => {
                   return {
                     id: candidate.id,
                     label: `${candidate.firstName} ${
-                      candidate.middleName || ''
+                      candidate.middleName || ""
                     } ${candidate.lastName}`,
                     _candidate: candidate,
                   };
-                }),
+                })
               );
             });
         } else {

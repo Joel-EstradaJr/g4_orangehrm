@@ -41,7 +41,7 @@
           :action-button-shown="$can.create(`${screen}_attachment`)"
           @click="onClickAdd"
         >
-          {{ $t('general.attachments') }}
+          {{ $t("general.attachments") }}
         </profile-action-header>
       </div>
       <table-header
@@ -70,24 +70,24 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {convertFilesizeToString} from '@ohrm/core/util/helper/filesize';
-import SaveAttachment from '@/orangehrmPimPlugin/components/SaveAttachment';
-import EditAttachment from '@/orangehrmPimPlugin/components/EditAttachment';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog.vue';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {parseDate, formatDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { convertFilesizeToString } from "@ohrm/core/util/helper/filesize";
+import SaveAttachment from "@/orangehrmPimPlugin/components/SaveAttachment";
+import EditAttachment from "@/orangehrmPimPlugin/components/EditAttachment";
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog.vue";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { parseDate, formatDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
-  name: 'ProfileAttachments',
+  name: "ProfileAttachments",
   components: {
-    'save-attachment': SaveAttachment,
-    'edit-attachment': EditAttachment,
-    'profile-action-header': ProfileActionHeader,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "save-attachment": SaveAttachment,
+    "edit-attachment": EditAttachment,
+    "profile-action-header": ProfileActionHeader,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
   props: {
     employeeId: {
@@ -110,10 +110,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.employeeId}/screen/${props.screen}/attachments`,
+      `/api/v2/pim/employees/${props.employeeId}/screen/${props.screen}/attachments`
     );
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const attachmentDataNormalizer = (data) => {
       return data.map((item) => {
@@ -156,27 +156,31 @@ export default {
     return {
       headers: [
         {
-          name: 'filename',
-          slot: 'title',
-          title: this.$t('general.file_name'),
-          style: {flex: 1},
+          name: "filename",
+          slot: "title",
+          title: this.$t("general.file_name"),
+          style: { flex: 1 },
         },
         {
-          name: 'description',
-          title: this.$t('general.description'),
-          style: {flex: 1},
+          name: "description",
+          title: this.$t("general.description"),
+          style: { flex: 1 },
         },
-        {name: 'size', title: this.$t('general.size'), style: {flex: 1}},
-        {name: 'fileType', title: this.$t('general.type'), style: {flex: 1}},
+        { name: "size", title: this.$t("general.size"), style: { flex: 1 } },
         {
-          name: 'attachedDate',
-          title: this.$t('pim.date_added'),
-          style: {flex: 1},
+          name: "fileType",
+          title: this.$t("general.type"),
+          style: { flex: 1 },
         },
         {
-          name: 'attachedByName',
-          title: this.$t('pim.added_by'),
-          style: {flex: 1},
+          name: "attachedDate",
+          title: this.$t("pim.date_added"),
+          style: { flex: 1 },
+        },
+        {
+          name: "attachedByName",
+          title: this.$t("pim.added_by"),
+          style: { flex: 1 },
         },
       ],
       checkedItems: [],
@@ -189,27 +193,27 @@ export default {
   computed: {
     tableHeaders() {
       const headerActions = {
-        name: 'actions',
-        slot: 'action',
-        title: this.$t('general.actions'),
-        style: {flex: 1},
-        cellType: 'oxd-table-cell-actions',
+        name: "actions",
+        slot: "action",
+        title: this.$t("general.actions"),
+        style: { flex: 1 },
+        cellType: "oxd-table-cell-actions",
         cellConfig: {},
       };
       if (this.$can.update(`${this.screen}_attachment`)) {
         headerActions.cellConfig.edit = {
           onClick: this.onClickEdit,
           props: {
-            name: 'pencil-fill',
+            name: "pencil-fill",
           },
         };
       }
       if (this.$can.delete(`${this.screen}_attachment`)) {
         headerActions.cellConfig.delete = {
           onClick: this.onClickDelete,
-          component: 'oxd-icon-button',
+          component: "oxd-icon-button",
           props: {
-            name: 'trash',
+            name: "trash",
           },
         };
       }
@@ -217,7 +221,7 @@ export default {
         headerActions.cellConfig.download = {
           onClick: this.onClickDownload,
           props: {
-            name: 'download',
+            name: "download",
           },
         };
       }
@@ -233,14 +237,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -277,7 +281,7 @@ export default {
     },
     onClickDownload(item) {
       const downUrl = `${window.appGlobal.baseUrl}/pim/viewAttachment/empNumber/${this.employeeId}/attachId/${item.id}`;
-      window.open(downUrl, '_blank');
+      window.open(downUrl, "_blank");
     },
     onSaveModalClose() {
       this.showSaveModal = false;

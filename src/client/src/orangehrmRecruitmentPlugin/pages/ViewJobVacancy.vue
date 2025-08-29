@@ -105,17 +105,17 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import useSort from '@ohrm/core/util/composable/useSort';
-import usei18n from '@/core/util/composable/usei18n';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import VacancyDropdown from '@/orangehrmRecruitmentPlugin/components/VacancyDropdown.vue';
-import HiringManagerDropdown from '@/orangehrmRecruitmentPlugin/components/HiringManagerDropdown';
+import { computed, ref } from "vue";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import useSort from "@ohrm/core/util/composable/useSort";
+import usei18n from "@/core/util/composable/usei18n";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import JobtitleDropdown from "@/orangehrmPimPlugin/components/JobtitleDropdown";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import VacancyDropdown from "@/orangehrmRecruitmentPlugin/components/VacancyDropdown.vue";
+import HiringManagerDropdown from "@/orangehrmRecruitmentPlugin/components/HiringManagerDropdown";
 
 const defaultFilters = {
   jobTitleId: null,
@@ -124,25 +124,25 @@ const defaultFilters = {
   status: null,
 };
 const defaultSortOrder = {
-  'vacancy.name': 'ASC',
-  'vacancy.status': 'DEFAULT',
-  'jobTitle.jobTitleName': 'DEFAULT',
-  'hiringManager.lastName': 'DEFAULT',
+  "vacancy.name": "ASC",
+  "vacancy.status": "DEFAULT",
+  "jobTitle.jobTitleName": "DEFAULT",
+  "hiringManager.lastName": "DEFAULT",
 };
 export default {
-  name: 'ViewJobVacancy',
+  name: "ViewJobVacancy",
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
-    'jobtitle-dropdown': JobtitleDropdown,
-    'vacancy-dropdown': VacancyDropdown,
-    'hiring-manager-dropdown': HiringManagerDropdown,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "jobtitle-dropdown": JobtitleDropdown,
+    "vacancy-dropdown": VacancyDropdown,
+    "hiring-manager-dropdown": HiringManagerDropdown,
   },
 
   setup() {
-    const {$t} = usei18n();
-    const {$tEmpName} = useEmployeeNameTranslate();
-    const filters = ref({...defaultFilters});
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { $t } = usei18n();
+    const { $tEmpName } = useEmployeeNameTranslate();
+    const filters = ref({ ...defaultFilters });
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
 
@@ -154,7 +154,7 @@ export default {
         status: filters.value.status?.id,
         sortField: sortField.value,
         sortOrder: sortOrder.value,
-        model: 'detailed',
+        model: "detailed",
       };
     });
 
@@ -164,20 +164,20 @@ export default {
           id: item.id,
           vacancy: item.name,
           jobTitle: item.jobTitle?.isDeleted
-            ? item.jobTitle.title + $t('general.deleted')
+            ? item.jobTitle.title + $t("general.deleted")
             : item.jobTitle?.title,
 
           hiringManager: item.hiringManager?.id
             ? $tEmpName(item.hiringManager)
-            : $t('general.deleted'),
-          status: item.status ? $t('general.active') : $t('general.closed'),
+            : $t("general.deleted"),
+          status: item.status ? $t("general.active") : $t("general.closed"),
         };
       });
     };
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/vacancies',
+      "/api/v2/recruitment/vacancies"
     );
     const {
       showPaginator,
@@ -213,56 +213,56 @@ export default {
     return {
       headers: [
         {
-          name: 'vacancy',
-          slot: 'title',
-          title: this.$t('recruitment.vacancy'),
-          sortField: 'vacancy.name',
-          style: {flex: 3},
+          name: "vacancy",
+          slot: "title",
+          title: this.$t("recruitment.vacancy"),
+          sortField: "vacancy.name",
+          style: { flex: 3 },
         },
         {
-          name: 'jobTitle',
-          title: this.$t('general.job_title'),
-          sortField: 'jobTitle.jobTitleName',
-          style: {flex: 3},
+          name: "jobTitle",
+          title: this.$t("general.job_title"),
+          sortField: "jobTitle.jobTitleName",
+          style: { flex: 3 },
         },
         {
-          name: 'hiringManager',
-          title: this.$t('recruitment.hiring_manager'),
-          sortField: 'hiringManager.lastName',
-          style: {flex: 3},
+          name: "hiringManager",
+          title: this.$t("recruitment.hiring_manager"),
+          sortField: "hiringManager.lastName",
+          style: { flex: 3 },
         },
         {
-          name: 'status',
-          title: this.$t('general.status'),
-          sortField: 'vacancy.status',
-          style: {flex: 2},
+          name: "status",
+          title: this.$t("general.status"),
+          sortField: "vacancy.status",
+          style: { flex: 2 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 2},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 2 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
         },
       ],
       statusOptions: [
-        {id: true, param: 'active', label: this.$t('general.active')},
-        {id: false, param: 'closed', label: this.$t('general.closed')},
+        { id: true, param: "active", label: this.$t("general.active") },
+        { id: false, param: "closed", label: this.$t("general.closed") },
       ],
       vacancies: [],
       checkedItems: [],
@@ -271,15 +271,15 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/recruitment/addJobVacancy');
+      navigate("/recruitment/addJobVacancy");
     },
     onClickEdit(item) {
-      navigate('/recruitment/addJobVacancy/{id}', {id: item.id});
+      navigate("/recruitment/addJobVacancy/{id}", { id: item.id });
     },
 
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteData([item.id]);
         }
       });
@@ -289,7 +289,7 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteData(ids);
         }
       });
@@ -319,7 +319,7 @@ export default {
       await this.execQuery();
     },
     onClickReset() {
-      this.filters = {...defaultFilters};
+      this.filters = { ...defaultFilters };
       this.filterItems();
     },
   },

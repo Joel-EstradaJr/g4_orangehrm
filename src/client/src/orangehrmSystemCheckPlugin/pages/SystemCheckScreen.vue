@@ -65,17 +65,17 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import FlexTable from '@/orangehrmSystemCheckPlugin/components/FlexTable';
+import { APIService } from "@/core/util/services/api.service";
+import FlexTable from "@/orangehrmSystemCheckPlugin/components/FlexTable";
 export default {
-  name: 'SystemCheckScreen',
+  name: "SystemCheckScreen",
   components: {
-    'flex-table': FlexTable,
+    "flex-table": FlexTable,
   },
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/core/system-check`,
+      `/api/v2/core/system-check`
     );
     return {
       http,
@@ -98,7 +98,7 @@ export default {
       this.http
         .getAll()
         .then((response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
           this.items = data;
           this.isInterrupted = meta.isInterrupted;
           this.error = meta.error;

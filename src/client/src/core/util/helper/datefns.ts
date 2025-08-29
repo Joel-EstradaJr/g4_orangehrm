@@ -11,116 +11,116 @@ import {
   isToday,
   differenceInSeconds,
   differenceInCalendarDays,
-} from 'date-fns';
+} from "date-fns";
 
 const defaultTimezones = [
   {
     offset: 0,
-    label: 'Europe/London',
+    label: "Europe/London",
   },
   {
     offset: 1,
-    label: 'Europe/Belgrade',
+    label: "Europe/Belgrade",
   },
   {
     offset: 2,
-    label: 'Europe/Minsk',
+    label: "Europe/Minsk",
   },
   {
     offset: 3,
-    label: 'Asia/Kuwait',
+    label: "Asia/Kuwait",
   },
   {
     offset: 4,
-    label: 'Asia/Muscat',
+    label: "Asia/Muscat",
   },
   {
     offset: 5,
-    label: 'Asia/Yekaterinburg',
+    label: "Asia/Yekaterinburg",
   },
   {
     offset: 5.5,
-    label: 'Asia/Kolkata',
+    label: "Asia/Kolkata",
   },
   {
     offset: 6,
-    label: 'Asia/Dhaka',
+    label: "Asia/Dhaka",
   },
   {
     offset: 7,
-    label: 'Asia/Krasnoyarsk',
+    label: "Asia/Krasnoyarsk",
   },
   {
     offset: 8,
-    label: 'Asia/Brunei',
+    label: "Asia/Brunei",
   },
   {
     offset: 9,
-    label: 'Asia/Seoul',
+    label: "Asia/Seoul",
   },
   {
     offset: 9.5,
-    label: 'Australia/Darwin',
+    label: "Australia/Darwin",
   },
   {
     offset: 10,
-    label: 'Australia/Canberra',
+    label: "Australia/Canberra",
   },
   {
     offset: 11,
-    label: 'Asia/Magadan',
+    label: "Asia/Magadan",
   },
   {
     offset: 12,
-    label: 'Pacific/Fiji',
+    label: "Pacific/Fiji",
   },
   {
     offset: -11,
-    label: 'Pacific/Midway',
+    label: "Pacific/Midway",
   },
   {
     offset: -10,
-    label: 'Pacific/Honolulu',
+    label: "Pacific/Honolulu",
   },
   {
     offset: -9,
-    label: 'America/Anchorage',
+    label: "America/Anchorage",
   },
   {
     offset: -8,
-    label: 'America/Los_Angeles',
+    label: "America/Los_Angeles",
   },
   {
     offset: -7,
-    label: 'America/Denver',
+    label: "America/Denver",
   },
   {
     offset: -6,
-    label: 'America/Tegucigalpa',
+    label: "America/Tegucigalpa",
   },
   {
     offset: -5,
-    label: 'America/New_York',
+    label: "America/New_York",
   },
   {
     offset: -4,
-    label: 'America/Halifax',
+    label: "America/Halifax",
   },
   {
     offset: -3.5,
-    label: 'America/St_Johns',
+    label: "America/St_Johns",
   },
   {
     offset: -3,
-    label: 'America/Argentina/Buenos_Aires',
+    label: "America/Argentina/Buenos_Aires",
   },
   {
     offset: -2,
-    label: 'Atlantic/South_Georgia',
+    label: "Atlantic/South_Georgia",
   },
   {
     offset: -1,
-    label: 'Atlantic/Azores',
+    label: "Atlantic/Azores",
   },
 ];
 
@@ -130,8 +130,8 @@ const freshDate = () => {
 
 const parseDate = (
   value: string,
-  dateFormat = 'yyyy-MM-dd',
-  options = {},
+  dateFormat = "yyyy-MM-dd",
+  options = {}
 ): Date | null => {
   try {
     const parsed = parse(value, dateFormat, freshDate(), options);
@@ -147,7 +147,7 @@ const parseDate = (
 const formatDate = (
   value: Date,
   dateFormat: string,
-  options = {},
+  options = {}
 ): string | null => {
   try {
     return format(value, dateFormat, options);
@@ -159,7 +159,7 @@ const formatDate = (
 const isBefore = (
   reference: string,
   comparable: string,
-  dateFormat: string,
+  dateFormat: string
 ): boolean => {
   const referenceDate = parseDate(reference, dateFormat);
   const comparableDate = parseDate(comparable, dateFormat);
@@ -174,7 +174,7 @@ const isBefore = (
 const isAfter = (
   reference: string,
   comparable: string,
-  dateFormat: string,
+  dateFormat: string
 ): boolean => {
   const referenceDate = parseDate(reference, dateFormat);
   const comparableDate = parseDate(comparable, dateFormat);
@@ -189,7 +189,7 @@ const isAfter = (
 const isEqual = (
   reference: string,
   comparable: string,
-  dateFormat: string,
+  dateFormat: string
 ): boolean => {
   const referenceDate = parseDate(reference, dateFormat);
   const comparableDate = parseDate(comparable, dateFormat);
@@ -203,7 +203,7 @@ const isEqual = (
 
 const numberOfDaysInMonth = (
   month: number | undefined, // 1 - 12
-  discardLeapYear: boolean,
+  discardLeapYear: boolean
 ): number => {
   if (month && month > 0 && month <= 12) {
     const days = getDaysInMonth(new Date().setMonth(month - 1));
@@ -220,7 +220,7 @@ const parseTime = (value: string, timeFormat: string): Date | null => {
 const formatTime = (
   value: Date,
   timeFormat: string,
-  options = {},
+  options = {}
 ): string | null => {
   return formatDate(value, timeFormat, options);
 };
@@ -228,7 +228,7 @@ const formatTime = (
 const compareTime = (
   reference: string,
   comparable: string,
-  timeFormat: string,
+  timeFormat: string
 ): number => {
   const referenceTime = parseDate(reference, timeFormat);
   const comparableTime = parseDate(comparable, timeFormat);
@@ -251,7 +251,7 @@ const compareTime = (
 const diffInDays = (
   fromDate: string,
   toDate: string,
-  dateFormat = 'yyyy-MM-dd',
+  dateFormat = "yyyy-MM-dd"
 ): number => {
   const from = parseDate(fromDate, dateFormat);
   const to = parseDate(toDate, dateFormat);
@@ -264,7 +264,7 @@ const diffInDays = (
 const diffInTime = (
   startTime: string,
   endTime: string,
-  timeFormat = 'HH:mm',
+  timeFormat = "HH:mm"
 ): number => {
   const start = parseTime(startTime, timeFormat);
   const end = parseTime(endTime, timeFormat);
@@ -278,15 +278,15 @@ const diffInTime = (
 const secondsTohhmm = (seconds: number): string => {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds - hours * 3600) / 60);
-  return `${hours.toString().padStart(2, '0')}:${minutes
+  return `${hours.toString().padStart(2, "0")}:${minutes
     .toString()
-    .padStart(2, '0')}`;
+    .padStart(2, "0")}`;
 };
 
 const parseTimeInSeconds = (value: string): number => {
   // Check if HH:mm format matches else if decimal format
   if (/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(value)) {
-    const time = value.split(':');
+    const time = value.split(":");
     return parseInt(time[0]) * 60 * 60 + parseInt(time[1]) * 60;
   } else if (
     parseFloat(value) < 24 &&
@@ -316,15 +316,15 @@ const setClockInterval = (callback: (args: void) => void, interval = 1000) => {
 //this function returns the timezone in standard format eg:- +05:30 when input given as float eg:- +5.5
 const getStandardTimezone = (timezoneOffset: number) => {
   return (
-    (timezoneOffset > 0 ? '+' : '-') +
+    (timezoneOffset > 0 ? "+" : "-") +
     String(Math.abs(timezoneOffset).toFixed(2))
-      .split('.')
+      .split(".")
       .map((substr, i) =>
         i === 0
-          ? substr.padStart(2, '0')
-          : String(parseInt(substr) * 0.6).padEnd(2, '0'),
+          ? substr.padStart(2, "0")
+          : String(parseInt(substr) * 0.6).padEnd(2, "0")
       )
-      .join(':')
+      .join(":")
   );
 };
 
@@ -345,7 +345,7 @@ const guessTimezone = () => {
   if (timezoneName === undefined) {
     // assign timezone manually
     const resolvedTz = defaultTimezones.find(
-      (tz) => tz.offset === timezoneOffset,
+      (tz) => tz.offset === timezoneOffset
     );
     timezoneName = resolvedTz ? resolvedTz.label : defaultTimezones[0].label;
   }

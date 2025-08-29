@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: 'TimeRange',
+  name: "TimeRange",
   inheritAttrs: false,
   props: {
     fromTime: {
@@ -64,13 +64,13 @@ export default {
       default: () => ({}),
     },
   },
-  emits: ['update:fromTime', 'update:toTime'],
+  emits: ["update:fromTime", "update:toTime"],
   mounted() {
     if (this.workShift?.startTime) {
-      this.$emit('update:fromTime', this.workShift.startTime);
+      this.$emit("update:fromTime", this.workShift.startTime);
     }
     if (this.workShift?.endTime) {
-      this.$emit('update:toTime', this.workShift.endTime);
+      this.$emit("update:toTime", this.workShift.endTime);
     }
   },
 };

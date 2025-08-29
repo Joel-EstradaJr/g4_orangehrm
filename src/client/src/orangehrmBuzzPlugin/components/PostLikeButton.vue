@@ -197,7 +197,7 @@
 
 <script>
 export default {
-  name: 'PostLikeButton',
+  name: "PostLikeButton",
 
   props: {
     like: {

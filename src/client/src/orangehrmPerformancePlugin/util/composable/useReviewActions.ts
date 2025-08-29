@@ -21,61 +21,61 @@ type ReviewAction = {
 };
 
 export const viewIcon: ReviewAction = {
-  component: 'oxd-icon-button',
+  component: "oxd-icon-button",
   props: {
-    name: 'eye-fill',
-    title: 'View',
+    name: "eye-fill",
+    title: "View",
   },
 };
 
 export const editIcon: ReviewAction = {
-  component: 'oxd-icon-button',
+  component: "oxd-icon-button",
   props: {
-    name: 'pencil-fill',
-    title: 'Edit',
+    name: "pencil-fill",
+    title: "Edit",
   },
 };
 
 export const evaluateIcon: ReviewAction = {
-  component: 'oxd-icon-button',
+  component: "oxd-icon-button",
   props: {
-    name: 'file-text-fill',
-    title: 'Evaluate',
+    name: "file-text-fill",
+    title: "Evaluate",
   },
 };
 
 export const viewLabel: ReviewAction = {
-  component: 'oxd-button',
+  component: "oxd-button",
   props: {
-    label: 'View',
-    displayType: 'text',
-    size: 'medium',
+    label: "View",
+    displayType: "text",
+    size: "medium",
     style: {
-      'min-width': '120px',
+      "min-width": "120px",
     },
   },
 };
 
 export const editLabel: ReviewAction = {
-  component: 'oxd-button',
+  component: "oxd-button",
   props: {
-    label: 'Edit',
-    displayType: 'text',
-    size: 'medium',
+    label: "Edit",
+    displayType: "text",
+    size: "medium",
     style: {
-      'min-width': '120px',
+      "min-width": "120px",
     },
   },
 };
 
 export const evaluateLabel: ReviewAction = {
-  component: 'oxd-button',
+  component: "oxd-button",
   props: {
-    label: 'Evaluate',
-    displayType: 'text',
-    size: 'medium',
+    label: "Evaluate",
+    displayType: "text",
+    size: "medium",
     style: {
-      'min-width': '120px',
+      "min-width": "120px",
     },
   },
 };

@@ -38,20 +38,20 @@
 </template>
 
 <script>
-import {computed, reactive, toRefs} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import PostModal from '@/orangehrmBuzzPlugin/components/PostModal';
-import PhotoInput from '@/orangehrmBuzzPlugin/components/PhotoInput';
-import {shouldNotExceedCharLength} from '@/core/util/validation/rules';
-import {OxdBuzzPostInput} from '@ohrm/oxd';
+import { computed, reactive, toRefs } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import PostModal from "@/orangehrmBuzzPlugin/components/PostModal";
+import PhotoInput from "@/orangehrmBuzzPlugin/components/PhotoInput";
+import { shouldNotExceedCharLength } from "@/core/util/validation/rules";
+import { OxdBuzzPostInput } from "@ohrm/oxd";
 
 export default {
-  name: 'SharePhotoModal',
+  name: "SharePhotoModal",
 
   components: {
-    'post-modal': PostModal,
-    'photo-input': PhotoInput,
-    'oxd-buzz-post-input': OxdBuzzPostInput,
+    "post-modal": PostModal,
+    "photo-input": PhotoInput,
+    "oxd-buzz-post-input": OxdBuzzPostInput,
   },
 
   props: {
@@ -61,13 +61,13 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props, context) {
     const rules = {
       text: [shouldNotExceedCharLength(65530)],
     };
-    const http = new APIService(window.appGlobal.baseUrl, '/api/v2/buzz/posts');
+    const http = new APIService(window.appGlobal.baseUrl, "/api/v2/buzz/posts");
 
     const state = reactive({
       post: {
@@ -81,11 +81,11 @@ export default {
       state.isLoading = true;
       http
         .create({
-          type: 'photo',
+          type: "photo",
           text: state.post.text,
           photos: state.post.photos,
         })
-        .then(() => context.emit('close', true));
+        .then(() => context.emit("close", true));
     };
 
     const isDisabled = computed(() => state.post.photos.length === 0);

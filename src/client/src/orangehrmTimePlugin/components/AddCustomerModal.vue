@@ -1,11 +1,11 @@
 <template>
   <oxd-dialog
-    :style="{width: '90%', maxWidth: '450px'}"
+    :style="{ width: '90%', maxWidth: '450px' }"
     @update:show="onCancel"
   >
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('time.add_customer') }}
+        {{ $t("time.add_customer") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -46,31 +46,31 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {OxdDialog, promiseDebounce} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { OxdDialog, promiseDebounce } from "@ohrm/oxd";
 
 const customerModel = {
-  id: '',
-  name: '',
-  description: '',
+  id: "",
+  name: "",
+  description: "",
 };
 
 export default {
-  name: 'AddCustomerModal',
+  name: "AddCustomerModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
-  emits: ['close'],
+  emits: ["close"],
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/time/customers',
+      "/api/v2/time/customers"
     );
-    http.setIgnorePath('/api/v2/time/validation/customer-name');
+    http.setIgnorePath("/api/v2/time/validation/customer-name");
     return {
       http,
     };
@@ -78,7 +78,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      customer: {...customerModel},
+      customer: { ...customerModel },
       rules: {
         name: [
           required,
@@ -98,30 +98,30 @@ export default {
           description: this.customer.description,
         })
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.$toast.saveSuccess();
-          this.$emit('close', data);
+          this.$emit("close", data);
         });
     },
     onCancel() {
-      this.$emit('close');
+      this.$emit("close");
     },
     validateCustomerName(customer) {
       return new Promise((resolve) => {
         if (customer) {
           this.http
             .request({
-              method: 'GET',
+              method: "GET",
               url: `/api/v2/time/validation/customer-name`,
               params: {
                 customerName: this.customer.name.trim(),
               },
             })
             .then((response) => {
-              const {data} = response.data;
+              const { data } = response.data;
               return data.valid === true
                 ? resolve(true)
-                : resolve(this.$t('general.already_exists'));
+                : resolve(this.$t("general.already_exists"));
             });
         } else {
           resolve(true);

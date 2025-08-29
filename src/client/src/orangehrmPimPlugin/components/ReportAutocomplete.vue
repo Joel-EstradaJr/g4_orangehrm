@@ -24,21 +24,21 @@
     :clear="false"
     :create-options="loadReports"
   >
-    <template #option="{data}">
+    <template #option="{ data }">
       <span>{{ data.label }}</span>
     </template>
   </oxd-input-field>
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'ReportAutocomplete',
+  name: "ReportAutocomplete",
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/reports/defined',
+      "/api/v2/pim/reports/defined"
     );
     return {
       http,
@@ -52,14 +52,14 @@ export default {
             .getAll({
               name: serachParam,
             })
-            .then(({data}) => {
+            .then(({ data }) => {
               resolve(
                 data.data.map((report) => {
                   return {
                     id: report.id,
                     label: report.name,
                   };
-                }),
+                })
               );
             });
         } else {

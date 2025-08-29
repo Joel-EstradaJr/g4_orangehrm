@@ -93,34 +93,34 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import {validSelection} from '@/core/util/validation/rules';
-import {APIService} from '@/core/util/services/api.service';
-import useSort from '@ohrm/core/util/composable/useSort';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import ReportAutocomplete from '@/orangehrmPimPlugin/components/ReportAutocomplete';
+import { computed, ref } from "vue";
+import { validSelection } from "@/core/util/validation/rules";
+import { APIService } from "@/core/util/services/api.service";
+import useSort from "@ohrm/core/util/composable/useSort";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import ReportAutocomplete from "@/orangehrmPimPlugin/components/ReportAutocomplete";
 
 const defaultFilters = {
   report: null,
 };
 
 const defaultSortOrder = {
-  'report.name': 'ASC',
+  "report.name": "ASC",
 };
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
-    'report-autocomplete': ReportAutocomplete,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "report-autocomplete": ReportAutocomplete,
   },
 
   setup() {
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
-    const filters = ref({...defaultFilters});
+    const filters = ref({ ...defaultFilters });
     const serializedFilters = computed(() => {
       return {
         reportId: filters.value.report?.id,
@@ -130,7 +130,7 @@ export default {
     });
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/reports/defined',
+      "/api/v2/pim/reports/defined"
     );
     const {
       showPaginator,
@@ -166,36 +166,36 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.name'),
-          style: {flex: '85%'},
-          sortField: 'report.name',
+          name: "name",
+          slot: "title",
+          title: this.$t("general.name"),
+          style: { flex: "85%" },
+          sortField: "report.name",
         },
         {
-          name: 'actions',
-          title: this.$t('general.actions'),
-          slot: 'action',
-          style: {flex: '15%'},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          title: this.$t("general.actions"),
+          slot: "action",
+          style: { flex: "15%" },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
             view: {
               onClick: this.onClickView,
               props: {
-                name: 'file-text-fill',
+                name: "file-text-fill",
               },
             },
           },
@@ -210,13 +210,13 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/pim/definePredefinedReport');
+      navigate("/pim/definePredefinedReport");
     },
     onClickEdit(item) {
-      navigate('/pim/definePredefinedReport/{id}', {id: item.id});
+      navigate("/pim/definePredefinedReport/{id}", { id: item.id });
     },
     onClickView(item) {
-      navigate('/pim/displayPredefinedReport/{id}', {id: item.id});
+      navigate("/pim/displayPredefinedReport/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = [];
@@ -224,14 +224,14 @@ export default {
         ids.push(this.items?.data[index].id);
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -260,7 +260,7 @@ export default {
       await this.execQuery();
     },
     onClickReset() {
-      this.filters = {...defaultFilters};
+      this.filters = { ...defaultFilters };
       this.filterItems();
     },
   },

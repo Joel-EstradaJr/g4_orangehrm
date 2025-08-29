@@ -22,7 +22,7 @@
     <div class="orangehrm-card-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('general.ldap_configuration') }}
+          {{ $t("general.ldap_configuration") }}
         </oxd-text>
         <oxd-switch-input
           v-model="configuration.enable"
@@ -34,7 +34,7 @@
 
       <oxd-form ref="formRef" :loading="isLoading">
         <oxd-text tag="p" class="orangehrm-subtitle">
-          {{ $t('admin.server_settings') }}
+          {{ $t("admin.server_settings") }}
         </oxd-text>
         <oxd-form-row>
           <oxd-grid :cols="3" class="orangehrm-full-width-grid">
@@ -46,7 +46,7 @@
                 required
               />
               <oxd-text class="orangehrm-input-hint" tag="p">
-                {{ $t('admin.ldap_host_input_hint') }}
+                {{ $t("admin.ldap_host_input_hint") }}
               </oxd-text>
             </oxd-grid-item>
             <oxd-grid-item class="orangehrm-column-half">
@@ -57,7 +57,7 @@
                 required
               />
               <oxd-text class="orangehrm-input-hint" tag="p">
-                {{ $t('admin.port_input_hint') }}
+                {{ $t("admin.port_input_hint") }}
               </oxd-text>
             </oxd-grid-item>
             <oxd-grid-item class="--offset-row-2">
@@ -83,14 +83,14 @@
         <oxd-divider class="orangehrm-form-divider" />
 
         <oxd-text tag="p" class="orangehrm-subtitle">
-          {{ $t('admin.bind_settings') }}
+          {{ $t("admin.bind_settings") }}
         </oxd-text>
 
         <oxd-form-row>
           <oxd-grid :cols="3" class="orangehrm-full-width-grid">
             <oxd-grid-item class="orangehrm-ldap-switch">
               <oxd-text tag="p" class="orangehrm-ldap-switch-text">
-                {{ $t('admin.bind_anonymously') }}
+                {{ $t("admin.bind_anonymously") }}
               </oxd-text>
               <oxd-switch-input v-model="configuration.bindAnonymously" />
             </oxd-grid-item>
@@ -123,7 +123,7 @@
         <oxd-divider class="orangehrm-form-divider" />
 
         <oxd-text tag="p" class="orangehrm-subtitle">
-          {{ $t('admin.user_lookup_settings') }}
+          {{ $t("admin.user_lookup_settings") }}
         </oxd-text>
         <oxd-form-row>
           <oxd-grid :cols="3" class="orangehrm-full-width-grid">
@@ -144,7 +144,7 @@
                 :label="$t('admin.search_scope')"
               />
               <oxd-text class="orangehrm-input-hint" tag="p">
-                {{ $t('admin.search_scope_input_hint') }}
+                {{ $t("admin.search_scope_input_hint") }}
               </oxd-text>
             </oxd-grid-item>
             <oxd-grid-item class="--offset-row-3">
@@ -155,7 +155,7 @@
                 required
               />
               <oxd-text class="orangehrm-input-hint" tag="p">
-                {{ $t('admin.user_name_input_hint') }}
+                {{ $t("admin.user_name_input_hint") }}
               </oxd-text>
             </oxd-grid-item>
             <oxd-grid-item class="--offset-row-4">
@@ -166,7 +166,7 @@
                 required
               />
               <oxd-text class="orangehrm-input-hint" tag="p">
-                {{ $t('admin.user_search_filter_input_hint') }}
+                {{ $t("admin.user_search_filter_input_hint") }}
               </oxd-text>
             </oxd-grid-item>
             <oxd-grid-item class="--offset-row-5">
@@ -176,7 +176,7 @@
                 :rules="rules.userUniqueIdAttribute"
               />
               <oxd-text class="orangehrm-input-hint" tag="p">
-                {{ $t('admin.user_unique_attribute_input_hint') }}
+                {{ $t("admin.user_unique_attribute_input_hint") }}
               </oxd-text>
             </oxd-grid-item>
           </oxd-grid>
@@ -185,31 +185,31 @@
         <oxd-divider class="orangehrm-form-divider" />
 
         <oxd-text tag="p" class="orangehrm-subtitle">
-          {{ $t('admin.data_mapping') }}
+          {{ $t("admin.data_mapping") }}
         </oxd-text>
         <oxd-form-row>
           <oxd-grid :cols="3" class="orangehrm-ldap-grid">
             <oxd-grid-item class="orangehrm-ldap-grid-header">
               <oxd-text tag="p">
-                {{ $t('admin.field_in_orangehrm') }}
+                {{ $t("admin.field_in_orangehrm") }}
               </oxd-text>
             </oxd-grid-item>
             <oxd-grid-item class="orangehrm-ldap-grid-header">
               <oxd-text tag="p">
-                {{ $t('admin.field_in_ldap_directory') }}
+                {{ $t("admin.field_in_ldap_directory") }}
               </oxd-text>
             </oxd-grid-item>
             <oxd-grid-item class="orangehrm-ldap-grid-header">
               <oxd-text tag="p">
                 {{
-                  $t('admin.use_this_field_as_the_employee_user_mapping_field')
+                  $t("admin.use_this_field_as_the_employee_user_mapping_field")
                 }}
               </oxd-text>
             </oxd-grid-item>
 
             <oxd-grid-item class="orangehrm-ldap-grid-content">
               <oxd-text tag="p" class="oxd-input-field-required">
-                {{ $t('general.first_name') }}
+                {{ $t("general.first_name") }}
               </oxd-text>
               <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
@@ -224,7 +224,7 @@
 
             <oxd-grid-item class="orangehrm-ldap-grid-content">
               <oxd-text tag="p">
-                {{ $t('general.middle_name') }}
+                {{ $t("general.middle_name") }}
               </oxd-text>
               <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
@@ -238,7 +238,7 @@
 
             <oxd-grid-item class="orangehrm-ldap-grid-content">
               <oxd-text tag="p" class="oxd-input-field-required">
-                {{ $t('general.last_name') }}
+                {{ $t("general.last_name") }}
               </oxd-text>
               <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
@@ -252,7 +252,7 @@
 
             <oxd-grid-item class="orangehrm-ldap-grid-content">
               <oxd-text tag="p">
-                {{ $t('general.user_status') }}
+                {{ $t("general.user_status") }}
               </oxd-text>
               <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
@@ -266,7 +266,7 @@
 
             <oxd-grid-item class="orangehrm-ldap-grid-content">
               <oxd-text tag="p" :class="workEmailLabelClasses">
-                {{ $t('general.work_email') }}
+                {{ $t("general.work_email") }}
               </oxd-text>
               <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
@@ -286,7 +286,7 @@
 
             <oxd-grid-item class="orangehrm-ldap-grid-content">
               <oxd-text tag="p" :class="employeeIdLabelClasses">
-                {{ $t('general.employee_id') }}
+                {{ $t("general.employee_id") }}
               </oxd-text>
               <oxd-icon class="orangehrm-ldap-grid-icon" name="arrow-left" />
             </oxd-grid-item>
@@ -309,13 +309,13 @@
         <oxd-divider class="orangehrm-form-divider" />
 
         <oxd-text tag="p" class="orangehrm-subtitle">
-          {{ $t('admin.additional_settings') }}
+          {{ $t("admin.additional_settings") }}
         </oxd-text>
         <oxd-form-row>
           <oxd-grid :cols="3" class="orangehrm-full-width-grid">
             <oxd-grid-item class="orangehrm-ldap-switch --offset-row-1">
               <oxd-text tag="p" class="orangehrm-ldap-switch-text">
-                {{ $t('admin.merge_ldap_users_with_existing_system_users') }}
+                {{ $t("admin.merge_ldap_users_with_existing_system_users") }}
               </oxd-text>
               <oxd-switch-input
                 v-model="configuration.mergeLDAPUsersWithExistingSystemUsers"
@@ -378,17 +378,17 @@ import {
   validHostnameFormat,
   shouldNotExceedCharLength,
   numberShouldBeBetweenMinAndMaxValue,
-} from '@/core/util/validation/rules';
-import useForm from '@/core/util/composable/useForm';
-import {reloadPage} from '@/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import LdapSyncConnection from '@/orangehrmAdminPlugin/components/LdapSyncConnection';
-import LdapTestConnectionModal from '@/orangehrmAdminPlugin/components/LdapTestConnectionModal';
-import {OxdAlert, OxdIcon, OxdSwitchInput} from '@ohrm/oxd';
+} from "@/core/util/validation/rules";
+import useForm from "@/core/util/composable/useForm";
+import { reloadPage } from "@/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import LdapSyncConnection from "@/orangehrmAdminPlugin/components/LdapSyncConnection";
+import LdapTestConnectionModal from "@/orangehrmAdminPlugin/components/LdapTestConnectionModal";
+import { OxdAlert, OxdIcon, OxdSwitchInput } from "@ohrm/oxd";
 
 const configurationModel = {
   enable: false,
-  hostname: 'localhost',
+  hostname: "localhost",
   port: 389,
   encryption: null,
   ldapImplementation: null,
@@ -397,18 +397,18 @@ const configurationModel = {
   bindUserPassword: null,
   baseDistinguishedName: null,
   searchScope: null,
-  userNameAttribute: 'cn',
-  userSearchFilter: 'objectClass=person',
+  userNameAttribute: "cn",
+  userSearchFilter: "objectClass=person",
   userUniqueIdAttribute: null,
   mergeLDAPUsersWithExistingSystemUsers: false,
   syncInterval: 1,
-  employeeSelectorMapping: '',
+  employeeSelectorMapping: "",
   hasBindUserPassword: false,
 };
 
 const dataMappingModel = {
-  firstName: 'givenName',
-  lastName: 'sn',
+  firstName: "givenName",
+  lastName: "sn",
   middleName: null,
   userStatus: null,
   workEmail: null,
@@ -417,11 +417,11 @@ const dataMappingModel = {
 
 export default {
   components: {
-    'oxd-icon': OxdIcon,
-    'oxd-alert': OxdAlert,
-    'oxd-switch-input': OxdSwitchInput,
-    'ldap-sync-connection': LdapSyncConnection,
-    'ldap-test-connection-modal': LdapTestConnectionModal,
+    "oxd-icon": OxdIcon,
+    "oxd-alert": OxdAlert,
+    "oxd-switch-input": OxdSwitchInput,
+    "ldap-sync-connection": LdapSyncConnection,
+    "ldap-test-connection-modal": LdapTestConnectionModal,
   },
 
   props: {
@@ -434,9 +434,9 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/ldap-config',
+      "/api/v2/admin/ldap-config"
     );
-    const {formRef, invalid, validate} = useForm();
+    const { formRef, invalid, validate } = useForm();
 
     return {
       http,
@@ -451,36 +451,36 @@ export default {
       isLoading: false,
       configuration: {
         ...configurationModel,
-        dataMapping: {...dataMappingModel},
+        dataMapping: { ...dataMappingModel },
       },
       encryptionOptions: [
         {
-          id: 'tls',
-          label: this.$t('admin.tls'),
+          id: "tls",
+          label: this.$t("admin.tls"),
         },
         {
-          id: 'ssl',
-          label: this.$t('admin.ssl'),
+          id: "ssl",
+          label: this.$t("admin.ssl"),
         },
       ],
       searchScopeOptions: [
         {
-          id: 'sub',
-          label: this.$t('admin.subtree'),
+          id: "sub",
+          label: this.$t("admin.subtree"),
         },
         {
-          id: 'one',
-          label: this.$t('admin.one_level'),
+          id: "one",
+          label: this.$t("admin.one_level"),
         },
       ],
       ldapImplementationOptions: [
         {
-          id: 'OpenLDAP',
-          label: this.$t('admin.open_ldap_v3'),
+          id: "OpenLDAP",
+          label: this.$t("admin.open_ldap_v3"),
         },
         {
-          id: 'ActiveDirectory',
-          label: this.$t('admin.ms_active_directory'),
+          id: "ActiveDirectory",
+          label: this.$t("admin.ms_active_directory"),
         },
       ],
       rules: {
@@ -510,14 +510,14 @@ export default {
         userStatusAttribute: [shouldNotExceedCharLength(100)],
         workEmailAttribute: [
           (v) =>
-            this.configuration.employeeSelectorMapping === 'workEmail'
+            this.configuration.employeeSelectorMapping === "workEmail"
               ? required(v)
               : true,
           shouldNotExceedCharLength(100),
         ],
         employeeIdAttribute: [
           (v) =>
-            this.configuration.employeeSelectorMapping === 'employeeId'
+            this.configuration.employeeSelectorMapping === "employeeId"
               ? required(v)
               : true,
           shouldNotExceedCharLength(100),
@@ -528,18 +528,18 @@ export default {
   },
   computed: {
     passwordPlaceHolder() {
-      return this.configuration.hasBindUserPassword ? '********' : null;
+      return this.configuration.hasBindUserPassword ? "********" : null;
     },
     workEmailLabelClasses() {
       return {
-        'oxd-input-field-required':
-          this.configuration.employeeSelectorMapping === 'workEmail',
+        "oxd-input-field-required":
+          this.configuration.employeeSelectorMapping === "workEmail",
       };
     },
     employeeIdLabelClasses() {
       return {
-        'oxd-input-field-required':
-          this.configuration.employeeSelectorMapping === 'employeeId',
+        "oxd-input-field-required":
+          this.configuration.employeeSelectorMapping === "employeeId",
       };
     },
   },
@@ -548,18 +548,18 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data} = response.data;
-        const {userLookupSettings} = data;
+        const { data } = response.data;
+        const { userLookupSettings } = data;
         const userLookupSetting = userLookupSettings[0];
         this.configuration.enable = data.enable;
         this.configuration.hostname = data.hostname;
         this.configuration.port = data.port;
         this.configuration.encryption = this.encryptionOptions.find(
-          (option) => option.id === data.encryption,
+          (option) => option.id === data.encryption
         );
         this.configuration.ldapImplementation =
           this.ldapImplementationOptions.find(
-            (option) => option.id === data.ldapImplementation,
+            (option) => option.id === data.ldapImplementation
           ) || this.ldapImplementationOptions[0];
 
         this.configuration.bindAnonymously = data.bindAnonymously;
@@ -577,16 +577,16 @@ export default {
 
           if (Array.isArray(userLookupSetting?.employeeSelectorMapping)) {
             if (userLookupSetting.employeeSelectorMapping.length === 0) {
-              this.configuration.employeeSelectorMapping = '';
+              this.configuration.employeeSelectorMapping = "";
             } else {
               this.configuration.employeeSelectorMapping =
-                userLookupSetting.employeeSelectorMapping[0]['field'];
+                userLookupSetting.employeeSelectorMapping[0]["field"];
             }
           }
         }
         this.configuration.searchScope =
           this.searchScopeOptions.find(
-            (option) => option.id === userLookupSetting?.searchScope,
+            (option) => option.id === userLookupSetting?.searchScope
           ) || this.searchScopeOptions[0];
 
         this.configuration.dataMapping = data.dataMapping;
@@ -608,12 +608,12 @@ export default {
         delete data.syncInterval;
         this.http
           .request({
-            method: 'POST',
-            url: '/api/v2/admin/ldap-test-connection',
+            method: "POST",
+            url: "/api/v2/admin/ldap-test-connection",
             data,
           })
           .then((response) => {
-            const {data} = response.data;
+            const { data } = response.data;
             this.testModalState = data;
           })
           .finally(() => (this.isLoading = false));
@@ -637,7 +637,7 @@ export default {
         enable: this.configuration.enable,
         hostname: this.configuration.hostname,
         port: parseInt(this.configuration.port),
-        encryption: this.configuration.encryption?.id || 'none',
+        encryption: this.configuration.encryption?.id || "none",
         ldapImplementation: this.configuration.ldapImplementation?.id,
         bindAnonymously: this.configuration.bindAnonymously,
         bindUserDN: this.configuration.bindUserDN,
@@ -664,7 +664,7 @@ export default {
         this.isLoading = true;
         this.http
           .request({
-            method: 'PUT',
+            method: "PUT",
             data: this.getRequestBody(),
           })
           .then(() => {

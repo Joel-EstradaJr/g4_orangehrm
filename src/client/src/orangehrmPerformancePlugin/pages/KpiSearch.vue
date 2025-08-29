@@ -89,32 +89,32 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@/core/util/composable/usePaginate';
-import useSort from '@/core/util/composable/useSort';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown.vue';
-import usei18n from '@/core/util/composable/usei18n';
+import { computed, ref } from "vue";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@/core/util/composable/usePaginate";
+import useSort from "@/core/util/composable/useSort";
+import JobtitleDropdown from "@/orangehrmPimPlugin/components/JobtitleDropdown.vue";
+import usei18n from "@/core/util/composable/usei18n";
 
 const defaultFilters = {
   jobTitleId: null,
 };
 
 const defaultSortOrder = {
-  'kpi.title': 'ASC',
-  'jobTitle.jobTitleName': 'DEFAULT',
+  "kpi.title": "ASC",
+  "jobTitle.jobTitleName": "DEFAULT",
 };
 
 export default {
-  name: 'KpiSearch',
+  name: "KpiSearch",
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
-    'jobtitle-dropdown': JobtitleDropdown,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "jobtitle-dropdown": JobtitleDropdown,
   },
   setup() {
-    const {$t} = usei18n();
+    const { $t } = usei18n();
     const kpiNormalizer = (data) => {
       return data.map((item) => {
         return {
@@ -124,15 +124,15 @@ export default {
           jobTitleId: item.jobTitle.id,
           minRating: item.minRating,
           maxRating: item.maxRating,
-          isDefault: item.isDefault ? $t('general.yes') : '',
+          isDefault: item.isDefault ? $t("general.yes") : "",
           isDeletable: item.deletable,
         };
       });
     };
 
-    const filters = ref({...defaultFilters});
+    const filters = ref({ ...defaultFilters });
 
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
 
@@ -146,7 +146,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/performance/kpis',
+      "/api/v2/performance/kpis"
     );
 
     const {
@@ -183,39 +183,39 @@ export default {
     return {
       headers: [
         {
-          name: 'title',
-          title: this.$t('performance.key_performance_indicator'),
-          slot: 'title',
-          sortField: 'kpi.title',
-          style: {flex: '30%'},
+          name: "title",
+          title: this.$t("performance.key_performance_indicator"),
+          slot: "title",
+          sortField: "kpi.title",
+          style: { flex: "30%" },
         },
         {
-          name: 'jobTitleName',
-          title: this.$t('general.job_title'),
-          sortField: 'jobTitle.jobTitleName',
-          style: {flex: '30%'},
+          name: "jobTitleName",
+          title: this.$t("general.job_title"),
+          sortField: "jobTitle.jobTitleName",
+          style: { flex: "30%" },
         },
         {
-          name: 'minRating',
-          title: this.$t('performance.min_rate'),
-          style: {flex: '10%'},
+          name: "minRating",
+          title: this.$t("performance.min_rate"),
+          style: { flex: "10%" },
         },
         {
-          name: 'maxRating',
-          title: this.$t('performance.max_rate'),
-          style: {flex: '10%'},
+          name: "maxRating",
+          title: this.$t("performance.max_rate"),
+          style: { flex: "10%" },
         },
         {
-          name: 'isDefault',
-          title: this.$t('performance.is_default'),
-          style: {flex: '10%'},
+          name: "isDefault",
+          title: this.$t("performance.is_default"),
+          style: { flex: "10%" },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: '10%'},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: "10%" },
+          cellType: "oxd-table-cell-actions",
           cellRenderer: this.cellRenderer,
         },
       ],
@@ -228,15 +228,15 @@ export default {
       cellConfig.edit = {
         onClick: this.onClickEdit,
         props: {
-          name: 'pencil-fill',
+          name: "pencil-fill",
         },
       };
       if (row.isDeletable) {
         cellConfig.delete = {
           onClick: this.onClickDelete,
-          component: 'oxd-icon-button',
+          component: "oxd-icon-button",
           props: {
-            name: 'trash',
+            name: "trash",
           },
         };
       }
@@ -249,7 +249,7 @@ export default {
       };
     },
     onClickAdd() {
-      navigate('/performance/saveKpi');
+      navigate("/performance/saveKpi");
     },
     onClickDeleteSelected() {
       const ids = [];
@@ -257,14 +257,14 @@ export default {
         ids.push(this.items?.data[index].id);
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -286,7 +286,7 @@ export default {
       }
     },
     onClickEdit(item) {
-      navigate('/performance/saveKpi/{id}', {id: item.id});
+      navigate("/performance/saveKpi/{id}", { id: item.id });
     },
     async filterItems() {
       await this.execQuery();

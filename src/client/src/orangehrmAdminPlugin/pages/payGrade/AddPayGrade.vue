@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.add_pay_grade') }}
+        {{ $t("admin.add_pay_grade") }}
       </oxd-text>
 
       <oxd-divider />
@@ -58,22 +58,22 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/pay-grades',
+      "/api/v2/admin/pay-grades"
     );
-    const {createUniqueValidator} = useServerValidation(http);
-    const payGradeUniqueValidation = createUniqueValidator('PayGrade', 'name');
+    const { createUniqueValidator } = useServerValidation(http);
+    const payGradeUniqueValidation = createUniqueValidator("PayGrade", "name");
 
     return {
       http,
@@ -84,8 +84,8 @@ export default {
     return {
       isLoading: false,
       grade: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -106,13 +106,13 @@ export default {
           name: this.grade.name,
         })
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.$toast.saveSuccess();
-          navigate('/admin/payGrade/{id}', {id: data.id});
+          navigate("/admin/payGrade/{id}", { id: data.id });
         });
     },
     onCancel() {
-      navigate('/admin/viewPayGrades');
+      navigate("/admin/viewPayGrades");
     },
   },
 };

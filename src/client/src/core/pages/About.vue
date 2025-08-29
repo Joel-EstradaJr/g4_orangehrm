@@ -19,12 +19,12 @@
 
 <template>
   <oxd-dialog
-    :style="{width: '90%', maxWidth: '450px'}"
+    :style="{ width: '90%', maxWidth: '450px' }"
     @update:show="onCancel"
   >
     <div class="orangehrm-modal-header">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('general.about') }}
+        {{ $t("general.about") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -34,7 +34,7 @@
     <oxd-grid v-else :cols="2" class="orangehrm-about">
       <oxd-grid-item>
         <oxd-text tag="p" class="orangehrm-about-title">
-          {{ $t('general.company_name') }}:
+          {{ $t("general.company_name") }}:
         </oxd-text>
       </oxd-grid-item>
       <oxd-grid-item>
@@ -44,7 +44,7 @@
       </oxd-grid-item>
       <oxd-grid-item>
         <oxd-text tag="p" class="orangehrm-about-title">
-          {{ $t('general.version') }}:
+          {{ $t("general.version") }}:
         </oxd-text>
       </oxd-grid-item>
       <oxd-grid-item>
@@ -55,7 +55,7 @@
       <template v-if="data.numberOfActiveEmployee !== undefined">
         <oxd-grid-item>
           <oxd-text tag="p" class="orangehrm-about-title">
-            {{ $t('general.active_employees') }}:
+            {{ $t("general.active_employees") }}:
           </oxd-text>
         </oxd-grid-item>
         <oxd-grid-item>
@@ -67,7 +67,7 @@
       <template v-if="data.numberOfPastEmployee !== undefined">
         <oxd-grid-item>
           <oxd-text tag="p" class="orangehrm-about-title">
-            {{ $t('general.employees_terminated') }}:
+            {{ $t("general.employees_terminated") }}:
           </oxd-text>
         </oxd-grid-item>
         <oxd-grid-item>
@@ -81,17 +81,17 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {OxdDialog, OxdSpinner} from '@ohrm/oxd';
+import { APIService } from "@/core/util/services/api.service";
+import { OxdDialog, OxdSpinner } from "@ohrm/oxd";
 
 export default {
   components: {
-    'oxd-loading-spinner': OxdSpinner,
-    'oxd-dialog': OxdDialog,
+    "oxd-loading-spinner": OxdSpinner,
+    "oxd-dialog": OxdDialog,
   },
-  emits: ['close'],
+  emits: ["close"],
   setup() {
-    const http = new APIService(window.appGlobal.baseUrl, '/api/v2/core/about');
+    const http = new APIService(window.appGlobal.baseUrl, "/api/v2/core/about");
     return {
       http,
     };
@@ -107,8 +107,8 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data} = response.data;
-        this.data = {...data};
+        const { data } = response.data;
+        this.data = { ...data };
       })
       .finally(() => {
         this.isLoading = false;
@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

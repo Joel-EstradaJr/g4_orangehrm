@@ -112,25 +112,25 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog.vue';
-import {computed, ref} from 'vue';
-import useSort from '@ohrm/core/util/composable/useSort';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog.vue";
+import { computed, ref } from "vue";
+import useSort from "@ohrm/core/util/composable/useSort";
 
 const defaultFilters = {
-  name: '',
-  city: '',
+  name: "",
+  city: "",
   countryCode: {},
 };
 
 const defaultSortOrder = {
-  'location.name': 'ASC',
-  'location.city': 'DEFAULT',
-  'country.countryName': 'DEFAULT',
-  'location.phone': 'DEFAULT',
-  noOfEmployees: 'DEFAULT',
+  "location.name": "ASC",
+  "location.city": "DEFAULT",
+  "country.countryName": "DEFAULT",
+  "location.phone": "DEFAULT",
+  noOfEmployees: "DEFAULT",
 };
 
 const locationDataNormalizer = (data) => {
@@ -148,7 +148,7 @@ const locationDataNormalizer = (data) => {
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
   props: {
     countries: {
@@ -158,10 +158,10 @@ export default {
   },
 
   setup() {
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
-    const filters = ref({...defaultFilters});
+    const filters = ref({ ...defaultFilters });
     const serializedFilters = computed(() => {
       return {
         name: filters.value.name,
@@ -173,7 +173,7 @@ export default {
     });
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/locations',
+      "/api/v2/admin/locations"
     );
     const {
       showPaginator,
@@ -209,15 +209,15 @@ export default {
     const cellConfig = {
       delete: {
         onClick: this.onClickDelete,
-        component: 'oxd-icon-button',
+        component: "oxd-icon-button",
         props: {
-          name: 'trash',
+          name: "trash",
         },
       },
       edit: {
         onClick: this.onClickEdit,
         props: {
-          name: 'pencil-fill',
+          name: "pencil-fill",
         },
       },
     };
@@ -225,42 +225,42 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.name'),
-          style: {flex: 1},
-          sortField: 'location.name',
+          name: "name",
+          slot: "title",
+          title: this.$t("general.name"),
+          style: { flex: 1 },
+          sortField: "location.name",
         },
         {
-          name: 'city',
-          title: this.$t('general.city'),
-          style: {flex: 1},
-          sortField: 'location.city',
+          name: "city",
+          title: this.$t("general.city"),
+          style: { flex: 1 },
+          sortField: "location.city",
         },
         {
-          name: 'country',
-          title: this.$t('general.country'),
-          style: {flex: 1},
-          sortField: 'country.countryName',
+          name: "country",
+          title: this.$t("general.country"),
+          style: { flex: 1 },
+          sortField: "country.countryName",
         },
         {
-          name: 'phone',
-          title: this.$t('general.phone'),
-          style: {flex: 1},
-          sortField: 'location.phone',
+          name: "phone",
+          title: this.$t("general.phone"),
+          style: { flex: 1 },
+          sortField: "location.phone",
         },
         {
-          name: 'noOfEmployees',
-          title: this.$t('admin.number_of_employees'),
-          style: {flex: 1},
-          sortField: 'noOfEmployees',
+          name: "noOfEmployees",
+          title: this.$t("admin.number_of_employees"),
+          style: { flex: 1 },
+          sortField: "noOfEmployees",
         },
         {
-          name: 'actions',
-          title: this.$t('general.actions'),
-          slot: 'action',
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          title: this.$t("general.actions"),
+          slot: "action",
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: cellConfig,
         },
       ],
@@ -270,10 +270,10 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/admin/saveLocation');
+      navigate("/admin/saveLocation");
     },
     onClickEdit(item) {
-      navigate('/admin/saveLocation/{id}', {id: item.id});
+      navigate("/admin/saveLocation/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = [];
@@ -281,14 +281,14 @@ export default {
         ids.push(this.items?.data[index].id);
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -317,7 +317,7 @@ export default {
       await this.execQuery();
     },
     onClickReset() {
-      this.filters = {...defaultFilters};
+      this.filters = { ...defaultFilters };
       this.filterItems();
     },
   },

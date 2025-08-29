@@ -23,6 +23,6 @@
 
 <script>
 export default {
-  name: 'PostShareButton',
+  name: "PostShareButton",
 };
 </script>

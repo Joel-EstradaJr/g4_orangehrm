@@ -22,13 +22,13 @@
     <oxd-divider />
     <oxd-grid :cols="2" class="orangehrm-translation-grid">
       <oxd-grid-item class="orangehrm-translation-grid-header">
-        <oxd-text type="card-title">{{ $t('admin.source_text') }}</oxd-text>
+        <oxd-text type="card-title">{{ $t("admin.source_text") }}</oxd-text>
       </oxd-grid-item>
       <oxd-grid-item class="orangehrm-translation-grid-header">
-        <oxd-text type="card-title">{{ $t('general.error') }}</oxd-text>
+        <oxd-text type="card-title">{{ $t("general.error") }}</oxd-text>
       </oxd-grid-item>
       <oxd-grid-item class="orangehrm-translation-grid-header">
-        <oxd-text type="card-title">{{ $t('admin.translated_text') }}</oxd-text>
+        <oxd-text type="card-title">{{ $t("admin.translated_text") }}</oxd-text>
       </oxd-grid-item>
       <template v-for="(langstring, index) in langstrings" :key="index">
         <oxd-grid-item class="orangehrm-translation-grid-text">
@@ -36,7 +36,7 @@
             class="orangehrm-translation-grid-langstring-header"
             type="card-title"
           >
-            {{ $t('admin.source_text') }}
+            {{ $t("admin.source_text") }}
           </oxd-text>
           <oxd-text :title="langstring.source">
             {{ langstring.source }}
@@ -47,7 +47,7 @@
             :title="langstring.error.message"
             class="orangehrm-translation-grid-header"
           >
-            {{ $t('admin.' + langstring.error.code) }}
+            {{ $t("admin." + langstring.error.code) }}
           </oxd-text>
         </oxd-grid-item>
         <oxd-grid-item class="orangehrm-translation-grid-text">
@@ -55,7 +55,7 @@
             class="orangehrm-translation-grid-langstring-header"
             type="card-title"
           >
-            {{ $t('admin.translated_text') }}
+            {{ $t("admin.translated_text") }}
           </oxd-text>
           <lang-string-target-input
             :lang-string-id="langstring.langStringId"
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import LangStringTargetInput from '@/orangehrmAdminPlugin/components/LangStringTargetInput.vue';
+import LangStringTargetInput from "@/orangehrmAdminPlugin/components/LangStringTargetInput.vue";
 
 export default {
   components: {
@@ -86,14 +86,14 @@ export default {
     },
   },
 
-  emits: ['update:langstrings'],
+  emits: ["update:langstrings"],
 
   setup(props, context) {
     const onUpdateTranslation = (value, index) => {
       const updatedLangstrings = [...props.langstrings];
       updatedLangstrings[index].target = value;
       updatedLangstrings[index].modified = true;
-      context.emit('update:langstrings', updatedLangstrings);
+      context.emit("update:langstrings", updatedLangstrings);
     };
 
     return {

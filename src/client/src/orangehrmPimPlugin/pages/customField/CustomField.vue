@@ -23,15 +23,15 @@
       <div class="orangehrm-header-container">
         <div class="orangehrm-custom-field-title">
           <oxd-text tag="h6" class="orangehrm-main-title">
-            {{ $t('pim.custom_fields') }}
+            {{ $t("pim.custom_fields") }}
           </oxd-text>
           <template v-if="!isLoading">
             <oxd-text v-if="remainingFields > 0" class="--infotext" tag="p">
-              {{ $t('pim.remaining_no_of_custom_fields') }}
+              {{ $t("pim.remaining_no_of_custom_fields") }}
               {{ remainingFields }}
             </oxd-text>
             <oxd-text v-else class="--infotext" tag="p">
-              {{ $t('pim.all_custom_fields_in_use') }}
+              {{ $t("pim.all_custom_fields_in_use") }}
             </oxd-text>
           </template>
         </div>
@@ -74,14 +74,14 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
   props: {
     customFieldLimit: {
@@ -105,12 +105,12 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/custom-fields',
+      "/api/v2/pim/custom-fields"
     );
     const dataNormalizer = (data) => {
       return data.map((item) => {
         const selectable = props.unselectableIds.findIndex(
-          (id) => id == item.id,
+          (id) => id == item.id
         );
         return {
           id: item.id,
@@ -135,7 +135,7 @@ export default {
       response,
       isLoading,
       execQuery,
-    } = usePaginate(http, {normalizer: dataNormalizer});
+    } = usePaginate(http, { normalizer: dataNormalizer });
 
     return {
       http,
@@ -155,31 +155,35 @@ export default {
       screenWidth: screen.width,
       headers: [
         {
-          name: 'fieldName',
-          slot: 'title',
-          title: this.$t('pim.custom_field_name'),
-          style: {flex: 2},
+          name: "fieldName",
+          slot: "title",
+          title: this.$t("pim.custom_field_name"),
+          style: { flex: 2 },
         },
-        {name: 'screen', title: this.$t('pim.screen'), style: {flex: 2}},
-        {name: 'fieldType', title: this.$t('pim.field_type'), style: {flex: 2}},
+        { name: "screen", title: this.$t("pim.screen"), style: { flex: 2 } },
         {
-          name: 'actions',
-          title: this.$t('general.actions'),
-          slot: 'action',
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "fieldType",
+          title: this.$t("pim.field_type"),
+          style: { flex: 2 },
+        },
+        {
+          name: "actions",
+          title: this.$t("general.actions"),
+          slot: "action",
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -199,33 +203,33 @@ export default {
   },
   methods: {
     onClickAdd() {
-      navigate('/pim/saveCustomFields');
+      navigate("/pim/saveCustomFields");
     },
     onClickEdit(item) {
-      navigate('/pim/saveCustomFields/{id}', {id: item.id});
+      navigate("/pim/saveCustomFields/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = this.checkedItems.map((index) => {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       const isSelectable = this.unselectableIds.findIndex(
-        (id) => id == item.id,
+        (id) => id == item.id
       );
       if (isSelectable > -1) {
         return this.$toast.error({
-          title: this.$t('general.error'),
-          message: this.$t('pim.custom_fields_in_use'),
+          title: this.$t("general.error"),
+          message: this.$t("pim.custom_fields_in_use"),
         });
       }
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

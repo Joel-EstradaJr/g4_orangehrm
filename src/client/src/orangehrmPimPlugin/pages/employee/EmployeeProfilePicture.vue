@@ -21,7 +21,7 @@
   <edit-employee-layout :employee-id="empNumber">
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('pim.change_profile_picture') }}
+        {{ $t("pim.change_profile_picture") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -45,20 +45,20 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ProfileImageInput from '@/orangehrmPimPlugin/components/ProfileImageInput';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ProfileImageInput from "@/orangehrmPimPlugin/components/ProfileImageInput";
+import EditEmployeeLayout from "@/orangehrmPimPlugin/components/EditEmployeeLayout";
 import {
   maxFileSize,
   required,
   validFileTypes,
-} from '@/core/util/validation/rules';
+} from "@/core/util/validation/rules";
 const defaultPic = `${window.appGlobal.publicPath}/images/default-photo.png`;
 
 export default {
   components: {
-    'profile-image-input': ProfileImageInput,
-    'edit-employee-layout': EditEmployeeLayout,
+    "profile-image-input": ProfileImageInput,
+    "edit-employee-layout": EditEmployeeLayout,
   },
 
   props: {
@@ -75,7 +75,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.empNumber}/picture`,
+      `/api/v2/pim/employees/${props.empNumber}/picture`
     );
 
     return {
@@ -103,7 +103,7 @@ export default {
         const file = this.empPicture.base64;
         const type = this.empPicture.type;
         const isPicture = this.allowedImageTypes.findIndex(
-          (item) => item === type,
+          (item) => item === type
         );
         return isPicture > -1 ? `data:${type};base64,${file}` : defaultPic;
       } else {
@@ -117,7 +117,7 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             empPicture: this.empPicture,
           },

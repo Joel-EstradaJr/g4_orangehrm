@@ -72,20 +72,20 @@ import {
   validDateFormat,
   endDateShouldBeAfterStartDate,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
-import {computed, ref} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {truncate} from '@ohrm/core/util/helper/truncate';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import useLeaveActions from '@/orangehrmLeavePlugin/util/composable/useLeaveActions';
-import LeaveCommentsModal from '@/orangehrmLeavePlugin/components/LeaveCommentsModal';
-import LeaveBulkActionModal from '@/orangehrmLeavePlugin/components/LeaveBulkActionModal';
-import LeaveListTableHeader from '@/orangehrmLeavePlugin/components/LeaveListTableHeader';
-import usei18n from '@/core/util/composable/usei18n';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+} from "@/core/util/validation/rules";
+import { computed, ref } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { truncate } from "@ohrm/core/util/helper/truncate";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import useLeaveActions from "@/orangehrmLeavePlugin/util/composable/useLeaveActions";
+import LeaveCommentsModal from "@/orangehrmLeavePlugin/components/LeaveCommentsModal";
+import LeaveBulkActionModal from "@/orangehrmLeavePlugin/components/LeaveBulkActionModal";
+import LeaveListTableHeader from "@/orangehrmLeavePlugin/components/LeaveListTableHeader";
+import usei18n from "@/core/util/composable/usei18n";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 const defaultFilters = {
   employee: null,
@@ -98,12 +98,12 @@ const defaultFilters = {
 };
 
 export default {
-  name: 'LeaveListTable',
+  name: "LeaveListTable",
 
   components: {
-    'leave-list-table-header': LeaveListTableHeader,
-    'leave-comment-modal': LeaveCommentsModal,
-    'leave-bulk-action-modal': LeaveBulkActionModal,
+    "leave-list-table-header": LeaveListTableHeader,
+    "leave-comment-modal": LeaveCommentsModal,
+    "leave-bulk-action-modal": LeaveBulkActionModal,
   },
 
   props: {
@@ -145,10 +145,10 @@ export default {
   setup(props) {
     const filters = ref({
       ...defaultFilters,
-      ...(props.leaveType && {leaveType: props.leaveType}),
-      ...(props.fromDate && {fromDate: props.fromDate}),
-      ...(props.toDate && {toDate: props.toDate}),
-      ...(props.leaveStatus && {statuses: [props.leaveStatus]}),
+      ...(props.leaveType && { leaveType: props.leaveType }),
+      ...(props.fromDate && { fromDate: props.fromDate }),
+      ...(props.toDate && { toDate: props.toDate }),
+      ...(props.leaveStatus && { statuses: [props.leaveStatus] }),
       ...(props.employee && {
         employee: {
           id: props.employee.empNumber,
@@ -158,9 +158,9 @@ export default {
       }),
     });
     const checkedItems = ref([]);
-    const {$t} = usei18n();
-    const {locale} = useLocale();
-    const {jsDateFormat, userDateFormat} = useDateFormat();
+    const { $t } = usei18n();
+    const { locale } = useLocale();
+    const { jsDateFormat, userDateFormat } = useDateFormat();
 
     const rules = {
       fromDate: [required, validDateFormat(userDateFormat)],
@@ -169,8 +169,8 @@ export default {
         validDateFormat(userDateFormat),
         endDateShouldBeAfterStartDate(
           () => filters.value.fromDate,
-          $t('general.to_date_should_be_after_from_date'),
-          {allowSameDate: true},
+          $t("general.to_date_should_be_after_from_date"),
+          { allowSameDate: true }
         ),
       ],
       statuses: [required],
@@ -188,8 +188,8 @@ export default {
         toDate: filters.value.toDate,
         subunitId: filters.value.subunit?.id,
         includeEmployees: filters.value.includePastEmps
-          ? 'currentAndPast'
-          : 'onlyCurrent',
+          ? "currentAndPast"
+          : "onlyCurrent",
         statuses: statuses.map((item) => item.id),
         leaveTypeId: filters.value.leaveType?.id,
       };
@@ -198,69 +198,69 @@ export default {
     const http = new APIService(
       window.appGlobal.baseUrl,
       `/api/v2/leave/${
-        props.myLeaveList ? 'leave-requests' : 'employees/leave-requests'
-      }`,
+        props.myLeaveList ? "leave-requests" : "employees/leave-requests"
+      }`
     );
 
     const leavelistNormalizer = (data) => {
       return data.map((item) => {
         let leaveDatePeriod,
           leaveStatuses,
-          leaveBalances = '';
+          leaveBalances = "";
         const duration = item.dates.durationType?.type;
 
         if (item.dates.fromDate) {
           leaveDatePeriod = formatDate(
             parseDate(item.dates.fromDate),
             jsDateFormat,
-            {locale},
+            { locale }
           );
         }
         if (item.dates.toDate) {
           leaveDatePeriod += ` to ${formatDate(
             parseDate(item.dates.toDate),
             jsDateFormat,
-            {locale},
+            { locale }
           )}`;
         }
         if (item.dates.startTime && item.dates.endTime) {
           leaveDatePeriod += ` (${item.dates.startTime} - ${item.dates.endTime})`;
         }
         if (
-          duration === 'half_day_morning' ||
-          duration === 'half_day_afternoon'
+          duration === "half_day_morning" ||
+          duration === "half_day_afternoon"
         ) {
-          leaveDatePeriod += ` ${$t('leave.half_day')}`;
+          leaveDatePeriod += ` ${$t("leave.half_day")}`;
         }
         if (Array.isArray(item.leaveBreakdown)) {
           leaveStatuses = item.leaveBreakdown
             .map(
               (status) =>
-                `${status.name} (${parseFloat(status.lengthDays).toFixed(2)})`,
+                `${status.name} (${parseFloat(status.lengthDays).toFixed(2)})`
             )
-            .join(', ');
+            .join(", ");
         }
         if (Array.isArray(item.leaveBalances)) {
           if (item.leaveBalances.length > 1) {
             leaveBalances = item.leaveBalances
-              .map(({period, balance}) => {
+              .map(({ period, balance }) => {
                 const _balance = parseFloat(balance.balance).toFixed(2);
                 const startDate = formatDate(
                   parseDate(period.startDate),
                   jsDateFormat,
-                  {locale},
+                  { locale }
                 );
                 const endDate = formatDate(
                   parseDate(period.endDate),
                   jsDateFormat,
-                  {locale},
+                  { locale }
                 );
                 return `${_balance} (${startDate} - ${endDate})`;
               })
-              .join(', ');
+              .join(", ");
           } else {
             const balance = item.leaveBalances[0]?.balance.balance;
-            leaveBalances = balance ? parseFloat(balance).toFixed(2) : '0.00';
+            leaveBalances = balance ? parseFloat(balance).toFixed(2) : "0.00";
           }
         }
 
@@ -268,10 +268,10 @@ export default {
         const leaveTypeName = item.leaveType?.name;
 
         if (item.employee?.terminationId) {
-          empName + ` (${$t('general.past_employee')})`;
+          empName + ` (${$t("general.past_employee")})`;
         }
         if (item.leaveType?.deleted) {
-          leaveTypeName + ` (${$t('general.deleted')})`;
+          leaveTypeName + ` (${$t("general.deleted")})`;
         }
 
         return {
@@ -317,18 +317,18 @@ export default {
         return {
           APPROVE: allActions.reduce(
             (approvable, actions) =>
-              approvable && actions.find((i) => i.action === 'APPROVE'),
-            true,
+              approvable && actions.find((i) => i.action === "APPROVE"),
+            true
           ),
           REJECT: allActions.reduce(
             (rejectable, actions) =>
-              rejectable && actions.find((i) => i.action === 'REJECT'),
-            true,
+              rejectable && actions.find((i) => i.action === "REJECT"),
+            true
           ),
           CANCEL: allActions.reduce(
             (cancelable, actions) =>
-              cancelable && actions.find((i) => i.action === 'CANCEL'),
-            true,
+              cancelable && actions.find((i) => i.action === "CANCEL"),
+            true
           ),
         };
       }
@@ -358,41 +358,45 @@ export default {
   data() {
     return {
       headers: [
-        {name: 'date', title: this.$t('general.date'), style: {flex: 1}},
+        { name: "date", title: this.$t("general.date"), style: { flex: 1 } },
         {
-          name: 'employeeName',
-          title: this.$t('general.employee_name'),
-          style: {flex: 1},
+          name: "employeeName",
+          title: this.$t("general.employee_name"),
+          style: { flex: 1 },
         },
         {
-          name: 'leaveType',
-          title: this.$t('leave.leave_type'),
-          style: {flex: 1},
+          name: "leaveType",
+          title: this.$t("leave.leave_type"),
+          style: { flex: 1 },
         },
         {
-          name: 'leaveBalance',
-          title: this.$t('leave.leave_balance_days'),
-          style: {flex: 1},
+          name: "leaveBalance",
+          title: this.$t("leave.leave_balance_days"),
+          style: { flex: 1 },
         },
         {
-          name: 'days',
-          title: this.$t('leave.number_of_days'),
-          style: {flex: 1},
-        },
-        {name: 'status', title: this.$t('general.status'), style: {flex: 1}},
-        {
-          name: 'comment',
-          title: this.$t('general.comments'),
-          style: {flex: '5%'},
+          name: "days",
+          title: this.$t("leave.number_of_days"),
+          style: { flex: 1 },
         },
         {
-          name: 'action',
-          slot: 'footer',
-          title: this.$t('general.actions'),
-          cellType: 'oxd-table-cell-actions',
+          name: "status",
+          title: this.$t("general.status"),
+          style: { flex: 1 },
+        },
+        {
+          name: "comment",
+          title: this.$t("general.comments"),
+          style: { flex: "5%" },
+        },
+        {
+          name: "action",
+          slot: "footer",
+          title: this.$t("general.actions"),
+          cellType: "oxd-table-cell-actions",
           cellRenderer: this.cellRenderer,
           style: {
-            flex: this.myLeaveList ? '10%' : '20%',
+            flex: this.myLeaveList ? "10%" : "20%",
           },
         },
       ],
@@ -410,9 +414,9 @@ export default {
         : this.leaveStatuses.filter((status) => status.id === 1);
     }
     this.http
-      .request({method: 'GET', url: '/api/v2/leave/leave-periods'})
+      .request({ method: "GET", url: "/api/v2/leave/leave-periods" })
       .then((response) => {
-        const {data, meta} = response.data;
+        const { data, meta } = response.data;
         if (meta.leavePeriodDefined) {
           this.filters.fromDate =
             this.filters.fromDate ?? meta?.currentLeavePeriod.startDate;
@@ -432,33 +436,36 @@ export default {
   methods: {
     cellRenderer(...[, , , row]) {
       const cellConfig = {};
-      const {approve, reject, cancel, more} = this.leaveActions;
+      const { approve, reject, cancel, more } = this.leaveActions;
       const dropdownActions = [
-        {label: this.$t('general.add_comment'), context: 'add_comment'},
-        {label: this.$t('leave.view_leave_details'), context: 'leave_details'},
-        {label: this.$t('leave.view_pim_info'), context: 'pim_details'},
+        { label: this.$t("general.add_comment"), context: "add_comment" },
+        {
+          label: this.$t("leave.view_leave_details"),
+          context: "leave_details",
+        },
+        { label: this.$t("leave.view_pim_info"), context: "pim_details" },
       ];
 
       row.actions.map((item) => {
-        if (item.action === 'APPROVE') {
-          approve.props.label = this.$t('general.approve');
-          approve.props.onClick = () => this.onLeaveAction(row.id, 'APPROVE');
+        if (item.action === "APPROVE") {
+          approve.props.label = this.$t("general.approve");
+          approve.props.onClick = () => this.onLeaveAction(row.id, "APPROVE");
           cellConfig.approve = approve;
         }
-        if (item.action === 'REJECT') {
-          reject.props.label = this.$t('general.reject');
-          reject.props.onClick = () => this.onLeaveAction(row.id, 'REJECT');
+        if (item.action === "REJECT") {
+          reject.props.label = this.$t("general.reject");
+          reject.props.onClick = () => this.onLeaveAction(row.id, "REJECT");
           cellConfig.reject = reject;
         }
-        if (item.action === 'CANCEL') {
+        if (item.action === "CANCEL") {
           if (this.myLeaveList) {
-            cancel.props.label = this.$t('general.cancel');
-            cancel.props.onClick = () => this.onLeaveAction(row.id, 'CANCEL');
+            cancel.props.label = this.$t("general.cancel");
+            cancel.props.onClick = () => this.onLeaveAction(row.id, "CANCEL");
             cellConfig.reject = cancel;
           } else {
             dropdownActions.push({
-              label: this.$t('leave.cancel_leave'),
-              context: 'cancel_leave',
+              label: this.$t("leave.cancel_leave"),
+              context: "cancel_leave",
             });
           }
         }
@@ -478,23 +485,23 @@ export default {
     },
     onLeaveDropdownAction(event, item) {
       switch (event.context) {
-        case 'add_comment':
+        case "add_comment":
           this.commentModalState = item.id;
           this.showCommentModal = true;
           break;
-        case 'cancel_leave':
-          this.onLeaveAction(item.id, 'CANCEL');
+        case "cancel_leave":
+          this.onLeaveAction(item.id, "CANCEL");
           break;
-        case 'pim_details':
-          navigate('/pim/viewPersonalDetails/empNumber/{id}', {
+        case "pim_details":
+          navigate("/pim/viewPersonalDetails/empNumber/{id}", {
             id: item.empNumber,
           });
           break;
         default:
           navigate(
-            '/leave/viewLeaveRequest/{id}',
-            {id: item.id},
-            this.myLeaveList && {mode: 'my-leave'},
+            "/leave/viewLeaveRequest/{id}",
+            { id: item.id },
+            this.myLeaveList && { mode: "my-leave" }
           );
       }
     },
@@ -518,18 +525,18 @@ export default {
       });
       const confirmation = await this.$refs.bulkActionModal.showDialog();
 
-      if (confirmation !== 'ok') {
+      if (confirmation !== "ok") {
         this.isLoading = false;
         return;
       }
 
       this.processLeaveRequestBulkAction(ids, actionType)
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           if (Array.isArray(data))
             this.$toast.success({
-              title: this.$t('general.success'),
-              message: this.$t('leave.leave_requests_action', {
+              title: this.$t("general.success"),
+              message: this.$t("leave.leave_requests_action", {
                 action: actionType,
                 count: data.length,
               }),
@@ -553,7 +560,7 @@ export default {
       await this.execQuery();
     },
     onReset() {
-      this.filters = {...defaultFilters};
+      this.filters = { ...defaultFilters };
       this.resetDataTable();
     },
   },

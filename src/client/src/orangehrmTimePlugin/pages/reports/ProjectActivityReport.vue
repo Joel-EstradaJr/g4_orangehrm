@@ -25,7 +25,7 @@
     :filters="serializedFilters"
     :column-count="2"
   >
-    <template #default="{generateReport}">
+    <template #default="{ generateReport }">
       <oxd-table-filter :filter-title="$t('time.project_report')">
         <oxd-form @submit-valid="generateReport">
           <oxd-form-row>
@@ -61,7 +61,7 @@
               </oxd-grid-item>
               <oxd-grid-item class="orangehrm-switch-filter --span-column-2">
                 <oxd-text class="orangehrm-switch-filter-text" tag="p">
-                  {{ $t('time.only_include_approved_timesheets') }}
+                  {{ $t("time.only_include_approved_timesheets") }}
                 </oxd-text>
                 <oxd-switch-input v-model="filters.includeTimesheet" />
               </oxd-grid-item>
@@ -83,27 +83,27 @@
       <br />
     </template>
 
-    <template #footer="{data}">
-      {{ $t('time.total_duration') }}:
-      {{ data.meta ? data.meta.sum.label : '0.00' }}
+    <template #footer="{ data }">
+      {{ $t("time.total_duration") }}:
+      {{ data.meta ? data.meta.sum.label : "0.00" }}
     </template>
   </reports-table>
 </template>
 
 <script>
-import {computed, ref} from 'vue';
+import { computed, ref } from "vue";
 import {
   required,
   validSelection,
   validDateFormat,
   endDateShouldBeAfterStartDate,
   startDateShouldBeBeforeEndDate,
-} from '@/core/util/validation/rules';
-import ReportsTable from '@/core/components/table/ReportsTable';
-import ProjectAutocomplete from '@/orangehrmTimePlugin/components/ProjectAutocomplete.vue';
-import usei18n from '@/core/util/composable/usei18n';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {OxdSwitchInput} from '@ohrm/oxd';
+} from "@/core/util/validation/rules";
+import ReportsTable from "@/core/components/table/ReportsTable";
+import ProjectAutocomplete from "@/orangehrmTimePlugin/components/ProjectAutocomplete.vue";
+import usei18n from "@/core/util/composable/usei18n";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const defaultFilters = {
   project: null,
@@ -114,9 +114,9 @@ const defaultFilters = {
 
 export default {
   components: {
-    'reports-table': ReportsTable,
-    'oxd-switch-input': OxdSwitchInput,
-    'project-autocomplete': ProjectAutocomplete,
+    "reports-table": ReportsTable,
+    "oxd-switch-input": OxdSwitchInput,
+    "project-autocomplete": ProjectAutocomplete,
   },
 
   props: {
@@ -147,11 +147,11 @@ export default {
       fromDate: props.fromDate,
       toDate: props.toDate,
       includeTimesheet: props.includeTimesheet,
-      ...(props.project && {project: props.project}),
+      ...(props.project && { project: props.project }),
     });
 
-    const {$t} = usei18n();
-    const {userDateFormat} = useDateFormat();
+    const { $t } = usei18n();
+    const { userDateFormat } = useDateFormat();
 
     const rules = {
       project: [required, validSelection],
@@ -159,16 +159,16 @@ export default {
         validDateFormat(userDateFormat),
         startDateShouldBeBeforeEndDate(
           () => filters.value.toDate,
-          $t('general.from_date_should_be_before_to_date'),
-          {allowSameDate: true},
+          $t("general.from_date_should_be_before_to_date"),
+          { allowSameDate: true }
         ),
       ],
       toDate: [
         validDateFormat(userDateFormat),
         endDateShouldBeAfterStartDate(
           () => filters.value.fromDate,
-          $t('general.to_date_should_be_after_from_date'),
-          {allowSameDate: true},
+          $t("general.to_date_should_be_after_from_date"),
+          { allowSameDate: true }
         ),
       ],
     };
@@ -179,8 +179,8 @@ export default {
         fromDate: filters.value.fromDate,
         toDate: filters.value.toDate,
         includeTimesheet: filters.value.includeTimesheet
-          ? 'onlyApproved'
-          : 'all',
+          ? "onlyApproved"
+          : "all",
       };
     });
 

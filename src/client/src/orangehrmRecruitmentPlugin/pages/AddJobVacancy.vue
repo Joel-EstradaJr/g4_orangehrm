@@ -20,7 +20,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('recruitment.add_vacancy') }}
+        {{ $t("recruitment.add_vacancy") }}
       </oxd-text>
       <oxd-divider />
 
@@ -80,7 +80,7 @@
         <oxd-grid :cols="3" class="orangehrm-full-width-grid">
           <oxd-grid-item class="orangerhrm-switch-wrapper">
             <oxd-text class="orangehrm-text" tag="p">
-              {{ $t('general.active') }}
+              {{ $t("general.active") }}
             </oxd-text>
             <oxd-switch-input v-model="vacancy.status" />
           </oxd-grid-item>
@@ -89,7 +89,7 @@
         <oxd-grid :cols="3" class="orangehrm-full-width-grid">
           <oxd-grid-item class="orangerhrm-switch-wrapper">
             <oxd-text class="orangehrm-text" tag="p">
-              {{ $t('recruitment.publish_in_rss_feed_and_web_page') }}
+              {{ $t("recruitment.publish_in_rss_feed_and_web_page") }}
             </oxd-text>
             <oxd-switch-input v-model="vacancy.isPublished" />
           </oxd-grid-item>
@@ -126,27 +126,27 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
 import {
   required,
   numericOnly,
   validSelection,
   shouldNotExceedCharLength,
   numberShouldBeBetweenMinAndMaxValue,
-} from '@ohrm/core/util/validation/rules';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
-import VacancyLinkCard from '../components/VacancyLinkCard.vue';
-import {OxdSwitchInput} from '@ohrm/oxd';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import JobtitleDropdown from "@/orangehrmPimPlugin/components/JobtitleDropdown";
+import VacancyLinkCard from "../components/VacancyLinkCard.vue";
+import { OxdSwitchInput } from "@ohrm/oxd";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const vacancyModel = {
   jobTitle: null,
-  name: '',
+  name: "",
   hiringManager: null,
-  numOfPositions: '',
-  description: '',
+  numOfPositions: "",
+  description: "",
   status: true,
   isPublished: true,
 };
@@ -155,21 +155,21 @@ const basePath = `${window.location.protocol}//${window.location.host}${window.a
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
-    'employee-autocomplete': EmployeeAutocomplete,
-    'jobtitle-dropdown': JobtitleDropdown,
-    'vacancy-link-card': VacancyLinkCard,
+    "oxd-switch-input": OxdSwitchInput,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "jobtitle-dropdown": JobtitleDropdown,
+    "vacancy-link-card": VacancyLinkCard,
   },
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/vacancies',
+      "/api/v2/recruitment/vacancies"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const vacancyNameUniqueValidation = createUniqueValidator(
-      'Vacancy',
-      'name',
+      "Vacancy",
+      "name"
     );
     return {
       http,
@@ -179,7 +179,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      vacancy: {...vacancyModel},
+      vacancy: { ...vacancyModel },
       rules: {
         jobTitle: [required],
         name: [
@@ -190,8 +190,8 @@ export default {
         hiringManager: [required, validSelection],
         numOfPositions: [
           (value) => {
-            if (value === null || value === '') return true;
-            return typeof numericOnly(value) === 'string'
+            if (value === null || value === "") return true;
+            return typeof numericOnly(value) === "string"
               ? numericOnly(value)
               : numberShouldBeBetweenMinAndMaxValue(1, 99)(value);
           },
@@ -206,7 +206,7 @@ export default {
   },
   methods: {
     onCancel() {
-      navigate('/recruitment/viewJobVacancy');
+      navigate("/recruitment/viewJobVacancy");
     },
     onSave() {
       this.isLoading = true;
@@ -221,10 +221,10 @@ export default {
         status: this.vacancy.status,
         isPublished: this.vacancy.isPublished,
       };
-      this.http.create({...this.vacancy}).then((response) => {
-        const {data} = response.data;
+      this.http.create({ ...this.vacancy }).then((response) => {
+        const { data } = response.data;
         this.$toast.saveSuccess();
-        navigate('/recruitment/addJobVacancy/{id}', {id: data.id});
+        navigate("/recruitment/addJobVacancy/{id}", { id: data.id });
       });
     },
   },

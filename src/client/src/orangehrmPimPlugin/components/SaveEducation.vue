@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-top-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('general.add_education') }}
+      {{ $t("general.add_education") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -101,31 +101,31 @@
 </template>
 
 <script>
-import QualificationDropdown from '@/orangehrmPimPlugin/components/QualificationDropdown';
+import QualificationDropdown from "@/orangehrmPimPlugin/components/QualificationDropdown";
 import {
   required,
   shouldNotExceedCharLength,
   digitsOnly,
   validDateFormat,
   endDateShouldBeAfterStartDate,
-} from '@ohrm/core/util/validation/rules';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const educationModel = {
   educationId: null,
-  institute: '',
-  major: '',
-  year: '',
-  score: '',
-  startDate: '',
-  endDate: '',
+  institute: "",
+  major: "",
+  year: "",
+  score: "",
+  startDate: "",
+  endDate: "",
 };
 
 export default {
-  name: 'SaveEducation',
+  name: "SaveEducation",
 
   components: {
-    'qualification-dropdown': QualificationDropdown,
+    "qualification-dropdown": QualificationDropdown,
   },
 
   props: {
@@ -139,10 +139,10 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup() {
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       userDateFormat,
@@ -152,7 +152,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      education: {...educationModel},
+      education: { ...educationModel },
       rules: {
         educationId: [required],
         institute: [shouldNotExceedCharLength(100)],
@@ -185,7 +185,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

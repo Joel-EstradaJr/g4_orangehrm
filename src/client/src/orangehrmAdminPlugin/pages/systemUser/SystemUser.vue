@@ -112,38 +112,38 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import useSort from '@ohrm/core/util/composable/useSort';
+import { computed, ref } from "vue";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import useSort from "@ohrm/core/util/composable/useSort";
 import {
   shouldNotExceedCharLength,
   validSelection,
-} from '@/core/util/validation/rules';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import usei18n from '@/core/util/composable/usei18n';
+} from "@/core/util/validation/rules";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import usei18n from "@/core/util/composable/usei18n";
 
 const defaultFilters = {
-  username: '',
+  username: "",
   userRoleId: null,
   empNumber: null,
   status: null,
 };
 
 const defaultSortOrder = {
-  'u.userName': 'ASC',
-  'r.displayName': 'ASC',
-  'e.firstName': 'ASC',
-  'u.status': 'DEFAULT',
+  "u.userName": "ASC",
+  "r.displayName": "ASC",
+  "e.firstName": "ASC",
+  "u.status": "DEFAULT",
 };
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
-    'employee-autocomplete': EmployeeAutocomplete,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
   props: {
     unselectableIds: {
@@ -153,30 +153,30 @@ export default {
   },
 
   setup(props) {
-    const {$t} = usei18n();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $t } = usei18n();
+    const { $tEmpName } = useEmployeeNameTranslate();
     const userdataNormalizer = (data) => {
       return data.map((item) => {
         const selectable = props.unselectableIds.findIndex(
-          (id) => id == item.id,
+          (id) => id == item.id
         );
         return {
           id: item.id,
           userName: item.userName,
           role:
-            item.userRole?.displayName === 'Admin'
-              ? $t('general.admin')
-              : $t('general.ess'),
-          empName: $tEmpName(item.employee, {includeMiddle: false}),
-          status: item.status ? $t('general.enabled') : $t('general.disabled'),
+            item.userRole?.displayName === "Admin"
+              ? $t("general.admin")
+              : $t("general.ess"),
+          empName: $tEmpName(item.employee, { includeMiddle: false }),
+          status: item.status ? $t("general.enabled") : $t("general.disabled"),
           isSelectable: selectable === -1,
         };
       });
     };
 
-    const filters = ref({...defaultFilters});
+    const filters = ref({ ...defaultFilters });
 
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
     const serializedFilters = computed(() => {
@@ -191,7 +191,7 @@ export default {
     });
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/users',
+      "/api/v2/admin/users"
     );
     const {
       showPaginator,
@@ -228,60 +228,60 @@ export default {
     return {
       headers: [
         {
-          name: 'userName',
-          title: this.$t('general.username'),
-          sortField: 'u.userName',
-          style: {flex: 1},
+          name: "userName",
+          title: this.$t("general.username"),
+          sortField: "u.userName",
+          style: { flex: 1 },
         },
         {
-          name: 'role',
-          title: this.$t('general.user_role'),
-          style: {flex: 1},
-          sortField: 'r.displayName',
+          name: "role",
+          title: this.$t("general.user_role"),
+          style: { flex: 1 },
+          sortField: "r.displayName",
         },
         {
-          name: 'empName',
-          slot: 'title',
-          title: this.$t('general.employee_name'),
-          sortField: 'e.firstName',
-          style: {flex: 1},
+          name: "empName",
+          slot: "title",
+          title: this.$t("general.employee_name"),
+          sortField: "e.firstName",
+          style: { flex: 1 },
         },
         {
-          name: 'status',
-          title: this.$t('general.status'),
-          sortField: 'u.status',
-          style: {flex: 1},
+          name: "status",
+          title: this.$t("general.status"),
+          sortField: "u.status",
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
         },
       ],
       userRoles: [
-        {id: 1, label: this.$t('general.admin')},
-        {id: 2, label: this.$t('general.ess')},
+        { id: 1, label: this.$t("general.admin") },
+        { id: 2, label: this.$t("general.ess") },
       ],
       userStatuses: [
-        {id: 1, label: this.$t('general.enabled')},
-        {id: 0, label: this.$t('general.disabled')},
+        { id: 1, label: this.$t("general.enabled") },
+        { id: 0, label: this.$t("general.disabled") },
       ],
       checkedItems: [],
       rules: {
@@ -292,30 +292,30 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/admin/saveSystemUser');
+      navigate("/admin/saveSystemUser");
     },
     onClickEdit(item) {
-      navigate('/admin/saveSystemUser/{id}', {id: item.id});
+      navigate("/admin/saveSystemUser/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = this.checkedItems.map((index) => {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       const isSelectable = this.unselectableIds.findIndex(
-        (id) => id == item.id,
+        (id) => id == item.id
       );
       if (isSelectable > -1) {
         return this.$toast.cannotDelete();
       }
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -344,7 +344,7 @@ export default {
       await this.execQuery();
     },
     onClickReset() {
-      this.filters = {...defaultFilters};
+      this.filters = { ...defaultFilters };
       this.filterItems();
     },
   },

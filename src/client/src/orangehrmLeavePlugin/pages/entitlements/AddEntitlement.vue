@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">
-        {{ $t('leave.add_leave_entitlement') }}
+        {{ $t("leave.add_leave_entitlement") }}
       </oxd-text>
 
       <oxd-divider />
@@ -32,7 +32,7 @@
             <oxd-grid-item>
               <oxd-input-group
                 :label="$t('leave.add_to')"
-                :classes="{wrapper: '--grouped-field'}"
+                :classes="{ wrapper: '--grouped-field' }"
               >
                 <oxd-input-field
                   v-model="leaveEntitlement.bulkAssign"
@@ -87,7 +87,7 @@
             <oxd-grid-item class="orangehrm-leave-entitled">
               <oxd-text class="orangehrm-leave-entitled-text" type="subtitle-2">
                 {{
-                  $t('leave.matches_emp_count_employees', {
+                  $t("leave.matches_emp_count_employees", {
                     empMatchCount: empMatchCount,
                   })
                 }}
@@ -152,34 +152,34 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {required, max, validSelection} from '@/core/util/validation/rules';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import LeaveTypeDropdown from '@/orangehrmLeavePlugin/components/LeaveTypeDropdown';
-import LeavePeriodDropdown from '@/orangehrmLeavePlugin/components/LeavePeriodDropdown';
-import EntitlementUpdateModal from '@/orangehrmLeavePlugin/components/EntitlementUpdateModal';
-import EntitlementBulkUpdateModal from '@/orangehrmLeavePlugin/components/EntitlementBulkUpdateModal';
-import EntitlementNoMatchModal from '@/orangehrmLeavePlugin/components/EntitlementNoMatchModal';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { required, max, validSelection } from "@/core/util/validation/rules";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import LeaveTypeDropdown from "@/orangehrmLeavePlugin/components/LeaveTypeDropdown";
+import LeavePeriodDropdown from "@/orangehrmLeavePlugin/components/LeavePeriodDropdown";
+import EntitlementUpdateModal from "@/orangehrmLeavePlugin/components/EntitlementUpdateModal";
+import EntitlementBulkUpdateModal from "@/orangehrmLeavePlugin/components/EntitlementBulkUpdateModal";
+import EntitlementNoMatchModal from "@/orangehrmLeavePlugin/components/EntitlementNoMatchModal";
 
 const leaveEntitlementModel = {
   bulkAssign: 0,
   employee: null,
   leaveType: null,
   leavePeriod: null,
-  entitlement: '',
+  entitlement: "",
   subunit: null,
   location: null,
 };
 
 export default {
   components: {
-    'leave-type-dropdown': LeaveTypeDropdown,
-    'leave-period-dropdown': LeavePeriodDropdown,
-    'employee-autocomplete': EmployeeAutocomplete,
-    'entitlement-update-modal': EntitlementUpdateModal,
-    'entitlement-bulk-update-modal': EntitlementBulkUpdateModal,
-    'entitlement-no-match-modal': EntitlementNoMatchModal,
+    "leave-type-dropdown": LeaveTypeDropdown,
+    "leave-period-dropdown": LeavePeriodDropdown,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "entitlement-update-modal": EntitlementUpdateModal,
+    "entitlement-bulk-update-modal": EntitlementBulkUpdateModal,
+    "entitlement-no-match-modal": EntitlementNoMatchModal,
   },
 
   props: {
@@ -201,7 +201,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/leave-entitlements',
+      "/api/v2/leave/leave-entitlements"
     );
     return {
       http,
@@ -211,7 +211,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      leaveEntitlement: {...leaveEntitlementModel},
+      leaveEntitlement: { ...leaveEntitlementModel },
       leavePeriodDefined: false,
       rules: {
         employee: [required, validSelection],
@@ -222,7 +222,7 @@ export default {
           (v) => {
             return (
               /^\d+(\.\d{1,2})?$/.test(v) ||
-              this.$t('leave.should_be_a_number_with_2_decimal_places')
+              this.$t("leave.should_be_a_number_with_2_decimal_places")
             );
           },
           max(10000),
@@ -233,8 +233,8 @@ export default {
   },
 
   watch: {
-    'leaveEntitlement.location': 'fetchEmployeeCount',
-    'leaveEntitlement.subunit': 'fetchEmployeeCount',
+    "leaveEntitlement.location": "fetchEmployeeCount",
+    "leaveEntitlement.subunit": "fetchEmployeeCount",
   },
 
   beforeMount() {
@@ -246,7 +246,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/leave/viewLeaveEntitlements');
+      navigate("/leave/viewLeaveEntitlements");
     },
     async onSave() {
       let confirmation = null;
@@ -263,7 +263,7 @@ export default {
         confirmation = await this.$refs.updateModal.showDialog();
       }
 
-      if (confirmation !== 'ok') {
+      if (confirmation !== "ok") {
         this.isLoading = false;
         return;
       }
@@ -290,11 +290,11 @@ export default {
         .then((response) => {
           let toast = null;
           let params = null;
-          const {data} = response.data;
+          const { data } = response.data;
           if (Array.isArray(data)) {
             toast = this.$toast.success({
-              title: this.$t('general.success'),
-              message: this.$t('leave.entitlement_added_to_n_employees', {
+              title: this.$t("general.success"),
+              message: this.$t("leave.entitlement_added_to_n_employees", {
                 count: data.length,
               }),
             });
@@ -315,24 +315,24 @@ export default {
         })
         .then((params) => {
           if (params) {
-            navigate('/leave/viewLeaveEntitlements', undefined, params);
+            navigate("/leave/viewLeaveEntitlements", undefined, params);
           } else {
-            navigate('/leave/viewLeaveEntitlements');
+            navigate("/leave/viewLeaveEntitlements");
           }
         });
     },
     async fetchEmployeeCount() {
       this.http
         .request({
-          method: 'GET',
-          url: '/api/v2/pim/employees/count',
+          method: "GET",
+          url: "/api/v2/pim/employees/count",
           params: {
             locationId: this.leaveEntitlement.location?.id,
             subunitId: this.leaveEntitlement.subunit?.id,
           },
         })
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.empMatchCount = parseInt(data.count);
         });
     },

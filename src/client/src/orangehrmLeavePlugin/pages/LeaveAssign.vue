@@ -28,7 +28,7 @@
     </leave-assign-confirm-modal>
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('leave.assign_leave') }}
+        {{ $t("leave.assign_leave") }}
       </oxd-text>
 
       <oxd-divider />
@@ -172,26 +172,26 @@ import {
   validDateFormat,
   shouldNotExceedCharLength,
   endDateShouldBeAfterStartDate,
-} from '@/core/util/validation/rules';
-import {yearRange} from '@ohrm/core/util/helper/year-range';
-import {diffInDays} from '@ohrm/core/util/helper/datefns';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import LeaveTypeDropdown from '@/orangehrmLeavePlugin/components/LeaveTypeDropdown';
-import LeaveDurationInput from '@/orangehrmLeavePlugin/components/LeaveDurationInput';
-import LeaveBalance from '@/orangehrmLeavePlugin/components/LeaveBalance';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import LeaveConflict from '@/orangehrmLeavePlugin/components/LeaveConflict';
-import LeaveAssignConfirmModal from '@/orangehrmLeavePlugin/components/LeaveAssignConfirmModal';
-import useLeaveValidators from '@/orangehrmLeavePlugin/util/composable/useLeaveValidators';
-import useForm from '@ohrm/core/util/composable/useForm';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@/core/util/validation/rules";
+import { yearRange } from "@ohrm/core/util/helper/year-range";
+import { diffInDays } from "@ohrm/core/util/helper/datefns";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import LeaveTypeDropdown from "@/orangehrmLeavePlugin/components/LeaveTypeDropdown";
+import LeaveDurationInput from "@/orangehrmLeavePlugin/components/LeaveDurationInput";
+import LeaveBalance from "@/orangehrmLeavePlugin/components/LeaveBalance";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import LeaveConflict from "@/orangehrmLeavePlugin/components/LeaveConflict";
+import LeaveAssignConfirmModal from "@/orangehrmLeavePlugin/components/LeaveAssignConfirmModal";
+import useLeaveValidators from "@/orangehrmLeavePlugin/util/composable/useLeaveValidators";
+import useForm from "@ohrm/core/util/composable/useForm";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const leaveModel = {
   employee: null,
   type: null,
   fromDate: null,
   toDate: null,
-  comment: '',
+  comment: "",
   partialOptions: null,
   duration: {
     type: null,
@@ -206,31 +206,31 @@ const leaveModel = {
 };
 
 const defaultWorkshift = {
-  startTime: '9:00',
-  endTime: '17:00',
+  startTime: "9:00",
+  endTime: "17:00",
 };
 
 export default {
-  name: 'LeaveAssign',
+  name: "LeaveAssign",
 
   components: {
-    'leave-type-dropdown': LeaveTypeDropdown,
-    'leave-duration-input': LeaveDurationInput,
-    'leave-balance': LeaveBalance,
-    'employee-autocomplete': EmployeeAutocomplete,
-    'leave-conflict': LeaveConflict,
-    'leave-assign-confirm-modal': LeaveAssignConfirmModal,
+    "leave-type-dropdown": LeaveTypeDropdown,
+    "leave-duration-input": LeaveDurationInput,
+    "leave-balance": LeaveBalance,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "leave-conflict": LeaveConflict,
+    "leave-assign-confirm-modal": LeaveAssignConfirmModal,
   },
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/employees/leave-requests',
+      "/api/v2/leave/employees/leave-requests"
     );
-    const {serializeBody, validateLeaveBalance, validateOverlapLeaves} =
+    const { serializeBody, validateLeaveBalance, validateOverlapLeaves } =
       useLeaveValidators(http);
-    const {formRef, reset} = useForm();
-    const {userDateFormat} = useDateFormat();
+    const { formRef, reset } = useForm();
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -246,7 +246,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      leave: {...leaveModel},
+      leave: { ...leaveModel },
       rules: {
         type: [required],
         fromDate: [required, validDateFormat(this.userDateFormat)],
@@ -255,24 +255,24 @@ export default {
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.leave.fromDate,
-            this.$t('general.to_date_should_be_after_from_date'),
-            {allowSameDate: true},
+            this.$t("general.to_date_should_be_after_from_date"),
+            { allowSameDate: true }
           ),
         ],
         comment: [shouldNotExceedCharLength(250)],
         employee: [required, validSelection],
       },
       partialOptions: [
-        {id: 1, label: this.$t('leave.all_days'), key: 'all'},
-        {id: 2, label: this.$t('leave.start_day_only'), key: 'start'},
-        {id: 3, label: this.$t('leave.end_day_only'), key: 'end'},
-        {id: 4, label: this.$t('leave.start_and_end_day'), key: 'start_end'},
+        { id: 1, label: this.$t("leave.all_days"), key: "all" },
+        { id: 2, label: this.$t("leave.start_day_only"), key: "start" },
+        { id: 3, label: this.$t("leave.end_day_only"), key: "end" },
+        { id: 4, label: this.$t("leave.start_and_end_day"), key: "start_end" },
       ],
       showLeaveConflict: false,
       isWorkShiftExceeded: false,
       leaveConflictData: null,
       yearsArray: [...yearRange()],
-      workShift: {...defaultWorkshift},
+      workShift: { ...defaultWorkshift },
     };
   },
 
@@ -295,29 +295,33 @@ export default {
   },
 
   watch: {
-    'leave.employee': function (employee) {
+    "leave.employee": function (employee) {
       if (employee?.id) {
         this.http
           .request({
-            method: 'GET',
+            method: "GET",
             url: `/api/v2/pim/employees/${employee.id}/work-shift`,
           })
           .then((response) => {
-            const {data} = response.data;
+            const { data } = response.data;
             this.workShift = data;
           });
       } else {
-        this.workShift = {...defaultWorkshift};
+        this.workShift = { ...defaultWorkshift };
       }
     },
     appliedLeaveDuration: function (duration) {
       if (duration === 1) {
-        this.leave.duration.type = {id: 1, label: 'Full Day', key: 'full_day'};
+        this.leave.duration.type = {
+          id: 1,
+          label: "Full Day",
+          key: "full_day",
+        };
       } else {
         this.leave.duration.type = null;
       }
     },
-    'leave.fromDate': function (fromDate) {
+    "leave.fromDate": function (fromDate) {
       if (!fromDate || this.leave.toDate) return;
       this.leave.toDate = fromDate;
     },
@@ -330,16 +334,16 @@ export default {
       this.showLeaveConflict = false;
 
       this.validateLeaveBalance(this.leave)
-        .then(async ({balance}) => {
+        .then(async ({ balance }) => {
           if (balance <= 0) {
             const confirmation = await this.$refs.confirmDialog.showDialog();
-            if (confirmation !== 'ok') {
+            if (confirmation !== "ok") {
               return Promise.reject();
             }
           }
           return this.validateOverlapLeaves(this.leave);
         })
-        .then(({isConflict, isOverWorkshift, data}) => {
+        .then(({ isConflict, isOverWorkshift, data }) => {
           if (isConflict) {
             this.leaveConflictData = data;
             this.showLeaveConflict = true;
@@ -355,8 +359,8 @@ export default {
         .catch(() => {
           this.showLeaveConflict &&
             this.$toast.warn({
-              title: this.$t('general.warning'),
-              message: this.$t('leave.failed_to_submit'),
+              title: this.$t("general.warning"),
+              message: this.$t("leave.failed_to_submit"),
             });
         })
         .finally(() => {

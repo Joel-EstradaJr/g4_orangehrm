@@ -15,8 +15,8 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {APIService} from '@/core/util/services/api.service';
-import {diffInDays} from '@ohrm/core/util/helper/datefns';
+import { APIService } from "@/core/util/services/api.service";
+import { diffInDays } from "@ohrm/core/util/helper/datefns";
 interface Duration {
   type: DurationOption | null;
   fromTime: string | null;
@@ -80,9 +80,9 @@ export default function useLeaveValidators(http: APIService) {
   const serializeBody = (leave: LeaveModel) => {
     const payload: LeaveRequestBody = {
       leaveTypeId: leave.type ? leave.type.id : 1,
-      fromDate: leave.fromDate ? leave.fromDate : '',
-      toDate: leave.toDate ? leave.toDate : '',
-      comment: leave.comment === '' ? null : leave.comment,
+      fromDate: leave.fromDate ? leave.fromDate : "",
+      toDate: leave.toDate ? leave.toDate : "",
+      comment: leave.comment === "" ? null : leave.comment,
       empNumber: leave.employee ? leave.employee.id : undefined,
     };
 
@@ -90,7 +90,7 @@ export default function useLeaveValidators(http: APIService) {
       const duration: DurationObject = {
         type: leave.duration.type?.key,
       };
-      if (duration.type === 'specify_time') {
+      if (duration.type === "specify_time") {
         if (leave.duration.fromTime) {
           duration.fromTime = leave.duration.fromTime;
         }
@@ -115,9 +115,9 @@ export default function useLeaveValidators(http: APIService) {
         if (leave.endDuration.toTime) {
           endDuration.toTime = leave.endDuration.toTime;
         }
-        if (payload.partialOption === 'start_end') {
+        if (payload.partialOption === "start_end") {
           payload.endDuration = endDuration;
-        } else if (payload.partialOption === 'end') {
+        } else if (payload.partialOption === "end") {
           payload.duration = endDuration;
         }
       }
@@ -125,7 +125,7 @@ export default function useLeaveValidators(http: APIService) {
 
     // Validation to prevent fromTime & toTime being sent with incorrect duration.type
     if (
-      payload.duration?.type !== 'specify_time' &&
+      payload.duration?.type !== "specify_time" &&
       (payload.duration?.fromTime || payload.duration?.toTime)
     ) {
       payload.duration.fromTime = undefined;
@@ -133,7 +133,7 @@ export default function useLeaveValidators(http: APIService) {
     }
 
     if (
-      payload.endDuration?.type !== 'specify_time' &&
+      payload.endDuration?.type !== "specify_time" &&
       (payload.endDuration?.fromTime || payload.endDuration?.toTime)
     ) {
       payload.endDuration.fromTime = undefined;
@@ -152,13 +152,13 @@ export default function useLeaveValidators(http: APIService) {
     };
 
     if (leave.duration.type) {
-      payload['duration[type]'] = leave.duration.type.key;
-      if (payload['duration[type]'] === 'specify_time') {
+      payload["duration[type]"] = leave.duration.type.key;
+      if (payload["duration[type]"] === "specify_time") {
         if (leave.duration.fromTime) {
-          payload['duration[fromTime]'] = leave.duration.fromTime;
+          payload["duration[fromTime]"] = leave.duration.fromTime;
         }
         if (leave.duration.toTime) {
-          payload['duration[toTime]'] = leave.duration.toTime;
+          payload["duration[toTime]"] = leave.duration.toTime;
         }
       }
     }
@@ -171,21 +171,21 @@ export default function useLeaveValidators(http: APIService) {
       if (leaveDuration > 1 && leave.partialOptions) {
         payload.partialOption = leave.partialOptions.key;
         if (leave.endDuration.type) {
-          if (payload.partialOption === 'start_end') {
-            payload['endDuration[type]'] = leave.endDuration.type.key;
+          if (payload.partialOption === "start_end") {
+            payload["endDuration[type]"] = leave.endDuration.type.key;
             if (leave.endDuration.fromTime) {
-              payload['endDuration[fromTime]'] = leave.endDuration.fromTime;
+              payload["endDuration[fromTime]"] = leave.endDuration.fromTime;
             }
             if (leave.endDuration.toTime) {
-              payload['endDuration[toTime]'] = leave.endDuration.toTime;
+              payload["endDuration[toTime]"] = leave.endDuration.toTime;
             }
-          } else if (payload.partialOption === 'end') {
-            payload['duration[type]'] = leave.endDuration.type.key;
+          } else if (payload.partialOption === "end") {
+            payload["duration[type]"] = leave.endDuration.type.key;
             if (leave.endDuration.fromTime) {
-              payload['duration[fromTime]'] = leave.endDuration.fromTime;
+              payload["duration[fromTime]"] = leave.endDuration.fromTime;
             }
             if (leave.endDuration.toTime) {
-              payload['duration[toTime]'] = leave.endDuration.toTime;
+              payload["duration[toTime]"] = leave.endDuration.toTime;
             }
           }
         }
@@ -194,36 +194,36 @@ export default function useLeaveValidators(http: APIService) {
 
     // Validation to prevent fromTime & toTime being sent with incorrect duration[type]
     if (
-      payload['duration[type]'] !== 'specify_time' &&
-      (payload['duration[fromTime]'] || payload['duration[toTime]'])
+      payload["duration[type]"] !== "specify_time" &&
+      (payload["duration[fromTime]"] || payload["duration[toTime]"])
     ) {
-      payload['duration[fromTime]'] = undefined;
-      payload['duration[toTime]'] = undefined;
+      payload["duration[fromTime]"] = undefined;
+      payload["duration[toTime]"] = undefined;
     }
 
     if (
-      payload['endDuration[type]'] !== 'specify_time' &&
-      (payload['endDuration[fromTime]'] || payload['endDuration[toTime]'])
+      payload["endDuration[type]"] !== "specify_time" &&
+      (payload["endDuration[fromTime]"] || payload["endDuration[toTime]"])
     ) {
-      payload['endDuration[fromTime]'] = undefined;
-      payload['endDuration[toTime]'] = undefined;
+      payload["endDuration[fromTime]"] = undefined;
+      payload["endDuration[toTime]"] = undefined;
     }
 
     return payload;
   };
 
   const validateOverlapLeaves = (
-    leaveData: LeaveModel,
+    leaveData: LeaveModel
   ): Promise<OverlapObj> => {
     return new Promise((resolve, reject) => {
       http
         .request({
-          method: 'GET',
-          url: '/api/v2/leave/overlap-leaves',
+          method: "GET",
+          url: "/api/v2/leave/overlap-leaves",
           params: serializeParams(leaveData),
         })
         .then((response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
 
           if (Array.isArray(data) && data.length > 0) {
             resolve({
@@ -249,7 +249,7 @@ export default function useLeaveValidators(http: APIService) {
     return new Promise((resolve, reject) => {
       http
         .request({
-          method: 'GET',
+          method: "GET",
           url: `/api/v2/leave/leave-balance/leave-type/${leaveData.type?.id}`,
           params: serializeParams(leaveData),
         })
@@ -258,7 +258,7 @@ export default function useLeaveValidators(http: APIService) {
           let breakdown = null;
           let metaData = null;
           if (response.status === 200) {
-            const {data, meta} = response.data;
+            const { data, meta } = response.data;
             metaData = meta;
             if (data.balance) {
               // response sends balance directly when no duration defined
@@ -277,7 +277,7 @@ export default function useLeaveValidators(http: APIService) {
               balance = 0;
             }
           }
-          resolve({balance, breakdown, metaData});
+          resolve({ balance, breakdown, metaData });
         })
         .catch((error) => {
           reject(error);

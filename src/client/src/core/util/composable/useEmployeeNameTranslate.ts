@@ -15,7 +15,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import usei18n from '@/core/util/composable/usei18n';
+import usei18n from "@/core/util/composable/usei18n";
 
 type Employee = {
   firstName: string;
@@ -30,33 +30,33 @@ type Options = {
 };
 
 export default function useEmployeeNameTranslate() {
-  const {$t} = usei18n();
+  const { $t } = usei18n();
 
   const translateEmployeeName = (
     employee: Employee,
-    options?: Options,
+    options?: Options
   ): string => {
-    if (employee.firstName === 'Purged' && employee.lastName === 'Employee') {
-      return $t('general.purged_employee');
+    if (employee.firstName === "Purged" && employee.lastName === "Employee") {
+      return $t("general.purged_employee");
     }
 
     const includeMiddle = options?.includeMiddle;
     const excludePastEmpTag = options?.excludePastEmpTag;
 
     const resolvedMiddleName =
-      typeof includeMiddle === 'boolean' &&
+      typeof includeMiddle === "boolean" &&
       includeMiddle &&
-      typeof employee.middleName === 'string'
+      typeof employee.middleName === "string"
         ? ` ${employee.middleName} `
-        : ' ';
+        : " ";
 
     if (employee.terminationId) {
       const resolvedPastEmpTag =
-        typeof excludePastEmpTag === 'undefined'
-          ? ` ${$t('general.past_employee')}`
+        typeof excludePastEmpTag === "undefined"
+          ? ` ${$t("general.past_employee")}`
           : excludePastEmpTag
-          ? ''
-          : ` ${$t('general.past_employee')}`;
+          ? ""
+          : ` ${$t("general.past_employee")}`;
 
       return `${employee.firstName}${resolvedMiddleName}${employee.lastName}${resolvedPastEmpTag}`;
     }

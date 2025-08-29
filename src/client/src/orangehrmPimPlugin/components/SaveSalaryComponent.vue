@@ -94,7 +94,7 @@
 
       <oxd-form-row class="directdeposit-form-header">
         <oxd-text class="directdeposit-form-header-text" tag="p">
-          {{ $t('pim.include_direct_deposit_details') }}
+          {{ $t("pim.include_direct_deposit_details") }}
         </oxd-text>
         <oxd-switch-input v-model="includeDirectDeposit" />
       </oxd-form-row>
@@ -170,30 +170,30 @@ import {
   maxCurrency,
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {OxdSwitchInput} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const salComponentModel = {
-  name: '',
-  salaryAmount: '',
-  comment: '',
+  name: "",
+  salaryAmount: "",
+  comment: "",
   payGradeId: null,
   payFrequencyId: null,
   currencyId: null,
 };
 
 const directDepositModel = {
-  directDepositAccount: '',
+  directDepositAccount: "",
   directDepositAccountType: null,
-  directDepositRoutingNumber: '',
-  directDepositAmount: '',
+  directDepositRoutingNumber: "",
+  directDepositAmount: "",
 };
 
 export default {
-  name: 'SaveSalaryComponent',
+  name: "SaveSalaryComponent",
 
   components: {
-    'oxd-switch-input': OxdSwitchInput,
+    "oxd-switch-input": OxdSwitchInput,
   },
 
   props: {
@@ -219,15 +219,15 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   data() {
     return {
       isLoading: false,
       includeDirectDeposit: false,
-      salaryComponent: {...salComponentModel},
-      directDeposit: {...directDepositModel},
-      accountType: '',
+      salaryComponent: { ...salComponentModel },
+      directDeposit: { ...directDepositModel },
+      accountType: "",
       usableCurrencies: [],
       rules: {
         name: [required, shouldNotExceedCharLength(100)],
@@ -257,7 +257,7 @@ export default {
 
   computed: {
     showOptionalAccountType() {
-      return this.directDeposit.directDepositAccountType?.id == 'OTHER';
+      return this.directDeposit.directDepositAccountType?.id == "OTHER";
     },
     minAmount() {
       return this.currencyInfo?.minAmount;
@@ -273,8 +273,8 @@ export default {
         return this.currencies.filter(
           (item) =>
             this.usableCurrencies.findIndex(
-              (currency) => currency.id === item.id,
-            ) > -1,
+              (currency) => currency.id === item.id
+            ) > -1
         );
       } else {
         return [];
@@ -282,23 +282,23 @@ export default {
     },
     currencyInfo() {
       return this.usableCurrencies.find(
-        (item) => item.id === this.salaryComponent.currencyId?.id,
+        (item) => item.id === this.salaryComponent.currencyId?.id
       );
     },
   },
 
   watch: {
-    'salaryComponent.payGradeId': function (newVal) {
+    "salaryComponent.payGradeId": function (newVal) {
       if (newVal?.id) {
         this.isLoading = true;
         this.http
           .request({
             url: `/api/v2/admin/pay-grades/${newVal.id}/currencies`,
-            method: 'GET',
-            params: {limit: 0},
+            method: "GET",
+            params: { limit: 0 },
           })
           .then((response) => {
-            const {data} = response.data;
+            const { data } = response.data;
             this.usableCurrencies = data.map((item) => {
               return {
                 id: item.currencyType.id,
@@ -309,7 +309,7 @@ export default {
             });
             const currency = this.salaryComponent.currencyId;
             const currencyIndex = this.usableCurrencies.findIndex(
-              (item) => item.id === currency?.id,
+              (item) => item.id === currency?.id
             );
             this.salaryComponent.currencyId =
               currencyIndex === -1 ? null : this.salaryComponent.currencyId;
@@ -327,11 +327,11 @@ export default {
     this.$nextTick(() => {
       this.rules.salaryAmount.push((v) => {
         const min = this.minAmount ? this.minAmount : 0;
-        return v >= min || this.$t('pim.should_be_within_min_max_values');
+        return v >= min || this.$t("pim.should_be_within_min_max_values");
       });
       this.rules.salaryAmount.push((v) => {
         const max = this.maxAmount ? this.maxAmount : 999999999;
-        return v <= max || this.$t('pim.should_be_within_min_max_values');
+        return v <= max || this.$t("pim.should_be_within_min_max_values");
       });
     });
   },
@@ -376,7 +376,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

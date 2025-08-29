@@ -27,19 +27,21 @@
       <oxd-divider />
       <template v-if="errorType === null">
         <oxd-text>
-          {{ $t('auth.client_name_would_like_to', {clientName: clientName}) }}:
+          {{
+            $t("auth.client_name_would_like_to", { clientName: clientName })
+          }}:
         </oxd-text>
         <ul class="orangehrm-oauth-list">
           <li>
-            <oxd-text>{{ $t('auth.access_and_manage_your_data') }}</oxd-text>
+            <oxd-text>{{ $t("auth.access_and_manage_your_data") }}</oxd-text>
           </li>
           <li>
             <oxd-text>
-              {{ $t('auth.perform_actions_on_your_behalf') }}
+              {{ $t("auth.perform_actions_on_your_behalf") }}
             </oxd-text>
           </li>
         </ul>
-        <oxd-text>{{ $t('auth.do_you_want_to_allow_access') }}</oxd-text>
+        <oxd-text>{{ $t("auth.do_you_want_to_allow_access") }}</oxd-text>
         <br />
         <oxd-form
           ref="authorizeForm"
@@ -83,7 +85,7 @@
           :message="$t('auth.this_request_is_invalid')"
         />
         <oxd-text class="orangehrm-oauth-error">
-          {{ $t('general.error') }}: {{ errorType }}
+          {{ $t("general.error") }}: {{ errorType }}
         </oxd-text>
       </template>
     </div>
@@ -92,15 +94,15 @@
 </template>
 
 <script>
-import {urlFor} from '@/core/util/helper/url';
-import LoginBranding from '@/orangehrmAuthenticationPlugin/components/LoginBranding.vue';
-import {OxdAlert} from '@ohrm/oxd';
+import { urlFor } from "@/core/util/helper/url";
+import LoginBranding from "@/orangehrmAuthenticationPlugin/components/LoginBranding.vue";
+import { OxdAlert } from "@ohrm/oxd";
 
 export default {
-  name: 'OAuthAuthorize',
+  name: "OAuthAuthorize",
   components: {
-    'login-branding': LoginBranding,
-    'oxd-alert': OxdAlert,
+    "login-branding": LoginBranding,
+    "oxd-alert": OxdAlert,
   },
   props: {
     params: {
@@ -127,7 +129,7 @@ export default {
   },
   computed: {
     submitUrl() {
-      return urlFor('/oauth2/authorize/consent');
+      return urlFor("/oauth2/authorize/consent");
     },
   },
   methods: {

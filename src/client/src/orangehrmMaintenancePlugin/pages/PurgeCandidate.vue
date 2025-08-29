@@ -34,18 +34,18 @@
 </template>
 
 <script>
-import {reloadPage} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import ConfirmationDialog from '@/core/components/dialogs/ConfirmationDialog';
-import MaintenanceNote from '@/orangehrmMaintenancePlugin/components/MaintenanceNote';
-import SelectedCandidates from '@/orangehrmMaintenancePlugin/components/SelectedCandidates';
+import { reloadPage } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import ConfirmationDialog from "@/core/components/dialogs/ConfirmationDialog";
+import MaintenanceNote from "@/orangehrmMaintenancePlugin/components/MaintenanceNote";
+import SelectedCandidates from "@/orangehrmMaintenancePlugin/components/SelectedCandidates";
 
 export default {
-  name: 'PurgeCandidate',
+  name: "PurgeCandidate",
   components: {
-    'maintenance-note': MaintenanceNote,
-    'purge-confirmation': ConfirmationDialog,
-    'selected-candidates': SelectedCandidates,
+    "maintenance-note": MaintenanceNote,
+    "purge-confirmation": ConfirmationDialog,
+    "selected-candidates": SelectedCandidates,
   },
   props: {
     instanceIdentifier: {
@@ -56,7 +56,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/maintenance/candidates/purge',
+      "/api/v2/maintenance/candidates/purge"
     );
 
     return {
@@ -72,7 +72,7 @@ export default {
     onClickPurge(vacancy) {
       const vacancyId = vacancy;
       this.$refs.purgeDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.purgeCandidates(vacancyId);
         }
       });
@@ -85,8 +85,8 @@ export default {
         })
         .then(() => {
           return this.$toast.success({
-            title: this.$t('general.success'),
-            message: this.$t('maintenance.purge_success'),
+            title: this.$t("general.success"),
+            message: this.$t("maintenance.purge_success"),
           });
         })
         .then(() => {

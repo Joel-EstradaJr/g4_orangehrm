@@ -15,9 +15,9 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {App, inject, ComponentOptions, getCurrentInstance} from 'vue';
+import { App, inject, ComponentOptions, getCurrentInstance } from "vue";
 
-export type Capability = 'canRead' | 'canCreate' | 'canUpdate' | 'canDelete';
+export type Capability = "canRead" | "canCreate" | "canUpdate" | "canDelete";
 
 export type DataGroup = {
   [key in Capability]: boolean;
@@ -38,16 +38,16 @@ const ResolvePermissions = (capability: Capability) => {
   return (...args: string[]): boolean => {
     const instance = getCurrentInstance();
     if (!instance) {
-      throw new Error('Vue app context not found!');
+      throw new Error("Vue app context not found!");
     }
-    const permissions = inject('permissions', undefined) as
+    const permissions = inject("permissions", undefined) as
       | Permission
       | undefined;
     if (permissions) {
       return args.reduce(
         (acc: boolean, rule: string) =>
           acc && Boolean(permissions[rule]) && permissions[rule][capability],
-        true,
+        true
       );
     }
     return false;
@@ -58,10 +58,10 @@ function defineMixin(): ComponentOptions {
   return {
     beforeCreate(): void {
       this.$can = {
-        read: ResolvePermissions('canRead'),
-        create: ResolvePermissions('canCreate'),
-        update: ResolvePermissions('canUpdate'),
-        delete: ResolvePermissions('canDelete'),
+        read: ResolvePermissions("canRead"),
+        create: ResolvePermissions("canCreate"),
+        update: ResolvePermissions("canUpdate"),
+        delete: ResolvePermissions("canDelete"),
       };
     },
   };

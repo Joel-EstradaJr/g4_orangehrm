@@ -26,19 +26,19 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import PostLikeButton from '@/orangehrmBuzzPlugin/components/PostLikeButton.vue';
-import PostShareButton from '@/orangehrmBuzzPlugin/components/PostShareButton.vue';
-import PostCommentButton from '@/orangehrmBuzzPlugin/components/PostCommentButton.vue';
+import { APIService } from "@/core/util/services/api.service";
+import useBuzzAPIs from "@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs";
+import PostLikeButton from "@/orangehrmBuzzPlugin/components/PostLikeButton.vue";
+import PostShareButton from "@/orangehrmBuzzPlugin/components/PostShareButton.vue";
+import PostCommentButton from "@/orangehrmBuzzPlugin/components/PostCommentButton.vue";
 
 export default {
-  name: 'PostActions',
+  name: "PostActions",
 
   components: {
-    'post-like': PostLikeButton,
-    'post-share': PostShareButton,
-    'post-comment': PostCommentButton,
+    "post-like": PostLikeButton,
+    "post-share": PostShareButton,
+    "post-comment": PostCommentButton,
   },
 
   props: {
@@ -48,30 +48,30 @@ export default {
     },
   },
 
-  emits: ['like', 'comment', 'share'],
+  emits: ["like", "comment", "share"],
 
   setup(props, context) {
     let loading = false;
-    const {updatePostLike} = useBuzzAPIs(
-      new APIService(window.appGlobal.baseUrl, ''),
+    const { updatePostLike } = useBuzzAPIs(
+      new APIService(window.appGlobal.baseUrl, "")
     );
 
     const onClickAction = (actionType) => {
       switch (actionType) {
-        case 'comment':
-          context.emit('comment');
+        case "comment":
+          context.emit("comment");
           break;
 
-        case 'share':
-          context.emit('share');
+        case "share":
+          context.emit("share");
           break;
 
-        case 'like':
+        case "like":
           if (!loading) {
             loading = true;
             updatePostLike(props.post.id, props.post.liked).then(() => {
               loading = false;
-              context.emit('like');
+              context.emit("like");
             });
           }
           break;

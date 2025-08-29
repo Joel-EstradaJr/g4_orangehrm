@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import {promiseDebounce} from '@ohrm/oxd';
-import {APIService} from '@/core/util/services/api.service';
-import usei18n from '@/core/util/composable/usei18n';
+import { promiseDebounce } from "@ohrm/oxd";
+import { APIService } from "@/core/util/services/api.service";
+import usei18n from "@/core/util/composable/usei18n";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
+} from "@/core/util/validation/rules";
 
 export default {
   props: {
@@ -42,27 +42,27 @@ export default {
     },
   },
   setup(props) {
-    const {$t} = usei18n();
+    const { $t } = usei18n();
 
     const validateLangString = (value) => {
       return new Promise((resolve) => {
         if (value) {
           const http = new APIService(
             window.appGlobal.baseUrl,
-            `/api/v2/admin/i18n/translation/${props.langStringId}/validate`,
+            `/api/v2/admin/i18n/translation/${props.langStringId}/validate`
           );
           http
             .request({
-              method: 'GET',
+              method: "GET",
               params: {
                 translation: value,
               },
             })
             .then((response) => {
-              const {data} = response.data;
+              const { data } = response.data;
               return data.valid === true
                 ? resolve(true)
-                : resolve($t('admin.' + data.code));
+                : resolve($t("admin." + data.code));
             });
         } else {
           resolve(true);

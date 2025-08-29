@@ -15,8 +15,8 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import ViewSupport from './pages/ViewSupport.vue';
+import ViewSupport from "./pages/ViewSupport.vue";
 
 export default {
-  'view-support': ViewSupport,
+  "view-support": ViewSupport,
 };

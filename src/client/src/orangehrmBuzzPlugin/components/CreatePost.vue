@@ -62,25 +62,25 @@
 </template>
 
 <script>
-import {ref} from 'vue';
-import {OxdBuzzPostInput, OxdGlassButton, OxdSheet} from '@ohrm/oxd';
-import useToast from '@/core/util/composable/useToast';
-import {APIService} from '@/core/util/services/api.service';
-import {shouldNotExceedCharLength} from '@/core/util/validation/rules';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
-import ShareVideoModal from '@/orangehrmBuzzPlugin/components/ShareVideoModal';
-import SharePhotoModal from '@/orangehrmBuzzPlugin/components/SharePhotoModal';
+import { ref } from "vue";
+import { OxdBuzzPostInput, OxdGlassButton, OxdSheet } from "@ohrm/oxd";
+import useToast from "@/core/util/composable/useToast";
+import { APIService } from "@/core/util/services/api.service";
+import { shouldNotExceedCharLength } from "@/core/util/validation/rules";
+import ProfileImage from "@/orangehrmBuzzPlugin/components/ProfileImage";
+import ShareVideoModal from "@/orangehrmBuzzPlugin/components/ShareVideoModal";
+import SharePhotoModal from "@/orangehrmBuzzPlugin/components/SharePhotoModal";
 
 export default {
-  name: 'CreatePost',
+  name: "CreatePost",
 
   components: {
-    'oxd-sheet': OxdSheet,
-    'profile-image': ProfileImage,
-    'oxd-glass-button': OxdGlassButton,
-    'oxd-buzz-post-input': OxdBuzzPostInput,
-    'share-video-modal': ShareVideoModal,
-    'share-photo-modal': SharePhotoModal,
+    "oxd-sheet": OxdSheet,
+    "profile-image": ProfileImage,
+    "oxd-glass-button": OxdGlassButton,
+    "oxd-buzz-post-input": OxdBuzzPostInput,
+    "share-video-modal": ShareVideoModal,
+    "share-photo-modal": SharePhotoModal,
   },
 
   props: {
@@ -90,27 +90,27 @@ export default {
     },
   },
 
-  emits: ['refresh'],
+  emits: ["refresh"],
 
   setup(_, context) {
     const post = ref(null);
-    const {saveSuccess} = useToast();
+    const { saveSuccess } = useToast();
     const showVideoModal = ref(false);
     const showPhotoModal = ref(false);
     const rules = [shouldNotExceedCharLength(65530)];
-    const http = new APIService(window.appGlobal.baseUrl, '/api/v2/buzz/posts');
+    const http = new APIService(window.appGlobal.baseUrl, "/api/v2/buzz/posts");
 
     const onSubmit = () => {
-      if (post.value === null || String(post.value).trim() === '') return;
+      if (post.value === null || String(post.value).trim() === "") return;
       http
         .create({
-          type: 'text',
+          type: "text",
           text: post.value,
         })
         .then(() => {
           saveSuccess();
           post.value = null;
-          context.emit('refresh');
+          context.emit("refresh");
         });
     };
 
@@ -126,7 +126,7 @@ export default {
       showVideoModal.value = false;
       if ($event) {
         saveSuccess();
-        context.emit('refresh');
+        context.emit("refresh");
       }
     };
 
@@ -134,7 +134,7 @@ export default {
       showPhotoModal.value = false;
       if ($event) {
         saveSuccess();
-        context.emit('refresh');
+        context.emit("refresh");
       }
     };
 

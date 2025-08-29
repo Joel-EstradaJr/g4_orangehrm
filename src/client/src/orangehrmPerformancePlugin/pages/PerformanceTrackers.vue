@@ -90,39 +90,39 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import useSort from '@/core/util/composable/useSort';
-import {navigate} from '@/core/util/helper/navigation';
-import useLocale from '@/core/util/composable/useLocale';
+import { computed, ref } from "vue";
+import useSort from "@/core/util/composable/useSort";
+import { navigate } from "@/core/util/helper/navigation";
+import useLocale from "@/core/util/composable/useLocale";
 import {
   shouldNotExceedCharLength,
   validSelection,
-} from '@/core/util/validation/rules';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@/core/util/composable/usePaginate';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
+} from "@/core/util/validation/rules";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@/core/util/composable/usePaginate";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@ohrm/core/util/helper/datefns";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
 
 const defaultFilters = {
   empNumber: null,
 };
 
 const defaultSortOrder = {
-  'performanceTracker.modifiedDate': 'DESC',
-  'employee.lastName': 'ASC',
-  'performanceTracker.trackerName': 'ASC',
-  'performanceTracker.addedDate': 'DESC',
+  "performanceTracker.modifiedDate": "DESC",
+  "employee.lastName": "ASC",
+  "performanceTracker.trackerName": "ASC",
+  "performanceTracker.addedDate": "DESC",
 };
 
 export default {
-  name: 'TrackerList',
+  name: "TrackerList",
 
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
-    'employee-autocomplete': EmployeeAutocomplete,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
   props: {
     unselectableIds: {
@@ -132,9 +132,9 @@ export default {
   },
 
   setup() {
-    const {locale} = useLocale();
-    const {jsDateFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { locale } = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     const trackerNormalizer = (data) => {
       return data.map((row) => {
@@ -157,12 +157,12 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/performance/config/trackers',
+      "/api/v2/performance/config/trackers"
     );
 
-    const filters = ref({...defaultFilters});
+    const filters = ref({ ...defaultFilters });
 
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
 
@@ -209,48 +209,48 @@ export default {
     return {
       headers: [
         {
-          name: 'empName',
-          title: this.$t('general.employee'),
-          slot: 'title',
-          sortField: 'employee.lastName',
-          style: {flex: 1},
+          name: "empName",
+          title: this.$t("general.employee"),
+          slot: "title",
+          sortField: "employee.lastName",
+          style: { flex: 1 },
         },
         {
-          name: 'tracker',
-          title: this.$t('performance.tracker'),
-          style: {flex: 1},
-          sortField: 'performanceTracker.trackerName',
+          name: "tracker",
+          title: this.$t("performance.tracker"),
+          style: { flex: 1 },
+          sortField: "performanceTracker.trackerName",
         },
         {
-          name: 'addDate',
-          title: this.$t('performance.added_date'),
-          sortField: 'performanceTracker.addedDate',
-          style: {flex: 1},
+          name: "addDate",
+          title: this.$t("performance.added_date"),
+          sortField: "performanceTracker.addedDate",
+          style: { flex: 1 },
         },
         {
-          name: 'modifiedDate',
-          title: this.$t('performance.modified_date'),
-          sortField: 'performanceTracker.modifiedDate',
-          style: {flex: 1},
+          name: "modifiedDate",
+          title: this.$t("performance.modified_date"),
+          sortField: "performanceTracker.modifiedDate",
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -265,30 +265,30 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/performance/addPerformanceTracker');
+      navigate("/performance/addPerformanceTracker");
     },
     onClickEdit(item) {
-      navigate('/performance/addPerformanceTracker/{id}', {id: item.id});
+      navigate("/performance/addPerformanceTracker/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = this.checkedItems.map((index) => {
         return this.response?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       const isSelectable = this.unselectableIds.findIndex(
-        (id) => id == item.id,
+        (id) => id == item.id
       );
       if (isSelectable > -1) {
         return this.$toast.cannotDelete();
       }
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
@@ -317,7 +317,7 @@ export default {
       await this.execQuery();
     },
     onClickReset() {
-      this.filters = {...defaultFilters};
+      this.filters = { ...defaultFilters };
       this.filterItems();
     },
   },

@@ -36,7 +36,7 @@
         />
         <oxd-text tag="p" @click="onClickPendingLeave">
           {{
-            $t('dashboard.n_pending_leave_request', {
+            $t("dashboard.n_pending_leave_request", {
               pendingActionsCount: leaveRequestCount,
             })
           }}
@@ -52,7 +52,7 @@
         />
         <oxd-text tag="p" @click="onClickPendingTimesheet">
           {{
-            $t('dashboard.n_pending_time_sheet', {
+            $t("dashboard.n_pending_time_sheet", {
               pendingActionsCount: timeSheetCount,
             })
           }}
@@ -68,7 +68,7 @@
         />
         <oxd-text tag="p" @click="onClickPendingReview">
           {{
-            $t('dashboard.n_pending_performance_evaluate', {
+            $t("dashboard.n_pending_performance_evaluate", {
               pendingActionsCount: reviewCount,
             })
           }}
@@ -84,7 +84,7 @@
         />
         <oxd-text tag="p" @click="onClickSelfReview">
           {{
-            $t('dashboard.n_pending_self_review', {
+            $t("dashboard.n_pending_self_review", {
               pendingActionsCount: selfReviewCount,
             })
           }}
@@ -100,7 +100,7 @@
         />
         <oxd-text tag="p" @click="onClickPendingInterview">
           {{
-            $t('dashboard.n_pending_candidate_interview', {
+            $t("dashboard.n_pending_candidate_interview", {
               pendingActionsCount: interviewCount,
             })
           }}
@@ -110,21 +110,21 @@
   </base-widget>
 </template>
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import BaseWidget from '@/orangehrmDashboardPlugin/components/BaseWidget.vue';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import BaseWidget from "@/orangehrmDashboardPlugin/components/BaseWidget.vue";
 
 export default {
-  name: 'MyActionSummaryWidget',
+  name: "MyActionSummaryWidget",
 
   components: {
-    'base-widget': BaseWidget,
+    "base-widget": BaseWidget,
   },
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/dashboard/employees/action-summary',
+      "/api/v2/dashboard/employees/action-summary"
     );
 
     return {
@@ -148,7 +148,7 @@ export default {
       return this.myActions.length === 0;
     },
     emptyText() {
-      return this.$t('dashboard.no_pending_actions');
+      return this.$t("dashboard.no_pending_actions");
     },
   },
 
@@ -157,22 +157,22 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.myActions = data.map((item) => {
-          const {group, pendingActionCount} = item;
-          if (group === 'Leave Requests To Approve') {
+          const { group, pendingActionCount } = item;
+          if (group === "Leave Requests To Approve") {
             this.leaveRequestCount = pendingActionCount;
           }
-          if (group === 'Timesheets To Approve') {
+          if (group === "Timesheets To Approve") {
             this.timeSheetCount = pendingActionCount;
           }
-          if (group === 'Pending Appraisal Reviews') {
+          if (group === "Pending Appraisal Reviews") {
             this.reviewCount = pendingActionCount;
           }
-          if (group === 'Pending Self Reviews') {
+          if (group === "Pending Self Reviews") {
             this.selfReviewCount = pendingActionCount;
           }
-          if (group === 'Candidates To Interview') {
+          if (group === "Candidates To Interview") {
             this.interviewCount = pendingActionCount;
           }
         });
@@ -184,21 +184,21 @@ export default {
 
   methods: {
     onClickPendingLeave() {
-      navigate('/leave/viewLeaveList');
+      navigate("/leave/viewLeaveList");
     },
     onClickPendingTimesheet() {
-      navigate('/time/viewEmployeeTimesheet');
+      navigate("/time/viewEmployeeTimesheet");
     },
     onClickPendingReview() {
-      navigate('/performance/searchEvaluatePerformanceReview');
+      navigate("/performance/searchEvaluatePerformanceReview");
     },
     onClickPendingInterview() {
-      navigate('/recruitment/viewCandidates', undefined, {
+      navigate("/recruitment/viewCandidates", undefined, {
         statusId: 4,
       });
     },
     onClickSelfReview() {
-      navigate('/performance/myPerformanceReview');
+      navigate("/performance/myPerformanceReview");
     },
   },
 };

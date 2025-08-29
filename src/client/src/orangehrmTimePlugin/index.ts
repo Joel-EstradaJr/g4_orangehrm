@@ -15,34 +15,34 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import TimeSheetPeriodConfig from './pages/configure/TimeSheetPeriod.vue';
-import Customer from './pages/customer/Customer.vue';
-import SaveCustomer from './pages/customer/SaveCustomer.vue';
-import EditCustomer from './pages/customer/EditCustomer.vue';
-import MyTimesheet from './pages/timesheets/MyTimesheet.vue';
-import EditTimeSheet from './pages/timesheets/EditTimeSheet.vue';
-import Project from './pages/project/Project.vue';
-import ProjectSave from './pages/project/ProjectSave.vue';
-import ProjectEdit from './pages/project/ProjectEdit.vue';
-import EmployeeTimesheet from './pages/timesheets/EmployeeTimesheet.vue';
-import ViewEmployeeTimesheet from './pages/timesheets/ViewEmployeeTimesheet.vue';
-import EmployeeTimeReport from './pages/reports/EmployeeTimeReport.vue';
-import ProjectActivityReport from './pages/reports/ProjectActivityReport.vue';
-import ActivityDetailsReport from './pages/reports/ActivityDetailsReport.vue';
+import TimeSheetPeriodConfig from "./pages/configure/TimeSheetPeriod.vue";
+import Customer from "./pages/customer/Customer.vue";
+import SaveCustomer from "./pages/customer/SaveCustomer.vue";
+import EditCustomer from "./pages/customer/EditCustomer.vue";
+import MyTimesheet from "./pages/timesheets/MyTimesheet.vue";
+import EditTimeSheet from "./pages/timesheets/EditTimeSheet.vue";
+import Project from "./pages/project/Project.vue";
+import ProjectSave from "./pages/project/ProjectSave.vue";
+import ProjectEdit from "./pages/project/ProjectEdit.vue";
+import EmployeeTimesheet from "./pages/timesheets/EmployeeTimesheet.vue";
+import ViewEmployeeTimesheet from "./pages/timesheets/ViewEmployeeTimesheet.vue";
+import EmployeeTimeReport from "./pages/reports/EmployeeTimeReport.vue";
+import ProjectActivityReport from "./pages/reports/ProjectActivityReport.vue";
+import ActivityDetailsReport from "./pages/reports/ActivityDetailsReport.vue";
 
 export default {
-  'time-sheet-period': TimeSheetPeriodConfig,
-  'customer-list': Customer,
-  'customer-save': SaveCustomer,
-  'customer-edit': EditCustomer,
-  'my-timesheet': MyTimesheet,
-  'edit-timesheet': EditTimeSheet,
-  'project-list': Project,
-  'project-save': ProjectSave,
-  'project-edit': ProjectEdit,
-  'employee-timesheet': EmployeeTimesheet,
-  'view-employee-timesheet': ViewEmployeeTimesheet,
-  'employee-time-report': EmployeeTimeReport,
-  'project-activity-report': ProjectActivityReport,
-  'activity-details-report': ActivityDetailsReport,
+  "time-sheet-period": TimeSheetPeriodConfig,
+  "customer-list": Customer,
+  "customer-save": SaveCustomer,
+  "customer-edit": EditCustomer,
+  "my-timesheet": MyTimesheet,
+  "edit-timesheet": EditTimeSheet,
+  "project-list": Project,
+  "project-save": ProjectSave,
+  "project-edit": ProjectEdit,
+  "employee-timesheet": EmployeeTimesheet,
+  "view-employee-timesheet": ViewEmployeeTimesheet,
+  "employee-time-report": EmployeeTimeReport,
+  "project-activity-report": ProjectActivityReport,
+  "activity-details-report": ActivityDetailsReport,
 };

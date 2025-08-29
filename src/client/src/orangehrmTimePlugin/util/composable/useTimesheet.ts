@@ -15,35 +15,39 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {computed, watchEffect} from 'vue';
-import useTimesheetAPIs from './useTimesheetAPIs';
-import useToast from '@/core/util/composable/useToast';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import {freshDate, formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
-import usei18n from '@/core/util/composable/usei18n';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import useLocale from '@/core/util/composable/useLocale';
+import { computed, watchEffect } from "vue";
+import useTimesheetAPIs from "./useTimesheetAPIs";
+import useToast from "@/core/util/composable/useToast";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import {
+  freshDate,
+  formatDate,
+  parseDate,
+} from "@ohrm/core/util/helper/datefns";
+import usei18n from "@/core/util/composable/usei18n";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default function useTimesheet(
   http: APIService,
   date: string | null,
-  empNumber?: number,
+  empNumber?: number
 ) {
-  const {state, fetchTimesheet, updateTimesheet, fetchTimesheetEntries} =
+  const { state, fetchTimesheet, updateTimesheet, fetchTimesheetEntries } =
     useTimesheetAPIs(http);
-  const {noRecordsFound, success} = useToast();
-  const {$t} = usei18n();
-  const {jsDateFormat} = useDateFormat();
-  const {locale} = useLocale();
-  state.date = date ? date : formatDate(freshDate(), 'yyyy-MM-dd');
+  const { noRecordsFound, success } = useToast();
+  const { $t } = usei18n();
+  const { jsDateFormat } = useDateFormat();
+  const { locale } = useLocale();
+  state.date = date ? date : formatDate(freshDate(), "yyyy-MM-dd");
 
   const loadTimesheet = (date: string | null): void => {
     if (date && parseDate(date) === null) return;
     state.isLoading = true;
     fetchTimesheet(date, empNumber)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         state.timesheet = data;
         state.timesheetId = data.id;
         return data.id
@@ -52,7 +56,7 @@ export default function useTimesheet(
       })
       .then((response) => {
         if (response !== null) {
-          const {data, meta, timesheet, allowedActions} = response;
+          const { data, meta, timesheet, allowedActions } = response;
           state.timesheetRecords = data;
           state.employee = meta.employee;
           state.timesheetColumns = meta.columns;
@@ -77,29 +81,29 @@ export default function useTimesheet(
   watchEffect(async () => state.date && loadTimesheet(state.date));
 
   const onClickPrevious = (): void => {
-    const currDate = parseDate(String(state.date), 'yyyy-MM-dd') ?? freshDate();
+    const currDate = parseDate(String(state.date), "yyyy-MM-dd") ?? freshDate();
     currDate.setDate(currDate.getDate() - 7);
-    state.date = formatDate(currDate, 'yyyy-MM-dd');
+    state.date = formatDate(currDate, "yyyy-MM-dd");
   };
 
   const onClickNext = (): void => {
-    const currDate = parseDate(String(state.date), 'yyyy-MM-dd') ?? freshDate();
+    const currDate = parseDate(String(state.date), "yyyy-MM-dd") ?? freshDate();
     currDate.setDate(currDate.getDate() + 7);
-    state.date = formatDate(currDate, 'yyyy-MM-dd');
+    state.date = formatDate(currDate, "yyyy-MM-dd");
   };
 
   const onClickEdit = (): void => {
     state.timesheetId &&
-      navigate('/time/editTimesheet/{id}', {id: state.timesheetId});
+      navigate("/time/editTimesheet/{id}", { id: state.timesheetId });
   };
 
   const onClickSubmit = (): void => {
     if (state.timesheetId) {
       state.isLoading = true;
-      updateTimesheet(state.timesheetId, 'SUBMIT', null, empNumber).then(() => {
+      updateTimesheet(state.timesheetId, "SUBMIT", null, empNumber).then(() => {
         success({
-          title: $t('general.success'),
-          message: $t('time.timesheet_submitted'),
+          title: $t("general.success"),
+          message: $t("time.timesheet_submitted"),
         });
         state.timesheetId = null;
         loadTimesheet(state.date);
@@ -110,10 +114,10 @@ export default function useTimesheet(
   const onClickReset = (): void => {
     if (state.timesheetId) {
       state.isLoading = true;
-      updateTimesheet(state.timesheetId, 'RESET', null, empNumber).then(() => {
+      updateTimesheet(state.timesheetId, "RESET", null, empNumber).then(() => {
         success({
-          title: $t('general.success'),
-          message: $t('time.timesheet_reset'),
+          title: $t("general.success"),
+          message: $t("time.timesheet_reset"),
         });
         state.timesheetId = null;
         loadTimesheet(state.date);
@@ -124,15 +128,15 @@ export default function useTimesheet(
   const onClickApprove = (comment?: string): void => {
     if (state.timesheetId) {
       state.isLoading = true;
-      updateTimesheet(state.timesheetId, 'APPROVE', comment, empNumber).then(
+      updateTimesheet(state.timesheetId, "APPROVE", comment, empNumber).then(
         () => {
           success({
-            title: $t('general.success'),
-            message: $t('time.timesheet_approved'),
+            title: $t("general.success"),
+            message: $t("time.timesheet_approved"),
           });
           state.timesheetId = null;
           loadTimesheet(state.date);
-        },
+        }
       );
     }
   };
@@ -140,15 +144,15 @@ export default function useTimesheet(
   const onClickReject = (comment?: string): void => {
     if (state.timesheetId) {
       state.isLoading = true;
-      updateTimesheet(state.timesheetId, 'REJECT', comment, empNumber).then(
+      updateTimesheet(state.timesheetId, "REJECT", comment, empNumber).then(
         () => {
           success({
-            title: $t('general.success'),
-            message: $t('time.timesheet_rejected'),
+            title: $t("general.success"),
+            message: $t("time.timesheet_rejected"),
           });
           state.timesheetId = null;
           loadTimesheet(state.date);
-        },
+        }
       );
     }
   };
@@ -157,16 +161,16 @@ export default function useTimesheet(
     state.isLoading = true;
     http
       .request({
-        method: 'POST',
+        method: "POST",
         url: empNumber
           ? `/api/v2/time/employees/${empNumber}/timesheets`
-          : '/api/v2/time/timesheets',
-        data: {date: state.date},
+          : "/api/v2/time/timesheets",
+        data: { date: state.date },
       })
       .then(() => {
         success({
-          title: $t('general.success'),
-          message: $t('time.timesheet_successfully_created'),
+          title: $t("general.success"),
+          message: $t("time.timesheet_successfully_created"),
         });
         loadTimesheet(state.date);
       });
@@ -177,38 +181,38 @@ export default function useTimesheet(
   });
 
   const canSubmitTimesheet = computed(() => {
-    return state.timesheetAllowedActions.find((i) => i.action === 'SUBMIT');
+    return state.timesheetAllowedActions.find((i) => i.action === "SUBMIT");
   });
 
   const canApproveTimesheet = computed(() => {
-    return state.timesheetAllowedActions.find((i) => i.action === 'APPROVE');
+    return state.timesheetAllowedActions.find((i) => i.action === "APPROVE");
   });
 
   const canRejectTimesheet = computed(() => {
-    return state.timesheetAllowedActions.find((i) => i.action === 'REJECT');
+    return state.timesheetAllowedActions.find((i) => i.action === "REJECT");
   });
 
   const canResetTimesheet = computed(() => {
-    return state.timesheetAllowedActions.find((i) => i.action === 'RESET');
+    return state.timesheetAllowedActions.find((i) => i.action === "RESET");
   });
 
   const canEditTimesheet = computed(() => {
-    return state.timesheetAllowedActions.find((i) => i.action === 'MODIFY');
+    return state.timesheetAllowedActions.find((i) => i.action === "MODIFY");
   });
 
   const canCreateTimesheet = computed(() => {
-    const currDate = parseDate(String(state.date), 'yyyy-MM-dd') ?? freshDate();
+    const currDate = parseDate(String(state.date), "yyyy-MM-dd") ?? freshDate();
     return currDate > freshDate();
   });
 
   const timesheetPeriod = computed(() => {
-    const startDate = parseDate(state.timesheet?.startDate || '');
-    const endDate = parseDate(state.timesheet?.endDate || '');
+    const startDate = parseDate(state.timesheet?.startDate || "");
+    const endDate = parseDate(state.timesheet?.endDate || "");
     if (!startDate || !endDate) return null;
 
-    return `${formatDate(startDate, jsDateFormat, {locale})} ${$t(
-      'general.to',
-    ).toLowerCase()} ${formatDate(endDate, jsDateFormat, {locale})}`;
+    return `${formatDate(startDate, jsDateFormat, { locale })} ${$t(
+      "general.to"
+    ).toLowerCase()} ${formatDate(endDate, jsDateFormat, { locale })}`;
   });
 
   return {

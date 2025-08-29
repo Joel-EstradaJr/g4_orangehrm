@@ -26,7 +26,7 @@
       <div class="orangehrm-buzz-pill-stats-likes">
         <oxd-icon name="heart-fill"></oxd-icon>
         <oxd-text tag="p">
-          {{ $t('buzz.n_like', {likesCount: post.stats.numOfLikes}) }}
+          {{ $t("buzz.n_like", { likesCount: post.stats.numOfLikes }) }}
         </oxd-text>
       </div>
       <div class="orangehrm-buzz-pill-stats-other">
@@ -37,19 +37,19 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import PostLikeButton from '@/orangehrmBuzzPlugin/components/PostLikeButton';
-import PostCommentButton from '@/orangehrmBuzzPlugin/components/PostCommentButton';
-import {OxdIcon} from '@ohrm/oxd';
+import { APIService } from "@/core/util/services/api.service";
+import useBuzzAPIs from "@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs";
+import PostLikeButton from "@/orangehrmBuzzPlugin/components/PostLikeButton";
+import PostCommentButton from "@/orangehrmBuzzPlugin/components/PostCommentButton";
+import { OxdIcon } from "@ohrm/oxd";
 
 export default {
-  name: 'PostActionsPill',
+  name: "PostActionsPill",
 
   components: {
-    'oxd-icon': OxdIcon,
-    'post-like': PostLikeButton,
-    'post-comment': PostCommentButton,
+    "oxd-icon": OxdIcon,
+    "post-like": PostLikeButton,
+    "post-comment": PostCommentButton,
   },
 
   props: {
@@ -59,16 +59,16 @@ export default {
     },
   },
 
-  emits: ['like', 'comment'],
+  emits: ["like", "comment"],
 
   setup(props, context) {
     let loading = false;
-    const {updatePostLike} = useBuzzAPIs(
-      new APIService(window.appGlobal.baseUrl, ''),
+    const { updatePostLike } = useBuzzAPIs(
+      new APIService(window.appGlobal.baseUrl, "")
     );
 
     const onClickComment = () => {
-      context.emit('comment');
+      context.emit("comment");
     };
 
     const onClickLike = () => {
@@ -76,7 +76,7 @@ export default {
         loading = true;
         updatePostLike(props.post.id, props.post.liked).then(() => {
           loading = false;
-          context.emit('like');
+          context.emit("like");
         });
       }
     };
@@ -89,11 +89,11 @@ export default {
 
   computed: {
     combinedPostStats() {
-      const commentsCount = this.$t('buzz.n_comment', {
+      const commentsCount = this.$t("buzz.n_comment", {
         commentCount: this.post.stats?.numOfComments || 0,
       });
 
-      const sharesCount = this.$t('buzz.n_share', {
+      const sharesCount = this.$t("buzz.n_share", {
         shareCount: this.post.stats?.numOfShares || 0,
       });
 

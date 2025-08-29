@@ -24,7 +24,7 @@
     :filters="serializedFilters"
     :column-count="6"
   >
-    <template #default="{generateReport}">
+    <template #default="{ generateReport }">
       <oxd-table-filter
         :filter-title="$t('leave.leave_entitlement_and_usage_report')"
       >
@@ -34,7 +34,7 @@
               <oxd-grid-item>
                 <oxd-input-group
                   :label="$t('leave.generate_for')"
-                  :classes="{wrapper: '--grouped-field'}"
+                  :classes="{ wrapper: '--grouped-field' }"
                 >
                   <oxd-input-field
                     v-model="filters.type"
@@ -94,7 +94,7 @@
               </oxd-grid-item>
               <oxd-grid-item class="orangehrm-leave-filter --span-column-2">
                 <oxd-text class="orangehrm-leave-filter-text" tag="p">
-                  {{ $t('leave.include_past_employees') }}
+                  {{ $t("leave.include_past_employees") }}
                 </oxd-text>
                 <oxd-switch-input v-model="filters.includePastEmps" />
               </oxd-grid-item>
@@ -142,21 +142,21 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
+import { computed, ref } from "vue";
 import {
   required,
   shouldNotExceedCharLength,
   validSelection,
-} from '@/core/util/validation/rules';
-import ReportsTable from '@/core/components/table/ReportsTable';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import LeaveTypeDropdown from '@/orangehrmLeavePlugin/components/LeaveTypeDropdown';
-import LeavePeriodDropdown from '@/orangehrmLeavePlugin/components/LeavePeriodDropdown';
-import {OxdSwitchInput} from '@ohrm/oxd';
+} from "@/core/util/validation/rules";
+import ReportsTable from "@/core/components/table/ReportsTable";
+import JobtitleDropdown from "@/orangehrmPimPlugin/components/JobtitleDropdown";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import LeaveTypeDropdown from "@/orangehrmLeavePlugin/components/LeaveTypeDropdown";
+import LeavePeriodDropdown from "@/orangehrmLeavePlugin/components/LeavePeriodDropdown";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const defaultFilters = {
-  type: 'leave_type_leave_entitlements_and_usage',
+  type: "leave_type_leave_entitlements_and_usage",
   employee: null,
   leavePeriod: null,
   leaveType: null,
@@ -168,12 +168,12 @@ const defaultFilters = {
 
 export default {
   components: {
-    'reports-table': ReportsTable,
-    'oxd-switch-input': OxdSwitchInput,
-    'jobtitle-dropdown': JobtitleDropdown,
-    'leave-type-dropdown': LeaveTypeDropdown,
-    'leave-period-dropdown': LeavePeriodDropdown,
-    'employee-autocomplete': EmployeeAutocomplete,
+    "reports-table": ReportsTable,
+    "oxd-switch-input": OxdSwitchInput,
+    "jobtitle-dropdown": JobtitleDropdown,
+    "leave-type-dropdown": LeaveTypeDropdown,
+    "leave-period-dropdown": LeavePeriodDropdown,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
   props: {
     locations: {
@@ -194,7 +194,7 @@ export default {
   setup(props) {
     const filters = ref({
       ...defaultFilters,
-      ...(props.leavePeriod && {leavePeriod: props.leavePeriod}),
+      ...(props.leavePeriod && { leavePeriod: props.leavePeriod }),
     });
     const rules = ref({
       employee: [required, shouldNotExceedCharLength(100), validSelection],
@@ -203,7 +203,7 @@ export default {
     });
 
     const serializedFilters = computed(() => {
-      if (filters.value.type === 'leave_type_leave_entitlements_and_usage') {
+      if (filters.value.type === "leave_type_leave_entitlements_and_usage") {
         return {
           name: filters.value.type,
           fromDate: filters.value.leavePeriod?.startDate,
@@ -213,8 +213,8 @@ export default {
           locationId: filters.value.location?.id,
           jobTitleId: filters.value.jobTitle?.id,
           includeEmployees: filters.value.includePastEmps
-            ? 'currentAndPast'
-            : 'onlyCurrent',
+            ? "currentAndPast"
+            : "onlyCurrent",
         };
       } else {
         return {

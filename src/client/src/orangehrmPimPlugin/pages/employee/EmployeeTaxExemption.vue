@@ -21,12 +21,12 @@
   <edit-employee-layout :employee-id="empNumber" screen="tax">
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('general.tax_exemptions') }}
+        {{ $t("general.tax_exemptions") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
         <oxd-text class="orangehrm-sub-title" tag="h6">
-          {{ $t('pim.federal_income_tax') }}
+          {{ $t("pim.federal_income_tax") }}
         </oxd-text>
         <oxd-divider />
         <oxd-form-row>
@@ -52,7 +52,7 @@
         </oxd-form-row>
 
         <oxd-text class="orangehrm-sub-title" tag="h6">
-          {{ $t('pim.state_income_tax') }}
+          {{ $t("pim.state_income_tax") }}
         </oxd-text>
         <oxd-divider />
         <oxd-form-row>
@@ -114,9 +114,9 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import {shouldNotExceedCharLength} from '@ohrm/core/util/validation/rules';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import EditEmployeeLayout from "@/orangehrmPimPlugin/components/EditEmployeeLayout";
+import { shouldNotExceedCharLength } from "@ohrm/core/util/validation/rules";
 
 const taxExemptionModel = {
   federalStatus: null,
@@ -130,7 +130,7 @@ const taxExemptionModel = {
 
 export default {
   components: {
-    'edit-employee-layout': EditEmployeeLayout,
+    "edit-employee-layout": EditEmployeeLayout,
   },
 
   props: {
@@ -151,7 +151,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.empNumber}/tax-exemption`,
+      `/api/v2/pim/employees/${props.empNumber}/tax-exemption`
     );
 
     return {
@@ -162,13 +162,13 @@ export default {
   data() {
     return {
       isLoading: false,
-      taxExemption: {...taxExemptionModel},
+      taxExemption: { ...taxExemptionModel },
       rules: {
         federalExemptions: [
           (v) => {
             return (
               v.match(/^\d*\.?\d*$/) !== null ||
-              this.$t('general.should_be_a_positive_number')
+              this.$t("general.should_be_a_positive_number")
             );
           },
           shouldNotExceedCharLength(2),
@@ -177,7 +177,7 @@ export default {
           (v) => {
             return (
               v.match(/^\d*\.?\d*$/) !== null ||
-              this.$t('general.should_be_a_positive_number')
+              this.$t("general.should_be_a_positive_number")
             );
           },
           shouldNotExceedCharLength(2),
@@ -203,7 +203,7 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             federalStatus: this.taxExemption.federalStatus?.id,
             federalExemptions: this.taxExemption.federalExemptions,
@@ -224,23 +224,23 @@ export default {
     },
 
     updateModel(response) {
-      const {data} = response.data;
+      const { data } = response.data;
       this.taxExemption.federalExemptions = data.federalExemptions;
       this.taxExemption.stateExemptions = data.stateExemptions;
       this.taxExemption.taxState = this.provinces.find(
-        (item) => item.id === data.taxState.code,
+        (item) => item.id === data.taxState.code
       );
       this.taxExemption.unemploymentState = this.provinces.find(
-        (item) => item.id === data.unemploymentState.code,
+        (item) => item.id === data.unemploymentState.code
       );
       this.taxExemption.workState = this.provinces.find(
-        (item) => item.id === data.workState.code,
+        (item) => item.id === data.workState.code
       );
       this.taxExemption.federalStatus = this.statuses.find(
-        (item) => item.id === data.federalStatus,
+        (item) => item.id === data.federalStatus
       );
       this.taxExemption.stateStatus = this.statuses.find(
-        (item) => item.id === data.stateStatus,
+        (item) => item.id === data.stateStatus
       );
     },
   },

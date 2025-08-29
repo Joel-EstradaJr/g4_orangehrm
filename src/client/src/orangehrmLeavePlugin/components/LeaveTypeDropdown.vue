@@ -24,20 +24,20 @@
     :options="options"
     :show-empty-selector="showEmptySelector"
   >
-    <template #option="{data}">
+    <template #option="{ data }">
       <span>{{ data.label }}</span>
       <div v-if="data.isDeleted" class="deleted-tag">
-        {{ $t('general.deleted') }}
+        {{ $t("general.deleted") }}
       </div>
     </template>
   </oxd-input-field>
 </template>
 
 <script>
-import {ref, watchEffect} from 'vue';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { ref, watchEffect } from "vue";
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'LeaveTypeDropdown',
+  name: "LeaveTypeDropdown",
   props: {
     eligibleOnly: {
       type: Boolean,
@@ -61,14 +61,14 @@ export default {
     const options = ref([]);
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/leave/leave-types${props.eligibleOnly ? '/eligible' : ''}`,
+      `/api/v2/leave/leave-types${props.eligibleOnly ? "/eligible" : ""}`
     );
 
     watchEffect(async () => {
       if (!props.eligibleOnly && props.includeAllocated) {
         // eslint-disable-next-line no-console
         console.error(
-          '`includeAllocated` prop can true only if `eligibleOnly` prop true',
+          "`includeAllocated` prop can true only if `eligibleOnly` prop true"
         );
       }
       http
@@ -76,9 +76,9 @@ export default {
           empNumber: props.employeeId,
           includeAllocated:
             props.eligibleOnly && props.includeAllocated ? true : undefined,
-          ...(props.eligibleOnly === false && {limit: 0}),
+          ...(props.eligibleOnly === false && { limit: 0 }),
         })
-        .then(({data}) => {
+        .then(({ data }) => {
           options.value = data.data.map((item) => {
             return {
               id: item.id,
@@ -90,7 +90,7 @@ export default {
             // this $event is only fired to default select first option
             // where --select-- options is not shown
             // eslint-disable-next-line vue/require-explicit-emits
-            context.emit('update:modelValue', options.value[0]);
+            context.emit("update:modelValue", options.value[0]);
           }
         });
     });

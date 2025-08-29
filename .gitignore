@@ -30,3 +30,23 @@ node_modules/
 
 # Frontend build output
 web/dist/
+
+# PHP Composer vendor dir (already committed in this project under src/vendor; keep lockfile)
+# If switching to a clean vendor install flow, uncomment the next line:
+src/vendor/
+
+# Local composer artifacts
+src/composer.phar
+src/vendor/composer/installed.json
+
+# Frontend logs and local env
+**/yarn-error.log
+**/npm-debug.log*
+src/client/.env.local
+src/client/.env.*.local
+
+# Test coverage (client)
+src/client/coverage/
+
+# Leave Assistant local overrides (do not commit developer-specific FAQ tweaks)
+plugins/orangehrmLeavePlugin/config/assistant-faq.local.yaml

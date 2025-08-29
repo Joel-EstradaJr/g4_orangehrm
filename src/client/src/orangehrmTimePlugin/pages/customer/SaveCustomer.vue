@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('time.add_customer') }}
+        {{ $t("time.add_customer") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -58,27 +58,27 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {promiseDebounce} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { promiseDebounce } from "@ohrm/oxd";
 
 const customerModel = {
-  id: '',
-  name: '',
-  description: '',
+  id: "",
+  name: "",
+  description: "",
 };
 
 export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/time/customers',
+      "/api/v2/time/customers"
     );
-    http.setIgnorePath('/api/v2/time/validation/customer-name');
+    http.setIgnorePath("/api/v2/time/validation/customer-name");
     return {
       http,
     };
@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      customer: {...customerModel},
+      customer: { ...customerModel },
       rules: {
         name: [
           required,
@@ -113,24 +113,24 @@ export default {
         });
     },
     onCancel() {
-      navigate('/time/viewCustomers');
+      navigate("/time/viewCustomers");
     },
     validateCustomerName(customer) {
       return new Promise((resolve) => {
         if (customer) {
           this.http
             .request({
-              method: 'GET',
+              method: "GET",
               url: `/api/v2/time/validation/customer-name`,
               params: {
                 customerName: this.customer.name.trim(),
               },
             })
             .then((response) => {
-              const {data} = response.data;
+              const { data } = response.data;
               return data.valid === true
                 ? resolve(true)
-                : resolve(this.$t('general.already_exists'));
+                : resolve(this.$t("general.already_exists"));
             });
         } else {
           resolve(true);

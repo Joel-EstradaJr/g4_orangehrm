@@ -46,18 +46,18 @@
 </template>
 
 <script>
-import {computed, reactive, toRefs} from 'vue';
-import PhotoViewer from '@/orangehrmBuzzPlugin/components/PhotoViewer';
-import PostDetails from '@/orangehrmBuzzPlugin/components/PostDetails';
-import PostActionsPill from '@/orangehrmBuzzPlugin/components/PostActionsPill';
+import { computed, reactive, toRefs } from "vue";
+import PhotoViewer from "@/orangehrmBuzzPlugin/components/PhotoViewer";
+import PostDetails from "@/orangehrmBuzzPlugin/components/PostDetails";
+import PostActionsPill from "@/orangehrmBuzzPlugin/components/PostActionsPill";
 
 export default {
-  name: 'PhotoCarousel',
+  name: "PhotoCarousel",
 
   components: {
-    'photo-viewer': PhotoViewer,
-    'post-details': PostDetails,
-    'post-actions-pill': PostActionsPill,
+    "photo-viewer": PhotoViewer,
+    "post-details": PostDetails,
+    "post-actions-pill": PostActionsPill,
   },
 
   props: {
@@ -75,11 +75,11 @@ export default {
     },
   },
 
-  emits: ['like', 'close', 'createComment', 'deleteComment'],
+  emits: ["like", "close", "createComment", "deleteComment"],
 
   setup(props) {
     const state = reactive({
-      view: 'photo',
+      view: "photo",
       index: props.photoIndex,
     });
 
@@ -87,21 +87,21 @@ export default {
 
     const onClickPreviousPhoto = () => state.index--;
 
-    const onClickComment = () => (state.view = 'details');
+    const onClickComment = () => (state.view = "details");
 
     const selectedPhoto = computed(() => props.post.photoIds[state.index]);
 
     const layoutClasses = computed(() => ({
-      'orangehrm-photo-carousel': true,
-      '--web': props.mobile === false,
+      "orangehrm-photo-carousel": true,
+      "--web": props.mobile === false,
     }));
 
     const showPhoto = computed(
-      () => props.mobile === false || state.view === 'photo',
+      () => props.mobile === false || state.view === "photo"
     );
 
     const showDetails = computed(
-      () => props.mobile === false || state.view === 'details',
+      () => props.mobile === false || state.view === "details"
     );
 
     return {

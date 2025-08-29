@@ -98,19 +98,19 @@ import {
   shouldNotExceedCharLength,
   validDateFormat,
   endDateShouldBeAfterStartDate,
-} from '@ohrm/core/util/validation/rules';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const workExpModel = {
-  company: '',
-  jobTitle: '',
-  fromDate: '',
-  toDate: '',
-  comment: '',
+  company: "",
+  jobTitle: "",
+  fromDate: "",
+  toDate: "",
+  comment: "",
 };
 
 export default {
-  name: 'EditWorkExperience',
+  name: "EditWorkExperience",
 
   props: {
     http: {
@@ -123,10 +123,10 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup() {
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       userDateFormat,
@@ -136,7 +136,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      workExperience: {...workExpModel},
+      workExperience: { ...workExpModel },
       rules: {
         company: [required, shouldNotExceedCharLength(100)],
         jobTitle: [required, shouldNotExceedCharLength(100)],
@@ -145,7 +145,7 @@ export default {
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.workExperience.fromDate,
-            this.$t('general.to_date_should_be_after_from_date'),
+            this.$t("general.to_date_should_be_after_from_date")
           ),
         ],
         comment: [shouldNotExceedCharLength(200)],
@@ -158,8 +158,8 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
-        this.workExperience = {...data};
+        const { data } = response.data;
+        this.workExperience = { ...data };
       })
       .finally(() => {
         this.isLoading = false;
@@ -181,7 +181,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

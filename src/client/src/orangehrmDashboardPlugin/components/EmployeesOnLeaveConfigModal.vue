@@ -23,10 +23,10 @@
       <oxd-icon type="svg" name="leaveAlt" />
       <div class="orangehrm-config-title">
         <oxd-text type="card-body">
-          {{ $t('dashboard.employees_on_leave_today') }}
+          {{ $t("dashboard.employees_on_leave_today") }}
         </oxd-text>
         <oxd-text type="card-title">
-          {{ $t('dashboard.configurations') }}
+          {{ $t("dashboard.configurations") }}
         </oxd-text>
       </div>
     </div>
@@ -38,7 +38,7 @@
           type="switch"
           :label="
             $t(
-              'dashboard.only_show_accessible_employees_on_leave_for_other_users',
+              'dashboard.only_show_accessible_employees_on_leave_for_other_users'
             )
           "
         />
@@ -58,20 +58,20 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {OxdDialog, OxdIcon} from '@ohrm/oxd';
+import { APIService } from "@/core/util/services/api.service";
+import { OxdDialog, OxdIcon } from "@ohrm/oxd";
 
 export default {
-  name: 'EmployeesOnLeaveConfigModal',
+  name: "EmployeesOnLeaveConfigModal",
   components: {
-    'oxd-icon': OxdIcon,
-    'oxd-dialog': OxdDialog,
+    "oxd-icon": OxdIcon,
+    "oxd-dialog": OxdDialog,
   },
-  emits: ['close'],
+  emits: ["close"],
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/dashboard/config/employee-on-leave-today',
+      "/api/v2/dashboard/config/employee-on-leave-today"
     );
     return {
       http,
@@ -88,7 +88,7 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.showAccessibleEmployeesOnly =
           data.showOnlyAccessibleEmployeesOnLeaveToday;
       })
@@ -99,7 +99,7 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             showOnlyAccessibleEmployeesOnLeaveToday:
               this.showAccessibleEmployeesOnly,
@@ -111,7 +111,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

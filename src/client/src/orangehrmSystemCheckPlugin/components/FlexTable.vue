@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: 'FlexTable',
+  name: "FlexTable",
   props: {
     titleName: {
       type: String,
@@ -34,12 +34,12 @@ export default {
   methods: {
     getClass(id) {
       if (id === 1) {
-        return 'orangehrm-flex-table-value --success';
+        return "orangehrm-flex-table-value --success";
       }
       if (id === 2) {
-        return 'orangehrm-flex-table-value --warning';
+        return "orangehrm-flex-table-value --warning";
       }
-      return 'orangehrm-flex-table-value --error';
+      return "orangehrm-flex-table-value --error";
     },
   },
 };

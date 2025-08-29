@@ -32,14 +32,14 @@
 </template>
 
 <script>
-import {required, validSelection} from '@ohrm/core/util/validation/rules';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
+import { required, validSelection } from "@ohrm/core/util/validation/rules";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
 
 export default {
-  name: 'ReportCriterionAutocomplete',
+  name: "ReportCriterionAutocomplete",
 
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
   inheritAttrs: false,
 
@@ -55,10 +55,10 @@ export default {
       default: () => null,
     },
   },
-  emits: ['update:valueX', 'update:operator'],
+  emits: ["update:valueX", "update:operator"],
   setup(_, context) {
     const rules = [required, validSelection];
-    context.emit('update:operator', {id: 'eq', label: 'Equal'});
+    context.emit("update:operator", { id: "eq", label: "Equal" });
 
     return {
       rules,

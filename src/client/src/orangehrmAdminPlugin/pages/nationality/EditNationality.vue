@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.edit_nationality') }}
+        {{ $t("admin.edit_nationality") }}
       </oxd-text>
       <oxd-divider />
 
@@ -53,13 +53,13 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 export default {
   props: {
@@ -71,13 +71,13 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/nationalities',
+      "/api/v2/admin/nationalities"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const nationalityUniqueValidation = createUniqueValidator(
-      'Nationality',
-      'name',
-      {entityId: props.nationalityId},
+      "Nationality",
+      "name",
+      { entityId: props.nationalityId }
     );
 
     return {
@@ -90,8 +90,8 @@ export default {
     return {
       isLoading: false,
       nationality: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -108,7 +108,7 @@ export default {
     this.http
       .get(this.nationalityId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.nationality.id = data.id;
         this.nationality.name = data.name;
       })
@@ -132,7 +132,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/admin/nationality');
+      navigate("/admin/nationality");
     },
   },
 };

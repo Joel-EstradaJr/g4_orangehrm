@@ -19,14 +19,14 @@
 
 <template>
   <oxd-input-group :label="$t('general.job_specification')">
-    <div :class="{'input-container': true, '--disabled': !file.id}">
+    <div :class="{ 'input-container': true, '--disabled': !file.id }">
       <oxd-text
         class="input-container-filename"
         tag="p"
         :title="file.filename"
         @click="downloadFile"
       >
-        {{ file.id ? file.filename : 'Not Defined' }}
+        {{ file.id ? file.filename : "Not Defined" }}
       </oxd-text>
       <oxd-icon-button
         v-if="!isLoading && file.id"
@@ -44,14 +44,14 @@
 </template>
 
 <script>
-import {onBeforeMount, reactive, toRefs} from 'vue';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {OxdSpinner} from '@ohrm/oxd';
+import { onBeforeMount, reactive, toRefs } from "vue";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { OxdSpinner } from "@ohrm/oxd";
 
 export default {
-  name: 'JobSpecDownload',
+  name: "JobSpecDownload",
   components: {
-    'oxd-loading-spinner': OxdSpinner,
+    "oxd-loading-spinner": OxdSpinner,
   },
   props: {
     resourceId: {
@@ -62,14 +62,14 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/admin/job-titles/${props.resourceId}/specification`,
+      `/api/v2/admin/job-titles/${props.resourceId}/specification`
     );
     const state = reactive({
       isLoading: false,
       file: {
-        id: '',
-        filename: '',
-        fileType: '',
+        id: "",
+        filename: "",
+        fileType: "",
         fileSize: 0,
       },
     });
@@ -78,13 +78,13 @@ export default {
       state.isLoading = true;
       http
         .request({
-          method: 'GET',
+          method: "GET",
           // Prevent triggering response interceptor on 404
           validateStatus: (status) => {
             return (status >= 200 && status < 300) || status == 404;
           },
         })
-        .then(({data}) => {
+        .then(({ data }) => {
           state.file = {
             ...data.data,
           };
@@ -97,7 +97,7 @@ export default {
     const downloadFile = () => {
       if (!state.file.id) return;
       const downUrl = `${window.appGlobal.baseUrl}/admin/viewJobSpecification/attachId/${state.file.id}`;
-      window.open(downUrl, '_blank');
+      window.open(downUrl, "_blank");
     };
 
     if (props.resourceId) {

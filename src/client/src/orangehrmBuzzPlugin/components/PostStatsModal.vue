@@ -47,10 +47,10 @@
         :with-container="true"
       />
       <oxd-text v-if="type === 'shares'">
-        {{ $t('buzz.n_share', {shareCount: total}) }}
+        {{ $t("buzz.n_share", { shareCount: total }) }}
       </oxd-text>
       <oxd-text v-if="type === 'likes'">
-        {{ $t('buzz.n_like', {likesCount: total}) }}
+        {{ $t("buzz.n_like", { likesCount: total }) }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -69,22 +69,22 @@
 </template>
 
 <script>
-import {onBeforeMount, reactive, toRefs} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
-import useInfiniteScroll from '@/core/util/composable/useInfiniteScroll';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import {OxdDialog, OxdIcon, OxdSheet, OxdSpinner} from '@ohrm/oxd';
+import { onBeforeMount, reactive, toRefs } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import ProfileImage from "@/orangehrmBuzzPlugin/components/ProfileImage";
+import useInfiniteScroll from "@/core/util/composable/useInfiniteScroll";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import { OxdDialog, OxdIcon, OxdSheet, OxdSpinner } from "@ohrm/oxd";
 
 export default {
-  name: 'PostStatsModal',
+  name: "PostStatsModal",
 
   components: {
-    'oxd-icon': OxdIcon,
-    'oxd-sheet': OxdSheet,
-    'oxd-dialog': OxdDialog,
-    'profile-image': ProfileImage,
-    'oxd-loading-spinner': OxdSpinner,
+    "oxd-icon": OxdIcon,
+    "oxd-sheet": OxdSheet,
+    "oxd-dialog": OxdDialog,
+    "profile-image": ProfileImage,
+    "oxd-loading-spinner": OxdSpinner,
   },
 
   props: {
@@ -106,19 +106,19 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props, context) {
     let apiPath;
     const EMPLOYEE_LIMIT = 10;
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     switch (props.type) {
-      case 'likes':
+      case "likes":
         apiPath = `/api/v2/buzz/shares/${props.postId}/likes`;
         break;
 
-      case 'shares':
+      case "shares":
         apiPath = `/api/v2/buzz/posts/${props.postId}/shares`;
         break;
 
@@ -143,11 +143,11 @@ export default {
           offset: state.offset,
         })
         .then((response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
           state.total = meta?.total || 0;
           if (Array.isArray(data)) {
             const _data = data.map((user) => {
-              const {employee} = user;
+              const { employee } = user;
               return {
                 employee,
                 fullName: $tEmpName(employee, {
@@ -171,7 +171,7 @@ export default {
     onBeforeMount(() => fetchData());
 
     const onClose = () => {
-      context.emit('close');
+      context.emit("close");
     };
 
     return {

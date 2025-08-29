@@ -39,12 +39,12 @@
 </template>
 
 <script>
-import LoginBranding from './LoginBranding';
+import LoginBranding from "./LoginBranding";
 
 export default {
-  name: 'LoginLayout',
+  name: "LoginLayout",
   components: {
-    'login-branding': LoginBranding,
+    "login-branding": LoginBranding,
   },
   props: {
     loginLogoSrc: {

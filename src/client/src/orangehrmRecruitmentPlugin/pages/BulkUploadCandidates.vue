@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('recruitment.bulk_upload_candidates') }}
+        {{ $t("recruitment.bulk_upload_candidates") }}
       </oxd-text>
       <oxd-divider />
 
@@ -125,7 +125,7 @@
             :items="previewData"
             :loading="isValidating"
           >
-            <template #cell-status="{item}">
+            <template #cell-status="{ item }">
               <div class="orangehrm-status-cell">
                 <oxd-icon
                   :name="getStatusIcon(item.status)"
@@ -137,7 +137,7 @@
               </div>
             </template>
 
-            <template #cell-errors="{item}">
+            <template #cell-errors="{ item }">
               <div v-if="item.errors.length > 0" class="orangehrm-error-list">
                 <oxd-text
                   v-for="error in item.errors"
@@ -150,7 +150,7 @@
               </div>
             </template>
 
-            <template #cell-warnings="{item}">
+            <template #cell-warnings="{ item }">
               <div
                 v-if="item.warnings.length > 0"
                 class="orangehrm-warning-list"
@@ -246,26 +246,26 @@
 </template>
 
 <script>
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import FileUploadInput from '@/core/components/inputs/FileUploadInput';
-import {required, validFileTypes} from '@/core/util/validation/rules';
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import FileUploadInput from "@/core/components/inputs/FileUploadInput";
+import { required, validFileTypes } from "@/core/util/validation/rules";
 
 export default {
-  name: 'BulkUploadCandidates',
+  name: "BulkUploadCandidates",
 
   components: {
-    'file-upload-input': FileUploadInput,
+    "file-upload-input": FileUploadInput,
   },
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/candidates',
+      "/api/v2/recruitment/candidates"
     );
     const vacancyHttp = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/vacancies',
+      "/api/v2/recruitment/vacancies"
     );
 
     return {
@@ -277,7 +277,7 @@ export default {
   data() {
     return {
       csvFile: null,
-      fileMethod: 'keepCurrent',
+      fileMethod: "keepCurrent",
       defaultVacancy: null,
       vacancyOptions: [],
       previewData: [],
@@ -289,33 +289,33 @@ export default {
 
       csvRules: [
         required,
-        validFileTypes(['text/csv', 'application/vnd.ms-excel']),
+        validFileTypes(["text/csv", "application/vnd.ms-excel"]),
       ],
 
       previewHeaders: [
-        {name: 'rowNumber', title: 'Row #', style: {flex: '0 0 60px'}},
-        {name: 'firstName', title: 'First Name', style: {flex: 1}},
-        {name: 'lastName', title: 'Last Name', style: {flex: 1}},
-        {name: 'email', title: 'Email', style: {flex: 1}},
-        {name: 'contactNumber', title: 'Contact', style: {flex: 1}},
-        {name: 'vacancy', title: 'Vacancy', style: {flex: 1}},
+        { name: "rowNumber", title: "Row #", style: { flex: "0 0 60px" } },
+        { name: "firstName", title: "First Name", style: { flex: 1 } },
+        { name: "lastName", title: "Last Name", style: { flex: 1 } },
+        { name: "email", title: "Email", style: { flex: 1 } },
+        { name: "contactNumber", title: "Contact", style: { flex: 1 } },
+        { name: "vacancy", title: "Vacancy", style: { flex: 1 } },
         {
-          name: 'status',
-          title: 'Status',
-          cellType: 'oxd-table-cell-slot',
-          style: {flex: '0 0 100px'},
+          name: "status",
+          title: "Status",
+          cellType: "oxd-table-cell-slot",
+          style: { flex: "0 0 100px" },
         },
         {
-          name: 'errors',
-          title: 'Errors',
-          cellType: 'oxd-table-cell-slot',
-          style: {flex: 1},
+          name: "errors",
+          title: "Errors",
+          cellType: "oxd-table-cell-slot",
+          style: { flex: 1 },
         },
         {
-          name: 'warnings',
-          title: 'Warnings',
-          cellType: 'oxd-table-cell-slot',
-          style: {flex: 1},
+          name: "warnings",
+          title: "Warnings",
+          cellType: "oxd-table-cell-slot",
+          style: { flex: 1 },
         },
       ],
     };
@@ -323,14 +323,14 @@ export default {
 
   computed: {
     validCount() {
-      return this.previewData.filter((item) => item.status === 'Valid').length;
+      return this.previewData.filter((item) => item.status === "Valid").length;
     },
     warningCount() {
-      return this.previewData.filter((item) => item.status === 'Warning')
+      return this.previewData.filter((item) => item.status === "Warning")
         .length;
     },
     errorCount() {
-      return this.previewData.filter((item) => item.status === 'Error').length;
+      return this.previewData.filter((item) => item.status === "Error").length;
     },
   },
 
@@ -343,8 +343,8 @@ export default {
       try {
         const response = await this.vacancyHttp.getAll({
           limit: 0,
-          sortField: 'vacancy.name',
-          sortOrder: 'ASC',
+          sortField: "vacancy.name",
+          sortOrder: "ASC",
         });
 
         this.vacancyOptions = response.data.data.map((vacancy) => ({
@@ -352,23 +352,23 @@ export default {
           label: vacancy.name,
         }));
       } catch (error) {
-        this.$toast.error('Failed to load vacancies');
+        this.$toast.error("Failed to load vacancies");
       }
     },
 
     downloadTemplate() {
       const csvContent = [
-        'firstName,lastName,email,contactNumber,vacancy,keywords,notes,dateOfApplication',
+        "firstName,lastName,email,contactNumber,vacancy,keywords,notes,dateOfApplication",
         'John,Doe,john.doe@email.com,1234567890,Software Engineer,"JavaScript,Vue.js,Node.js","Experienced developer",2024-08-09',
         'Jane,Smith,jane.smith@email.com,0987654321,Marketing Manager,"Digital Marketing,SEO","Marketing specialist",2024-08-09',
         'Mike,Johnson,mike.j@email.com,5551234567,Sales Representative,"Sales,CRM,B2B","Great communication skills",2024-08-09',
-      ].join('\n');
+      ].join("\n");
 
-      const blob = new Blob([csvContent], {type: 'text/csv'});
+      const blob = new Blob([csvContent], { type: "text/csv" });
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = 'candidate_bulk_upload_template.csv';
+      a.download = "candidate_bulk_upload_template.csv";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -383,25 +383,25 @@ export default {
 
       try {
         const text = await this.csvFile.text();
-        const lines = text.split('\n').filter((line) => line.trim());
+        const lines = text.split("\n").filter((line) => line.trim());
 
         if (lines.length < 2) {
-          this.$toast.error('CSV file must contain at least one data row');
+          this.$toast.error("CSV file must contain at least one data row");
           return;
         }
 
         const headers = lines[0]
-          .split(',')
-          .map((h) => h.trim().replace(/"/g, ''));
-        const requiredHeaders = ['firstName', 'lastName', 'email'];
+          .split(",")
+          .map((h) => h.trim().replace(/"/g, ""));
+        const requiredHeaders = ["firstName", "lastName", "email"];
 
         // Validate headers
         const missingHeaders = requiredHeaders.filter(
-          (h) => !headers.includes(h),
+          (h) => !headers.includes(h)
         );
         if (missingHeaders.length > 0) {
           this.$toast.error(
-            `Missing required columns: ${missingHeaders.join(', ')}`,
+            `Missing required columns: ${missingHeaders.join(", ")}`
           );
           return;
         }
@@ -416,7 +416,7 @@ export default {
         // Check for duplicates
         this.checkDuplicates();
       } catch (error) {
-        this.$toast.error('Failed to parse CSV file');
+        this.$toast.error("Failed to parse CSV file");
       } finally {
         this.isValidating = false;
       }
@@ -424,16 +424,16 @@ export default {
 
     parseCSVLine(line) {
       const values = [];
-      let current = '';
+      let current = "";
       let inQuotes = false;
 
       for (let i = 0; i < line.length; i++) {
         const char = line[i];
         if (char === '"') {
           inQuotes = !inQuotes;
-        } else if (char === ',' && !inQuotes) {
+        } else if (char === "," && !inQuotes) {
           values.push(current.trim());
-          current = '';
+          current = "";
         } else {
           current += char;
         }
@@ -448,48 +448,48 @@ export default {
         rowNumber,
         errors: [],
         warnings: [],
-        status: 'Valid',
+        status: "Valid",
       };
 
       // Map values to headers
       headers.forEach((header, index) => {
-        rowData[header] = values[index]?.replace(/"/g, '') || '';
+        rowData[header] = values[index]?.replace(/"/g, "") || "";
       });
 
       // Validate required fields
       if (!rowData.firstName) {
-        rowData.errors.push('First name is required');
+        rowData.errors.push("First name is required");
       }
       if (!rowData.lastName) {
-        rowData.errors.push('Last name is required');
+        rowData.errors.push("Last name is required");
       }
       if (!rowData.email) {
-        rowData.errors.push('Email is required');
+        rowData.errors.push("Email is required");
       } else if (!this.isValidEmail(rowData.email)) {
-        rowData.errors.push('Invalid email format');
+        rowData.errors.push("Invalid email format");
       }
 
       // Validate vacancy
       if (!rowData.vacancy && !this.defaultVacancy) {
-        rowData.warnings.push('No vacancy specified, will use default if set');
+        rowData.warnings.push("No vacancy specified, will use default if set");
       }
 
       // Validate field lengths
       if (rowData.firstName && rowData.firstName.length > 30) {
-        rowData.errors.push('First name too long (max 30 characters)');
+        rowData.errors.push("First name too long (max 30 characters)");
       }
       if (rowData.lastName && rowData.lastName.length > 30) {
-        rowData.errors.push('Last name too long (max 30 characters)');
+        rowData.errors.push("Last name too long (max 30 characters)");
       }
       if (rowData.email && rowData.email.length > 50) {
-        rowData.errors.push('Email too long (max 50 characters)');
+        rowData.errors.push("Email too long (max 50 characters)");
       }
 
       // Set status based on validation
       if (rowData.errors.length > 0) {
-        rowData.status = 'Error';
+        rowData.status = "Error";
       } else if (rowData.warnings.length > 0) {
-        rowData.status = 'Warning';
+        rowData.status = "Warning";
       }
 
       return rowData;
@@ -502,9 +502,9 @@ export default {
         if (row.email) {
           if (emailMap.has(row.email)) {
             row.warnings.push(
-              `Duplicate email (also in row ${emailMap.get(row.email)})`,
+              `Duplicate email (also in row ${emailMap.get(row.email)})`
             );
-            if (row.status === 'Valid') row.status = 'Warning';
+            if (row.status === "Valid") row.status = "Warning";
           } else {
             emailMap.set(row.email, row.rowNumber);
           }
@@ -519,27 +519,27 @@ export default {
 
     getStatusIcon(status) {
       switch (status) {
-        case 'Valid':
-          return 'check-circle';
-        case 'Warning':
-          return 'alert-triangle';
-        case 'Error':
-          return 'x-circle';
+        case "Valid":
+          return "check-circle";
+        case "Warning":
+          return "alert-triangle";
+        case "Error":
+          return "x-circle";
         default:
-          return 'help-circle';
+          return "help-circle";
       }
     },
 
     getStatusClass(status) {
       switch (status) {
-        case 'Valid':
-          return 'orangehrm-status-success';
-        case 'Warning':
-          return 'orangehrm-status-warning';
-        case 'Error':
-          return 'orangehrm-status-error';
+        case "Valid":
+          return "orangehrm-status-success";
+        case "Warning":
+          return "orangehrm-status-warning";
+        case "Error":
+          return "orangehrm-status-error";
         default:
-          return '';
+          return "";
       }
     },
 
@@ -549,7 +549,7 @@ export default {
       this.importedCount = 0;
 
       const validCandidates = this.previewData.filter(
-        (row) => row.status === 'Valid' || row.status === 'Warning',
+        (row) => row.status === "Valid" || row.status === "Warning"
       );
 
       const results = {
@@ -571,7 +571,7 @@ export default {
             comment: candidate.notes || null,
             dateOfApplication:
               candidate.dateOfApplication ||
-              new Date().toISOString().split('T')[0],
+              new Date().toISOString().split("T")[0],
             consentToKeepData: false,
             vacancyId: this.getVacancyId(candidate.vacancy),
           };
@@ -591,7 +591,7 @@ export default {
 
       if (results.success > 0) {
         this.$toast.success(
-          `Successfully imported ${results.success} candidates`,
+          `Successfully imported ${results.success} candidates`
         );
       }
       if (results.failed > 0) {
@@ -605,7 +605,7 @@ export default {
       }
 
       const vacancy = this.vacancyOptions.find(
-        (v) => v.label.toLowerCase() === vacancyName?.toLowerCase(),
+        (v) => v.label.toLowerCase() === vacancyName?.toLowerCase()
       );
 
       return vacancy?.id || this.defaultVacancy?.id || null;
@@ -617,22 +617,22 @@ export default {
       if (errorRows.length === 0) return;
 
       const csvContent = [
-        'Row,First Name,Last Name,Email,Contact Number,Vacancy,Errors',
+        "Row,First Name,Last Name,Email,Contact Number,Vacancy,Errors",
         ...errorRows.map(
           (row) =>
             `${row.rowNumber},"${row.firstName}","${row.lastName}","${
               row.email
             }","${row.contactNumber}","${row.vacancy}","${row.errors.join(
-              '; ',
-            )}"`,
+              "; "
+            )}"`
         ),
-      ].join('\n');
+      ].join("\n");
 
-      const blob = new Blob([csvContent], {type: 'text/csv'});
+      const blob = new Blob([csvContent], { type: "text/csv" });
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = 'candidate_import_errors.csv';
+      a.download = "candidate_import_errors.csv";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -652,11 +652,11 @@ export default {
     },
 
     viewCandidates() {
-      navigate('/recruitment/viewCandidates');
+      navigate("/recruitment/viewCandidates");
     },
 
     onCancel() {
-      navigate('/recruitment/viewCandidates');
+      navigate("/recruitment/viewCandidates");
     },
   },
 };

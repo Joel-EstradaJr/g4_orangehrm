@@ -19,7 +19,7 @@
 
 <template>
   <leave-list-table :leave-statuses="leaveStatuses">
-    <template #default="{filters, filterItems, rules, onReset}">
+    <template #default="{ filters, filterItems, rules, onReset }">
       <oxd-table-filter :filter-title="$t('leave.leave_list')">
         <oxd-form @submit-valid="filterItems" @reset="onReset">
           <oxd-form-row>
@@ -81,7 +81,7 @@
 
               <oxd-grid-item class="orangehrm-leave-filter --span-column-2">
                 <oxd-text class="orangehrm-leave-filter-text" tag="p">
-                  {{ $t('leave.include_past_employees') }}
+                  {{ $t("leave.include_past_employees") }}
                 </oxd-text>
                 <oxd-switch-input v-model="filters.includePastEmps" />
               </oxd-grid-item>
@@ -111,17 +111,17 @@
 </template>
 
 <script>
-import LeaveListTable from '@/orangehrmLeavePlugin/components/LeaveListTable';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import LeaveTypeDropdown from '@/orangehrmLeavePlugin/components/LeaveTypeDropdown';
-import {OxdSwitchInput} from '@ohrm/oxd';
+import LeaveListTable from "@/orangehrmLeavePlugin/components/LeaveListTable";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import LeaveTypeDropdown from "@/orangehrmLeavePlugin/components/LeaveTypeDropdown";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 export default {
   components: {
-    'leave-list-table': LeaveListTable,
-    'employee-autocomplete': EmployeeAutocomplete,
-    'oxd-switch-input': OxdSwitchInput,
-    'leave-type-dropdown': LeaveTypeDropdown,
+    "leave-list-table": LeaveListTable,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "oxd-switch-input": OxdSwitchInput,
+    "leave-type-dropdown": LeaveTypeDropdown,
   },
   props: {
     subunits: {

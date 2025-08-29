@@ -15,9 +15,9 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {reactive} from 'vue';
-import {AxiosResponse} from 'axios';
-import {APIService} from '@/core/util/services/api.service';
+import { reactive } from "vue";
+import { AxiosResponse } from "axios";
+import { APIService } from "@/core/util/services/api.service";
 
 interface State {
   isLoading: boolean;
@@ -168,11 +168,11 @@ export default function useTimesheetAPIs(http: APIService) {
 
   const fetchTimesheet = (
     date: string | null,
-    empNumber?: number,
+    empNumber?: number
   ): Promise<AxiosResponse<TimesheetResponse>> => {
     return http.request({
-      method: 'GET',
-      url: '/api/v2/time/timesheets/default',
+      method: "GET",
+      url: "/api/v2/time/timesheets/default",
       params: {
         date,
         empNumber,
@@ -184,10 +184,10 @@ export default function useTimesheetAPIs(http: APIService) {
     timesheetId: number,
     action: string,
     comment?: string | null,
-    empNumber?: number,
+    empNumber?: number
   ): Promise<AxiosResponse<TimesheetUpdateResponse>> => {
     return http.request({
-      method: 'PUT',
+      method: "PUT",
       url: empNumber
         ? `/api/v2/time/employees/${empNumber}/timesheets/${timesheetId}`
         : `/api/v2/time/timesheets/${timesheetId}`,
@@ -200,7 +200,7 @@ export default function useTimesheetAPIs(http: APIService) {
 
   const fetchTimesheetEntries = (
     timesheetId: number,
-    isEmployeeTimesheet?: boolean,
+    isEmployeeTimesheet?: boolean
   ): Promise<{
     data: Record[];
     meta: Meta;
@@ -210,15 +210,15 @@ export default function useTimesheetAPIs(http: APIService) {
     return new Promise((resolve) => {
       http
         .request({
-          method: 'GET',
+          method: "GET",
           url: isEmployeeTimesheet
             ? `/api/v2/time/employees/timesheets/${timesheetId}/entries`
             : `/api/v2/time/timesheets/${timesheetId}/entries`,
         })
         .then((response: AxiosResponse<EntriesResponse>) => {
-          const {data, meta} = response.data;
-          const {timesheet, allowedActions} = meta;
-          resolve({data, meta, timesheet, allowedActions});
+          const { data, meta } = response.data;
+          const { timesheet, allowedActions } = meta;
+          resolve({ data, meta, timesheet, allowedActions });
         });
     });
   };
@@ -226,10 +226,10 @@ export default function useTimesheetAPIs(http: APIService) {
   const updateTimesheetEntries = (
     timesheetId: number,
     payload: EntriesUpdateRequest,
-    isEmployeeTimesheet?: boolean,
+    isEmployeeTimesheet?: boolean
   ): Promise<AxiosResponse<TimesheetUpdateResponse>> => {
     return http.request({
-      method: 'PUT',
+      method: "PUT",
       url: isEmployeeTimesheet
         ? `/api/v2/time/employees/timesheets/${timesheetId}/entries`
         : `/api/v2/time/timesheets/${timesheetId}/entries`,

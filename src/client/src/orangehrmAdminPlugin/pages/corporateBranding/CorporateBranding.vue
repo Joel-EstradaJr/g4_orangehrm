@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('general.corporate_branding') }}
+        {{ $t("general.corporate_branding") }}
       </oxd-text>
 
       <oxd-divider />
@@ -150,7 +150,7 @@
             <oxd-grid-item>
               <div class="orangehrm-sm-field">
                 <oxd-text tag="p" class="orangehrm-sm-field-label">
-                  {{ $t('admin.social_media_images') }}
+                  {{ $t("admin.social_media_images") }}
                 </oxd-text>
                 <oxd-switch-input v-model="showSocialMediaImages" />
               </div>
@@ -188,21 +188,21 @@
 </template>
 
 <script>
-import {onBeforeMount, reactive, toRefs} from 'vue';
+import { onBeforeMount, reactive, toRefs } from "vue";
 import {
   required,
   maxFileSize,
   validHexFormat,
   validFileTypes,
   imageShouldHaveDimensions,
-} from '@ohrm/core/util/validation/rules';
-import useForm from '@/core/util/composable/useForm';
-import useToast from '@/core/util/composable/useToast';
-import {APIService} from '@/core/util/services/api.service';
-import {reloadPage} from '@ohrm/core/util/helper/navigation';
-import FileUploadInput from '@/core/components/inputs/FileUploadInput';
-import InlineColorInput from '@/orangehrmAdminPlugin/components/InlineColorInput';
-import {OxdSwitchInput} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import useForm from "@/core/util/composable/useForm";
+import useToast from "@/core/util/composable/useToast";
+import { APIService } from "@/core/util/services/api.service";
+import { reloadPage } from "@ohrm/core/util/helper/navigation";
+import FileUploadInput from "@/core/components/inputs/FileUploadInput";
+import InlineColorInput from "@/orangehrmAdminPlugin/components/InlineColorInput";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const colorModel = {
   primaryColor: null,
@@ -216,14 +216,14 @@ const colorModel = {
 const fileUploadModel = {
   oldAttachment: null,
   newAttachment: null,
-  method: 'keepCurrent',
+  method: "keepCurrent",
 };
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
-    'file-upload-input': FileUploadInput,
-    'inline-color-input': InlineColorInput,
+    "oxd-switch-input": OxdSwitchInput,
+    "file-upload-input": FileUploadInput,
+    "inline-color-input": InlineColorInput,
   },
   props: {
     allowedImageTypes: {
@@ -246,11 +246,11 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/admin/theme`,
+      `/api/v2/admin/theme`
     );
 
-    const {saveSuccess} = useToast();
-    const {formRef, invalid, validate} = useForm();
+    const { saveSuccess } = useToast();
+    const { formRef, invalid, validate } = useForm();
 
     const state = reactive({
       isLoading: false,
@@ -273,31 +273,31 @@ export default {
       color: [required, validHexFormat],
       clientLogo: [
         (v) =>
-          state.clientLogo.method === 'replaceCurrent' ? required(v) : true,
+          state.clientLogo.method === "replaceCurrent" ? required(v) : true,
         maxFileSize(props.maxFileSize),
         imageShouldHaveDimensions(
           props.aspectRatios.clientLogo,
-          props.aspectRatioTolerance,
+          props.aspectRatioTolerance
         ),
         validFileTypes(props.allowedImageTypes),
       ],
       clientBanner: [
         (v) =>
-          state.clientBanner.method === 'replaceCurrent' ? required(v) : true,
+          state.clientBanner.method === "replaceCurrent" ? required(v) : true,
         maxFileSize(props.maxFileSize),
         imageShouldHaveDimensions(
           props.aspectRatios.clientBanner,
-          props.aspectRatioTolerance,
+          props.aspectRatioTolerance
         ),
         validFileTypes(props.allowedImageTypes),
       ],
       loginBanner: [
         (v) =>
-          state.loginBanner.method === 'replaceCurrent' ? required(v) : true,
+          state.loginBanner.method === "replaceCurrent" ? required(v) : true,
         maxFileSize(props.maxFileSize),
         imageShouldHaveDimensions(
           props.aspectRatios.loginBanner,
-          props.aspectRatioTolerance,
+          props.aspectRatioTolerance
         ),
         validFileTypes(props.allowedImageTypes),
       ],
@@ -307,7 +307,7 @@ export default {
       const getAttachment = (fileUploadModel) => {
         if (
           fileUploadModel.method === null ||
-          fileUploadModel.method === 'replaceCurrent'
+          fileUploadModel.method === "replaceCurrent"
         ) {
           return fileUploadModel.newAttachment;
         }
@@ -316,8 +316,8 @@ export default {
       state.isLoading = true;
       http
         .request({
-          method: 'PUT',
-          url: '/api/v2/admin/theme',
+          method: "PUT",
+          url: "/api/v2/admin/theme",
           data: {
             variables: state.colors,
             showSocialMediaImages: state.showSocialMediaImages,
@@ -339,8 +339,8 @@ export default {
       state.isLoading = true;
       http
         .request({
-          method: 'DELETE',
-          url: '/api/v2/admin/theme',
+          method: "DELETE",
+          url: "/api/v2/admin/theme",
         })
         .then(() => reloadPage());
     };
@@ -351,14 +351,14 @@ export default {
         state.isLoading = true;
         http
           .request({
-            method: 'POST',
-            url: '/api/v2/admin/theme/preview',
+            method: "POST",
+            url: "/api/v2/admin/theme/preview",
             data: {
               ...state.colors,
             },
           })
           .then((response) => {
-            const {data} = response.data;
+            const { data } = response.data;
             for (const key in data) {
               const value = data[key];
               document.documentElement.style.setProperty(key, value);
@@ -373,7 +373,7 @@ export default {
       http
         .getAll()
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           const {
             clientLogo,
             clientBanner,
@@ -386,19 +386,19 @@ export default {
             state.clientLogo.method = null;
           } else {
             state.clientLogo.oldAttachment = clientLogo;
-            state.clientLogo.oldAttachment.id = 'clientLogo';
+            state.clientLogo.oldAttachment.id = "clientLogo";
           }
           if (clientBanner === null) {
             state.clientBanner.method = null;
           } else {
             state.clientBanner.oldAttachment = clientBanner;
-            state.clientBanner.oldAttachment.id = 'clientBanner';
+            state.clientBanner.oldAttachment.id = "clientBanner";
           }
           if (loginBanner === null) {
             state.loginBanner.method = null;
           } else {
             state.loginBanner.oldAttachment = loginBanner;
-            state.loginBanner.oldAttachment.id = 'loginBanner';
+            state.loginBanner.oldAttachment.id = "loginBanner";
           }
           state.showSocialMediaImages = showSocialMediaImages;
         })
@@ -417,7 +417,7 @@ export default {
   computed: {
     formattedFileSize() {
       let size = Math.round((this.maxFileSize / (1024 * 1024)) * 100) / 100;
-      return size === 1 ? size + 'MB' : size + 'MBs';
+      return size === 1 ? size + "MB" : size + "MBs";
     },
   },
 };

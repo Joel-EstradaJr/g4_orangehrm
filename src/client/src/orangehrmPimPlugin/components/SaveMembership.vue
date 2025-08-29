@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('general.add_membership') }}
+      {{ $t("general.add_membership") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -99,21 +99,21 @@ import {
   endDateShouldBeAfterStartDate,
   digitsOnlyWithDecimalPoint,
   maxCurrency,
-} from '@ohrm/core/util/validation/rules';
-import {yearRange} from '@ohrm/core/util/helper/year-range';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import { yearRange } from "@ohrm/core/util/helper/year-range";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const membershipModel = {
   membershipId: [],
-  subscriptionFee: '',
+  subscriptionFee: "",
   subscriptionPaidBy: null,
   currencyTypeId: [],
-  subscriptionCommenceDate: '',
-  subscriptionRenewalDate: '',
+  subscriptionCommenceDate: "",
+  subscriptionRenewalDate: "",
 };
 
 export default {
-  name: 'SaveMembership',
+  name: "SaveMembership",
 
   props: {
     http: {
@@ -134,10 +134,10 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup() {
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       userDateFormat,
@@ -147,7 +147,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      membership: {...membershipModel},
+      membership: { ...membershipModel },
       yearArray: [...yearRange()],
       rules: {
         membership: [required],
@@ -156,7 +156,7 @@ export default {
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.membership.subscriptionCommenceDate,
-            this.$t('pim.renewal_date_should_be_after_the_commencing_date'),
+            this.$t("pim.renewal_date_should_be_after_the_commencing_date")
           ),
         ],
         subscriptionFee: [digitsOnlyWithDecimalPoint, maxCurrency(1000000000)],
@@ -180,12 +180,12 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          this.membership = {...membershipModel};
+          this.membership = { ...membershipModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

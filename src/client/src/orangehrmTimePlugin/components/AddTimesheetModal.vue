@@ -19,12 +19,12 @@
 
 <template>
   <oxd-dialog
-    :style="{width: '90%', maxWidth: '450px'}"
+    :style="{ width: '90%', maxWidth: '450px' }"
     @update:show="onCancel"
   >
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('time.add_timesheet') }}
+        {{ $t("time.add_timesheet") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -54,15 +54,15 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {OxdDialog} from '@ohrm/oxd';
-import {required, validDateFormat} from '@ohrm/core/util/validation/rules';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+import { APIService } from "@/core/util/services/api.service";
+import { OxdDialog } from "@ohrm/oxd";
+import { required, validDateFormat } from "@ohrm/core/util/validation/rules";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 export default {
-  name: 'AddTimesheetModal',
+  name: "AddTimesheetModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
 
   props: {
@@ -72,13 +72,13 @@ export default {
       default: null,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/time/add-timesheet`,
+      `/api/v2/pim/time/add-timesheet`
     );
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -110,7 +110,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close');
+      this.$emit("close");
     },
   },
 };

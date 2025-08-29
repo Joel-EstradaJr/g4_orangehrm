@@ -63,18 +63,18 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
+import { APIService } from "@/core/util/services/api.service";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
 
 const candidateModel = {
-  candidateName: '',
-  vacancyName: '',
-  hiringManagerName: '',
+  candidateName: "",
+  vacancyName: "",
+  hiringManagerName: "",
   status: null,
 };
 
 export default {
-  name: 'CandidateActionLayout',
+  name: "CandidateActionLayout",
   inheritAttrs: false,
   props: {
     candidateId: {
@@ -90,13 +90,13 @@ export default {
       required: true,
     },
   },
-  emits: ['update:loading'],
+  emits: ["update:loading"],
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/recruitment/candidates`,
+      `/api/v2/recruitment/candidates`
     );
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     return {
       http,
@@ -105,17 +105,17 @@ export default {
   },
   data() {
     return {
-      candidate: {...candidateModel},
+      candidate: { ...candidateModel },
       statuses: [
-        {id: 1, label: this.$t('recruitment.application_initiated')},
-        {id: 2, label: this.$t('recruitment.shortlisted')},
-        {id: 3, label: this.$t('leave.rejected')},
-        {id: 4, label: this.$t('recruitment.interview_scheduled')},
-        {id: 5, label: this.$t('recruitment.interview_passed')},
-        {id: 6, label: this.$t('recruitment.interview_failed')},
-        {id: 7, label: this.$t('recruitment.job_offered')},
-        {id: 8, label: this.$t('recruitment.offer_declined')},
-        {id: 9, label: this.$t('recruitment.hired')},
+        { id: 1, label: this.$t("recruitment.application_initiated") },
+        { id: 2, label: this.$t("recruitment.shortlisted") },
+        { id: 3, label: this.$t("leave.rejected") },
+        { id: 4, label: this.$t("recruitment.interview_scheduled") },
+        { id: 5, label: this.$t("recruitment.interview_passed") },
+        { id: 6, label: this.$t("recruitment.interview_failed") },
+        { id: 7, label: this.$t("recruitment.job_offered") },
+        { id: 8, label: this.$t("recruitment.offer_declined") },
+        { id: 9, label: this.$t("recruitment.hired") },
       ],
     };
   },
@@ -128,14 +128,14 @@ export default {
     },
   },
   beforeMount() {
-    this.$emit('update:loading', true);
+    this.$emit("update:loading", true);
     this.http
       .get(this.candidateId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.candidate.status = data.status;
         this.candidate.candidateName = `${data?.firstName} ${
-          data?.middleName || ''
+          data?.middleName || ""
         } ${data?.lastName}`;
         if (data?.vacancy) {
           this.candidate.vacancyName = data?.vacancy.name;
@@ -146,12 +146,12 @@ export default {
             {
               includeMiddle: true,
               excludePastEmpTag: false,
-            },
+            }
           );
         }
       })
       .finally(() => {
-        this.$emit('update:loading', false);
+        this.$emit("update:loading", false);
       });
   },
 };

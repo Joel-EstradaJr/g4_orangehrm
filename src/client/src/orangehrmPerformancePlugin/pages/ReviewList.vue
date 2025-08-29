@@ -106,51 +106,51 @@
 </template>
 
 <script>
-import {computed, ref, inject} from 'vue';
-import {navigate} from '@/core/util/helper/navigation';
+import { computed, ref, inject } from "vue";
+import { navigate } from "@/core/util/helper/navigation";
 import {
   validSelection,
   validDateFormat,
   endDateShouldBeAfterStartDate,
   startDateShouldBeBeforeEndDate,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
+} from "@/core/util/validation/rules";
 import {
   viewIcon,
   evaluateIcon,
   viewLabel,
   evaluateLabel,
-} from '@/orangehrmPerformancePlugin/util/composable/useReviewActions';
-import useSort from '@ohrm/core/util/composable/useSort';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@/core/util/services/api.service';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
-import SubunitDropdown from '@/orangehrmPimPlugin/components/SubunitDropdown';
-import ReviewStatusDropdown from '@/orangehrmPerformancePlugin/components/ReviewStatusDropdown';
-import usei18n from '@/core/util/composable/usei18n';
-import {formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import useLocale from '@/core/util/composable/useLocale';
-import IncludeEmployeeDropdown from '@/core/components/dropdown/IncludeEmployeeDropdown';
-import ReviewPeriodCell from '@/orangehrmPerformancePlugin/components/ReviewPeriodCell';
-import {tableScreenStateKey} from '@ohrm/oxd';
+} from "@/orangehrmPerformancePlugin/util/composable/useReviewActions";
+import useSort from "@ohrm/core/util/composable/useSort";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@/core/util/services/api.service";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import JobtitleDropdown from "@/orangehrmPimPlugin/components/JobtitleDropdown";
+import SubunitDropdown from "@/orangehrmPimPlugin/components/SubunitDropdown";
+import ReviewStatusDropdown from "@/orangehrmPerformancePlugin/components/ReviewStatusDropdown";
+import usei18n from "@/core/util/composable/usei18n";
+import { formatDate, parseDate } from "@ohrm/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import useLocale from "@/core/util/composable/useLocale";
+import IncludeEmployeeDropdown from "@/core/components/dropdown/IncludeEmployeeDropdown";
+import ReviewPeriodCell from "@/orangehrmPerformancePlugin/components/ReviewPeriodCell";
+import { tableScreenStateKey } from "@ohrm/oxd";
 
 const defaultSortOrder = {
-  'employee.lastName': 'DEFAULT',
-  'performanceReview.reviewPeriodStart': 'DEFAULT',
-  'performanceReview.dueDate': 'DEFAULT',
-  'performanceReview.statusId': 'ASC',
+  "employee.lastName": "DEFAULT",
+  "performanceReview.reviewPeriodStart": "DEFAULT",
+  "performanceReview.dueDate": "DEFAULT",
+  "performanceReview.statusId": "ASC",
 };
 
 export default {
-  name: 'ReviewList',
+  name: "ReviewList",
   components: {
-    'include-employee-dropdown': IncludeEmployeeDropdown,
-    'review-status-dropdown': ReviewStatusDropdown,
-    'subunit-dropdown': SubunitDropdown,
-    'jobtitle-dropdown': JobtitleDropdown,
-    'employee-autocomplete': EmployeeAutocomplete,
+    "include-employee-dropdown": IncludeEmployeeDropdown,
+    "review-status-dropdown": ReviewStatusDropdown,
+    "subunit-dropdown": SubunitDropdown,
+    "jobtitle-dropdown": JobtitleDropdown,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
   props: {
     fromDate: {
@@ -165,12 +165,12 @@ export default {
     },
   },
   setup(props) {
-    const {$t} = usei18n();
-    const {jsDateFormat, userDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { $t } = usei18n();
+    const { jsDateFormat, userDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const reviewListDateFormat = (date) =>
-      formatDate(parseDate(date), jsDateFormat, {locale});
+      formatDate(parseDate(date), jsDateFormat, { locale });
 
     const reviewListNormalizer = (data) => {
       return data.map((item) => {
@@ -178,8 +178,8 @@ export default {
           id: item.id,
           employee: `${item.employee?.firstName} ${item.employee?.lastName} ${
             item.employee?.terminationId
-              ? ` ${$t('general.past_employee')}`
-              : ''
+              ? ` ${$t("general.past_employee")}`
+              : ""
           }`,
           jobTitle: item.jobTitle?.name,
           subunit: item.subunit?.name,
@@ -190,10 +190,10 @@ export default {
           dueDate: reviewListDateFormat(item.dueDate),
           status:
             item.overallStatus.statusId === 2
-              ? $t('performance.activated')
+              ? $t("performance.activated")
               : item.overallStatus.statusId === 3
-              ? $t('performance.in_progress')
-              : $t('performance.completed'),
+              ? $t("performance.in_progress")
+              : $t("performance.completed"),
           statusId: item.overallStatus.statusId,
         };
       });
@@ -208,17 +208,17 @@ export default {
       toDate: null,
       includeEmployees: {
         id: 1,
-        param: 'onlyCurrent',
-        label: $t('general.current_employees_only'),
+        param: "onlyCurrent",
+        label: $t("general.current_employees_only"),
       },
     };
 
     const filters = ref({
       ...defaultFilters,
-      ...(props.fromDate && {fromDate: props.fromDate}),
-      ...(props.toDate && {toDate: props.toDate}),
+      ...(props.fromDate && { fromDate: props.fromDate }),
+      ...(props.toDate && { toDate: props.toDate }),
     });
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
     const serializedFilters = computed(() => {
@@ -237,7 +237,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/performance/employees/reviews',
+      "/api/v2/performance/employees/reviews"
     );
 
     const {
@@ -275,48 +275,48 @@ export default {
     return {
       headers: [
         {
-          name: 'employee',
-          title: this.$t('general.employee'),
-          slot: 'title',
-          sortField: 'employee.lastName',
-          style: {flex: 1},
+          name: "employee",
+          title: this.$t("general.employee"),
+          slot: "title",
+          sortField: "employee.lastName",
+          style: { flex: 1 },
         },
         {
-          name: 'jobTitle',
-          title: this.$t('general.job_title'),
-          style: {flex: 1},
+          name: "jobTitle",
+          title: this.$t("general.job_title"),
+          style: { flex: 1 },
         },
         {
-          name: 'subunit',
-          title: this.$t('general.sub_unit'),
-          style: {flex: 1},
+          name: "subunit",
+          title: this.$t("general.sub_unit"),
+          style: { flex: 1 },
         },
         {
-          name: 'reviewPeriod',
-          title: this.$t('performance.review_period'),
-          sortField: 'performanceReview.reviewPeriodStart',
-          style: {flex: 1},
+          name: "reviewPeriod",
+          title: this.$t("performance.review_period"),
+          sortField: "performanceReview.reviewPeriodStart",
+          style: { flex: 1 },
           cellRenderer: this.reviewPeriodCellRenderer,
         },
         {
-          name: 'dueDate',
-          title: this.$t('performance.due_date'),
-          sortField: 'performanceReview.dueDate',
-          style: {flex: 1},
+          name: "dueDate",
+          title: this.$t("performance.due_date"),
+          sortField: "performanceReview.dueDate",
+          style: { flex: 1 },
         },
         {
-          name: 'status',
-          title: this.$t('performance.review_status'),
-          sortField: 'performanceReview.statusId',
-          style: {flex: 1},
+          name: "status",
+          title: this.$t("performance.review_status"),
+          sortField: "performanceReview.statusId",
+          style: { flex: 1 },
         },
         {
-          name: 'action',
-          slot: 'footer',
-          title: this.$t('general.actions'),
-          cellType: 'oxd-table-cell-actions',
+          name: "action",
+          slot: "footer",
+          title: this.$t("general.actions"),
+          cellType: "oxd-table-cell-actions",
           cellRenderer: this.actionCellRenderer,
-          style: {flex: 1},
+          style: { flex: 1 },
         },
       ],
       rules: {
@@ -325,16 +325,16 @@ export default {
           validDateFormat(this.userDateFormat),
           startDateShouldBeBeforeEndDate(
             () => this.filters.toDate,
-            this.$t('general.from_date_should_be_before_to_date'),
-            {allowSameDate: true},
+            this.$t("general.from_date_should_be_before_to_date"),
+            { allowSameDate: true }
           ),
         ],
         toDate: [
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.filters.fromDate,
-            this.$t('general.to_date_should_be_after_from_date'),
-            {allowSameDate: true},
+            this.$t("general.to_date_should_be_after_from_date"),
+            { allowSameDate: true }
           ),
         ],
       },
@@ -345,24 +345,24 @@ export default {
       const cellConfig = {};
       const screenState = inject(tableScreenStateKey);
 
-      if (screenState.screenType === 'lg' || screenState.screenType === 'xl') {
+      if (screenState.screenType === "lg" || screenState.screenType === "xl") {
         if (row.statusId === 4) {
           cellConfig.view = viewIcon;
-          cellConfig.view.props.title = this.$t('general.view');
+          cellConfig.view.props.title = this.$t("general.view");
           cellConfig.view.onClick = this.onClickEvaluate;
         } else {
           cellConfig.evaluate = evaluateIcon;
-          cellConfig.evaluate.props.title = this.$t('performance.evaluate');
+          cellConfig.evaluate.props.title = this.$t("performance.evaluate");
           cellConfig.evaluate.onClick = this.onClickEvaluate;
         }
       } else {
         if (row.statusId === 4) {
           cellConfig.view = viewLabel;
-          cellConfig.view.props.label = this.$t('general.view');
+          cellConfig.view.props.label = this.$t("general.view");
           cellConfig.view.onClick = this.onClickEvaluate;
         } else {
           cellConfig.evaluate = evaluateLabel;
-          cellConfig.evaluate.props.label = this.$t('performance.evaluate');
+          cellConfig.evaluate.props.label = this.$t("performance.evaluate");
           cellConfig.evaluate.onClick = this.onClickEvaluate;
         }
       }
@@ -389,7 +389,7 @@ export default {
       await this.execQuery();
     },
     onClickEvaluate(item) {
-      navigate('/performance/reviewEvaluateByAdmin/{id}', {id: item.id});
+      navigate("/performance/reviewEvaluateByAdmin/{id}", { id: item.id });
     },
   },
 };

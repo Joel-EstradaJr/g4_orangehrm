@@ -21,18 +21,18 @@
   <teleport to="#app">
     <oxd-dialog
       v-if="show"
-      :style="{maxWidth: '450px'}"
+      :style="{ maxWidth: '450px' }"
       @update:show="onCancel"
     >
       <div class="orangehrm-modal-header">
         <oxd-text type="card-title">
-          {{ $t('leave.updating_entitlement') }}
+          {{ $t("leave.updating_entitlement") }}
         </oxd-text>
       </div>
       <div class="orangehrm-text-center-align">
         <oxd-text type="card-body">
           {{
-            $t('leave.entitlement_value_confirmation_message', {
+            $t("leave.entitlement_value_confirmation_message", {
               oldvalue: current,
               newvalue: updateAs,
             })
@@ -58,13 +58,13 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {OxdDialog} from '@ohrm/oxd';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'EntitlementUpdateModal',
+  name: "EntitlementUpdateModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -73,7 +73,7 @@ export default {
     },
   },
   setup() {
-    const http = new APIService(window.appGlobal.baseUrl, '');
+    const http = new APIService(window.appGlobal.baseUrl, "");
     return {
       http,
     };
@@ -83,15 +83,15 @@ export default {
       show: false,
       reject: null,
       resolve: null,
-      current: '0.00',
-      updateAs: '0.00',
+      current: "0.00",
+      updateAs: "0.00",
     };
   },
   methods: {
     showDialog() {
       return this.http
         .request({
-          method: 'GET',
+          method: "GET",
           url: `/api/v2/leave/employees/${this.data.employee?.id}/leave-entitlements`,
           params: {
             leaveTypeId: this.data.leaveType?.id,
@@ -101,13 +101,13 @@ export default {
           },
         })
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           this.current = data.entitlement?.current
             ? parseFloat(data.entitlement.current).toFixed(2)
-            : '0.00';
+            : "0.00";
           this.updateAs = data.entitlement?.updateAs
             ? parseFloat(data.entitlement.updateAs).toFixed(2)
-            : '0.00';
+            : "0.00";
           return new Promise((resolve, reject) => {
             this.resolve = resolve;
             this.reject = reject;
@@ -117,11 +117,11 @@ export default {
     },
     onConfirm() {
       this.show = false;
-      this.resolve && this.resolve('ok');
+      this.resolve && this.resolve("ok");
     },
     onCancel() {
       this.show = false;
-      this.resolve && this.resolve('cancel');
+      this.resolve && this.resolve("cancel");
     },
   },
 };

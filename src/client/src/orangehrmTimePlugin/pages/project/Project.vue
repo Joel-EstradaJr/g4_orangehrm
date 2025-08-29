@@ -104,18 +104,18 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import usei18n from '@/core/util/composable/usei18n';
-import {validSelection} from '@/core/util/validation/rules';
-import useSort from '@ohrm/core/util/composable/useSort';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import ProjectAutocomplete from '@/orangehrmTimePlugin/components/ProjectAutocomplete.vue';
-import CustomerAutocomplete from '@/orangehrmTimePlugin/components/CustomerAutocomplete.vue';
-import ProjectAdminAutocomplete from '@/orangehrmTimePlugin/components/ProjectAdminAutocomplete.vue';
+import { computed, ref } from "vue";
+import usei18n from "@/core/util/composable/usei18n";
+import { validSelection } from "@/core/util/validation/rules";
+import useSort from "@ohrm/core/util/composable/useSort";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import ProjectAutocomplete from "@/orangehrmTimePlugin/components/ProjectAutocomplete.vue";
+import CustomerAutocomplete from "@/orangehrmTimePlugin/components/CustomerAutocomplete.vue";
+import ProjectAdminAutocomplete from "@/orangehrmTimePlugin/components/ProjectAdminAutocomplete.vue";
 
 const defaultFilters = {
   customer: null,
@@ -124,17 +124,17 @@ const defaultFilters = {
 };
 
 const defaultSortOrder = {
-  'project.name': 'ASC',
-  'customer.name': 'DEFAULT',
-  'employee.lastName': 'DEFAULT',
+  "project.name": "ASC",
+  "customer.name": "DEFAULT",
+  "employee.lastName": "DEFAULT",
 };
 
 export default {
   components: {
-    'project-autocomplete': ProjectAutocomplete,
-    'customer-autocomplete': CustomerAutocomplete,
-    'delete-confirmation': DeleteConfirmationDialog,
-    'project-admin-autocomplete': ProjectAdminAutocomplete,
+    "project-autocomplete": ProjectAutocomplete,
+    "customer-autocomplete": CustomerAutocomplete,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "project-admin-autocomplete": ProjectAdminAutocomplete,
   },
   props: {
     unselectableIds: {
@@ -143,30 +143,30 @@ export default {
     },
   },
   setup(props) {
-    const {$t} = usei18n();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $t } = usei18n();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     const projectNormalizer = (data) => {
       return data.map((item) => {
         const selectable = props.unselectableIds.findIndex(
-          (id) => id == item.id,
+          (id) => id == item.id
         );
         return {
           id: item.id,
           project: item.name,
           customer: item.customer?.deleted
-            ? item.customer?.name + $t('general.deleted')
+            ? item.customer?.name + $t("general.deleted")
             : item.customer?.name,
           projectAdmins: item.projectAdmins
             ?.map((projectAdmin) => $tEmpName(projectAdmin))
-            .join(', '),
+            .join(", "),
           isSelectable: selectable === -1,
         };
       });
     };
 
-    const filters = ref({...defaultFilters});
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const filters = ref({ ...defaultFilters });
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
 
@@ -177,13 +177,13 @@ export default {
         empNumber: filters.value.projectAdmin?.id,
         sortField: sortField.value,
         sortOrder: sortOrder.value,
-        model: 'detailed',
+        model: "detailed",
       };
     });
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/time/projects',
+      "/api/v2/time/projects"
     );
 
     const {
@@ -230,37 +230,37 @@ export default {
     headers() {
       const headers = [
         {
-          name: 'customer',
-          title: this.$t('time.customer_name'),
-          sortField: 'customer.name',
-          style: {flex: '15%'},
+          name: "customer",
+          title: this.$t("time.customer_name"),
+          sortField: "customer.name",
+          style: { flex: "15%" },
         },
         {
-          name: 'project',
-          slot: 'title',
-          title: this.$t('time.project'),
-          sortField: 'project.name',
-          style: {flex: '15%'},
+          name: "project",
+          slot: "title",
+          title: this.$t("time.project"),
+          sortField: "project.name",
+          style: { flex: "15%" },
         },
         {
-          name: 'projectAdmins',
-          title: this.$t('time.project_admins'),
-          style: {flex: '20%'},
+          name: "projectAdmins",
+          title: this.$t("time.project_admins"),
+          style: { flex: "20%" },
         },
       ];
       const headerActions = {
-        name: 'actions',
-        slot: 'action',
-        title: this.$t('general.actions'),
-        style: {flex: 1},
-        cellType: 'oxd-table-cell-actions',
+        name: "actions",
+        slot: "action",
+        title: this.$t("general.actions"),
+        style: { flex: 1 },
+        cellType: "oxd-table-cell-actions",
         cellConfig: {},
       };
       if (this.$can.delete(`time_projects`)) {
         headerActions.cellConfig.delete = {
           onClick: this.onClickDelete,
           props: {
-            name: 'trash',
+            name: "trash",
           },
         };
       }
@@ -268,7 +268,7 @@ export default {
         headerActions.cellConfig.edit = {
           onClick: this.onClickEdit,
           props: {
-            name: 'pencil-fill',
+            name: "pencil-fill",
           },
         };
       }
@@ -280,25 +280,25 @@ export default {
   },
   methods: {
     onClickAdd() {
-      navigate('/time/saveProject');
+      navigate("/time/saveProject");
     },
     onClickEdit(item) {
-      navigate('/time/saveProject/{id}', {id: item.id});
+      navigate("/time/saveProject/{id}", { id: item.id });
     },
     onClickDelete(item) {
       const isSelectable = this.unselectableIds.findIndex(
-        (id) => id == item.id,
+        (id) => id == item.id
       );
       if (isSelectable > -1) {
         return this.$toast.error({
-          title: this.$t('general.error'),
+          title: this.$t("general.error"),
           message: this.$t(
-            'time.not_allowed_to_delete_projects_which_have_time_logged',
+            "time.not_allowed_to_delete_projects_which_have_time_logged"
           ),
         });
       }
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteData([item.id]);
         }
       });
@@ -308,7 +308,7 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteData(ids);
         }
       });

@@ -21,17 +21,17 @@
   <teleport to="#app">
     <oxd-dialog
       v-if="show"
-      :style="{maxWidth: '450px'}"
+      :style="{ maxWidth: '450px' }"
       @update:show="onCancel"
     >
       <div class="orangehrm-modal-header">
         <oxd-text type="card-title">
-          {{ $t('general.no_matching_employees') }}
+          {{ $t("general.no_matching_employees") }}
         </oxd-text>
       </div>
       <div class="orangehrm-text-center-align">
         <oxd-text type="card-body">
-          {{ $t('general.no_employees_match_filters') }}
+          {{ $t("general.no_employees_match_filters") }}
         </oxd-text>
       </div>
       <div class="orangehrm-modal-footer">
@@ -46,12 +46,12 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'EntitlementNoMatchModal',
+  name: "EntitlementNoMatchModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   data() {
     return {

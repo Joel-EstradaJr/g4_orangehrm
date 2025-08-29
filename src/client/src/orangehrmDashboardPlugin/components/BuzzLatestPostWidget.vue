@@ -59,60 +59,60 @@
 </template>
 
 <script>
-import {ref, computed, onBeforeMount} from 'vue';
-import {navigate} from '@/core/util/helper/navigation';
-import useLocale from '@/core/util/composable/useLocale';
-import {APIService} from '@/core/util/services/api.service';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import VideoFrame from '@/orangehrmBuzzPlugin/components/VideoFrame';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage.vue';
-import BaseWidget from '@/orangehrmDashboardPlugin/components/BaseWidget.vue';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
+import { ref, computed, onBeforeMount } from "vue";
+import { navigate } from "@/core/util/helper/navigation";
+import useLocale from "@/core/util/composable/useLocale";
+import { APIService } from "@/core/util/services/api.service";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import VideoFrame from "@/orangehrmBuzzPlugin/components/VideoFrame";
+import useBuzzAPIs from "@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs";
+import ProfileImage from "@/orangehrmBuzzPlugin/components/ProfileImage.vue";
+import BaseWidget from "@/orangehrmDashboardPlugin/components/BaseWidget.vue";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
 
 export default {
-  name: 'BuzzLatestPostWidget',
+  name: "BuzzLatestPostWidget",
 
   components: {
-    'base-widget': BaseWidget,
-    'video-frame': VideoFrame,
-    'profile-image': ProfileImage,
+    "base-widget": BaseWidget,
+    "video-frame": VideoFrame,
+    "profile-image": ProfileImage,
   },
 
   setup() {
     const posts = ref([]);
     const isLoading = ref(false);
-    const {locale} = useLocale();
-    const {jsDateFormat, jsTimeFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
-    const {fetchPosts} = useBuzzAPIs(
-      new APIService(window.appGlobal.baseUrl, ''),
+    const { locale } = useLocale();
+    const { jsDateFormat, jsTimeFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
+    const { fetchPosts } = useBuzzAPIs(
+      new APIService(window.appGlobal.baseUrl, "")
     );
 
     const isEmpty = computed(() => posts.value.length === 0);
 
-    const onClickPost = () => navigate('/buzz/viewBuzz');
+    const onClickPost = () => navigate("/buzz/viewBuzz");
 
     onBeforeMount(() => {
       isLoading.value = true;
-      fetchPosts(5, 0, 'DESC', 'share.createdAtUtc')
+      fetchPosts(5, 0, "DESC", "share.createdAtUtc")
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           posts.value = data.map((post) => {
-            const {employee, createdDate, createdTime, originalPost} = post;
+            const { employee, createdDate, createdTime, originalPost } = post;
 
             const postVideoSrc = post.video?.link || null;
             const utcDate = parseDate(
               `${createdDate} ${createdTime} +00:00`,
-              'yyyy-MM-dd HH:mm xxx',
+              "yyyy-MM-dd HH:mm xxx"
             );
             const dateTime = formatDate(
               utcDate,
               `${jsDateFormat} ${jsTimeFormat}`,
               {
                 locale,
-              },
+              }
             );
             const employeeFullName = $tEmpName(employee, {
               includeMiddle: true,

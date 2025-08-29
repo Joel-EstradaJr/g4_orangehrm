@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('general.add_employee') }}
+        {{ $t("general.add_employee") }}
       </oxd-text>
       <oxd-divider />
 
@@ -60,7 +60,7 @@
             <oxd-divider />
             <oxd-form-row class="user-form-header">
               <oxd-text class="user-form-header-text" tag="p">
-                {{ $t('pim.create_login_details') }}
+                {{ $t("pim.create_login_details") }}
               </oxd-text>
               <oxd-switch-input v-model="createLogin" />
             </oxd-form-row>
@@ -81,7 +81,7 @@
                   <oxd-grid-item>
                     <oxd-input-group
                       :label="$t('general.status')"
-                      :classes="{wrapper: '--status-grouped-field'}"
+                      :classes="{ wrapper: '--status-grouped-field' }"
                     >
                       <oxd-input-field
                         v-model="user.status"
@@ -125,47 +125,47 @@
 </template>
 
 <script>
-import {ref} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import ProfileImageInput from '@/orangehrmPimPlugin/components/ProfileImageInput';
-import FullNameInput from '@/orangehrmPimPlugin/components/FullNameInput';
-import PasswordInput from '@/core/components/inputs/PasswordInput';
+import { ref } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import ProfileImageInput from "@/orangehrmPimPlugin/components/ProfileImageInput";
+import FullNameInput from "@/orangehrmPimPlugin/components/FullNameInput";
+import PasswordInput from "@/core/components/inputs/PasswordInput";
 import {
   maxFileSize,
   required,
   shouldNotExceedCharLength,
   shouldNotLessThanCharLength,
   validFileTypes,
-} from '@ohrm/core/util/validation/rules';
-import {OxdSwitchInput} from '@ohrm/oxd';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import { OxdSwitchInput } from "@ohrm/oxd";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const defaultPic = `${window.appGlobal.publicPath}/images/default-photo.png`;
 
 const employeeModel = {
-  firstName: '',
-  middleName: '',
-  lastName: '',
+  firstName: "",
+  middleName: "",
+  lastName: "",
   empPicture: null,
-  employeeId: '',
+  employeeId: "",
 };
 
 const userModel = {
-  username: '',
+  username: "",
   userRoleId: 2,
   empNumber: 0,
-  status: '1',
-  password: '',
-  passwordConfirm: '',
+  status: "1",
+  password: "",
+  passwordConfirm: "",
 };
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
-    'profile-image-input': ProfileImageInput,
-    'full-name-input': FullNameInput,
-    'password-input': PasswordInput,
+    "oxd-switch-input": OxdSwitchInput,
+    "profile-image-input": ProfileImageInput,
+    "full-name-input": FullNameInput,
+    "password-input": PasswordInput,
   },
 
   props: {
@@ -186,24 +186,24 @@ export default {
   setup(props) {
     const employee = ref({
       ...employeeModel,
-      employeeId: props.empId ? props.empId : '',
+      employeeId: props.empId ? props.empId : "",
     });
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/employees',
+      "/api/v2/pim/employees"
     );
 
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const employeeIdUniqueValidation = createUniqueValidator(
-      'Employee',
-      'employeeId',
-      {translateKey: 'pim.employee_id_exists'},
+      "Employee",
+      "employeeId",
+      { translateKey: "pim.employee_id_exists" }
     );
-    const usernameUniqueValidation = createUniqueValidator('User', 'userName', {
-      matchByField: 'deleted',
-      matchByValue: 'false',
-      translateKey: 'pim.username_already_exists',
+    const usernameUniqueValidation = createUniqueValidator("User", "userName", {
+      matchByField: "deleted",
+      matchByValue: "false",
+      translateKey: "pim.username_already_exists",
     });
 
     return {
@@ -218,7 +218,7 @@ export default {
     return {
       isLoading: false,
       createLogin: false,
-      user: {...userModel},
+      user: { ...userModel },
       empNumber: null,
       rules: {
         firstName: [required, shouldNotExceedCharLength(30)],
@@ -249,7 +249,7 @@ export default {
         const file = this.employee.empPicture.base64;
         const type = this.employee.empPicture.type;
         const isPicture = this.allowedImageTypes.findIndex(
-          (item) => item === type,
+          (item) => item === type
         );
         return isPicture > -1 ? `data:${type};base64,${file}` : defaultPic;
       } else {
@@ -267,7 +267,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/pim/viewEmployeeList');
+      navigate("/pim/viewEmployeeList");
     },
     onSave() {
       this.isLoading = true;
@@ -276,18 +276,18 @@ export default {
           ...this.employee,
         })
         .then((response) => {
-          const {data} = response;
+          const { data } = response;
           if (data?.data) {
             this.empNumber = data.data.empNumber;
           }
           if (this.createLogin && data?.data) {
             return this.http.request({
-              method: 'POST',
-              url: '/api/v2/admin/users',
+              method: "POST",
+              url: "/api/v2/admin/users",
               data: {
                 username: this.user.username,
                 password: this.user.password,
-                status: this.user.status == '1',
+                status: this.user.status == "1",
                 userRoleId: this.user.userRoleId,
                 empNumber: data.data.empNumber,
               },
@@ -300,8 +300,8 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          this.employee = {...employeeModel};
-          this.user = {...userModel};
+          this.employee = { ...employeeModel };
+          this.user = { ...userModel };
           if (this.empNumber) {
             navigate(`/pim/viewPersonalDetails/empNumber/${this.empNumber}`);
           } else {

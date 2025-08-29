@@ -19,7 +19,7 @@
 
 <template>
   <leave-entitlement-table :prefetch="false">
-    <template #default="{filters, filterItems}">
+    <template #default="{ filters, filterItems }">
       <oxd-table-filter :filter-title="$t('leave.leave_entitlements')">
         <oxd-form @submit-valid="filterItems">
           <oxd-form-row>
@@ -71,18 +71,18 @@ import {
   required,
   shouldNotExceedCharLength,
   validSelection,
-} from '@/core/util/validation/rules';
-import LeaveEntitlementTable from '@/orangehrmLeavePlugin/components/LeaveEntitlementTable';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import LeaveTypeDropdown from '@/orangehrmLeavePlugin/components/LeaveTypeDropdown';
-import LeavePeriodDropdown from '@/orangehrmLeavePlugin/components/LeavePeriodDropdown';
+} from "@/core/util/validation/rules";
+import LeaveEntitlementTable from "@/orangehrmLeavePlugin/components/LeaveEntitlementTable";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import LeaveTypeDropdown from "@/orangehrmLeavePlugin/components/LeaveTypeDropdown";
+import LeavePeriodDropdown from "@/orangehrmLeavePlugin/components/LeavePeriodDropdown";
 
 export default {
   components: {
-    'leave-entitlement-table': LeaveEntitlementTable,
-    'employee-autocomplete': EmployeeAutocomplete,
-    'leave-type-dropdown': LeaveTypeDropdown,
-    'leave-period-dropdown': LeavePeriodDropdown,
+    "leave-entitlement-table": LeaveEntitlementTable,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "leave-type-dropdown": LeaveTypeDropdown,
+    "leave-period-dropdown": LeavePeriodDropdown,
   },
   data() {
     return {

@@ -15,8 +15,8 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import CorporateDirectory from './pages/CorporateDirectory.vue';
+import CorporateDirectory from "./pages/CorporateDirectory.vue";
 
 export default {
-  'corporate-directory-employee-list': CorporateDirectory,
+  "corporate-directory-employee-list": CorporateDirectory,
 };

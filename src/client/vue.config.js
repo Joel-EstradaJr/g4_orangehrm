@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const DumpBuildTimestampPlugin = require('./scripts/plugins/DumpBuildTimestampPlugin');
+const DumpBuildTimestampPlugin = require("./scripts/plugins/DumpBuildTimestampPlugin");
 
 module.exports = {
   css: {
@@ -13,18 +13,18 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        '@ohrm/core': '@/core',
-        '@ohrm/components': '@/core/components',
+        "@ohrm/core": "@/core",
+        "@ohrm/components": "@/core/components",
       },
     },
     plugins: [new DumpBuildTimestampPlugin()],
   },
   chainWebpack: (config) => {
-    config.plugins.delete('html');
-    config.plugins.delete('preload');
-    config.plugins.delete('prefetch');
+    config.plugins.delete("html");
+    config.plugins.delete("preload");
+    config.plugins.delete("prefetch");
   },
-  publicPath: '.',
+  publicPath: ".",
   filenameHashing: false,
   runtimeCompiler: true,
 };

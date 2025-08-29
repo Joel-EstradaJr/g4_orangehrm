@@ -22,7 +22,7 @@
     <div class="orangehrm-card-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('recruitment.candidate_profile') }}
+          {{ $t("recruitment.candidate_profile") }}
         </oxd-text>
         <oxd-switch-input
           v-if="!isLoading && updatable"
@@ -120,7 +120,7 @@
                 v-model="profile.keywords"
                 :label="$t('recruitment.keywords')"
                 :placeholder="`${$t(
-                  'recruitment.enter_comma_seperated_words',
+                  'recruitment.enter_comma_seperated_words'
                 )}...`"
                 :rules="rules.keywords"
                 :disabled="!editable"
@@ -192,25 +192,25 @@ import {
   validEmailFormat,
   validPhoneNumberFormat,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
-import {urlFor} from '@ohrm/core/util/helper/url';
-import DateInput from '@/core/components/inputs/DateInput';
-import {APIService} from '@/core/util/services/api.service';
-import FileUploadInput from '@/core/components/inputs/FileUploadInput';
-import FullNameInput from '@/orangehrmPimPlugin/components/FullNameInput';
-import VacancyDropdown from '@/orangehrmRecruitmentPlugin/components/VacancyDropdown';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import ConfirmationDialog from '@/core/components/dialogs/ConfirmationDialog';
-import {OxdSwitchInput} from '@ohrm/oxd';
+} from "@/core/util/validation/rules";
+import { urlFor } from "@ohrm/core/util/helper/url";
+import DateInput from "@/core/components/inputs/DateInput";
+import { APIService } from "@/core/util/services/api.service";
+import FileUploadInput from "@/core/components/inputs/FileUploadInput";
+import FullNameInput from "@/orangehrmPimPlugin/components/FullNameInput";
+import VacancyDropdown from "@/orangehrmRecruitmentPlugin/components/VacancyDropdown";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import ConfirmationDialog from "@/core/components/dialogs/ConfirmationDialog";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const CandidateProfileModel = {
-  firstName: '',
-  middleName: '',
-  lastName: '',
-  email: '',
-  contactNumber: '',
-  comment: '',
-  keywords: '',
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  email: "",
+  contactNumber: "",
+  comment: "",
+  keywords: "",
   dateOfApplication: null,
   consentToKeepData: false,
 };
@@ -219,23 +219,23 @@ const CandidateAttachmentModel = {
   id: null,
   oldAttachment: {},
   newAttachment: null,
-  method: 'replaceCurrent',
+  method: "replaceCurrent",
 };
 
 const VacancyModel = {
   id: null,
-  label: '',
+  label: "",
 };
 
 export default {
-  name: 'CandidateProfile',
+  name: "CandidateProfile",
   components: {
     DateInput,
-    'oxd-switch-input': OxdSwitchInput,
-    'full-name-input': FullNameInput,
-    'vacancy-dropdown': VacancyDropdown,
-    'file-upload-input': FileUploadInput,
-    'confirmation-dialog': ConfirmationDialog,
+    "oxd-switch-input": OxdSwitchInput,
+    "full-name-input": FullNameInput,
+    "vacancy-dropdown": VacancyDropdown,
+    "file-upload-input": FileUploadInput,
+    "confirmation-dialog": ConfirmationDialog,
   },
   props: {
     candidate: {
@@ -256,10 +256,10 @@ export default {
       default: true,
     },
   },
-  emits: ['update'],
+  emits: ["update"],
   setup() {
-    const http = new APIService(window.appGlobal.baseUrl, '/');
-    const {userDateFormat} = useDateFormat();
+    const http = new APIService(window.appGlobal.baseUrl, "/");
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -270,9 +270,9 @@ export default {
     return {
       editable: false,
       isLoading: false,
-      profile: {...CandidateProfileModel},
-      vacancy: {...VacancyModel},
-      attachment: {...CandidateAttachmentModel},
+      profile: { ...CandidateProfileModel },
+      vacancy: { ...VacancyModel },
+      attachment: { ...CandidateAttachmentModel },
       rules: {
         firstName: [required, shouldNotExceedCharLength(30)],
         lastName: [required, shouldNotExceedCharLength(30)],
@@ -308,7 +308,7 @@ export default {
         this.candidate.vacancy?.id !== this.vacancy?.id
       ) {
         this.$refs.confirmDialog.showDialog().then((confirmation) => {
-          if (confirmation === 'ok') this.updateCandidate();
+          if (confirmation === "ok") this.updateCandidate();
         });
       } else {
         this.updateCandidate();
@@ -318,14 +318,14 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           url: `/api/v2/recruitment/candidates/${this.candidate.id}`,
-          data: {...this.profile, vacancyId: this.vacancy?.id},
+          data: { ...this.profile, vacancyId: this.vacancy?.id },
         })
         .then(() => {
           if (this.attachment.newAttachment || this.candidate.hasAttachment) {
             return this.http.request({
-              method: 'PUT',
+              method: "PUT",
               url: `/api/v2/recruitment/candidate/${this.candidate.id}/attachment`,
               data: {
                 currentAttachment: this.attachment.oldAttachment
@@ -343,15 +343,15 @@ export default {
           return this.$toast.updateSuccess();
         })
         .then(() => {
-          this.$emit('update');
+          this.$emit("update");
           this.isLoading = false;
           this.editable = false;
         });
     },
     getResumeUrl() {
       return urlFor(
-        '/recruitment/viewCandidateAttachment/candidateId/{candidateId}',
-        {candidateId: this.candidate.id},
+        "/recruitment/viewCandidateAttachment/candidateId/{candidateId}",
+        { candidateId: this.candidate.id }
       );
     },
     fetchCandidate() {
@@ -365,23 +365,23 @@ export default {
       this.profile.dateOfApplication = this.candidate.dateOfApplication;
       this.profile.comment = this.candidate.comment;
       this.profile.consentToKeepData = this.candidate.consentToKeepData;
-      const {vacancy} = this.candidate;
+      const { vacancy } = this.candidate;
       if (vacancy) {
         this.vacancy = {
           id: vacancy.id,
           label:
             vacancy.status === false
-              ? vacancy.name + ` (${this.$t('general.closed')})`
+              ? vacancy.name + ` (${this.$t("general.closed")})`
               : vacancy.name,
         };
       }
       if (this.candidate.hasAttachment) {
         this.http
           .request({
-            method: 'GET',
+            method: "GET",
             url: `/api/v2/recruitment/candidate/${this.candidate.id}/attachment`,
           })
-          .then(({data: {data}}) => {
+          .then(({ data: { data } }) => {
             this.attachment.id = data.id;
             this.attachment.newAttachment = null;
             this.attachment.oldAttachment = {
@@ -390,10 +390,10 @@ export default {
               fileType: data.attachment.fileType,
               fileSize: data.attachment.fileSize,
             };
-            this.attachment.method = 'keepCurrent';
+            this.attachment.method = "keepCurrent";
           });
       } else {
-        this.attachment = {...CandidateAttachmentModel};
+        this.attachment = { ...CandidateAttachmentModel };
       }
       this.isLoading = false;
     },

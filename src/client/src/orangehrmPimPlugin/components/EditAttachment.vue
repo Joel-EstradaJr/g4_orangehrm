@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-card-container">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('general.edit_attachment') }}
+      {{ $t("general.edit_attachment") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -48,7 +48,9 @@
               :placeholder="$t('general.no_file_selected')"
             />
             <oxd-text class="orangehrm-input-hint" tag="p">
-              {{ $t('general.accepts_up_to_n_mb', {count: formattedFileSize}) }}
+              {{
+                $t("general.accepts_up_to_n_mb", { count: formattedFileSize })
+              }}
             </oxd-text>
           </oxd-grid-item>
         </oxd-grid>
@@ -88,14 +90,14 @@ import {
   maxFileSize,
   shouldNotExceedCharLength,
   validFileTypes,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 const attachmentModel = {
   attachment: null,
-  description: '',
+  description: "",
 };
 
 export default {
-  name: 'EditAttachment',
+  name: "EditAttachment",
 
   props: {
     http: {
@@ -116,12 +118,12 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   data() {
     return {
       isLoading: false,
-      currentFile: '',
+      currentFile: "",
       attachment: {
         ...attachmentModel,
       },
@@ -146,7 +148,7 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.currentFile = data.filename;
         this.attachment.description = data.description;
       })
@@ -159,17 +161,17 @@ export default {
     onSave() {
       this.isLoading = true;
       this.http
-        .update(this.data.id, {...this.attachment})
+        .update(this.data.id, { ...this.attachment })
         .then(() => {
           return this.$toast.updateSuccess();
         })
         .then(() => {
-          this.attachment = {...attachmentModel};
+          this.attachment = { ...attachmentModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

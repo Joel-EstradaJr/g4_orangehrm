@@ -146,34 +146,34 @@
 </template>
 
 <script>
-import {ref, computed} from 'vue';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-import {navigate} from '@/core/util/helper/navigation';
-import useSort from '@ohrm/core/util/composable/useSort';
-import {APIService} from '@/core/util/services/api.service';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import ReferenceIdAutocomplete from '@/orangehrmClaimPlugin/components/ReferenceIdAutocomplete.vue';
-import ClaimEventDropdown from '@/orangehrmClaimPlugin/components/ClaimEventDropdown.vue';
-import StatusDropdown from '@/orangehrmClaimPlugin/components/StatusDropdown.vue';
+import { ref, computed } from "vue";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import { navigate } from "@/core/util/helper/navigation";
+import useSort from "@ohrm/core/util/composable/useSort";
+import { APIService } from "@/core/util/services/api.service";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import ReferenceIdAutocomplete from "@/orangehrmClaimPlugin/components/ReferenceIdAutocomplete.vue";
+import ClaimEventDropdown from "@/orangehrmClaimPlugin/components/ClaimEventDropdown.vue";
+import StatusDropdown from "@/orangehrmClaimPlugin/components/StatusDropdown.vue";
 import {
   shouldNotExceedCharLength,
   validDateFormat,
-} from '@/core/util/validation/rules';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete.vue';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import useLocale from '@/core/util/composable/useLocale';
-import {formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
+} from "@/core/util/validation/rules";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete.vue";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import useLocale from "@/core/util/composable/useLocale";
+import { formatDate, parseDate } from "@ohrm/core/util/helper/datefns";
 import {
   validSelection,
   endDateShouldBeAfterStartDate,
-} from '@/core/util/validation/rules';
-import IncludeEmployeeDropdownVue from '@ohrm/core/components/dropdown/IncludeEmployeeDropdown.vue';
-import usei18n from '@/core/util/composable/usei18n';
+} from "@/core/util/validation/rules";
+import IncludeEmployeeDropdownVue from "@ohrm/core/components/dropdown/IncludeEmployeeDropdown.vue";
+import usei18n from "@/core/util/composable/usei18n";
 
 const defaultFilters = {
-  referenceId: '',
+  referenceId: "",
   employee: null,
   claimEvent: null,
   status: null,
@@ -182,20 +182,20 @@ const defaultFilters = {
 };
 
 const defaultSortOrder = {
-  'claimRequest.referenceId': 'DESC',
-  'employee.firstName': 'ASC',
-  'claimEvent.name': 'ASC',
-  'claimRequest.status': 'ASC',
-  'claimRequest.submittedDate': 'ASC',
+  "claimRequest.referenceId": "DESC",
+  "employee.firstName": "ASC",
+  "claimEvent.name": "ASC",
+  "claimRequest.status": "ASC",
+  "claimRequest.submittedDate": "ASC",
 };
 
 export default {
   components: {
-    'reference-id-autocomplete': ReferenceIdAutocomplete,
-    'claim-event-dropdown': ClaimEventDropdown,
-    'status-dropdown': StatusDropdown,
-    'employee-autocomplete': EmployeeAutocomplete,
-    'include-employee-dropdown': IncludeEmployeeDropdownVue,
+    "reference-id-autocomplete": ReferenceIdAutocomplete,
+    "claim-event-dropdown": ClaimEventDropdown,
+    "status-dropdown": StatusDropdown,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "include-employee-dropdown": IncludeEmployeeDropdownVue,
   },
   props: {
     empNumber: {
@@ -204,29 +204,29 @@ export default {
     },
   },
   setup() {
-    const {$t} = usei18n();
+    const { $t } = usei18n();
     const filters = ref({
       includeEmployees: {
         id: 1,
-        param: 'onlyCurrent',
-        label: $t('general.current_employees_only'),
+        param: "onlyCurrent",
+        label: $t("general.current_employees_only"),
       },
       ...defaultFilters,
     });
-    const {$tEmpName} = useEmployeeNameTranslate();
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { $tEmpName } = useEmployeeNameTranslate();
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
-    const {locale} = useLocale();
-    const {jsDateFormat} = useDateFormat();
+    const { locale } = useLocale();
+    const { jsDateFormat } = useDateFormat();
 
     const serializedFilters = computed(() => {
       return {
         referenceId:
-          typeof filters.value.referenceId === 'object' &&
+          typeof filters.value.referenceId === "object" &&
           filters.value.referenceId
             ? filters.value.referenceId.id
-            : typeof filters.value.referenceId === 'string'
+            : typeof filters.value.referenceId === "string"
             ? filters.value.referenceId
             : null,
         empNumber: filters.value.employee?.id,
@@ -236,8 +236,8 @@ export default {
         toDate: filters.value.toDate,
         includeEmployees: filters.value.includeEmployees?.param,
         sortField:
-          sortField.value === 'claimRequest.claimEvent.name'
-            ? 'claimEvent.name'
+          sortField.value === "claimRequest.claimEvent.name"
+            ? "claimEvent.name"
             : sortField.value,
         sortOrder: sortOrder.value,
       };
@@ -258,9 +258,9 @@ export default {
           submittedDate: formatDate(
             parseDate(item.submittedDate),
             jsDateFormat,
-            {locale},
+            { locale }
           ),
-          amount: Number(item.amount).toLocaleString('en-US', {
+          amount: Number(item.amount).toLocaleString("en-US", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           }),
@@ -270,7 +270,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/claim/employees/requests',
+      "/api/v2/claim/employees/requests"
     );
     const {
       showPaginator,
@@ -308,75 +308,75 @@ export default {
       showExportDropdown: false,
       headers: [
         {
-          name: 'referenceId',
-          title: this.$t('claim.reference_id'),
-          slot: 'title',
-          sortField: 'claimRequest.referenceId',
-          style: {flex: 3},
+          name: "referenceId",
+          title: this.$t("claim.reference_id"),
+          slot: "title",
+          sortField: "claimRequest.referenceId",
+          style: { flex: 3 },
         },
         {
-          name: 'employee',
-          title: this.$t('general.employee_name'),
-          slot: 'title',
-          sortField: 'employee.firstName',
-          style: {flex: 4},
+          name: "employee",
+          title: this.$t("general.employee_name"),
+          slot: "title",
+          sortField: "employee.firstName",
+          style: { flex: 4 },
         },
         {
-          name: 'eventName',
-          title: this.$t('claim.event_name'),
-          slot: 'title',
-          cellType: 'oxd-table-cell-truncate',
-          sortField: 'claimEvent.name',
-          style: {flex: 3},
+          name: "eventName",
+          title: this.$t("claim.event_name"),
+          slot: "title",
+          cellType: "oxd-table-cell-truncate",
+          sortField: "claimEvent.name",
+          style: { flex: 3 },
         },
         {
-          name: 'description',
-          title: this.$t('general.description'),
-          slot: 'title',
-          cellType: 'oxd-table-cell-truncate',
-          sortField: 'claimRequest.description',
-          style: {flex: 4},
+          name: "description",
+          title: this.$t("general.description"),
+          slot: "title",
+          cellType: "oxd-table-cell-truncate",
+          sortField: "claimRequest.description",
+          style: { flex: 4 },
         },
         {
-          name: 'currency',
-          title: this.$t('general.currency'),
-          slot: 'title',
-          style: {flex: 3},
+          name: "currency",
+          title: this.$t("general.currency"),
+          slot: "title",
+          style: { flex: 3 },
         },
         {
-          name: 'submittedDate',
-          title: this.$t('claim.submitted_date'),
-          slot: 'title',
-          sortField: 'claimRequest.submittedDate',
-          style: {flex: 3},
+          name: "submittedDate",
+          title: this.$t("claim.submitted_date"),
+          slot: "title",
+          sortField: "claimRequest.submittedDate",
+          style: { flex: 3 },
         },
         {
-          name: 'status',
-          title: this.$t('general.status'),
-          sortField: 'claimRequest.status',
-          style: {flex: 2},
+          name: "status",
+          title: this.$t("general.status"),
+          sortField: "claimRequest.status",
+          style: { flex: 2 },
         },
         {
-          name: 'amount',
-          title: this.$t('general.amount'),
-          slot: 'title',
-          sortField: 'claimRequest.amount',
-          style: {flex: 3},
+          name: "amount",
+          title: this.$t("general.amount"),
+          slot: "title",
+          sortField: "claimRequest.amount",
+          style: { flex: 3 },
         },
         {
-          name: 'actions',
-          slot: 'right',
-          title: this.$t('general.actions'),
-          style: {flex: 4},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "right",
+          title: this.$t("general.actions"),
+          style: { flex: 4 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             view: {
               onClick: this.onClickView,
-              component: 'oxd-button',
+              component: "oxd-button",
               props: {
-                label: this.$t('claim.view_details'),
-                displayType: 'text',
-                size: 'medium',
+                label: this.$t("claim.view_details"),
+                displayType: "text",
+                size: "medium",
               },
             },
           },
@@ -388,8 +388,8 @@ export default {
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.filters.fromDate,
-            this.$t('general.to_date_should_be_after_from_date'),
-            {allowSameDate: true},
+            this.$t("general.to_date_should_be_after_from_date"),
+            { allowSameDate: true }
           ),
         ],
         employee: [shouldNotExceedCharLength(100), validSelection],
@@ -399,11 +399,11 @@ export default {
 
   mounted() {
     // Close dropdown when clicking outside
-    document.addEventListener('click', this.handleClickOutside);
+    document.addEventListener("click", this.handleClickOutside);
   },
 
   beforeUnmount() {
-    document.removeEventListener('click', this.handleClickOutside);
+    document.removeEventListener("click", this.handleClickOutside);
   },
 
   methods: {
@@ -421,36 +421,36 @@ export default {
       }
     },
 
-    async onClickExport(format = 'csv') {
+    async onClickExport(format = "csv") {
       this.showExportDropdown = false; // Close dropdown
       this.isExporting = true;
 
       try {
         if (!this.items?.data || this.items.data.length === 0) {
           this.$toast.error({
-            title: 'Error',
-            message: 'No claims to export',
+            title: "Error",
+            message: "No claims to export",
           });
           return;
         }
 
-        if (format === 'csv') {
+        if (format === "csv") {
           this.downloadCSV(this.items.data);
-        } else if (format === 'pdf') {
+        } else if (format === "pdf") {
           this.downloadPDF(this.items.data);
         }
 
         this.$toast.success({
-          title: 'Success',
+          title: "Success",
           message: `${
             this.items.data.length
           } claims exported as ${format.toUpperCase()} successfully`,
         });
       } catch (error) {
-        console.error('Export error:', error);
+        console.error("Export error:", error);
         this.$toast.error({
-          title: 'Error',
-          message: 'Failed to export claims',
+          title: "Error",
+          message: "Failed to export claims",
         });
       } finally {
         this.isExporting = false;
@@ -459,37 +459,37 @@ export default {
 
     downloadCSV(claims) {
       const headers = [
-        'Reference ID',
-        'Employee Name',
-        'Event Name',
-        'Description',
-        'Currency',
-        'Submitted Date',
-        'Status',
-        'Amount',
+        "Reference ID",
+        "Employee Name",
+        "Event Name",
+        "Description",
+        "Currency",
+        "Submitted Date",
+        "Status",
+        "Amount",
       ];
 
       const rows = claims.map((claim) => [
-        claim.referenceId || '',
-        claim.employee || '',
-        claim.eventName || '',
-        claim.description || '',
-        claim.currency || '',
-        claim.submittedDate || '',
-        claim.status || '',
-        claim.amount || '',
+        claim.referenceId || "",
+        claim.employee || "",
+        claim.eventName || "",
+        claim.description || "",
+        claim.currency || "",
+        claim.submittedDate || "",
+        claim.status || "",
+        claim.amount || "",
       ]);
 
       const csvContent = [headers, ...rows]
-        .map((row) => row.map((field) => `"${field}"`).join(','))
-        .join('\n');
+        .map((row) => row.map((field) => `"${field}"`).join(","))
+        .join("\n");
 
-      const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
       link.download = `employee_claims_${
-        new Date().toISOString().split('T')[0]
+        new Date().toISOString().split("T")[0]
       }.csv`;
       document.body.appendChild(link);
       link.click();
@@ -502,7 +502,7 @@ export default {
 
       // Add title
       doc.setFontSize(18);
-      doc.text('Employee Claims Report', 14, 22);
+      doc.text("Employee Claims Report", 14, 22);
 
       // Add date
       doc.setFontSize(12);
@@ -511,25 +511,25 @@ export default {
 
       // Prepare table data
       const headers = [
-        'Reference ID',
-        'Employee Name',
-        'Event Name',
-        'Description',
-        'Currency',
-        'Submitted Date',
-        'Status',
-        'Amount',
+        "Reference ID",
+        "Employee Name",
+        "Event Name",
+        "Description",
+        "Currency",
+        "Submitted Date",
+        "Status",
+        "Amount",
       ];
 
       const data = claims.map((claim) => [
-        claim.referenceId || '',
-        claim.employee || '',
-        claim.eventName || '',
-        claim.description || '',
-        claim.currency || '',
-        claim.submittedDate || '',
-        claim.status || '',
-        claim.amount || '',
+        claim.referenceId || "",
+        claim.employee || "",
+        claim.eventName || "",
+        claim.description || "",
+        claim.currency || "",
+        claim.submittedDate || "",
+        claim.status || "",
+        claim.amount || "",
       ]);
 
       // Add table using autoTable function
@@ -544,16 +544,16 @@ export default {
         headStyles: {
           fillColor: [41, 128, 185],
           textColor: 255,
-          fontStyle: 'bold',
+          fontStyle: "bold",
         },
         alternateRowStyles: {
           fillColor: [245, 245, 245],
         },
-        margin: {top: 50},
+        margin: { top: 50 },
       });
 
       // Save the PDF
-      doc.save(`employee_claims_${new Date().toISOString().split('T')[0]}.pdf`);
+      doc.save(`employee_claims_${new Date().toISOString().split("T")[0]}.pdf`);
     },
 
     async resetDataTable() {
@@ -564,14 +564,14 @@ export default {
       await this.execQuery();
     },
     onClickReset() {
-      this.filters = {...defaultFilters};
+      this.filters = { ...defaultFilters };
       this.filterItems();
     },
     onClickAdd() {
-      navigate('/claim/assignClaim');
+      navigate("/claim/assignClaim");
     },
     onClickView(item) {
-      navigate('/claim/assignClaim/id/{id}', {id: item.id});
+      navigate("/claim/assignClaim/id/{id}", { id: item.id });
     },
   },
 };

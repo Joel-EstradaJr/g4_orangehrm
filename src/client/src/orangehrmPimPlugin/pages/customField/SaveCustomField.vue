@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('pim.add_custom_field') }}
+        {{ $t("pim.add_custom_field") }}
       </oxd-text>
 
       <oxd-divider />
@@ -69,7 +69,7 @@
                 :required="isDropDownField"
               />
               <oxd-text tag="p" class="select-options-hint">
-                {{ $t('pim.enter_allowed_options_separated_by_commas') }}
+                {{ $t("pim.enter_allowed_options_separated_by_commas") }}
               </oxd-text>
             </oxd-grid-item>
           </oxd-grid>
@@ -93,18 +93,18 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 const customFieldModel = {
-  fieldName: '',
-  screen: '',
-  fieldType: '',
-  extraData: '',
+  fieldName: "",
+  screen: "",
+  fieldType: "",
+  extraData: "",
 };
 
 export default {
@@ -122,7 +122,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/custom-fields',
+      "/api/v2/pim/custom-fields"
     );
     return {
       http,
@@ -132,7 +132,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      customField: {...customFieldModel},
+      customField: { ...customFieldModel },
       rules: {
         fieldName: [required, shouldNotExceedCharLength(250)],
         screen: [required, shouldNotExceedCharLength(100)],
@@ -151,10 +151,10 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.rules.fieldName.push((v) => {
           const index = data.findIndex((item) => item.fieldName == v);
-          return index === -1 || this.$t('general.already_exists');
+          return index === -1 || this.$t("general.already_exists");
         });
       })
       .finally(() => {
@@ -181,7 +181,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/pim/listCustomFields');
+      navigate("/pim/listCustomFields");
     },
   },
 };

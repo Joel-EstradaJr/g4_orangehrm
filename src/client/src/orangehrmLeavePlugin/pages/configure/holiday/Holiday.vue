@@ -99,24 +99,24 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { computed, ref } from "vue";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   endDateShouldBeAfterStartDate,
   required,
   validDateFormat,
-} from '@/core/util/validation/rules';
-import {yearRange} from '@ohrm/core/util/helper/year-range';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+} from "@/core/util/validation/rules";
+import { yearRange } from "@ohrm/core/util/helper/year-range";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
   props: {
     leavePeriod: {
@@ -138,15 +138,15 @@ export default {
       };
     });
 
-    const {jsDateFormat, userDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat, userDateFormat } = useDateFormat();
+    const { locale } = useLocale();
     const dataNormalizer = (data) => {
       return data.map((item) => {
         return {
           id: item.id,
           name: item.name,
-          date: formatDate(parseDate(item.date), jsDateFormat, {locale}),
-          recurring: item.recurring ? 'Yes' : 'No',
+          date: formatDate(parseDate(item.date), jsDateFormat, { locale }),
+          recurring: item.recurring ? "Yes" : "No",
           length: item.lengthName,
         };
       });
@@ -154,7 +154,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/holidays',
+      "/api/v2/leave/holidays"
     );
     const {
       showPaginator,
@@ -195,47 +195,47 @@ export default {
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.filters.fromDate,
-            this.$t('general.to_date_should_be_after_from_date'),
-            {allowSameDate: true},
+            this.$t("general.to_date_should_be_after_from_date"),
+            { allowSameDate: true }
           ),
         ],
       },
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.name'),
-          style: {flex: 2},
+          name: "name",
+          slot: "title",
+          title: this.$t("general.name"),
+          style: { flex: 2 },
         },
-        {name: 'date', title: this.$t('general.date'), style: {flex: 2}},
+        { name: "date", title: this.$t("general.date"), style: { flex: 2 } },
         {
-          name: 'length',
-          title: this.$t('leave.full_day_half_day'),
-          style: {flex: 2},
-        },
-        {
-          name: 'recurring',
-          title: this.$t('leave.repeats_annually'),
-          style: {flex: 2},
+          name: "length",
+          title: this.$t("leave.full_day_half_day"),
+          style: { flex: 2 },
         },
         {
-          name: 'actions',
-          title: this.$t('general.actions'),
-          slot: 'action',
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "recurring",
+          title: this.$t("leave.repeats_annually"),
+          style: { flex: 2 },
+        },
+        {
+          name: "actions",
+          title: this.$t("general.actions"),
+          slot: "action",
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -247,24 +247,24 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/leave/saveHolidays');
+      navigate("/leave/saveHolidays");
     },
     onClickEdit(item) {
-      navigate('/leave/saveHolidays/{id}', {id: item.id});
+      navigate("/leave/saveHolidays/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = this.checkedItems.map((index) => {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

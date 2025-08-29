@@ -25,7 +25,7 @@
     :filters="serializedFilters"
     :column-count="2"
   >
-    <template #default="{generateReport}">
+    <template #default="{ generateReport }">
       <oxd-table-filter :filter-title="$t('time.project_report')">
         <oxd-form @submit-valid="generateReport">
           <oxd-form-row>
@@ -73,7 +73,7 @@
               </oxd-grid-item>
               <oxd-grid-item class="orangehrm-switch-filter --span-column-2">
                 <oxd-text class="orangehrm-switch-filter-text" tag="p">
-                  {{ $t('time.only_include_approved_timesheets') }}
+                  {{ $t("time.only_include_approved_timesheets") }}
                 </oxd-text>
                 <oxd-switch-input v-model="filters.includeTimesheet" disabled />
               </oxd-grid-item>
@@ -96,29 +96,29 @@
       <br />
     </template>
 
-    <template #footer="{data}">
-      {{ $t('time.total_duration') }}:
-      {{ data.meta ? data.meta.sum.label : '0.00' }}
+    <template #footer="{ data }">
+      {{ $t("time.total_duration") }}:
+      {{ data.meta ? data.meta.sum.label : "0.00" }}
     </template>
   </reports-table>
 </template>
 
 <script>
-import {computed, ref} from 'vue';
+import { computed, ref } from "vue";
 import {
   required,
   validSelection,
   validDateFormat,
   endDateShouldBeAfterStartDate,
   startDateShouldBeBeforeEndDate,
-} from '@/core/util/validation/rules';
-import {navigate} from '@/core/util/helper/navigation';
-import ReportsTable from '@/core/components/table/ReportsTable';
-import ActivityDropdown from '@/orangehrmTimePlugin/components/ActivityDropdown.vue';
-import ProjectAutocomplete from '@/orangehrmTimePlugin/components/ProjectAutocomplete.vue';
-import usei18n from '@/core/util/composable/usei18n';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {OxdSwitchInput} from '@ohrm/oxd';
+} from "@/core/util/validation/rules";
+import { navigate } from "@/core/util/helper/navigation";
+import ReportsTable from "@/core/components/table/ReportsTable";
+import ActivityDropdown from "@/orangehrmTimePlugin/components/ActivityDropdown.vue";
+import ProjectAutocomplete from "@/orangehrmTimePlugin/components/ProjectAutocomplete.vue";
+import usei18n from "@/core/util/composable/usei18n";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const defaultFilters = {
   project: null,
@@ -130,10 +130,10 @@ const defaultFilters = {
 
 export default {
   components: {
-    'reports-table': ReportsTable,
-    'oxd-switch-input': OxdSwitchInput,
-    'activity-dropdown': ActivityDropdown,
-    'project-autocomplete': ProjectAutocomplete,
+    "reports-table": ReportsTable,
+    "oxd-switch-input": OxdSwitchInput,
+    "activity-dropdown": ActivityDropdown,
+    "project-autocomplete": ProjectAutocomplete,
   },
 
   props: {
@@ -162,16 +162,16 @@ export default {
   },
 
   setup(props) {
-    const {$t} = usei18n();
+    const { $t } = usei18n();
     const filters = ref({
       ...defaultFilters,
       fromDate: props.fromDate,
       toDate: props.toDate,
       includeTimesheet: props.includeTimesheet,
-      ...(props.project && {project: props.project}),
-      ...(props.activity && {activity: props.activity}),
+      ...(props.project && { project: props.project }),
+      ...(props.activity && { activity: props.activity }),
     });
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     const rules = {
       project: [required],
@@ -180,16 +180,16 @@ export default {
         validDateFormat(userDateFormat),
         startDateShouldBeBeforeEndDate(
           () => filters.value.toDate,
-          $t('attendance.from_date_should_be_before_to_date'),
-          {allowSameDate: true},
+          $t("attendance.from_date_should_be_before_to_date"),
+          { allowSameDate: true }
         ),
       ],
       toDate: [
         validDateFormat(userDateFormat),
         endDateShouldBeAfterStartDate(
           () => filters.value.fromDate,
-          $t('attendance.to_date_should_be_after_from_date'),
-          {allowSameDate: true},
+          $t("attendance.to_date_should_be_after_from_date"),
+          { allowSameDate: true }
         ),
       ],
     };
@@ -201,17 +201,17 @@ export default {
         fromDate: filters.value.fromDate,
         toDate: filters.value.toDate,
         includeTimesheet: filters.value.includeTimesheet
-          ? 'onlyApproved'
-          : 'all',
+          ? "onlyApproved"
+          : "all",
       };
     });
 
     const onClickBack = () => {
-      navigate('/time/displayProjectReportCriteria', undefined, {
+      navigate("/time/displayProjectReportCriteria", undefined, {
         projectId: props.project.id,
         fromDate: props.fromDate,
         toDate: props.fromDate,
-        includeTimesheet: props.includeTimesheet ? 'onlyApproved' : 'all',
+        includeTimesheet: props.includeTimesheet ? "onlyApproved" : "all",
       });
     };
 

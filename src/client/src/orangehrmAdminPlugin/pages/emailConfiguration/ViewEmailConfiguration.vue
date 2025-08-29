@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">
-        {{ $t('admin.email_configuration') }}
+        {{ $t("admin.email_configuration") }}
       </oxd-text>
 
       <oxd-divider />
@@ -98,7 +98,7 @@
             <oxd-grid-item>
               <oxd-input-group
                 :label="$t('admin.use_smtp_authentication')"
-                :classes="{wrapper: '--status-grouped-field'}"
+                :classes="{ wrapper: '--status-grouped-field' }"
               >
                 <oxd-input-field
                   v-model="emailConfiguration.smtpAuthType"
@@ -151,7 +151,7 @@
             <oxd-grid-item class="organization-name-container">
               <div class="orangehrm-optional-field-row">
                 <oxd-text tag="p" class="orangehrm-optional-field-label">
-                  {{ $t('admin.tls') }}
+                  {{ $t("admin.tls") }}
                 </oxd-text>
                 <oxd-switch-input v-model="useTLSSecureConnection" />
               </div>
@@ -164,7 +164,7 @@
               <oxd-text tag="p" class="tls-hint">
                 {{
                   $t(
-                    'admin.optional_the_mail_server_requires_the_use_of_tls_security',
+                    "admin.optional_the_mail_server_requires_the_use_of_tls_security"
                   )
                 }}
               </oxd-text>
@@ -177,7 +177,7 @@
             <oxd-grid-item class="organization-name-container">
               <div class="orangehrm-optional-field-row">
                 <oxd-text tag="p" class="orangehrm-optional-field-label">
-                  {{ $t('admin.send_test_email') }}
+                  {{ $t("admin.send_test_email") }}
                 </oxd-text>
                 <oxd-switch-input v-model="sendTestMailEditable" />
               </div>
@@ -215,17 +215,17 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   validEmailFormat,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {OxdSwitchInput} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
+    "oxd-switch-input": OxdSwitchInput,
   },
   props: {
     pathToSendmail: {
@@ -236,7 +236,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/email-configuration',
+      "/api/v2/admin/email-configuration"
     );
     return {
       http,
@@ -245,24 +245,24 @@ export default {
 
   data() {
     return {
-      passwordPlaceHolder: '',
+      passwordPlaceHolder: "",
       defaultValues: {
-        smtpSecurityType: 'tls',
+        smtpSecurityType: "tls",
       },
       useTLSSecureConnection: true,
       sendTestMailEditable: false,
       isLoading: false,
       emailConfiguration: {
-        mailType: '',
-        sentAs: '',
+        mailType: "",
+        sentAs: "",
         pathToSendmail: this.pathToSendmail,
-        smtpHost: '',
+        smtpHost: "",
         smtpPort: null,
-        smtpUsername: '',
+        smtpUsername: "",
         smtpPassword: null,
-        smtpAuthType: '',
-        smtpSecurityType: '',
-        testEmailAddress: '',
+        smtpAuthType: "",
+        smtpSecurityType: "",
+        testEmailAddress: "",
       },
       initialEmailConfiguration: {
         ...this.emailConfiguration,
@@ -289,20 +289,20 @@ export default {
     this.isLoading = true;
     this.http
       .request({
-        method: 'GET',
-        url: '/api/v2/admin/email-configuration',
+        method: "GET",
+        url: "/api/v2/admin/email-configuration",
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.emailConfiguration.mailType = data.mailType;
         this.emailConfiguration.sentAs = data.sentAs;
         this.emailConfiguration.smtpHost = data.smtpHost;
         this.emailConfiguration.smtpPort = data.smtpPort;
         this.emailConfiguration.smtpUsername = data.smtpUsername;
-        this.passwordPlaceHolder = data.smtpUsername ? '******' : '';
-        this.emailConfiguration.smtpAuthType = data.smtpAuthType ?? 'none';
+        this.passwordPlaceHolder = data.smtpUsername ? "******" : "";
+        this.emailConfiguration.smtpAuthType = data.smtpAuthType ?? "none";
         this.emailConfiguration.testEmailAddress = data.testEmailAddress;
-        this.useTLSSecureConnection = data.smtpSecurityType === 'tls';
+        this.useTLSSecureConnection = data.smtpSecurityType === "tls";
         this.initialEmailConfiguration = {
           ...this.emailConfiguration,
           useTLSSecureConnection: this.useTLSSecureConnection,
@@ -321,22 +321,22 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             mailType: this.emailConfiguration.mailType,
             sentAs: this.emailConfiguration.sentAs,
             smtpHost: this.emailConfiguration.smtpHost,
             smtpPort: parseInt(this.emailConfiguration.smtpPort),
             smtpUsername:
-              this.emailConfiguration.smtpAuthType === 'login'
+              this.emailConfiguration.smtpAuthType === "login"
                 ? this.emailConfiguration.smtpUsername
-                : '',
+                : "",
             smtpPassword:
-              this.emailConfiguration.smtpPassword === ''
+              this.emailConfiguration.smtpPassword === ""
                 ? null
                 : this.emailConfiguration.smtpPassword,
             smtpAuthType: this.emailConfiguration.smtpAuthType,
-            smtpSecurityType: this.useTLSSecureConnection ? 'tls' : 'none',
+            smtpSecurityType: this.useTLSSecureConnection ? "tls" : "none",
             testEmailAddress: this.emailConfiguration.testEmailAddress,
           },
         })
@@ -344,13 +344,13 @@ export default {
           const testEmailStatus = response.data.meta?.testEmailStatus;
           if (testEmailStatus === 1 && this.sendTestMailEditable) {
             this.$toast.success({
-              title: this.$t('general.success'),
-              message: this.$t('admin.test_email_sent'),
+              title: this.$t("general.success"),
+              message: this.$t("admin.test_email_sent"),
             });
           } else if (testEmailStatus === 0 && this.sendTestMailEditable) {
             this.$toast.warn({
-              title: this.$t('general.failed'),
-              message: this.$t('admin.test_email_not_sent'),
+              title: this.$t("general.failed"),
+              message: this.$t("admin.test_email_not_sent"),
             });
           }
           return this.$toast.saveSuccess();
@@ -360,7 +360,7 @@ export default {
         });
     },
     onReset() {
-      this.emailConfiguration = {...this.initialEmailConfiguration};
+      this.emailConfiguration = { ...this.initialEmailConfiguration };
       this.useTLSSecureConnection =
         this.initialEmailConfiguration.useTLSSecureConnection;
     },

@@ -52,7 +52,7 @@
                 v-model="filters.keywords"
                 :label="$t('recruitment.keywords')"
                 :placeholder="`${$t(
-                  'recruitment.enter_comma_seperated_words',
+                  'recruitment.enter_comma_seperated_words'
                 )}...`"
               />
             </oxd-grid-item>
@@ -172,30 +172,30 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import { computed, ref } from "vue";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import {
   validSelection,
   validDateFormat,
   endDateShouldBeAfterStartDate,
   startDateShouldBeBeforeEndDate,
-} from '@/core/util/validation/rules';
-import usei18n from '@/core/util/composable/usei18n';
-import useSort from '@ohrm/core/util/composable/useSort';
-import useLocale from '@/core/util/composable/useLocale';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {formatDate, parseDate} from '@ohrm/core/util/helper/datefns';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown';
-import VacancyDropdown from '@/orangehrmRecruitmentPlugin/components/VacancyDropdown';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import CandidateAutocomplete from '@/orangehrmRecruitmentPlugin/components/CandidateAutocomplete';
-import HiringManagerDropdown from '@/orangehrmRecruitmentPlugin/components/HiringManagerDropdown';
-import CandidateStatusDropdown from '@/orangehrmRecruitmentPlugin/components/CandidateStatusDropdown';
+} from "@/core/util/validation/rules";
+import usei18n from "@/core/util/composable/usei18n";
+import useSort from "@ohrm/core/util/composable/useSort";
+import useLocale from "@/core/util/composable/useLocale";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { formatDate, parseDate } from "@ohrm/core/util/helper/datefns";
+import JobtitleDropdown from "@/orangehrmPimPlugin/components/JobtitleDropdown";
+import VacancyDropdown from "@/orangehrmRecruitmentPlugin/components/VacancyDropdown";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import CandidateAutocomplete from "@/orangehrmRecruitmentPlugin/components/CandidateAutocomplete";
+import HiringManagerDropdown from "@/orangehrmRecruitmentPlugin/components/HiringManagerDropdown";
+import CandidateStatusDropdown from "@/orangehrmRecruitmentPlugin/components/CandidateStatusDropdown";
 
 const defaultFilters = {
   jobTitle: null,
@@ -210,21 +210,21 @@ const defaultFilters = {
 };
 
 const defaultSortOrder = {
-  'vacancy.name': 'DEFAULT',
-  'candidate.lastName': 'DEFAULT',
-  'hiringManager.lastName': 'DEFAULT',
-  'candidate.dateOfApplication': 'DESC',
-  'candidateVacancy.status': 'DEFAULT',
+  "vacancy.name": "DEFAULT",
+  "candidate.lastName": "DEFAULT",
+  "hiringManager.lastName": "DEFAULT",
+  "candidate.dateOfApplication": "DESC",
+  "candidateVacancy.status": "DEFAULT",
 };
 
 export default {
   components: {
-    'vacancy-dropdown': VacancyDropdown,
-    'jobtitle-dropdown': JobtitleDropdown,
-    'delete-confirmation': DeleteConfirmationDialog,
-    'candidate-autocomplete': CandidateAutocomplete,
-    'hiring-manager-dropdown': HiringManagerDropdown,
-    'candidate-status-dropdown': CandidateStatusDropdown,
+    "vacancy-dropdown": VacancyDropdown,
+    "jobtitle-dropdown": JobtitleDropdown,
+    "delete-confirmation": DeleteConfirmationDialog,
+    "candidate-autocomplete": CandidateAutocomplete,
+    "hiring-manager-dropdown": HiringManagerDropdown,
+    "candidate-status-dropdown": CandidateStatusDropdown,
   },
 
   props: {
@@ -236,20 +236,20 @@ export default {
   },
 
   setup(props) {
-    const {$t} = usei18n();
-    const {locale} = useLocale();
-    const {jsDateFormat, userDateFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $t } = usei18n();
+    const { locale } = useLocale();
+    const { jsDateFormat, userDateFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
     const statuses = [
-      {id: 1, label: $t('recruitment.application_initiated')},
-      {id: 2, label: $t('recruitment.shortlisted')},
-      {id: 3, label: $t('leave.rejected')},
-      {id: 4, label: $t('recruitment.interview_scheduled')},
-      {id: 5, label: $t('recruitment.interview_passed')},
-      {id: 6, label: $t('recruitment.interview_failed')},
-      {id: 7, label: $t('recruitment.job_offered')},
-      {id: 8, label: $t('recruitment.offer_declined')},
-      {id: 9, label: $t('recruitment.hired')},
+      { id: 1, label: $t("recruitment.application_initiated") },
+      { id: 2, label: $t("recruitment.shortlisted") },
+      { id: 3, label: $t("leave.rejected") },
+      { id: 4, label: $t("recruitment.interview_scheduled") },
+      { id: 5, label: $t("recruitment.interview_passed") },
+      { id: 6, label: $t("recruitment.interview_failed") },
+      { id: 7, label: $t("recruitment.job_offered") },
+      { id: 8, label: $t("recruitment.offer_declined") },
+      { id: 9, label: $t("recruitment.hired") },
     ];
     const candidateDataNormalizer = (data) => {
       return data.map((item) => {
@@ -257,9 +257,9 @@ export default {
           id: item.id,
           vacancy:
             item.vacancy?.status === false
-              ? `${item.vacancy?.name} (${$t('general.closed')})`
+              ? `${item.vacancy?.name} (${$t("general.closed")})`
               : item.vacancy?.name,
-          candidate: `${item.firstName} ${item.middleName || ''} ${
+          candidate: `${item.firstName} ${item.middleName || ""} ${
             item.lastName
           }`,
           manager: item?.vacancy?.hiringManager?.id
@@ -267,15 +267,15 @@ export default {
                 includeMiddle: true,
                 excludePastEmpTag: false,
               })
-            : $t('general.deleted'),
+            : $t("general.deleted"),
           dateOfApplication: formatDate(
             parseDate(item.dateOfApplication),
             jsDateFormat,
-            {locale},
+            { locale }
           ),
           status:
             statuses.find((status) => status.id === item.status?.id)?.label ||
-            '',
+            "",
           resume: item.hasAttachment,
           isSelectable: item.deletable,
         };
@@ -283,7 +283,7 @@ export default {
     };
     const filters = ref({
       ...defaultFilters,
-      ...(props.status && {status: props.status}),
+      ...(props.status && { status: props.status }),
     });
     const rules = {
       candidate: [validSelection],
@@ -291,20 +291,20 @@ export default {
         validDateFormat(userDateFormat),
         startDateShouldBeBeforeEndDate(
           () => filters.value.toDate,
-          $t('general.from_date_should_be_before_to_date'),
-          {allowSameDate: true},
+          $t("general.from_date_should_be_before_to_date"),
+          { allowSameDate: true }
         ),
       ],
       toDate: [
         validDateFormat(userDateFormat),
         endDateShouldBeAfterStartDate(
           () => filters.value.fromDate,
-          $t('general.to_date_should_be_after_from_date'),
-          {allowSameDate: true},
+          $t("general.to_date_should_be_after_from_date"),
+          { allowSameDate: true }
         ),
       ],
     };
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
     const serializedFilters = computed(() => {
@@ -318,7 +318,7 @@ export default {
         toDate: filters.value.toDate,
         status: filters.value.status?.id,
         methodOfApplication: filters.value.methodOfApplication?.id,
-        model: 'list',
+        model: "list",
         sortField: sortField.value,
         sortOrder: sortOrder.value,
       };
@@ -326,7 +326,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/candidates',
+      "/api/v2/recruitment/candidates"
     );
 
     const {
@@ -367,53 +367,53 @@ export default {
       showExportDropdown: false,
       headers: [
         {
-          name: 'vacancy',
-          title: this.$t('recruitment.vacancy'),
-          sortField: 'vacancy.name',
-          style: {flex: 1},
+          name: "vacancy",
+          title: this.$t("recruitment.vacancy"),
+          sortField: "vacancy.name",
+          style: { flex: 1 },
         },
         {
-          name: 'candidate',
-          slot: 'title',
-          title: this.$t('recruitment.candidate'),
-          sortField: 'candidate.lastName',
-          style: {flex: 1},
+          name: "candidate",
+          slot: "title",
+          title: this.$t("recruitment.candidate"),
+          sortField: "candidate.lastName",
+          style: { flex: 1 },
         },
         {
-          name: 'manager',
-          title: this.$t('recruitment.hiring_manager'),
-          sortField: 'hiringManager.lastName',
-          style: {flex: 1},
+          name: "manager",
+          title: this.$t("recruitment.hiring_manager"),
+          sortField: "hiringManager.lastName",
+          style: { flex: 1 },
         },
         {
-          name: 'dateOfApplication',
-          title: this.$t('recruitment.date_of_application'),
-          sortField: 'candidate.dateOfApplication',
-          style: {flex: 1},
+          name: "dateOfApplication",
+          title: this.$t("recruitment.date_of_application"),
+          sortField: "candidate.dateOfApplication",
+          style: { flex: 1 },
         },
         {
-          name: 'status',
-          title: this.$t('general.status'),
-          sortField: 'candidateVacancy.status',
-          style: {flex: 1},
+          name: "status",
+          title: this.$t("general.status"),
+          sortField: "candidateVacancy.status",
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellRenderer: this.cellRenderer,
         },
       ],
       applications: [
         {
           id: 1,
-          label: this.$t('recruitment.manual'),
+          label: this.$t("recruitment.manual"),
         },
         {
           id: 2,
-          label: this.$t('recruitment.online'),
+          label: this.$t("recruitment.online"),
         },
       ],
     };
@@ -421,11 +421,11 @@ export default {
 
   mounted() {
     // Close dropdown when clicking outside
-    document.addEventListener('click', this.handleClickOutside);
+    document.addEventListener("click", this.handleClickOutside);
   },
 
   beforeUnmount() {
-    document.removeEventListener('click', this.handleClickOutside);
+    document.removeEventListener("click", this.handleClickOutside);
   },
 
   methods: {
@@ -443,36 +443,36 @@ export default {
       }
     },
 
-    async onClickExport(format = 'csv') {
+    async onClickExport(format = "csv") {
       this.showExportDropdown = false; // Close dropdown
       this.isExporting = true;
 
       try {
         if (!this.items?.data || this.items.data.length === 0) {
           this.$toast.error({
-            title: 'Error',
-            message: 'No candidates to export',
+            title: "Error",
+            message: "No candidates to export",
           });
           return;
         }
 
-        if (format === 'csv') {
+        if (format === "csv") {
           this.downloadCSV(this.items.data);
-        } else if (format === 'pdf') {
+        } else if (format === "pdf") {
           this.downloadPDF(this.items.data);
         }
 
         this.$toast.success({
-          title: 'Success',
+          title: "Success",
           message: `${
             this.items.data.length
           } candidates exported as ${format.toUpperCase()} successfully`,
         });
       } catch (error) {
-        console.error('Export error:', error);
+        console.error("Export error:", error);
         this.$toast.error({
-          title: 'Error',
-          message: 'Failed to export candidates',
+          title: "Error",
+          message: "Failed to export candidates",
         });
       } finally {
         this.isExporting = false;
@@ -481,31 +481,31 @@ export default {
 
     downloadCSV(candidates) {
       const headers = [
-        'Vacancy',
-        'Candidate',
-        'Hiring Manager',
-        'Date of Application',
-        'Status',
+        "Vacancy",
+        "Candidate",
+        "Hiring Manager",
+        "Date of Application",
+        "Status",
       ];
 
       const rows = candidates.map((candidate) => [
-        candidate.vacancy || '',
-        candidate.candidate || '',
-        candidate.manager || '',
-        candidate.dateOfApplication || '',
-        candidate.status || '',
+        candidate.vacancy || "",
+        candidate.candidate || "",
+        candidate.manager || "",
+        candidate.dateOfApplication || "",
+        candidate.status || "",
       ]);
 
       const csvContent = [headers, ...rows]
-        .map((row) => row.map((field) => `"${field}"`).join(','))
-        .join('\n');
+        .map((row) => row.map((field) => `"${field}"`).join(","))
+        .join("\n");
 
-      const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
       link.download = `candidates_${
-        new Date().toISOString().split('T')[0]
+        new Date().toISOString().split("T")[0]
       }.csv`;
       document.body.appendChild(link);
       link.click();
@@ -518,7 +518,7 @@ export default {
 
       // Add title
       doc.setFontSize(18);
-      doc.text('Candidates Report', 14, 22);
+      doc.text("Candidates Report", 14, 22);
 
       // Add date
       doc.setFontSize(12);
@@ -527,19 +527,19 @@ export default {
 
       // Prepare table data
       const headers = [
-        'Vacancy',
-        'Candidate',
-        'Hiring Manager',
-        'Date of Application',
-        'Status',
+        "Vacancy",
+        "Candidate",
+        "Hiring Manager",
+        "Date of Application",
+        "Status",
       ];
 
       const data = candidates.map((candidate) => [
-        candidate.vacancy || '',
-        candidate.candidate || '',
-        candidate.manager || '',
-        candidate.dateOfApplication || '',
-        candidate.status || '',
+        candidate.vacancy || "",
+        candidate.candidate || "",
+        candidate.manager || "",
+        candidate.dateOfApplication || "",
+        candidate.status || "",
       ]);
 
       // Add table using autoTable function
@@ -554,16 +554,16 @@ export default {
         headStyles: {
           fillColor: [41, 128, 185],
           textColor: 255,
-          fontStyle: 'bold',
+          fontStyle: "bold",
         },
         alternateRowStyles: {
           fillColor: [245, 245, 245],
         },
-        margin: {top: 50},
+        margin: { top: 50 },
       });
 
       // Save the PDF
-      doc.save(`candidates_${new Date().toISOString().split('T')[0]}.pdf`);
+      doc.save(`candidates_${new Date().toISOString().split("T")[0]}.pdf`);
     },
 
     cellRenderer(...[, , , row]) {
@@ -571,16 +571,16 @@ export default {
         view: {
           onClick: this.onClickEdit,
           props: {
-            name: 'eye-fill',
+            name: "eye-fill",
           },
         },
       };
       if (row.isSelectable) {
         cellConfig.delete = {
           onClick: this.onClickDelete,
-          component: 'oxd-icon-button',
+          component: "oxd-icon-button",
           props: {
-            name: 'trash',
+            name: "trash",
           },
         };
       }
@@ -588,7 +588,7 @@ export default {
         cellConfig.download = {
           onClick: this.onDownload,
           props: {
-            name: 'download',
+            name: "download",
           },
         };
       }
@@ -601,36 +601,36 @@ export default {
       };
     },
     onClickAdd() {
-      navigate('/recruitment/addCandidate');
+      navigate("/recruitment/addCandidate");
     },
     onClickBulkUpload() {
-      navigate('/recruitment/bulkUploadCandidates');
+      navigate("/recruitment/bulkUploadCandidates");
     },
     onClickEdit(item) {
-      navigate('/recruitment/addCandidate/{id}', {id: item.id});
+      navigate("/recruitment/addCandidate/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = this.checkedItems.map((index) => {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });
     },
     onDownload(item) {
       if (!item?.id) return;
-      const fileUrl = 'recruitment/viewCandidateAttachment/candidateId';
+      const fileUrl = "recruitment/viewCandidateAttachment/candidateId";
       const downUrl = `${window.appGlobal.baseUrl}/${fileUrl}/${item.id}`;
-      window.open(downUrl, '_blank');
+      window.open(downUrl, "_blank");
     },
     deleteItems(items) {
       if (items instanceof Array) {
@@ -660,7 +660,7 @@ export default {
       await this.execQuery();
     },
     onReset() {
-      this.filters = {...defaultFilters};
+      this.filters = { ...defaultFilters };
       this.filterItems();
     },
   },

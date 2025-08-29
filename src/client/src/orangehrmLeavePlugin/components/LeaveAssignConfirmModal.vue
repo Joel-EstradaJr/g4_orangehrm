@@ -21,20 +21,20 @@
   <teleport to="#app">
     <oxd-dialog
       v-if="show"
-      :style="{maxWidth: '450px'}"
+      :style="{ maxWidth: '450px' }"
       @update:show="onCancel"
     >
       <div class="orangehrm-modal-header">
         <oxd-text type="card-title">
-          {{ $t('leave.confirm_leave_assignment') }}
+          {{ $t("leave.confirm_leave_assignment") }}
         </oxd-text>
       </div>
       <div class="orangehrm-text-center-align">
         <oxd-text type="subtitle-2">
           {{
-            $t('leave.employee_does_not_have_enough_balance_for_leave_request')
+            $t("leave.employee_does_not_have_enough_balance_for_leave_request")
           }}
-          {{ $t('leave.click_ok_to_confirm_leave_assignment') }}
+          {{ $t("leave.click_ok_to_confirm_leave_assignment") }}
         </oxd-text>
       </div>
       <div class="orangehrm-modal-footer">
@@ -56,12 +56,12 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'LeaveAssignConfirmModal',
+  name: "LeaveAssignConfirmModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   data() {
     return {
@@ -80,11 +80,11 @@ export default {
     },
     onConfirm() {
       this.show = false;
-      this.resolve && this.resolve('ok');
+      this.resolve && this.resolve("ok");
     },
     onCancel() {
       this.show = false;
-      this.resolve && this.resolve('cancel');
+      this.resolve && this.resolve("cancel");
     },
   },
 };

@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('pim.edit_immigration') }}
+      {{ $t("pim.edit_immigration") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -124,23 +124,23 @@ import {
   shouldNotExceedCharLength,
   validDateFormat,
   endDateShouldBeAfterStartDate,
-} from '@ohrm/core/util/validation/rules';
-import {yearRange} from '@ohrm/core/util/helper/year-range';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import { yearRange } from "@ohrm/core/util/helper/year-range";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const immigrationModel = {
-  number: '',
-  issuedDate: '',
-  expiryDate: '',
+  number: "",
+  issuedDate: "",
+  expiryDate: "",
   type: 1,
-  status: '',
-  reviewDate: '',
+  status: "",
+  reviewDate: "",
   countryCode: null,
-  comment: '',
+  comment: "",
 };
 
 export default {
-  name: 'EditImmigration',
+  name: "EditImmigration",
 
   props: {
     http: {
@@ -157,10 +157,10 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup() {
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       userDateFormat,
@@ -170,7 +170,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      immigration: {...immigrationModel},
+      immigration: { ...immigrationModel },
       yearArray: [...yearRange()],
       rules: {
         number: [required, shouldNotExceedCharLength(30)],
@@ -178,7 +178,7 @@ export default {
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.immigration.issuedDate,
-            this.$t('pim.expiry_date_should_be_after_issued_date'),
+            this.$t("pim.expiry_date_should_be_after_issued_date")
           ),
         ],
         status: [shouldNotExceedCharLength(30)],
@@ -187,9 +187,9 @@ export default {
         comment: [shouldNotExceedCharLength(250)],
       },
       immigrationTypeClasses: {
-        wrapper: '--gender-grouped-field',
+        wrapper: "--gender-grouped-field",
         label: {
-          'oxd-input-field-required': true,
+          "oxd-input-field-required": true,
         },
       },
     };
@@ -200,10 +200,10 @@ export default {
     this.http
       .get(this.data.id)
       .then((response) => {
-        const {data} = response.data;
-        this.immigration = {...immigrationModel, ...data};
+        const { data } = response.data;
+        this.immigration = { ...immigrationModel, ...data };
         this.immigration.countryCode = this.countries.find(
-          (item) => item.id === data.country?.code,
+          (item) => item.id === data.country?.code
         );
       })
       .finally(() => {
@@ -229,12 +229,12 @@ export default {
           return this.$toast.updateSuccess();
         })
         .then(() => {
-          this.immigration = {...immigrationModel};
+          this.immigration = { ...immigrationModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

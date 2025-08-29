@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('leave.edit_leave_type') }}
+        {{ $t("leave.edit_leave_type") }}
       </oxd-text>
 
       <oxd-divider />
@@ -38,7 +38,7 @@
         <oxd-form-row>
           <oxd-grid :cols="2" class="orangehrm-full-width-grid">
             <oxd-grid-item>
-              <oxd-input-group :classes="{wrapper: '--status-grouped-field'}">
+              <oxd-input-group :classes="{ wrapper: '--status-grouped-field' }">
                 <template #label>
                   <div class="label-is-entitlement-situational">
                     <oxd-label
@@ -91,26 +91,26 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import EntitlementSituationalModal from '@/orangehrmLeavePlugin/components/EntitlementSituationalModal';
-import {OxdLabel} from '@ohrm/oxd';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import EntitlementSituationalModal from "@/orangehrmLeavePlugin/components/EntitlementSituationalModal";
+import { OxdLabel } from "@ohrm/oxd";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const leaveTypeModel = {
-  id: '',
-  name: '',
-  situational: '',
+  id: "",
+  name: "",
+  situational: "",
 };
 
 export default {
   components: {
-    'oxd-label': OxdLabel,
-    'entitlement-situational-modal': EntitlementSituationalModal,
+    "oxd-label": OxdLabel,
+    "entitlement-situational-modal": EntitlementSituationalModal,
   },
   props: {
     leaveTypeId: {
@@ -122,13 +122,13 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/leave-types',
+      "/api/v2/leave/leave-types"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const leaveTypeUniqueValidation = createUniqueValidator(
-      'LeaveType',
-      'name',
-      {entityId: props.leaveTypeId},
+      "LeaveType",
+      "name",
+      { entityId: props.leaveTypeId }
     );
     return {
       http,
@@ -140,7 +140,7 @@ export default {
     return {
       showModal: false,
       isLoading: false,
-      leaveType: {...leaveTypeModel},
+      leaveType: { ...leaveTypeModel },
       rules: {
         name: [
           required,
@@ -155,7 +155,7 @@ export default {
     this.http
       .get(this.leaveTypeId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.leaveType.id = data.id;
         this.leaveType.name = data.name;
         this.leaveType.situational = data.situational;
@@ -181,7 +181,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/leave/leaveTypeList');
+      navigate("/leave/leaveTypeList");
     },
     onModalOpen() {
       this.showModal = true;

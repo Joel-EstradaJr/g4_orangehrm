@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('general.edit_membership') }}
+        {{ $t("general.edit_membership") }}
       </oxd-text>
 
       <oxd-divider />
@@ -54,13 +54,13 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 export default {
   props: {
@@ -72,13 +72,13 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/memberships',
+      "/api/v2/admin/memberships"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const membershipUniqueValidation = createUniqueValidator(
-      'Membership',
-      'name',
-      {entityId: props.qualificationMembershipId},
+      "Membership",
+      "name",
+      { entityId: props.qualificationMembershipId }
     );
 
     return {
@@ -91,8 +91,8 @@ export default {
     return {
       isLoading: false,
       membership: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -109,7 +109,7 @@ export default {
     this.http
       .get(this.qualificationMembershipId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.membership.id = data.id;
         this.membership.name = data.name;
       })
@@ -133,7 +133,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/admin/membership');
+      navigate("/admin/membership");
     },
   },
 };

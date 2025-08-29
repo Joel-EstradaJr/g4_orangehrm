@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('general.add_license') }}
+        {{ $t("general.add_license") }}
       </oxd-text>
 
       <oxd-divider />
@@ -54,22 +54,22 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/licenses',
+      "/api/v2/admin/licenses"
     );
-    const {createUniqueValidator} = useServerValidation(http);
-    const licenseUniqueValidation = createUniqueValidator('License', 'name');
+    const { createUniqueValidator } = useServerValidation(http);
+    const licenseUniqueValidation = createUniqueValidator("License", "name");
 
     return {
       http,
@@ -80,8 +80,8 @@ export default {
     return {
       isLoading: false,
       license: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -104,12 +104,12 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          this.license.name = '';
+          this.license.name = "";
           this.onCancel();
         });
     },
     onCancel() {
-      navigate('/admin/viewLicenses');
+      navigate("/admin/viewLicenses");
     },
   },
 };

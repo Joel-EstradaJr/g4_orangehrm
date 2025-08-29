@@ -28,7 +28,7 @@
     >
       <template #header-title>
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('time.my_timesheet') }}
+          {{ $t("time.my_timesheet") }}
         </oxd-text>
       </template>
       <template #header-options>
@@ -41,7 +41,7 @@
       </template>
       <template #footer-title>
         <oxd-text v-show="timesheetStatus" type="subtitle-2">
-          {{ $t('general.status') }}: {{ myTimesheetStatus }}
+          {{ $t("general.status") }}: {{ myTimesheetStatus }}
         </oxd-text>
       </template>
       <template #footer-options>
@@ -76,18 +76,18 @@
 </template>
 
 <script>
-import {toRefs} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import Timesheet from '@/orangehrmTimePlugin/components/Timesheet.vue';
-import useTimesheet from '@/orangehrmTimePlugin/util/composable/useTimesheet';
-import TimesheetPeriod from '@/orangehrmTimePlugin/components/TimesheetPeriod.vue';
-import TimesheetActions from '@/orangehrmTimePlugin/components/TimesheetActions.vue';
+import { toRefs } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import Timesheet from "@/orangehrmTimePlugin/components/Timesheet.vue";
+import useTimesheet from "@/orangehrmTimePlugin/util/composable/useTimesheet";
+import TimesheetPeriod from "@/orangehrmTimePlugin/components/TimesheetPeriod.vue";
+import TimesheetActions from "@/orangehrmTimePlugin/components/TimesheetActions.vue";
 
 export default {
   components: {
     timesheet: Timesheet,
-    'timesheet-period': TimesheetPeriod,
-    'timesheet-actions': TimesheetActions,
+    "timesheet-period": TimesheetPeriod,
+    "timesheet-actions": TimesheetActions,
   },
 
   props: {
@@ -101,7 +101,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/time/timesheets',
+      "/api/v2/time/timesheets"
     );
 
     const {
@@ -135,10 +135,10 @@ export default {
   data() {
     return {
       statuses: [
-        {id: 1, label: this.$t('time.submitted'), name: 'Submitted'},
-        {id: 2, label: this.$t('leave.rejected'), name: 'Rejected'},
-        {id: 3, label: this.$t('time.not_submitted'), name: 'Not Submitted'},
-        {id: 4, label: this.$t('time.approved'), name: 'Approved'},
+        { id: 1, label: this.$t("time.submitted"), name: "Submitted" },
+        { id: 2, label: this.$t("leave.rejected"), name: "Rejected" },
+        { id: 3, label: this.$t("time.not_submitted"), name: "Not Submitted" },
+        { id: 4, label: this.$t("time.approved"), name: "Approved" },
       ],
     };
   },

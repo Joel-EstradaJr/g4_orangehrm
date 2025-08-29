@@ -37,7 +37,7 @@
     ></edit-language>
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <profile-action-header @click="onClickAdd">
-        {{ $t('general.languages') }}
+        {{ $t("general.languages") }}
       </profile-action-header>
     </div>
     <table-header
@@ -66,12 +66,12 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import SaveLanguage from '@/orangehrmPimPlugin/components/SaveLanguage';
-import EditLanguage from '@/orangehrmPimPlugin/components/EditLanguage';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import SaveLanguage from "@/orangehrmPimPlugin/components/SaveLanguage";
+import EditLanguage from "@/orangehrmPimPlugin/components/EditLanguage";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
 
 const languageNormalizer = (data) => {
   return data.map((item) => {
@@ -87,13 +87,13 @@ const languageNormalizer = (data) => {
 };
 
 export default {
-  name: 'EmployeeLanguages',
+  name: "EmployeeLanguages",
 
   components: {
-    'profile-action-header': ProfileActionHeader,
-    'save-language': SaveLanguage,
-    'edit-language': EditLanguage,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "profile-action-header": ProfileActionHeader,
+    "save-language": SaveLanguage,
+    "edit-language": EditLanguage,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -114,7 +114,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.employeeId}/languages`,
+      `/api/v2/pim/employees/${props.employeeId}/languages`
     );
 
     const languagesEndpoint = `/api/v2/pim/employees/${props.employeeId}/languages/allowed`;
@@ -150,40 +150,40 @@ export default {
     return {
       headers: [
         {
-          name: 'language',
-          slot: 'title',
-          title: this.$t('general.language'),
-          style: {flex: 1},
+          name: "language",
+          slot: "title",
+          title: this.$t("general.language"),
+          style: { flex: 1 },
         },
-        {name: 'fluency', title: this.$t('pim.fluency'), style: {flex: 1}},
+        { name: "fluency", title: this.$t("pim.fluency"), style: { flex: 1 } },
         {
-          name: 'competency',
-          title: this.$t('pim.competency'),
-          style: {flex: 1},
-        },
-        {
-          name: 'comments',
-          title: this.$t('general.comments'),
-          style: {flex: 1},
+          name: "competency",
+          title: this.$t("pim.competency"),
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {'flex-basis': '10em'},
-          cellType: 'oxd-table-cell-actions',
+          name: "comments",
+          title: this.$t("general.comments"),
+          style: { flex: 1 },
+        },
+        {
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { "flex-basis": "10em" },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -211,14 +211,14 @@ export default {
         };
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([
             {
               languageId: item.languageId,

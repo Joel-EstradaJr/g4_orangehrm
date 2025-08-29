@@ -15,8 +15,8 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import ViewDashboard from '@/orangehrmDashboardPlugin/pages/ViewDashboard.vue';
+import ViewDashboard from "@/orangehrmDashboardPlugin/pages/ViewDashboard.vue";
 
 export default {
-  'view-dashboard': ViewDashboard,
+  "view-dashboard": ViewDashboard,
 };

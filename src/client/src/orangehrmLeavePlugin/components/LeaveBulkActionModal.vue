@@ -26,18 +26,18 @@
     >
       <div class="orangehrm-modal-header">
         <oxd-text type="card-title">
-          {{ $t('leave.leave_action', {action: action}) }}
+          {{ $t("leave.leave_action", { action: action }) }}
         </oxd-text>
       </div>
       <div class="orangehrm-text-center-align">
         <oxd-text type="subtitle-2">
           {{
-            $t('leave.bulk_leave_action_confirm_message_one', {
+            $t("leave.bulk_leave_action_confirm_message_one", {
               action: action,
               count: count,
             })
           }}
-          {{ $t('leave.bulk_leave_action_confirm_message_two') }}
+          {{ $t("leave.bulk_leave_action_confirm_message_two") }}
         </oxd-text>
       </div>
       <div class="orangehrm-modal-footer">
@@ -58,12 +58,12 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
+import { OxdDialog } from "@ohrm/oxd";
 
 export default {
-  name: 'LeaveBulkActionModal',
+  name: "LeaveBulkActionModal",
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
   props: {
     data: {
@@ -96,11 +96,11 @@ export default {
     },
     onCancel() {
       this.show = false;
-      this.resolve && this.resolve('cancel');
+      this.resolve && this.resolve("cancel");
     },
     onConfirm() {
       this.show = false;
-      this.resolve && this.resolve('ok');
+      this.resolve && this.resolve("ok");
     },
   },
 };

@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">{{
-        $t('pim.add_termination_reason')
+        $t("pim.add_termination_reason")
       }}</oxd-text>
 
       <oxd-divider />
@@ -54,24 +54,24 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/termination-reasons',
+      "/api/v2/pim/termination-reasons"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const terminationReasonUniqueValidation = createUniqueValidator(
-      'TerminationReason',
-      'name',
+      "TerminationReason",
+      "name"
     );
     return {
       http,
@@ -82,8 +82,8 @@ export default {
     return {
       isLoading: false,
       termination: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -110,7 +110,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/pim/viewTerminationReasons');
+      navigate("/pim/viewTerminationReasons");
     },
   },
 };

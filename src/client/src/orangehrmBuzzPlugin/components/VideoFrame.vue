@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'VideoFrame',
+  name: "VideoFrame",
   props: {
     videoSrc: {
       type: String,

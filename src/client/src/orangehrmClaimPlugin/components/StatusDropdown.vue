@@ -26,34 +26,34 @@
 </template>
 
 <script>
-import {ref} from 'vue';
+import { ref } from "vue";
 export default {
-  name: 'StatusDropdown',
+  name: "StatusDropdown",
   data() {
     const options = ref([
       {
-        id: 'INITIATED',
-        label: this.$t('claim.initiated'),
+        id: "INITIATED",
+        label: this.$t("claim.initiated"),
       },
       {
-        id: 'SUBMITTED',
-        label: this.$t('time.submitted'),
+        id: "SUBMITTED",
+        label: this.$t("time.submitted"),
       },
       {
-        id: 'APPROVED',
-        label: this.$t('time.approved'),
+        id: "APPROVED",
+        label: this.$t("time.approved"),
       },
       {
-        id: 'REJECTED',
-        label: this.$t('leave.rejected'),
+        id: "REJECTED",
+        label: this.$t("leave.rejected"),
       },
       {
-        id: 'CANCELLED',
-        label: this.$t('leave.cancelled'),
+        id: "CANCELLED",
+        label: this.$t("leave.cancelled"),
       },
       {
-        id: 'PAID',
-        label: this.$t('claim.paid'),
+        id: "PAID",
+        label: this.$t("claim.paid"),
       },
     ]);
     return {

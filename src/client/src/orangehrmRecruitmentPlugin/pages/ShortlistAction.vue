@@ -53,14 +53,14 @@
 </template>
 
 <script>
-import {navigate} from '@/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import {shouldNotExceedCharLength} from '@/core/util/validation/rules';
-import CandidateActionLayout from '@/orangehrmRecruitmentPlugin/components/CandidateActionLayout.vue';
+import { navigate } from "@/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import { shouldNotExceedCharLength } from "@/core/util/validation/rules";
+import CandidateActionLayout from "@/orangehrmRecruitmentPlugin/components/CandidateActionLayout.vue";
 
 export default {
   components: {
-    'candidate-action-layout': CandidateActionLayout,
+    "candidate-action-layout": CandidateActionLayout,
   },
   props: {
     candidateId: {
@@ -72,7 +72,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/recruitment/candidates/${props.candidateId}/shortlist`,
+      `/api/v2/recruitment/candidates/${props.candidateId}/shortlist`
     );
 
     return {
@@ -93,7 +93,7 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             note: this.note,
           },
@@ -102,11 +102,11 @@ export default {
           return this.$toast.updateSuccess();
         })
         .then(() => {
-          navigate('/recruitment/addCandidate/{id}', {id: this.candidateId});
+          navigate("/recruitment/addCandidate/{id}", { id: this.candidateId });
         });
     },
     onClickBack() {
-      navigate('/recruitment/addCandidate/{id}', {id: this.candidateId});
+      navigate("/recruitment/addCandidate/{id}", { id: this.candidateId });
     },
   },
 };

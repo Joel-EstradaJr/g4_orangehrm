@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('admin.add_nationality') }}
+        {{ $t("admin.add_nationality") }}
       </oxd-text>
 
       <oxd-divider />
@@ -54,24 +54,24 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/nationalities',
+      "/api/v2/admin/nationalities"
     );
-    const {createUniqueValidator} = useServerValidation(http);
+    const { createUniqueValidator } = useServerValidation(http);
     const nationalityUniqueValidation = createUniqueValidator(
-      'Nationality',
-      'name',
+      "Nationality",
+      "name"
     );
 
     return {
@@ -83,8 +83,8 @@ export default {
     return {
       isLoading: false,
       nationality: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -111,7 +111,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/admin/nationality');
+      navigate("/admin/nationality");
     },
   },
 };

@@ -22,7 +22,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('admin.email_subscriptions') }}
+          {{ $t("admin.email_subscriptions") }}
         </oxd-text>
       </div>
       <table-header
@@ -46,15 +46,15 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import usei18n from '@/core/util/composable/usei18n';
-import {OxdSpinner, OxdSwitchInput} from '@ohrm/oxd';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import usei18n from "@/core/util/composable/usei18n";
+import { OxdSpinner, OxdSwitchInput } from "@ohrm/oxd";
 
 export default {
   setup() {
-    const {$t} = usei18n();
+    const { $t } = usei18n();
     const subscribersNormalizer = (data) => {
       return data.map((item) => {
         const subscribers = Array.isArray(item.subscribers)
@@ -62,20 +62,20 @@ export default {
           : [];
         let _type = item.name;
         switch (_type) {
-          case 'Leave Applications':
-            _type = $t('admin.leave_applications');
+          case "Leave Applications":
+            _type = $t("admin.leave_applications");
             break;
-          case 'Leave Approvals':
-            _type = $t('admin.leave_approvals');
+          case "Leave Approvals":
+            _type = $t("admin.leave_approvals");
             break;
-          case 'Leave Assignments':
-            _type = $t('admin.leave_assignments');
+          case "Leave Assignments":
+            _type = $t("admin.leave_assignments");
             break;
-          case 'Leave Cancellations':
-            _type = $t('admin.leave_cancellation');
+          case "Leave Cancellations":
+            _type = $t("admin.leave_cancellation");
             break;
-          case 'Leave Rejections':
-            _type = $t('admin.leave_rejections');
+          case "Leave Rejections":
+            _type = $t("admin.leave_rejections");
             break;
         }
         return {
@@ -85,7 +85,7 @@ export default {
             .map((sub) => {
               return `${sub.name} <${sub.email}>`;
             })
-            .join(', '),
+            .join(", "),
           enabled: item.isEnabled,
           _loading: false,
         };
@@ -93,9 +93,9 @@ export default {
     };
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/email-subscriptions',
+      "/api/v2/admin/email-subscriptions"
     );
-    const {total, response, isLoading} = usePaginate(http, {
+    const { total, response, isLoading } = usePaginate(http, {
       normalizer: subscribersNormalizer,
     });
     return {
@@ -110,22 +110,22 @@ export default {
     return {
       headers: [
         {
-          name: 'type',
-          slot: 'title',
-          title: this.$t('admin.notification_type'),
-          style: {flex: '20%'},
+          name: "type",
+          slot: "title",
+          title: this.$t("admin.notification_type"),
+          style: { flex: "20%" },
         },
         {
-          name: 'subscribers',
-          title: this.$t('admin.subscribers'),
-          style: {flex: '65%'},
+          name: "subscribers",
+          title: this.$t("admin.subscribers"),
+          style: { flex: "65%" },
         },
         {
-          name: 'actions',
-          title: this.$t('general.actions'),
-          slot: 'action',
-          style: {flex: '15%'},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          title: this.$t("general.actions"),
+          slot: "action",
+          style: { flex: "15%" },
+          cellType: "oxd-table-cell-actions",
           cellRenderer: this.cellRenderer,
         },
       ],
@@ -137,11 +137,11 @@ export default {
       const [index, , , row] = args;
 
       const addSubscriber = {
-        component: 'oxd-icon-button',
+        component: "oxd-icon-button",
         props: {
-          name: 'person-plus-fill',
+          name: "person-plus-fill",
           onClick: () => {
-            navigate('/admin/saveSubscriber/{id}', {id: row.id});
+            navigate("/admin/saveSubscriber/{id}", { id: row.id });
           },
         },
       };
@@ -150,14 +150,14 @@ export default {
         component: OxdSwitchInput,
         props: {
           modelValue: row.enabled,
-          'onUpdate:modelValue': ($event) => {
+          "onUpdate:modelValue": ($event) => {
             this.items.data[index]._loading = true;
             this.http
               .update(row.id, {
                 enabled: $event,
               })
               .then((response) => {
-                const {data} = response.data;
+                const { data } = response.data;
                 this.items.data[index].enabled = data.isEnabled;
                 this.$toast.updateSuccess();
               })
@@ -166,8 +166,8 @@ export default {
               });
           },
           style: {
-            'margin-left': '1rem',
-            'text-align': 'left',
+            "margin-left": "1rem",
+            "text-align": "left",
           },
         },
       };
@@ -184,8 +184,8 @@ export default {
           header: {
             cellConfig: {
               ...(row._loading
-                ? {loader}
-                : {addSubscriber, switchSubscription}),
+                ? { loader }
+                : { addSubscriber, switchSubscription }),
             },
           },
         },

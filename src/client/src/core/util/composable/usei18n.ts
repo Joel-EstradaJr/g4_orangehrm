@@ -15,7 +15,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {translate as translatorFactory} from '@/core/plugins/i18n/translate';
+import { translate as translatorFactory } from "@/core/plugins/i18n/translate";
 
 export default function usei18n() {
   const translate = translatorFactory();

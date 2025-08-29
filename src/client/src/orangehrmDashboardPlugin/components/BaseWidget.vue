@@ -46,7 +46,7 @@
           class="orangehrm-dashboard-widget-img"
         />
         <oxd-text tag="p">
-          {{ emptyText || $t('dashboard.not_available') }}
+          {{ emptyText || $t("dashboard.not_available") }}
         </oxd-text>
       </div>
     </div>
@@ -54,15 +54,15 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import {OxdIcon, OxdSheet, OxdSpinner} from '@ohrm/oxd';
+import { computed, ref } from "vue";
+import { OxdIcon, OxdSheet, OxdSpinner } from "@ohrm/oxd";
 
 export default {
-  name: 'BaseWidget',
+  name: "BaseWidget",
   components: {
-    'oxd-sheet': OxdSheet,
-    'oxd-icon': OxdIcon,
-    'oxd-loading-spinner': OxdSpinner,
+    "oxd-sheet": OxdSheet,
+    "oxd-icon": OxdIcon,
+    "oxd-loading-spinner": OxdSpinner,
   },
   props: {
     icon: {
@@ -95,8 +95,8 @@ export default {
     const defaultPic = `${window.appGlobal.publicPath}/images/dashboard_empty_widget_watermark.png`;
 
     const widgetBodyClasses = computed(() => ({
-      'orangehrm-dashboard-widget-body': true,
-      '--scroll-visible':
+      "orangehrm-dashboard-widget-body": true,
+      "--scroll-visible":
         widgetRef.value?.scrollHeight > widgetRef.value?.clientHeight,
     }));
 

@@ -24,8 +24,8 @@
         <oxd-text tag="h6" class="orangehrm-main-title">
           {{
             myLeaveRequest
-              ? $t('leave.my_leave_request_details')
-              : $t('leave.leave_request_details')
+              ? $t("leave.my_leave_request_details")
+              : $t("leave.leave_request_details")
           }}
         </oxd-text>
       </div>
@@ -100,23 +100,23 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {truncate} from '@ohrm/core/util/helper/truncate';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import useLeaveActions from '@/orangehrmLeavePlugin/util/composable/useLeaveActions';
-import LeaveCommentsModal from '@/orangehrmLeavePlugin/components/LeaveCommentsModal';
-import usei18n from '@/core/util/composable/usei18n';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { truncate } from "@ohrm/core/util/helper/truncate";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import useLeaveActions from "@/orangehrmLeavePlugin/util/composable/useLeaveActions";
+import LeaveCommentsModal from "@/orangehrmLeavePlugin/components/LeaveCommentsModal";
+import usei18n from "@/core/util/composable/usei18n";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
 
 export default {
-  name: 'LeaveViewRequest',
+  name: "LeaveViewRequest",
 
   components: {
-    'leave-comment-modal': LeaveCommentsModal,
+    "leave-comment-modal": LeaveCommentsModal,
   },
 
   props: {
@@ -133,40 +133,40 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/leave/leave-requests/${props.leaveRequestId}/leaves`,
+      `/api/v2/leave/leave-requests/${props.leaveRequestId}/leaves`
     );
 
-    const {leaveActions, processLeaveAction} = useLeaveActions(http);
-    const {$t} = usei18n();
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { leaveActions, processLeaveAction } = useLeaveActions(http);
+    const { $t } = usei18n();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     const leaveRequestNormalizer = (data) => {
       return data.map((item) => {
-        let leaveDatePeriod = '';
+        let leaveDatePeriod = "";
         const duration = item.dates.durationType?.type;
 
         if (item.dates.fromDate) {
           leaveDatePeriod = formatDate(
             parseDate(item.dates.fromDate),
             jsDateFormat,
-            {locale},
+            { locale }
           );
         }
         if (item.dates.startTime && item.dates.endTime) {
           leaveDatePeriod += ` (${item.dates.startTime} - ${item.dates.endTime})`;
         }
         if (
-          duration === 'half_day_morning' ||
-          duration === 'half_day_afternoon'
+          duration === "half_day_morning" ||
+          duration === "half_day_afternoon"
         ) {
-          leaveDatePeriod += ` ${$t('leave.half_day')}`;
+          leaveDatePeriod += ` ${$t("leave.half_day")}`;
         }
 
         const leaveTypeName = item.leaveType?.name;
         if (item.leaveType?.deleted) {
-          leaveTypeName + $t('general.deleted');
+          leaveTypeName + $t("general.deleted");
         }
 
         return {
@@ -196,7 +196,7 @@ export default {
       response,
       isLoading,
       execQuery,
-    } = usePaginate(http, {normalizer: leaveRequestNormalizer});
+    } = usePaginate(http, { normalizer: leaveRequestNormalizer });
 
     return {
       http,
@@ -219,35 +219,39 @@ export default {
   data() {
     return {
       headers: [
-        {name: 'date', title: this.$t('general.date'), style: {flex: 1}},
+        { name: "date", title: this.$t("general.date"), style: { flex: 1 } },
         {
-          name: 'leaveType',
-          title: this.$t('leave.leave_type'),
-          style: {flex: 1},
+          name: "leaveType",
+          title: this.$t("leave.leave_type"),
+          style: { flex: 1 },
         },
         {
-          name: 'leaveBalance',
-          title: this.$t('leave.leave_balance_days'),
-          style: {flex: 1},
+          name: "leaveBalance",
+          title: this.$t("leave.leave_balance_days"),
+          style: { flex: 1 },
         },
         {
-          name: 'duration',
-          title: this.$t('attendance.duration_hours'),
-          style: {flex: 1},
-        },
-        {name: 'status', title: this.$t('general.status'), style: {flex: 1}},
-        {
-          name: 'comment',
-          title: this.$t('general.comments'),
-          style: {flex: '10%'},
+          name: "duration",
+          title: this.$t("attendance.duration_hours"),
+          style: { flex: 1 },
         },
         {
-          name: 'action',
-          slot: 'footer',
-          title: this.$t('general.actions'),
-          cellType: 'oxd-table-cell-actions',
+          name: "status",
+          title: this.$t("general.status"),
+          style: { flex: 1 },
+        },
+        {
+          name: "comment",
+          title: this.$t("general.comments"),
+          style: { flex: "10%" },
+        },
+        {
+          name: "action",
+          slot: "footer",
+          title: this.$t("general.actions"),
+          cellType: "oxd-table-cell-actions",
           cellRenderer: this.cellRenderer,
-          style: {flex: '20%'},
+          style: { flex: "20%" },
         },
       ],
       showCommentModal: false,
@@ -265,18 +269,18 @@ export default {
           excludePastEmpTag: false,
         });
       }
-      return '';
+      return "";
     },
     leavePeriod() {
       const startDate = formatDate(
         parseDate(this.response?.meta?.startDate),
         this.jsDateFormat,
-        {locale: this.locale},
+        { locale: this.locale }
       );
       const endDate = formatDate(
         parseDate(this.response?.meta?.endDate),
         this.jsDateFormat,
-        {locale: this.locale},
+        { locale: this.locale }
       );
       return startDate === endDate ? startDate : `${startDate} - ${endDate}`;
     },
@@ -286,35 +290,35 @@ export default {
     cellRenderer(...[, , , row]) {
       const cellConfig = {};
       const dropdownActions = [];
-      const {approve, reject, cancel, more} = this.leaveActions;
+      const { approve, reject, cancel, more } = this.leaveActions;
 
       if (row.canComment) {
         dropdownActions.push({
-          label: 'Add Comment',
-          context: 'add_comment',
+          label: "Add Comment",
+          context: "add_comment",
         });
       }
 
       row.actions.map((item) => {
-        if (item.action === 'APPROVE') {
-          approve.props.label = this.$t('general.approve');
-          approve.props.onClick = () => this.onLeaveAction(row.id, 'APPROVE');
+        if (item.action === "APPROVE") {
+          approve.props.label = this.$t("general.approve");
+          approve.props.onClick = () => this.onLeaveAction(row.id, "APPROVE");
           cellConfig.approve = approve;
         }
-        if (item.action === 'REJECT') {
-          reject.props.label = this.$t('general.reject');
-          reject.props.onClick = () => this.onLeaveAction(row.id, 'REJECT');
+        if (item.action === "REJECT") {
+          reject.props.label = this.$t("general.reject");
+          reject.props.onClick = () => this.onLeaveAction(row.id, "REJECT");
           cellConfig.reject = reject;
         }
-        if (item.action === 'CANCEL') {
+        if (item.action === "CANCEL") {
           if (this.myLeaveRequest) {
-            cancel.props.label = this.$t('general.cancel');
-            cancel.props.onClick = () => this.onLeaveAction(row.id, 'CANCEL');
+            cancel.props.label = this.$t("general.cancel");
+            cancel.props.onClick = () => this.onLeaveAction(row.id, "CANCEL");
             cellConfig.cancel = cancel;
           } else {
             dropdownActions.push({
-              label: 'Cancel Leave',
-              context: 'cancel_leave',
+              label: "Cancel Leave",
+              context: "cancel_leave",
             });
           }
         }
@@ -346,8 +350,8 @@ export default {
       this.resetDataTable();
     },
     onLeaveDropdownAction(event, item) {
-      if (event.context === 'cancel_leave') {
-        this.onLeaveAction(item.id, 'CANCEL');
+      if (event.context === "cancel_leave") {
+        this.onLeaveAction(item.id, "CANCEL");
       } else {
         this.commentModalState = item.id;
         this.isLeaveRequest = false;
@@ -364,8 +368,8 @@ export default {
     },
     onClickBack() {
       this.myLeaveRequest
-        ? navigate('/leave/viewMyLeaveList')
-        : navigate('/leave/viewLeaveList');
+        ? navigate("/leave/viewMyLeaveList")
+        : navigate("/leave/viewLeaveList");
     },
     async resetDataTable() {
       await this.execQuery();

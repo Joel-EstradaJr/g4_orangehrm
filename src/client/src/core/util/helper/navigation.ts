@@ -15,7 +15,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {urlFor} from '@ohrm/core/util/helper/url';
+import { urlFor } from "@ohrm/core/util/helper/url";
 
 /**
  * @param path
@@ -24,8 +24,8 @@ import {urlFor} from '@ohrm/core/util/helper/url';
  */
 export const navigate = function (
   path: string,
-  params: {[key: string]: string | number} = {},
-  query: {[key: string]: string | number | boolean | string[]} = {},
+  params: { [key: string]: string | number } = {},
+  query: { [key: string]: string | number | boolean | string[] } = {}
 ): void {
   window.location.href = urlFor(path, params, query);
 };

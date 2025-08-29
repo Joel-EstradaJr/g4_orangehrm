@@ -21,7 +21,7 @@
   <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('general.add_attachment') }}
+        {{ $t("general.add_attachment") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -39,7 +39,9 @@
               required
             />
             <oxd-text class="orangehrm-input-hint" tag="p">
-              {{ $t('general.accepts_up_to_n_mb', {count: formattedFileSize}) }}
+              {{
+                $t("general.accepts_up_to_n_mb", { count: formattedFileSize })
+              }}
             </oxd-text>
           </oxd-grid-item>
         </oxd-grid>
@@ -75,25 +77,25 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {required} from '@/core/util/validation/rules';
-import {OxdDialog} from '@ohrm/oxd';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { required } from "@/core/util/validation/rules";
+import { OxdDialog } from "@ohrm/oxd";
 import {
   maxFileSize,
   shouldNotExceedCharLength,
   validFileTypes,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 const attachmentModel = {
   attachment: null,
-  description: '',
+  description: "",
 };
 
 export default {
-  name: 'SaveAttachment',
+  name: "SaveAttachment",
 
   components: {
-    'oxd-dialog': OxdDialog,
+    "oxd-dialog": OxdDialog,
   },
 
   props: {
@@ -111,12 +113,12 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/claim/requests/${props.requestId}/attachments`,
+      `/api/v2/claim/requests/${props.requestId}/attachments`
     );
     return {
       http,
@@ -157,12 +159,12 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          this.attachment = {...attachmentModel};
+          this.attachment = { ...attachmentModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

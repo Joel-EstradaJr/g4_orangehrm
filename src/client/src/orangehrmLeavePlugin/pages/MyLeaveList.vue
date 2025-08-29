@@ -19,7 +19,7 @@
 
 <template>
   <leave-list-table :leave-statuses="leaveStatuses" :my-leave-list="true">
-    <template #default="{filters, filterItems, rules, onReset}">
+    <template #default="{ filters, filterItems, rules, onReset }">
       <oxd-table-filter :filter-title="$t('leave.my_leave_list')">
         <oxd-form @submit-valid="filterItems" @reset="onReset">
           <oxd-form-row>
@@ -79,16 +79,19 @@
       </oxd-table-filter>
     </template>
   </leave-list-table>
+  <leave-assistant-widget />
 </template>
 
 <script>
-import LeaveListTable from '@/orangehrmLeavePlugin/components/LeaveListTable';
-import LeaveTypeDropdown from '@/orangehrmLeavePlugin/components/LeaveTypeDropdown';
+import LeaveListTable from "@/orangehrmLeavePlugin/components/LeaveListTable";
+import LeaveTypeDropdown from "@/orangehrmLeavePlugin/components/LeaveTypeDropdown";
+import LeaveAssistantWidget from "@/orangehrmLeavePlugin/components/LeaveAssistantWidget";
 
 export default {
   components: {
-    'leave-list-table': LeaveListTable,
-    'leave-type-dropdown': LeaveTypeDropdown,
+    "leave-list-table": LeaveListTable,
+    "leave-type-dropdown": LeaveTypeDropdown,
+    LeaveAssistantWidget,
   },
   props: {
     leaveStatuses: {

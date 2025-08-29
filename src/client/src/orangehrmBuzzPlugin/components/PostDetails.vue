@@ -45,7 +45,7 @@
       class="orangehrm-post-details-readmore"
       @click="onClickReadMore"
     >
-      {{ $t('buzz.read_more') }}
+      {{ $t("buzz.read_more") }}
     </oxd-text>
     <oxd-divider></oxd-divider>
     <div class="orangehrm-post-details-actions">
@@ -63,26 +63,26 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import useLocale from '@/core/util/composable/useLocale';
-import {APIService} from '@/core/util/services/api.service';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import PostStats from '@/orangehrmBuzzPlugin/components/PostStats';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
-import useBuzzAPIs from '@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs';
-import PostLikeButton from '@/orangehrmBuzzPlugin/components/PostLikeButton';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import PostCommentContainer from '@/orangehrmBuzzPlugin/components/PostCommentContainer';
+import { computed, ref } from "vue";
+import useLocale from "@/core/util/composable/useLocale";
+import { APIService } from "@/core/util/services/api.service";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import PostStats from "@/orangehrmBuzzPlugin/components/PostStats";
+import ProfileImage from "@/orangehrmBuzzPlugin/components/ProfileImage";
+import useBuzzAPIs from "@/orangehrmBuzzPlugin/util/composable/useBuzzAPIs";
+import PostLikeButton from "@/orangehrmBuzzPlugin/components/PostLikeButton";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import PostCommentContainer from "@/orangehrmBuzzPlugin/components/PostCommentContainer";
 
 export default {
-  name: 'PostDetails',
+  name: "PostDetails",
 
   components: {
-    'post-stats': PostStats,
-    'post-like': PostLikeButton,
-    'profile-image': ProfileImage,
-    'post-comment-container': PostCommentContainer,
+    "post-stats": PostStats,
+    "post-like": PostLikeButton,
+    "profile-image": ProfileImage,
+    "post-comment-container": PostCommentContainer,
   },
 
   props: {
@@ -96,24 +96,24 @@ export default {
     },
   },
 
-  emits: ['like', 'close', 'createComment', 'deleteComment'],
+  emits: ["like", "close", "createComment", "deleteComment"],
 
   setup(props, context) {
     let loading = false;
-    const {locale} = useLocale();
-    const {jsDateFormat, jsTimeFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { locale } = useLocale();
+    const { jsDateFormat, jsTimeFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
     const readMore = ref(new String(props.post?.text).length < 500);
-    const {updatePostLike} = useBuzzAPIs(
-      new APIService(window.appGlobal.baseUrl, ''),
+    const { updatePostLike } = useBuzzAPIs(
+      new APIService(window.appGlobal.baseUrl, "")
     );
 
     const postDateTime = computed(() => {
-      const {createdDate, createdTime} = props.post;
+      const { createdDate, createdTime } = props.post;
 
       const utcDate = parseDate(
         `${createdDate} ${createdTime} +00:00`,
-        'yyyy-MM-dd HH:mm xxx',
+        "yyyy-MM-dd HH:mm xxx"
       );
 
       return formatDate(utcDate, `${jsDateFormat} ${jsTimeFormat}`, {
@@ -128,21 +128,21 @@ export default {
       });
     });
 
-    const onClickClose = () => context.emit('close');
+    const onClickClose = () => context.emit("close");
 
     const onClickLike = () => {
       if (!loading) {
         loading = true;
         updatePostLike(props.post.id, props.post.liked).then(() => {
           loading = false;
-          context.emit('like');
+          context.emit("like");
         });
       }
     };
 
     const postClasses = computed(() => ({
-      'orangehrm-post-details-text': true,
-      '--truncate': readMore.value === false,
+      "orangehrm-post-details-text": true,
+      "--truncate": readMore.value === false,
     }));
 
     const onClickReadMore = () => {

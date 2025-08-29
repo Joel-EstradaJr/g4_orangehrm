@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import {OxdAlert} from '@ohrm/oxd';
+import { OxdAlert } from "@ohrm/oxd";
 
 export default {
   components: {
-    'oxd-alert': OxdAlert,
+    "oxd-alert": OxdAlert,
   },
 };
 </script>

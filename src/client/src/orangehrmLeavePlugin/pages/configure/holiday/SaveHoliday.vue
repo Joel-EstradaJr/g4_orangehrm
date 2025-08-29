@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('leave.add_holiday') }}
+        {{ $t("leave.add_holiday") }}
       </oxd-text>
 
       <oxd-divider />
@@ -62,7 +62,7 @@
           <oxd-grid :cols="3" class="orangehrm-full-width-grid">
             <oxd-grid-item>
               <oxd-input-group
-                :classes="{wrapper: '--status-grouped-field'}"
+                :classes="{ wrapper: '--status-grouped-field' }"
                 :label="$t('leave.repeats_annually')"
               >
                 <oxd-input-field
@@ -99,21 +99,21 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
   validDateFormat,
-} from '@ohrm/core/util/validation/rules';
-import {yearRange} from '@ohrm/core/util/helper/year-range';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import { yearRange } from "@ohrm/core/util/helper/year-range";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const holidayModel = {
-  name: '',
-  date: '',
+  name: "",
+  date: "",
   recurring: false,
-  length: {id: 0, label: 'Full Day'},
+  length: { id: 0, label: "Full Day" },
 };
 
 export default {
@@ -127,9 +127,9 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/holidays',
+      "/api/v2/leave/holidays"
     );
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       http,
@@ -141,7 +141,7 @@ export default {
     return {
       yearArray: [...yearRange(201)],
       isLoading: false,
-      holiday: {...holidayModel},
+      holiday: { ...holidayModel },
       rules: {
         name: [required, shouldNotExceedCharLength(200)],
         date: [required, validDateFormat(this.userDateFormat)],
@@ -157,24 +157,24 @@ export default {
     const startDate =
       today.getFullYear() -
       100 +
-      '-' +
+      "-" +
       (today.getMonth() + 1) +
-      '-' +
+      "-" +
       today.getDate();
     const endDate =
       today.getFullYear() +
       100 +
-      '-' +
+      "-" +
       (today.getMonth() + 1) +
-      '-' +
+      "-" +
       today.getDate();
     this.http
-      .getAll({fromDate: startDate, toDate: endDate, limit: 0})
+      .getAll({ fromDate: startDate, toDate: endDate, limit: 0 })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.rules.date.push((v) => {
           const index = data.findIndex((item) => item.date == v);
-          return index === -1 || this.$t('general.already_exists');
+          return index === -1 || this.$t("general.already_exists");
         });
       })
       .finally(() => {
@@ -196,12 +196,12 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          this.holiday = {...holidayModel};
+          this.holiday = { ...holidayModel };
           this.onCancel();
         });
     },
     onCancel() {
-      navigate('/leave/viewHolidayList');
+      navigate("/leave/viewHolidayList");
     },
   },
 };

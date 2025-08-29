@@ -21,58 +21,58 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">
-        {{ $t('pim.data_import') }}
+        {{ $t("pim.data_import") }}
       </oxd-text>
 
       <oxd-divider />
       <div class="orangehrm-information-card-container">
         <oxd-text class="orangehrm-sub-title">
-          {{ $t('general.note') }}:
+          {{ $t("general.note") }}:
         </oxd-text>
         <ul>
           <li>
             <oxd-text class="orangehrm-information-card-text">
-              {{ $t('pim.column_order_should_not_be_changed') }}
+              {{ $t("pim.column_order_should_not_be_changed") }}
             </oxd-text>
           </li>
           <li>
             <oxd-text class="orangehrm-information-card-text">
-              {{ $t('pim.first_name_and_last_name_are_compulsory') }}
+              {{ $t("pim.first_name_and_last_name_are_compulsory") }}
             </oxd-text>
           </li>
           <li>
             <oxd-text class="orangehrm-information-card-text">
-              {{ $t('pim.all_date_fields_should_be_in_yyyy_mm_dd_format') }}
+              {{ $t("pim.all_date_fields_should_be_in_yyyy_mm_dd_format") }}
             </oxd-text>
           </li>
           <li>
             <oxd-text class="orangehrm-information-card-text">
-              {{ $t('pim.gender_specified_value_should_be_either_m_or_f') }}
+              {{ $t("pim.gender_specified_value_should_be_either_m_or_f") }}
             </oxd-text>
           </li>
           <li>
             <oxd-text class="orangehrm-information-card-text">
               {{
                 $t(
-                  'pim.each_import_file_should_be_configured_for_100_records_or_less',
+                  "pim.each_import_file_should_be_configured_for_100_records_or_less"
                 )
               }}
             </oxd-text>
           </li>
           <li>
             <oxd-text class="orangehrm-information-card-text">
-              {{ $t('pim.multiple_import_files_may_be_required') }}
+              {{ $t("pim.multiple_import_files_may_be_required") }}
             </oxd-text>
           </li>
           <li>
             <oxd-text class="orangehrm-information-card-text">
-              {{ $t('pim.sample_csv_file') }} :
+              {{ $t("pim.sample_csv_file") }} :
               <a
                 href="#"
                 class="download-link"
                 @click.prevent="onClickDownload"
               >
-                {{ $t('general.download') }}
+                {{ $t("general.download") }}
               </a>
             </oxd-text>
           </li>
@@ -95,7 +95,7 @@
               />
               <oxd-text class="orangehrm-input-hint" tag="p">
                 {{
-                  $t('general.accepts_up_to_n_mb', {count: formattedFileSize})
+                  $t("general.accepts_up_to_n_mb", { count: formattedFileSize })
                 }}
               </oxd-text>
             </oxd-grid-item>
@@ -122,10 +122,10 @@ import {
   required,
   maxFileSize,
   validFileTypes,
-} from '@/core/util/validation/rules';
-import useForm from '@ohrm/core/util/composable/useForm';
-import {APIService} from '@/core/util/services/api.service';
-import EmployeeDataImportModal from '@/orangehrmPimPlugin/components/EmployeeDataImportModal';
+} from "@/core/util/validation/rules";
+import useForm from "@ohrm/core/util/composable/useForm";
+import { APIService } from "@/core/util/services/api.service";
+import EmployeeDataImportModal from "@/orangehrmPimPlugin/components/EmployeeDataImportModal";
 
 const attachmentModel = {
   attachment: null,
@@ -133,7 +133,7 @@ const attachmentModel = {
 
 export default {
   components: {
-    'employee-data-import-modal': EmployeeDataImportModal,
+    "employee-data-import-modal": EmployeeDataImportModal,
   },
   props: {
     allowedFileTypes: {
@@ -148,9 +148,9 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/csv-import`,
+      `/api/v2/pim/csv-import`
     );
-    const {formRef, reset} = useForm();
+    const { formRef, reset } = useForm();
     return {
       http,
       reset,
@@ -187,7 +187,7 @@ export default {
           ...this.attachment,
         })
         .then((response) => {
-          const {meta} = response.data;
+          const { meta } = response.data;
           this.importModalState = meta;
         })
         .finally(() => {
@@ -197,7 +197,7 @@ export default {
     },
     onClickDownload() {
       const downUrl = `${window.appGlobal.baseUrl}/pim/sampleCsvDownload`;
-      window.open(downUrl, '_blank');
+      window.open(downUrl, "_blank");
     },
     onImportModalClose() {
       this.importModalState = null;

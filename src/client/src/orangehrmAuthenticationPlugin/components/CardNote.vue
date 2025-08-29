@@ -26,24 +26,24 @@
     }"
   >
     <oxd-text v-if="hasNote" class="orangehrm-sub-title">
-      {{ $t('general.note') }}:
+      {{ $t("general.note") }}:
     </oxd-text>
     <oxd-text v-if="hasNoteIcon" tag="span" class="orangehrm-card-note-icon">
       <oxd-icon name="exclamation-triangle" class="orangehrm-card-icon" />
     </oxd-text>
-    <oxd-text :class="{'orangehrm-card-note-text': hasNoteIcon}">
+    <oxd-text :class="{ 'orangehrm-card-note-text': hasNoteIcon }">
       {{ noteText }}
     </oxd-text>
   </oxd-text>
 </template>
 
 <script>
-import {OxdIcon} from '@ohrm/oxd';
+import { OxdIcon } from "@ohrm/oxd";
 
 export default {
-  name: 'CardNote',
+  name: "CardNote",
   components: {
-    'oxd-icon': OxdIcon,
+    "oxd-icon": OxdIcon,
   },
   props: {
     noteText: {

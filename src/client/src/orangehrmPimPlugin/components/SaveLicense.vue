@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-top-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">{{
-      $t('general.add_license')
+      $t("general.add_license")
     }}</oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -81,28 +81,28 @@
 </template>
 
 <script>
-import QualificationDropdown from '@/orangehrmPimPlugin/components/QualificationDropdown';
+import QualificationDropdown from "@/orangehrmPimPlugin/components/QualificationDropdown";
 import {
   required,
   validDateFormat,
   shouldNotExceedCharLength,
   endDateShouldBeAfterStartDate,
-} from '@ohrm/core/util/validation/rules';
-import {yearRange} from '@ohrm/core/util/helper/year-range';
-import useDateFormat from '@/core/util/composable/useDateFormat';
+} from "@ohrm/core/util/validation/rules";
+import { yearRange } from "@ohrm/core/util/helper/year-range";
+import useDateFormat from "@/core/util/composable/useDateFormat";
 
 const licenseModel = {
   licenseId: null,
-  licenseNo: '',
-  issuedDate: '',
-  expiryDate: '',
+  licenseNo: "",
+  issuedDate: "",
+  expiryDate: "",
 };
 
 export default {
-  name: 'SaveLicense',
+  name: "SaveLicense",
 
   components: {
-    'qualification-dropdown': QualificationDropdown,
+    "qualification-dropdown": QualificationDropdown,
   },
 
   props: {
@@ -116,10 +116,10 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   setup() {
-    const {userDateFormat} = useDateFormat();
+    const { userDateFormat } = useDateFormat();
 
     return {
       userDateFormat,
@@ -129,7 +129,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      license: {...licenseModel},
+      license: { ...licenseModel },
       yearArray: [...yearRange()],
       rules: {
         licenseId: [required],
@@ -139,7 +139,7 @@ export default {
           validDateFormat(this.userDateFormat),
           endDateShouldBeAfterStartDate(
             () => this.license.issuedDate,
-            this.$t('pim.expiry_date_should_be_after_issued_date'),
+            this.$t("pim.expiry_date_should_be_after_issued_date")
           ),
         ],
       },
@@ -162,7 +162,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

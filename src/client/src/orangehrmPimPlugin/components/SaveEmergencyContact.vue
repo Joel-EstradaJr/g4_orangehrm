@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
     <oxd-text tag="h6" class="orangehrm-main-title">
-      {{ $t('pim.save_emergency_contact') }}
+      {{ $t("pim.save_emergency_contact") }}
     </oxd-text>
     <oxd-divider />
     <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -90,18 +90,18 @@ import {
   required,
   shouldNotExceedCharLength,
   validPhoneNumberFormat,
-} from '@ohrm/core/util/validation/rules';
+} from "@ohrm/core/util/validation/rules";
 
 const emergencyContactModel = {
-  name: '',
-  relationship: '',
-  homePhone: '',
-  officePhone: '',
-  mobilePhone: '',
+  name: "",
+  relationship: "",
+  homePhone: "",
+  officePhone: "",
+  mobilePhone: "",
 };
 
 export default {
-  name: 'SaveEmergencyContact',
+  name: "SaveEmergencyContact",
 
   props: {
     http: {
@@ -110,12 +110,12 @@ export default {
     },
   },
 
-  emits: ['close'],
+  emits: ["close"],
 
   data() {
     return {
       isLoading: false,
-      contact: {...emergencyContactModel},
+      contact: { ...emergencyContactModel },
       rules: {
         name: [required, shouldNotExceedCharLength(100)],
         relationship: [required, shouldNotExceedCharLength(100)],
@@ -124,10 +124,10 @@ export default {
           shouldNotExceedCharLength(30),
           (v) => {
             return (
-              v !== '' ||
-              this.contact.mobilePhone !== '' ||
-              this.contact.officePhone !== '' ||
-              this.$t('pim.at_least_one_phone_number_is_required')
+              v !== "" ||
+              this.contact.mobilePhone !== "" ||
+              this.contact.officePhone !== "" ||
+              this.$t("pim.at_least_one_phone_number_is_required")
             );
           },
         ],
@@ -148,12 +148,12 @@ export default {
           return this.$toast.saveSuccess();
         })
         .then(() => {
-          this.contact = {...emergencyContactModel};
+          this.contact = { ...emergencyContactModel };
           this.onCancel();
         });
     },
     onCancel() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

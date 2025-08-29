@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">{{
-        $t('pim.edit_report')
+        $t("pim.edit_report")
       }}</oxd-text>
       <oxd-divider />
 
@@ -43,7 +43,7 @@
         <oxd-divider />
         <oxd-form-row>
           <oxd-text class="orangehrm-sub-title" tag="h6">
-            {{ $t('pim.selection_criteria') }}
+            {{ $t("pim.selection_criteria") }}
           </oxd-text>
           <oxd-grid :cols="4" class="orangehrm-full-width-grid">
             <oxd-grid-item class="orangehrm-report-criteria --span-column-2">
@@ -90,7 +90,7 @@
         <oxd-divider />
         <oxd-form-row>
           <oxd-text class="orangehrm-sub-title" tag="h6">
-            {{ $t('pim.display_fields') }}
+            {{ $t("pim.display_fields") }}
           </oxd-text>
           <oxd-grid :cols="4" class="orangehrm-full-width-grid">
             <oxd-grid-item>
@@ -152,20 +152,20 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
+import { navigate } from "@ohrm/core/util/helper/navigation";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ReportCriterion from '@/orangehrmPimPlugin/components/ReportCriterion';
-import ReportDisplayField from '@/orangehrmPimPlugin/components/ReportDisplayField';
-import useEmployeeReport from '@/orangehrmPimPlugin/util/composable/useEmployeeReport';
+} from "@ohrm/core/util/validation/rules";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ReportCriterion from "@/orangehrmPimPlugin/components/ReportCriterion";
+import ReportDisplayField from "@/orangehrmPimPlugin/components/ReportDisplayField";
+import useEmployeeReport from "@/orangehrmPimPlugin/util/composable/useEmployeeReport";
 
 export default {
   components: {
-    'report-criterion': ReportCriterion,
-    'report-display-field': ReportDisplayField,
+    "report-criterion": ReportCriterion,
+    "report-display-field": ReportDisplayField,
   },
 
   props: {
@@ -190,7 +190,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/reports/defined',
+      "/api/v2/pim/reports/defined"
     );
     const {
       report,
@@ -206,7 +206,7 @@ export default {
     } = useEmployeeReport(
       props.selectionCriteria,
       props.displayFields,
-      props.displayFieldGroups,
+      props.displayFieldGroups
     );
 
     return {
@@ -234,15 +234,19 @@ export default {
       includeOpts: [
         {
           id: 1,
-          key: 'onlyCurrent',
-          label: this.$t('general.current_employees_only'),
+          key: "onlyCurrent",
+          label: this.$t("general.current_employees_only"),
         },
         {
           id: 2,
-          key: 'currentAndPast',
-          label: this.$t('general.current_and_past_employees'),
+          key: "currentAndPast",
+          label: this.$t("general.current_and_past_employees"),
         },
-        {id: 3, key: 'onlyPast', label: this.$t('general.past_employees_only')},
+        {
+          id: 3,
+          key: "onlyPast",
+          label: this.$t("general.past_employees_only"),
+        },
       ],
     };
   },
@@ -252,58 +256,58 @@ export default {
     this.http
       .get(this.reportId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.report.name = data.name;
         this.report.includeEmployees = this.includeOpts.find(
-          (opt) => opt.key === data.include,
+          (opt) => opt.key === data.include
         );
         const operators = [
-          {id: 'eq', label: 'Equal'},
-          {id: 'lt', label: 'Less Than'},
-          {id: 'gt', label: 'Greater Than'},
-          {id: 'between', label: 'Range'},
+          { id: "eq", label: "Equal" },
+          { id: "lt", label: "Less Than" },
+          { id: "gt", label: "Greater Than" },
+          { id: "between", label: "Range" },
         ];
         for (const key in data.fieldGroup) {
           const fieldGroup = this.displayFields.find(
-            (group) => group.field_group_id == key,
+            (group) => group.field_group_id == key
           );
           this.report.fieldGroupSelected.push(
-            this.displayFieldGroups.find((group) => group.id == key),
+            this.displayFieldGroups.find((group) => group.id == key)
           );
           this.report.displayFieldSelected[key] = {
             fields: data.fieldGroup[key].fields.map((id) =>
-              fieldGroup.fields.find((field) => field.id === id),
+              fieldGroup.fields.find((field) => field.id === id)
             ),
             includeHeader: data.fieldGroup[key].includeHeader,
           };
         }
         for (const key in data.criteria) {
           const criterion = this.selectionCriteria.find(
-            (criterion) => criterion.id == key,
+            (criterion) => criterion.id == key
           );
           this.report.criteriaSelected.push(criterion);
           this.report.criteriaFieldValues[key] = {
             valueX: data.criteria[key].x,
             valueY:
-              data.criteria[key].y === 'undefined'
+              data.criteria[key].y === "undefined"
                 ? null
                 : data.criteria[key].y,
             operator: operators.find(
-              (o) => o.id === data.criteria[key].operator,
+              (o) => o.id === data.criteria[key].operator
             ),
           };
         }
         // Fetch list data for unique test
-        return this.http.getAll({limit: 0});
+        return this.http.getAll({ limit: 0 });
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.rules.name.push((v) => {
           const index = data.findIndex((item) => item.name == v);
           if (index > -1) {
-            const {id} = data[index];
+            const { id } = data[index];
             return id != this.reportId
-              ? this.$t('general.already_exists')
+              ? this.$t("general.already_exists")
               : true;
           } else {
             return true;
@@ -317,13 +321,13 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/pim/viewDefinedPredefinedReports');
+      navigate("/pim/viewDefinedPredefinedReports");
     },
     onSave() {
       if (Object.keys(this.report.displayFieldSelected).length === 0) {
         return this.$toast.warn({
-          title: this.$t('general.warning'),
-          message: this.$t('pim.at_least_one_display_field_should_be_added'),
+          title: this.$t("general.warning"),
+          message: this.$t("pim.at_least_one_display_field_should_be_added"),
         });
       }
 
@@ -335,7 +339,7 @@ export default {
           return this.$toast.updateSuccess();
         })
         .then(() => {
-          navigate('/pim/displayPredefinedReport/{id}', {id: this.reportId});
+          navigate("/pim/displayPredefinedReport/{id}", { id: this.reportId });
         });
     },
   },

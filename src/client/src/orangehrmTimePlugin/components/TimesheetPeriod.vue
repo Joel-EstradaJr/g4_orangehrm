@@ -20,7 +20,7 @@
 <template>
   <div class="orangehrm-timeperiod-picker">
     <oxd-text tag="p" class="orangehrm-timeperiod-title">
-      {{ $t('time.timesheet_period') }}
+      {{ $t("time.timesheet_period") }}
     </oxd-text>
     <oxd-icon-button
       class="orangehrm-timeperiod-icon --prev"
@@ -38,9 +38,9 @@
 
 <script>
 export default {
-  name: 'TimesheetPeriod',
+  name: "TimesheetPeriod",
   inheritAttrs: false,
-  emits: ['previous', 'next'],
+  emits: ["previous", "next"],
 };
 </script>
 

@@ -69,11 +69,11 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
 
 export default {
-  name: 'ClaimActionButtons',
+  name: "ClaimActionButtons",
   props: {
     requestId: {
       type: Number,
@@ -92,7 +92,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/claim/requests/${props.requestId}/action`,
+      `/api/v2/claim/requests/${props.requestId}/action`
     );
     return {
       http,
@@ -100,26 +100,26 @@ export default {
   },
   computed: {
     isCancelAllowed() {
-      return this.allowedActions.includes('Cancel');
+      return this.allowedActions.includes("Cancel");
     },
     isSubmitAllowed() {
-      return this.allowedActions.includes('Submit');
+      return this.allowedActions.includes("Submit");
     },
     isApproveAllowed() {
-      return this.allowedActions.includes('Approve');
+      return this.allowedActions.includes("Approve");
     },
     isRejectAllowed() {
-      return this.allowedActions.includes('Reject');
+      return this.allowedActions.includes("Reject");
     },
     isPayAllowed() {
-      return this.allowedActions.includes('Pay');
+      return this.allowedActions.includes("Pay");
     },
   },
   methods: {
     onClaimAction(action) {
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             action: action,
           },
@@ -135,8 +135,8 @@ export default {
     },
     onBack() {
       this.isAssigned
-        ? navigate('/claim/viewAssignClaim')
-        : navigate('/claim/viewClaim');
+        ? navigate("/claim/viewAssignClaim")
+        : navigate("/claim/viewClaim");
     },
   },
 };

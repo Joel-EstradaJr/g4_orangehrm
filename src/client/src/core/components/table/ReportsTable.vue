@@ -31,7 +31,7 @@
       >
         <template #pagination>
           <oxd-text class="oxd-text--count" tag="span">
-            {{ $t('general.n_records_found', {count: total}) }}
+            {{ $t("general.n_records_found", { count: total }) }}
           </oxd-text>
           <oxd-pagination
             v-if="showPaginator"
@@ -50,17 +50,17 @@
 </template>
 
 <script>
-import {computed, onBeforeMount, ref, watch} from 'vue';
-import {APIService} from '@/core/util/services/api.service';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {CellAdapter, OxdMultilineCell, OxdReportTable} from '@ohrm/oxd';
+import { computed, onBeforeMount, ref, watch } from "vue";
+import { APIService } from "@/core/util/services/api.service";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { CellAdapter, OxdMultilineCell, OxdReportTable } from "@ohrm/oxd";
 
 export default {
-  name: 'ReportsTable',
+  name: "ReportsTable",
 
   components: {
-    'oxd-report-table': OxdReportTable,
+    "oxd-report-table": OxdReportTable,
   },
 
   props: {
@@ -100,13 +100,17 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/${props.module}/reports/data`,
+      `/api/v2/${props.module}/reports/data`
     );
 
     const headers = ref([]);
     const colCount = ref(props.columnCount ? props.columnCount : 0);
     const serializedFilters = computed(() => {
-      return {...props.filters, name: props.name, _dateFormattingEnabled: true};
+      return {
+        ...props.filters,
+        name: props.name,
+        _dateFormattingEnabled: true,
+      };
     });
 
     const {
@@ -133,14 +137,14 @@ export default {
           if (Array.isArray(value) && value.length > _rows)
             _rows = value.length;
         }
-        return {...item, _rows};
+        return { ...item, _rows };
       });
     });
 
     const setupTableHeaders = (header) => {
-      delete header['size'];
-      const {type, ...rest} = header.cellProperties ?? {};
-      const cellProperties = function ({prop, model}) {
+      delete header["size"];
+      const { type, ...rest } = header.cellProperties ?? {};
+      const cellProperties = function ({ prop, model }) {
         const url = model?._url ? model?._url[prop] : undefined;
         return {
           ...rest,
@@ -151,7 +155,7 @@ export default {
         ...header,
         cellProperties,
         cellTemplate:
-          type === 'list' ? CellAdapter(OxdMultilineCell) : undefined,
+          type === "list" ? CellAdapter(OxdMultilineCell) : undefined,
       };
     };
 
@@ -159,7 +163,7 @@ export default {
       isLoading.value = true;
       http
         .request({
-          method: 'GET',
+          method: "GET",
           url: `/api/v2/${props.module}/reports`,
           params: {
             name: serializedFilters.value.name,
@@ -167,11 +171,11 @@ export default {
           },
         })
         .then((response) => {
-          const {data, meta} = response.data;
+          const { data, meta } = response.data;
           headers.value = data.headers.map((header) => {
             if (header?.children && Array.isArray(header.children)) {
               header.children = header.children.map((child) =>
-                setupTableHeaders(child),
+                setupTableHeaders(child)
               );
               return header;
             } else {
@@ -194,7 +198,7 @@ export default {
       () => props.name,
       () => {
         headers.value = [];
-      },
+      }
     );
 
     props.prefetch && onBeforeMount(() => generateReport());

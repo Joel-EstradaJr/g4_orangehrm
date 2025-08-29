@@ -33,7 +33,7 @@
       >
         <div class="orangehrm-header-container">
           <oxd-text tag="h6" class="orangehrm-main-title">
-            {{ $t('admin.errors_in_import_language_packages') }}
+            {{ $t("admin.errors_in_import_language_packages") }}
           </oxd-text>
           <oxd-pagination
             v-if="showPaginator && !itemsModified"
@@ -78,19 +78,19 @@
 </template>
 
 <script>
-import useToast from '@/core/util/composable/useToast';
-import {APIService} from '@/core/util/services/api.service';
-import FixLanguageStringErrorTable from '@/orangehrmAdminPlugin/components/FixLanguageStringErrorTable.vue';
-import usePaginate from '@/core/util/composable/usePaginate';
-import {navigate} from '@/core/util/helper/navigation';
-import {ref} from 'vue';
-import {OxdAlert} from '@ohrm/oxd';
+import useToast from "@/core/util/composable/useToast";
+import { APIService } from "@/core/util/services/api.service";
+import FixLanguageStringErrorTable from "@/orangehrmAdminPlugin/components/FixLanguageStringErrorTable.vue";
+import usePaginate from "@/core/util/composable/usePaginate";
+import { navigate } from "@/core/util/helper/navigation";
+import { ref } from "vue";
+import { OxdAlert } from "@ohrm/oxd";
 
 export default {
-  name: 'FixLanguageStringErrors',
+  name: "FixLanguageStringErrors",
   components: {
-    'oxd-alert': OxdAlert,
-    'edit-translations': FixLanguageStringErrorTable,
+    "oxd-alert": OxdAlert,
+    "edit-translations": FixLanguageStringErrorTable,
   },
   props: {
     languageId: {
@@ -112,11 +112,11 @@ export default {
   },
 
   setup(props) {
-    const {saveSuccess} = useToast();
+    const { saveSuccess } = useToast();
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/admin/i18n/languages/${props.languageId}/translations/errors`,
+      `/api/v2/admin/i18n/languages/${props.languageId}/translations/errors`
     );
 
     const {
@@ -140,8 +140,8 @@ export default {
     const checkItemsModified = () => {
       itemsModified.value = items.value.data.reduce(
         (accumulator, item) =>
-          accumulator || (item.target !== '' && item.modified === true),
-        false,
+          accumulator || (item.target !== "" && item.modified === true),
+        false
       );
     };
 
@@ -189,7 +189,7 @@ export default {
   watch: {
     total(value) {
       if (value === 0) {
-        navigate('/admin/languagePackage');
+        navigate("/admin/languagePackage");
       }
     },
   },

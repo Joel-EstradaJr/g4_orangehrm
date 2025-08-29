@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">
-        {{ $t('performance.add_key_performance_indicator') }}
+        {{ $t("performance.add_key_performance_indicator") }}
       </oxd-text>
       <oxd-divider />
 
@@ -69,7 +69,7 @@
             <oxd-grid-item>
               <div class="orangehrm-module-field-row">
                 <oxd-text tag="p" class="orangehrm-module-field-label">
-                  {{ $t('performance.make_default_scale') }}
+                  {{ $t("performance.make_default_scale") }}
                 </oxd-text>
                 <oxd-switch-input v-model="kpi.isDefault" />
               </div>
@@ -95,20 +95,20 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
+import { navigate } from "@ohrm/core/util/helper/navigation";
 import {
   required,
   shouldNotExceedCharLength,
   minValueShouldBeLowerThanMaxValue,
   maxValueShouldBeGreaterThanMinValue,
   numberShouldBeBetweenMinAndMaxValue,
-} from '@ohrm/core/util/validation/rules';
-import {APIService} from '@/core/util/services/api.service';
-import JobtitleDropdown from '@/orangehrmPimPlugin/components/JobtitleDropdown.vue';
-import {OxdSwitchInput} from '@ohrm/oxd';
+} from "@ohrm/core/util/validation/rules";
+import { APIService } from "@/core/util/services/api.service";
+import JobtitleDropdown from "@/orangehrmPimPlugin/components/JobtitleDropdown.vue";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const initialKpi = {
-  title: '',
+  title: "",
   jobTitle: null,
   minRating: null,
   maxRating: null,
@@ -116,10 +116,10 @@ const initialKpi = {
 };
 
 export default {
-  name: 'KpiSave',
+  name: "KpiSave",
   components: {
-    'oxd-switch-input': OxdSwitchInput,
-    'jobtitle-dropdown': JobtitleDropdown,
+    "oxd-switch-input": OxdSwitchInput,
+    "jobtitle-dropdown": JobtitleDropdown,
   },
   props: {
     defaultMinRating: {
@@ -136,7 +136,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/performance/kpis',
+      "/api/v2/performance/kpis"
     );
 
     return {
@@ -146,7 +146,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      kpi: {...initialKpi},
+      kpi: { ...initialKpi },
       rules: {
         title: [required, shouldNotExceedCharLength(100)],
         jobTitle: [required],
@@ -156,8 +156,8 @@ export default {
           minValueShouldBeLowerThanMaxValue(
             () => this.kpi.maxRating,
             this.$t(
-              'performance.minimum_rating_should_be_less_than_maximum_rating',
-            ),
+              "performance.minimum_rating_should_be_less_than_maximum_rating"
+            )
           ),
         ],
         maxRating: [
@@ -166,8 +166,8 @@ export default {
           maxValueShouldBeGreaterThanMinValue(
             () => this.kpi.minRating,
             this.$t(
-              'performance.maximum_rating_should_be_greater_than_minimum_rating',
-            ),
+              "performance.maximum_rating_should_be_greater_than_minimum_rating"
+            )
           ),
         ],
       },
@@ -179,7 +179,7 @@ export default {
   },
   methods: {
     onCancel() {
-      navigate('/performance/searchKpi');
+      navigate("/performance/searchKpi");
     },
     onSave() {
       this.isLoading = true;

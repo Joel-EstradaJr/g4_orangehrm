@@ -28,13 +28,13 @@
       class="orangehrm-buzz-post-body-readmore"
       @click="onClickReadMore"
     >
-      {{ $t('buzz.read_more') }}
+      {{ $t("buzz.read_more") }}
     </oxd-text>
     <br v-if="post.text && (post.type === 'video' || post.type === 'photo')" />
     <video-frame v-if="post.type === 'video'" :video-src="post.video.link">
     </video-frame>
     <photo-frame v-if="post.type === 'photo'" :media="post.photoIds">
-      <template #content="{index}">
+      <template #content="{ index }">
         <div
           v-if="index === 3 && post.photoIds.length === 5"
           class="orangehrm-buzz-post-body-picture --more"
@@ -70,22 +70,22 @@
 </template>
 
 <script>
-import {computed, reactive, toRefs} from 'vue';
-import useLocale from '@/core/util/composable/useLocale';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import PhotoFrame from '@/orangehrmBuzzPlugin/components/PhotoFrame';
-import VideoFrame from '@/orangehrmBuzzPlugin/components/VideoFrame';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import {OxdIcon} from '@ohrm/oxd';
+import { computed, reactive, toRefs } from "vue";
+import useLocale from "@/core/util/composable/useLocale";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import PhotoFrame from "@/orangehrmBuzzPlugin/components/PhotoFrame";
+import VideoFrame from "@/orangehrmBuzzPlugin/components/VideoFrame";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import { OxdIcon } from "@ohrm/oxd";
 
 export default {
-  name: 'PostBody',
+  name: "PostBody",
 
   components: {
-    'oxd-icon': OxdIcon,
-    'photo-frame': PhotoFrame,
-    'video-frame': VideoFrame,
+    "oxd-icon": OxdIcon,
+    "photo-frame": PhotoFrame,
+    "video-frame": VideoFrame,
   },
 
   props: {
@@ -95,19 +95,19 @@ export default {
     },
   },
 
-  emits: ['close', 'selectPhoto'],
+  emits: ["close", "selectPhoto"],
 
   setup(props, context) {
-    const {locale} = useLocale();
-    const {jsDateFormat, jsTimeFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { locale } = useLocale();
+    const { jsDateFormat, jsTimeFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
     const state = reactive({
       readMore: new String(props.post?.text).length < 500,
     });
 
     const postClasses = computed(() => ({
-      'orangehrm-buzz-post-body-text': true,
-      '--truncate': state.readMore === false,
+      "orangehrm-buzz-post-body-text": true,
+      "--truncate": state.readMore === false,
     }));
 
     const onClickReadMore = () => {
@@ -115,16 +115,16 @@ export default {
     };
 
     const onClickPicture = (index) => {
-      context.emit('selectPhoto', index);
+      context.emit("selectPhoto", index);
     };
 
     const originalPost = computed(() => {
       if (props.post.originalPost === null) return null;
-      const {createdDate, createdTime} = props.post.originalPost;
+      const { createdDate, createdTime } = props.post.originalPost;
 
       const utcDate = parseDate(
         `${createdDate} ${createdTime} +00:00`,
-        'yyyy-MM-dd HH:mm xxx',
+        "yyyy-MM-dd HH:mm xxx"
       );
 
       return {

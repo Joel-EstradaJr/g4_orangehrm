@@ -38,7 +38,7 @@
     ></edit-membership>
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <profile-action-header @click="onClickAdd">
-        {{ $t('pim.assigned_memberships') }}
+        {{ $t("pim.assigned_memberships") }}
       </profile-action-header>
     </div>
     <table-header
@@ -71,24 +71,24 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import SaveMembership from '@/orangehrmPimPlugin/components/SaveMembership';
-import EditMembership from '@/orangehrmPimPlugin/components/EditMembership';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import EditEmployeeLayout from "@/orangehrmPimPlugin/components/EditEmployeeLayout";
+import SaveMembership from "@/orangehrmPimPlugin/components/SaveMembership";
+import EditMembership from "@/orangehrmPimPlugin/components/EditMembership";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
   components: {
-    'profile-action-header': ProfileActionHeader,
-    'edit-employee-layout': EditEmployeeLayout,
-    'save-membership': SaveMembership,
-    'edit-membership': EditMembership,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "profile-action-header": ProfileActionHeader,
+    "edit-employee-layout": EditEmployeeLayout,
+    "save-membership": SaveMembership,
+    "edit-membership": EditMembership,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -113,10 +113,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.empNumber}/memberships`,
+      `/api/v2/pim/employees/${props.empNumber}/memberships`
     );
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const membershipNormalizer = (data) => {
       return data.map((item) => {
@@ -131,12 +131,12 @@ export default {
           subscriptionCommenceDate: formatDate(
             parseDate(item.subscriptionCommenceDate),
             jsDateFormat,
-            {locale},
+            { locale }
           ),
           subscriptionRenewalDate: formatDate(
             parseDate(item.subscriptionRenewalDate),
             jsDateFormat,
-            {locale},
+            { locale }
           ),
         };
       });
@@ -172,54 +172,54 @@ export default {
     return {
       headers: [
         {
-          name: 'membershipName',
-          slot: 'title',
-          title: this.$t('pim.membership'),
-          style: {flex: 1},
+          name: "membershipName",
+          slot: "title",
+          title: this.$t("pim.membership"),
+          style: { flex: 1 },
         },
         {
-          name: 'subscriptionPaidBy',
-          title: this.$t('pim.subscription_paid_by'),
-          style: {flex: 1},
+          name: "subscriptionPaidBy",
+          title: this.$t("pim.subscription_paid_by"),
+          style: { flex: 1 },
         },
         {
-          name: 'subscriptionFee',
-          title: this.$t('pim.subscription_amount'),
-          style: {flex: 1},
+          name: "subscriptionFee",
+          title: this.$t("pim.subscription_amount"),
+          style: { flex: 1 },
         },
         {
-          name: 'subscriptionCurrencyName',
-          title: this.$t('general.currency'),
-          style: {flex: 1},
+          name: "subscriptionCurrencyName",
+          title: this.$t("general.currency"),
+          style: { flex: 1 },
         },
         {
-          name: 'subscriptionCommenceDate',
-          title: this.$t('pim.subscription_commence_date'),
-          style: {flex: 1},
+          name: "subscriptionCommenceDate",
+          title: this.$t("pim.subscription_commence_date"),
+          style: { flex: 1 },
         },
         {
-          name: 'subscriptionRenewalDate',
-          title: this.$t('pim.subscription_renewal_date'),
-          style: {flex: 1},
+          name: "subscriptionRenewalDate",
+          title: this.$t("pim.subscription_renewal_date"),
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -244,14 +244,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">{{
-        $t('pim.add_report')
+        $t("pim.add_report")
       }}</oxd-text>
       <oxd-divider />
 
@@ -43,7 +43,7 @@
         <oxd-divider />
         <oxd-form-row>
           <oxd-text class="orangehrm-sub-title" tag="h6">
-            {{ $t('pim.selection_criteria') }}
+            {{ $t("pim.selection_criteria") }}
           </oxd-text>
           <oxd-grid :cols="4" class="orangehrm-full-width-grid">
             <oxd-grid-item class="orangehrm-report-criteria --span-column-2">
@@ -90,7 +90,7 @@
         <oxd-divider />
         <oxd-form-row>
           <oxd-text class="orangehrm-sub-title" tag="h6">
-            {{ $t('pim.display_fields') }}
+            {{ $t("pim.display_fields") }}
           </oxd-text>
           <oxd-grid :cols="4" class="orangehrm-full-width-grid">
             <oxd-grid-item>
@@ -153,20 +153,20 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
+import { navigate } from "@ohrm/core/util/helper/navigation";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ReportCriterion from '@/orangehrmPimPlugin/components/ReportCriterion';
-import ReportDisplayField from '@/orangehrmPimPlugin/components/ReportDisplayField';
-import useEmployeeReport from '@/orangehrmPimPlugin/util/composable/useEmployeeReport';
+} from "@ohrm/core/util/validation/rules";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ReportCriterion from "@/orangehrmPimPlugin/components/ReportCriterion";
+import ReportDisplayField from "@/orangehrmPimPlugin/components/ReportDisplayField";
+import useEmployeeReport from "@/orangehrmPimPlugin/util/composable/useEmployeeReport";
 
 export default {
   components: {
-    'report-criterion': ReportCriterion,
-    'report-display-field': ReportDisplayField,
+    "report-criterion": ReportCriterion,
+    "report-display-field": ReportDisplayField,
   },
 
   props: {
@@ -187,7 +187,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/reports/defined',
+      "/api/v2/pim/reports/defined"
     );
     const {
       report,
@@ -203,7 +203,7 @@ export default {
     } = useEmployeeReport(
       props.selectionCriteria,
       props.displayFields,
-      props.displayFieldGroups,
+      props.displayFieldGroups
     );
 
     return {
@@ -231,15 +231,19 @@ export default {
       includeOpts: [
         {
           id: 1,
-          key: 'onlyCurrent',
-          label: this.$t('general.current_employees_only'),
+          key: "onlyCurrent",
+          label: this.$t("general.current_employees_only"),
         },
         {
           id: 2,
-          key: 'currentAndPast',
-          label: this.$t('general.current_and_past_employees'),
+          key: "currentAndPast",
+          label: this.$t("general.current_and_past_employees"),
         },
-        {id: 3, key: 'onlyPast', label: this.$t('general.past_employees_only')},
+        {
+          id: 3,
+          key: "onlyPast",
+          label: this.$t("general.past_employees_only"),
+        },
       ],
     };
   },
@@ -247,12 +251,12 @@ export default {
   beforeMount() {
     this.isLoading = true;
     this.http
-      .getAll({limit: 0})
+      .getAll({ limit: 0 })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.rules.name.push((v) => {
           const index = data.findIndex((item) => item.name == v);
-          return index === -1 || this.$t('general.already_exists');
+          return index === -1 || this.$t("general.already_exists");
         });
       })
       .finally(() => {
@@ -262,13 +266,13 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/pim/viewDefinedPredefinedReports');
+      navigate("/pim/viewDefinedPredefinedReports");
     },
     onSave() {
       if (Object.keys(this.report.displayFieldSelected).length === 0) {
         return this.$toast.warn({
-          title: this.$t('general.warning'),
-          message: this.$t('pim.at_least_one_display_field_should_be_added'),
+          title: this.$t("general.warning"),
+          message: this.$t("pim.at_least_one_display_field_should_be_added"),
         });
       }
 
@@ -278,13 +282,13 @@ export default {
       this.http
         .create(payload)
         .then((response) => {
-          const {data} = response.data;
+          const { data } = response.data;
           reportId = data.id;
           return this.$toast.saveSuccess();
         })
         .then(() => {
           reportId &&
-            navigate('/pim/displayPredefinedReport/{id}', {id: reportId});
+            navigate("/pim/displayPredefinedReport/{id}", { id: reportId });
         });
     },
   },

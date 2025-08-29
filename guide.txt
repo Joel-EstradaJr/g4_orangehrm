@@ -1,14 +1,31 @@
-On Powershell Terminal:
+On PowerShell terminal (Windows):
     cd C:\xampp\htdocs
     git clone --branch joel https://github.com/Brianc1012/G4_COLONYXT.git colonyxt
-    cd src/client
+
+    # Install backend PHP dependencies (vendor is ignored)
+    cd .\colonyxt\src
+    composer install
+
+    # Install and build frontend assets (outputs to web/dist)
+    cd ..\src\client
     npm install -g yarn
     yarn install
     yarn lint:fix
-    yarn dev
+    yarn build
+    
+    # Optional: run in dev/watch mode instead of building once
+    # yarn dev
 
 On browser:
     http://localhost/colonyxt/installer
+
+-----------------------------------------------------------------
+
+After installer completes (mandatory for Leave Assistant):
+    # Seed API permission and role grants for the Leave Assistant endpoint
+    cd C:\xampp\htdocs\colonyxt
+    php installer\scripts\seed_leave_assistant.php
+    # (composer install already done above)
 
 -----------------------------------------------------------------
 
@@ -49,3 +66,19 @@ Register: no
 
 On browser:
     http://localhost/colonyxt/web/index.php/auth/login
+
+-----------------------------------------------------------------
+
+Leave Assistant (Read-only, built-in)
+- A floating "Leave Assistant" chat widget is available on Leave pages.
+- It answers FAQs and gives guidance only; it does not modify data.
+- If UI changes are made to the widget, rebuild assets from src/client:
+        cd C:\xampp\htdocs\colonyxt\src\client ; yarn build
+
+Troubleshooting
+- If you see 404/403 on the assistant API, ensure you're logged in and
+    that the installer completed successfully.
+- If you change backend PHP classes, clear OrangeHRM caches if needed:
+    delete folders under src/cache/orangehrm, doctrine_metadata, doctrine_queries.
+ - If backend classes are newly added, regenerate autoload:
+     cd C:\xampp\htdocs\colonyxt\src ; composer dump-autoload

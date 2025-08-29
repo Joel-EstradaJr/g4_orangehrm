@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import {ref} from 'vue';
-import ReportsTable from '@/core/components/table/ReportsTable';
+import { ref } from "vue";
+import ReportsTable from "@/core/components/table/ReportsTable";
 
 export default {
   components: {
-    'reports-table': ReportsTable,
+    "reports-table": ReportsTable,
   },
   props: {
     reportId: {

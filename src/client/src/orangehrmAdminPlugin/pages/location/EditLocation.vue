@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title" tag="h6">
-        {{ $t('admin.edit_location') }}
+        {{ $t("admin.edit_location") }}
       </oxd-text>
 
       <oxd-divider />
@@ -131,25 +131,25 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
   validPhoneNumberFormat,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 const initialLocation = {
-  name: '',
+  name: "",
   countryCode: null,
-  province: '',
-  city: '',
-  address: '',
-  zipCode: '',
-  phone: '',
-  fax: '',
-  note: '',
+  province: "",
+  city: "",
+  address: "",
+  zipCode: "",
+  phone: "",
+  fax: "",
+  note: "",
 };
 
 export default {
@@ -167,10 +167,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/locations',
+      "/api/v2/admin/locations"
     );
-    const {createUniqueValidator} = useServerValidation(http);
-    const locationUniqueValidation = createUniqueValidator('Location', 'name', {
+    const { createUniqueValidator } = useServerValidation(http);
+    const locationUniqueValidation = createUniqueValidator("Location", "name", {
       entityId: props.locationId,
     });
 
@@ -183,7 +183,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      location: {...initialLocation},
+      location: { ...initialLocation },
       rules: {
         name: [
           required,
@@ -213,10 +213,10 @@ export default {
     this.http
       .get(parseInt(this.locationId, 10))
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.location.name = data.name;
         this.location.countryCode = this.countries.find(
-          (item) => item.id === data.country.countryCode,
+          (item) => item.id === data.country.countryCode
         );
         this.location.province = data.province;
         this.location.city = data.city;
@@ -233,7 +233,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/admin/viewLocations');
+      navigate("/admin/viewLocations");
     },
     onSave() {
       this.isLoading = true;

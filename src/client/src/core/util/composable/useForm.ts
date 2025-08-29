@@ -15,18 +15,18 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {ref, computed} from 'vue';
-import {OxdForm} from '@ohrm/oxd';
+import { ref, computed } from "vue";
+import { OxdForm } from "@ohrm/oxd";
 
 type useFormArgs = {
   refName?: string;
 };
 
-export default function useForm({refName = 'formRef'}: useFormArgs = {}) {
+export default function useForm({ refName = "formRef" }: useFormArgs = {}) {
   // https://v3.vuejs.org/guide/typescript-support.html#typing-template-refs
   const form = ref<InstanceType<typeof OxdForm>>();
 
-  const submit = () => form.value?.onSubmit(new Event('submit'));
+  const submit = () => form.value?.onSubmit(new Event("submit"));
   const reset = () => form.value?.onReset();
   const validate = () => form.value?.validate();
 

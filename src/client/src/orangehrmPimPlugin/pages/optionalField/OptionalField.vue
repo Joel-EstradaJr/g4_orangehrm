@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text class="orangehrm-main-title">
-        {{ $t('pim.optional_fields') }}
+        {{ $t("pim.optional_fields") }}
       </oxd-text>
 
       <oxd-divider />
@@ -29,14 +29,14 @@
       <oxd-form :loading="isLoading" @submit-valid="onSave">
         <oxd-form-row>
           <oxd-text class="orangehrm-sub-title" tag="h6">
-            {{ $t('pim.show_deprecated_fields') }}
+            {{ $t("pim.show_deprecated_fields") }}
           </oxd-text>
           <oxd-grid :cols="3" class="orangehrm-full-width-grid">
             <div class="orangehrm-optional-field-row">
               <oxd-text tag="p" class="orangehrm-optional-field-label">
                 {{
                   $t(
-                    'pim.show_nick_name_smoker_and_military_service_in_personal_details',
+                    "pim.show_nick_name_smoker_and_military_service_in_personal_details"
                   )
                 }}
               </oxd-text>
@@ -51,24 +51,24 @@
 
         <oxd-form-row>
           <oxd-text class="orangehrm-sub-title" tag="h6">
-            {{ $t('pim.country_specific_information') }}
+            {{ $t("pim.country_specific_information") }}
           </oxd-text>
           <oxd-grid :cols="3" class="orangehrm-full-width-grid">
             <div class="orangehrm-optional-field-row">
               <oxd-text tag="p" class="orangehrm-optional-field-label">
-                {{ $t('pim.show_ssn_field_in_personal_details') }}
+                {{ $t("pim.show_ssn_field_in_personal_details") }}
               </oxd-text>
               <oxd-switch-input v-model="optionalField.showSSN" />
             </div>
             <div class="orangehrm-optional-field-row">
               <oxd-text tag="p" class="orangehrm-optional-field-label">
-                {{ $t('pim.show_sin_field_in_personal_details') }}
+                {{ $t("pim.show_sin_field_in_personal_details") }}
               </oxd-text>
               <oxd-switch-input v-model="optionalField.showSIN" />
             </div>
             <div class="orangehrm-optional-field-row">
               <oxd-text tag="p" class="orangehrm-optional-field-label">
-                {{ $t('pim.show_us_tax_exemptions_menu') }}
+                {{ $t("pim.show_us_tax_exemptions_menu") }}
               </oxd-text>
               <oxd-switch-input v-model="optionalField.showTaxExemptions" />
             </div>
@@ -86,8 +86,8 @@
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
-import {OxdSwitchInput} from '@ohrm/oxd';
+import { APIService } from "@ohrm/core/util/services/api.service";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const optionalFieldModel = {
   pimShowDeprecatedFields: false,
@@ -98,13 +98,13 @@ const optionalFieldModel = {
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
+    "oxd-switch-input": OxdSwitchInput,
   },
 
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/pim/optional-field',
+      "/api/v2/pim/optional-field"
     );
     return {
       http,
@@ -113,7 +113,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      optionalField: {...optionalFieldModel},
+      optionalField: { ...optionalFieldModel },
     };
   },
 
@@ -122,8 +122,8 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data} = response.data;
-        this.optionalField = {...data};
+        const { data } = response.data;
+        this.optionalField = { ...data };
       })
       .finally(() => {
         this.isLoading = false;
@@ -135,12 +135,12 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
-          data: {...this.optionalField},
+          method: "PUT",
+          data: { ...this.optionalField },
         })
         .then((response) => {
-          const {data} = response.data;
-          this.optionalField = {...data};
+          const { data } = response.data;
+          this.optionalField = { ...data };
           this.$toast.saveSuccess();
           this.isLoading = false;
         });

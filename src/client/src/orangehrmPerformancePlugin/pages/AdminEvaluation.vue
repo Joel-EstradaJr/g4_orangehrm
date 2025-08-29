@@ -22,7 +22,7 @@
     <review-confirm-modal ref="confirmDialog"> </review-confirm-modal>
     <div class="orangehrm-card-container">
       <oxd-text tag="h5" class="orangehrm-performance-review-title">
-        {{ $t('performance.performance_review') }}
+        {{ $t("performance.performance_review") }}
       </oxd-text>
     </div>
     <br />
@@ -102,34 +102,34 @@
 </template>
 
 <script>
-import useForm from '@ohrm/core/util/composable/useForm';
-import {APIService} from '@/core/util/services/api.service';
-import {navigate, reloadPage} from '@/core/util/helper/navigation';
-import ReviewSummary from '@/orangehrmPerformancePlugin/components/ReviewSummary';
-import FinalEvaluation from '@/orangehrmPerformancePlugin/components/FinalEvaluation';
-import EvaluationForm from '@/orangehrmPerformancePlugin/components/EvaluationForm';
-import useReviewEvaluation from '@/orangehrmPerformancePlugin/util/composable/useReviewEvaluation';
-import ReviewConfirmModal from '@/orangehrmPerformancePlugin/components/ReviewConfirmModal';
+import useForm from "@ohrm/core/util/composable/useForm";
+import { APIService } from "@/core/util/services/api.service";
+import { navigate, reloadPage } from "@/core/util/helper/navigation";
+import ReviewSummary from "@/orangehrmPerformancePlugin/components/ReviewSummary";
+import FinalEvaluation from "@/orangehrmPerformancePlugin/components/FinalEvaluation";
+import EvaluationForm from "@/orangehrmPerformancePlugin/components/EvaluationForm";
+import useReviewEvaluation from "@/orangehrmPerformancePlugin/util/composable/useReviewEvaluation";
+import ReviewConfirmModal from "@/orangehrmPerformancePlugin/components/ReviewConfirmModal";
 
 const reviewerModel = {
   details: {
     empNumber: null,
-    firstName: '',
-    lastName: '',
-    middleName: '',
+    firstName: "",
+    lastName: "",
+    middleName: "",
     terminationId: null,
   },
-  jobTitle: '',
+  jobTitle: "",
   status: 1,
   actions: new Map(),
 };
 
 export default {
   components: {
-    'review-summary': ReviewSummary,
-    'final-evaluation': FinalEvaluation,
-    'evaluation-form': EvaluationForm,
-    'review-confirm-modal': ReviewConfirmModal,
+    "review-summary": ReviewSummary,
+    "final-evaluation": FinalEvaluation,
+    "evaluation-form": EvaluationForm,
+    "review-confirm-modal": ReviewConfirmModal,
   },
   props: {
     reviewId: {
@@ -158,8 +158,8 @@ export default {
     },
   },
   setup() {
-    const {formRef, invalid, validate} = useForm();
-    const http = new APIService(window.appGlobal.baseUrl, '');
+    const { formRef, invalid, validate } = useForm();
+    const http = new APIService(window.appGlobal.baseUrl, "");
 
     const {
       getAllKpis,
@@ -199,9 +199,9 @@ export default {
     return {
       kpis: [],
       rules: [],
-      employee: {...reviewerModel},
+      employee: { ...reviewerModel },
       employeeReview: {},
-      supervisor: {...reviewerModel},
+      supervisor: { ...reviewerModel },
       supervisorReview: {},
       isLoading: false,
       finalRating: null,
@@ -212,13 +212,13 @@ export default {
   },
   computed: {
     hasSupervisorUpdateAction() {
-      return this.employee.actions.has('supervisorUpdate');
+      return this.employee.actions.has("supervisorUpdate");
     },
     hasSaveAction() {
-      return this.supervisor.actions.has('save');
+      return this.supervisor.actions.has("save");
     },
     hasCompleteAction() {
-      return this.supervisor.actions.has('complete');
+      return this.supervisor.actions.has("complete");
     },
     hasCancelAction() {
       return this.status !== 4;
@@ -236,7 +236,7 @@ export default {
     this.isLoading = true;
     this.getAllKpis(this.reviewId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.kpis = [...data];
         this.rules = this.generateRules(data);
         this.employeeReview = this.generateModel(data);
@@ -244,35 +244,35 @@ export default {
         return this.getEmployeeReview(this.reviewId);
       })
       .then((response) => {
-        const {data} = response.data;
-        const {meta} = response.data;
+        const { data } = response.data;
+        const { meta } = response.data;
         this.employee = this.generateReviewerData(meta.reviewer);
         this.employee.actions = this.generateAllowedActions(
-          meta.allowedActions,
+          meta.allowedActions
         );
         this.employeeReview = this.generateEvaluationFormData(
           data,
           meta.generalComment,
-          this.employeeReview.kpis,
+          this.employeeReview.kpis
         );
         return this.getSupervisorReview(this.reviewId);
       })
       .then((response) => {
-        const {data} = response.data;
-        const {meta} = response.data;
+        const { data } = response.data;
+        const { meta } = response.data;
         this.supervisor = this.generateReviewerData(meta.reviewer);
         this.supervisor.actions = this.generateAllowedActions(
-          meta.allowedActions,
+          meta.allowedActions
         );
         this.supervisorReview = this.generateEvaluationFormData(
           data,
           meta.generalComment,
-          this.supervisorReview.kpis,
+          this.supervisorReview.kpis
         );
         return this.getFinalReview(this.reviewId);
       })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.finalRating = data.finalRating;
         this.finalComment = data.finalComment;
         this.completedDate = data.completedDate;
@@ -290,7 +290,7 @@ export default {
           if (this.invalid === true) return;
           if (complete) {
             this.$refs.confirmDialog.showDialog().then((confirmation) => {
-              if (confirmation === 'ok') {
+              if (confirmation === "ok") {
                 this.submitReview(true);
               }
             });
@@ -307,7 +307,7 @@ export default {
             return this.saveEmployeeReview(
               this.reviewId,
               true,
-              this.employeeReview,
+              this.employeeReview
             );
           }
         })
@@ -329,8 +329,8 @@ export default {
     onClickCancel() {
       navigate(
         this.isReviewer
-          ? '/performance/searchEvaluatePerformanceReview'
-          : '/performance/searchPerformanceReview',
+          ? "/performance/searchEvaluatePerformanceReview"
+          : "/performance/searchPerformanceReview"
       );
     },
   },

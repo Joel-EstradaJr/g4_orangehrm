@@ -26,18 +26,18 @@
   />
 </template>
 <script>
-import {ref, onBeforeMount} from 'vue';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { ref, onBeforeMount } from "vue";
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'LanguagesDropdown',
+  name: "LanguagesDropdown",
   setup() {
     const options = ref([]);
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/i18n/languages',
+      "/api/v2/admin/i18n/languages"
     );
     onBeforeMount(() => {
-      http.getAll({activeOnly: false, limit: 0}).then(({data}) => {
+      http.getAll({ activeOnly: false, limit: 0 }).then(({ data }) => {
         options.value = data.data.map((item) => {
           return {
             id: item.id,

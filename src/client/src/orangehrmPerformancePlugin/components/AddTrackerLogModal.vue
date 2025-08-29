@@ -19,12 +19,12 @@
 
 <template>
   <oxd-dialog
-    :style="{width: '90%', maxWidth: '650px'}"
+    :style="{ width: '90%', maxWidth: '650px' }"
     @update:show="onCancel"
   >
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('performance.add_tracker_log') }}
+        {{ $t("performance.add_tracker_log") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -83,24 +83,24 @@
 </template>
 
 <script>
-import {OxdDialog} from '@ohrm/oxd';
+import { OxdDialog } from "@ohrm/oxd";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
-import {APIService} from '@/core/util/services/api.service';
-import TrackerLogRatingButton from '@/orangehrmPerformancePlugin/components/TrackerLogRatingButton';
+} from "@/core/util/validation/rules";
+import { APIService } from "@/core/util/services/api.service";
+import TrackerLogRatingButton from "@/orangehrmPerformancePlugin/components/TrackerLogRatingButton";
 
 const trackerLogModel = {
-  log: '',
-  comment: '',
+  log: "",
+  comment: "",
 };
 
 export default {
-  name: 'AddTrackerLogModal',
+  name: "AddTrackerLogModal",
   components: {
-    'oxd-dialog': OxdDialog,
-    'tracker-log-rating-button': TrackerLogRatingButton,
+    "oxd-dialog": OxdDialog,
+    "tracker-log-rating-button": TrackerLogRatingButton,
   },
   props: {
     trackerId: {
@@ -108,11 +108,11 @@ export default {
       required: true,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/performance/trackers/${props.trackerId}/logs`,
+      `/api/v2/performance/trackers/${props.trackerId}/logs`
     );
 
     return {
@@ -123,7 +123,7 @@ export default {
     return {
       isLoading: false,
       rating: true,
-      trackerLog: {...trackerLogModel},
+      trackerLog: { ...trackerLogModel },
       rules: {
         log: [required, shouldNotExceedCharLength(150)],
         comment: [required, shouldNotExceedCharLength(3000)],
@@ -151,7 +151,7 @@ export default {
         });
     },
     onCancel() {
-      this.$emit('close');
+      this.$emit("close");
     },
   },
 };

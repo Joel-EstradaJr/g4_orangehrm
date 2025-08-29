@@ -21,7 +21,7 @@
   <div class="orangehrm-header-container">
     <div v-if="bulkActions && selected > 0" class="actions">
       <oxd-text tag="span">
-        {{ $t('general.n_records_selected', {count: selected}) }}
+        {{ $t("general.n_records_selected", { count: selected }) }}
       </oxd-text>
       <oxd-button
         v-if="bulkActions.APPROVE"
@@ -43,14 +43,14 @@
       />
     </div>
     <oxd-text v-else tag="span">
-      {{ $t('general.n_records_found', {count: total}) }}
+      {{ $t("general.n_records_found", { count: total }) }}
     </oxd-text>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'LeaveListTableHeader',
+  name: "LeaveListTableHeader",
 
   props: {
     loading: {
@@ -72,7 +72,7 @@ export default {
     },
   },
 
-  emits: ['onActionClick'],
+  emits: ["onActionClick"],
 };
 </script>
 

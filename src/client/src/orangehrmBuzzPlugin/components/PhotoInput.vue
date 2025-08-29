@@ -44,7 +44,7 @@
     </div>
 
     <photo-frame :media="modelValue">
-      <template #content="{index}">
+      <template #content="{ index }">
         <oxd-icon-button
           name="x"
           class="orangehrm-photo-input-remove --float"
@@ -56,20 +56,20 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import usei18n from '@/core/util/composable/usei18n';
-import PhotoFrame from '@/orangehrmBuzzPlugin/components/PhotoFrame';
-import {maxFileSize, validFileTypes} from '@/core/util/validation/rules';
-import PhotoUploadArea from '@/orangehrmBuzzPlugin/components/PhotoUploadArea';
-import {OxdAlert} from '@ohrm/oxd';
+import { computed, ref } from "vue";
+import usei18n from "@/core/util/composable/usei18n";
+import PhotoFrame from "@/orangehrmBuzzPlugin/components/PhotoFrame";
+import { maxFileSize, validFileTypes } from "@/core/util/validation/rules";
+import PhotoUploadArea from "@/orangehrmBuzzPlugin/components/PhotoUploadArea";
+import { OxdAlert } from "@ohrm/oxd";
 
 export default {
-  name: 'PhotoInput',
+  name: "PhotoInput",
 
   components: {
-    'oxd-alert': OxdAlert,
-    'photo-frame': PhotoFrame,
-    'photo-upload-area': PhotoUploadArea,
+    "oxd-alert": OxdAlert,
+    "photo-frame": PhotoFrame,
+    "photo-upload-area": PhotoUploadArea,
   },
 
   props: {
@@ -79,58 +79,58 @@ export default {
     },
   },
 
-  emits: ['update:modelValue'],
+  emits: ["update:modelValue"],
 
   setup(props, context) {
-    const {$t} = usei18n();
-    const validationMessage = ref('');
+    const { $t } = usei18n();
+    const validationMessage = ref("");
     const fileTypeValidator = validFileTypes([
-      'image/gif',
-      'image/jpeg',
-      'image/jpg',
-      'image/pjpeg',
-      'image/png',
-      'image/x-png',
+      "image/gif",
+      "image/jpeg",
+      "image/jpg",
+      "image/pjpeg",
+      "image/png",
+      "image/x-png",
     ]);
     const fileSizeValidator = maxFileSize(1024 * 1024 * 2);
 
     const onFileChange = ($file) => {
       if (!$file) return;
-      validationMessage.value = '';
+      validationMessage.value = "";
       if (fileSizeValidator($file) !== true) {
         return (validationMessage.value = $t(
-          'buzz.file_size_validation_message',
+          "buzz.file_size_validation_message"
         ));
       }
       if (fileTypeValidator($file) !== true) {
         return (validationMessage.value = $t(
-          'buzz.file_type_validation_message',
+          "buzz.file_type_validation_message"
         ));
       }
-      context.emit('update:modelValue', [...(props.modelValue || []), $file]);
+      context.emit("update:modelValue", [...(props.modelValue || []), $file]);
     };
 
     const onClickRemove = (index) => {
-      validationMessage.value = '';
+      validationMessage.value = "";
       context.emit(
-        'update:modelValue',
-        (props.modelValue || []).filter((_, i) => index !== i),
+        "update:modelValue",
+        (props.modelValue || []).filter((_, i) => index !== i)
       );
     };
 
     const onClickCloseAlert = () => {
-      validationMessage.value = '';
+      validationMessage.value = "";
     };
 
     const showUploadArea = computed(
-      () => Array.isArray(props.modelValue) && props.modelValue.length < 1,
+      () => Array.isArray(props.modelValue) && props.modelValue.length < 1
     );
 
     const showUploadButton = computed(
       () =>
         Array.isArray(props.modelValue) &&
         props.modelValue.length > 0 &&
-        props.modelValue.length < 5,
+        props.modelValue.length < 5
     );
 
     return {

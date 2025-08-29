@@ -38,7 +38,7 @@
           tag="p"
           class="orangehrm-timeperiod-title"
         >
-          {{ $t('time.timesheet_period') }}
+          {{ $t("time.timesheet_period") }}
         </oxd-text>
         <oxd-text tag="h6" class="orangehrm-main-title">
           {{ timesheetDateRange }}
@@ -70,17 +70,17 @@
 import {
   secondsTohhmm,
   parseTimeInSeconds,
-} from '@ohrm/core/util/helper/datefns';
-import {onBeforeMount, toRefs} from 'vue';
-import useToast from '@/core/util/composable/useToast';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import Timesheet from '@/orangehrmTimePlugin/components/Timesheet.vue';
-import useTimesheetAPIs from '@/orangehrmTimePlugin/util/composable/useTimesheetAPIs';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
+} from "@ohrm/core/util/helper/datefns";
+import { onBeforeMount, toRefs } from "vue";
+import useToast from "@/core/util/composable/useToast";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import Timesheet from "@/orangehrmTimePlugin/components/Timesheet.vue";
+import useTimesheetAPIs from "@/orangehrmTimePlugin/util/composable/useTimesheetAPIs";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
 
 export default {
   components: {
@@ -101,19 +101,19 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/time/timesheets`,
+      `/api/v2/time/timesheets`
     );
 
-    http.setIgnorePath('/api/v2/time/timesheets/[0-9]+/entries');
+    http.setIgnorePath("/api/v2/time/timesheets/[0-9]+/entries");
 
     let timesheetModal = [];
 
-    const {saveSuccess} = useToast();
-    const {state, fetchTimesheetEntries, updateTimesheetEntries} =
+    const { saveSuccess } = useToast();
+    const { state, fetchTimesheetEntries, updateTimesheetEntries } =
       useTimesheetAPIs(http);
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     const loadTimesheet = () => {
       state.isLoading = true;
@@ -121,7 +121,7 @@ export default {
       state.timesheetRecords = [];
       fetchTimesheetEntries(props.timesheetId, !props.myTimesheet).then(
         (response) => {
-          const {data, meta, timesheet, allowedActions} = response;
+          const { data, meta, timesheet, allowedActions } = response;
           state.timesheet = timesheet;
           state.employee = meta.employee;
           state.timesheetColumns = meta.columns;
@@ -144,7 +144,7 @@ export default {
             });
           }
           state.isLoading = false;
-        },
+        }
       );
     };
 
@@ -153,19 +153,19 @@ export default {
     const onClickCancel = () => {
       if (props.myTimesheet) {
         navigate(
-          '/time/viewMyTimesheet',
+          "/time/viewMyTimesheet",
           {},
           {
             startDate: state.timesheet.startDate,
-          },
+          }
         );
       } else {
         navigate(
-          '/time/viewTimesheet/employeeId/{id}',
+          "/time/viewTimesheet/employeeId/{id}",
           {
             id: state.employee?.empNumber,
           },
-          {startDate: state.timesheet.startDate},
+          { startDate: state.timesheet.startDate }
         );
       }
     };
@@ -178,7 +178,7 @@ export default {
           for (const date in record.dates) {
             const _duration = parseTimeInSeconds(record.dates[date].duration);
             dates[date] = {
-              duration: _duration > 0 ? secondsTohhmm(_duration) : '00:00',
+              duration: _duration > 0 ? secondsTohhmm(_duration) : "00:00",
             };
           }
           return {
@@ -194,7 +194,7 @@ export default {
               state.timesheetRecords.findIndex(
                 (item) =>
                   item.project.id === record.project.id &&
-                  item.activity.id === record.activity.id,
+                  item.activity.id === record.activity.id
               ) < 0
             );
           })
@@ -232,27 +232,27 @@ export default {
   computed: {
     title() {
       if (this.myTimesheet) {
-        return this.$t('time.edit_timesheet');
+        return this.$t("time.edit_timesheet");
       } else if (this.employee) {
         const empName = this.translateEmpName(this.employee, {
           includeMiddle: false,
           excludePastEmpTag: false,
         });
-        return `${this.$t('time.edit_timesheet_for')} ${empName}`;
+        return `${this.$t("time.edit_timesheet_for")} ${empName}`;
       }
-      return '';
+      return "";
     },
     timesheetDateRange() {
-      if (!this.timesheet) return '';
+      if (!this.timesheet) return "";
       const startDate = formatDate(
         parseDate(this.timesheet.startDate),
         this.jsDateFormat,
-        {locale: this.locale},
+        { locale: this.locale }
       );
       const endDate = formatDate(
         parseDate(this.timesheet.endDate),
         this.jsDateFormat,
-        {locale: this.locale},
+        { locale: this.locale }
       );
       return `${startDate} - ${endDate}`;
     },

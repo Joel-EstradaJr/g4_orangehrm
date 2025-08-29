@@ -46,7 +46,7 @@
               >
                 <oxd-icon name="trash" />
                 <oxd-text tag="p">
-                  {{ $t('buzz.delete_post') }}
+                  {{ $t("buzz.delete_post") }}
                 </oxd-text>
               </li>
               <li
@@ -56,7 +56,7 @@
               >
                 <oxd-icon name="pencil" />
                 <oxd-text tag="p">
-                  {{ $t('buzz.edit_post') }}
+                  {{ $t("buzz.edit_post") }}
                 </oxd-text>
               </li>
             </template>
@@ -78,21 +78,21 @@
 </template>
 
 <script>
-import {computed} from 'vue';
-import useLocale from '@/core/util/composable/useLocale';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import ProfileImage from '@/orangehrmBuzzPlugin/components/ProfileImage';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import {OxdDropdownMenu, OxdIcon, OxdSheet} from '@ohrm/oxd';
+import { computed } from "vue";
+import useLocale from "@/core/util/composable/useLocale";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import ProfileImage from "@/orangehrmBuzzPlugin/components/ProfileImage";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import { OxdDropdownMenu, OxdIcon, OxdSheet } from "@ohrm/oxd";
 
 export default {
-  name: 'PostContainer',
+  name: "PostContainer",
   components: {
-    'oxd-icon': OxdIcon,
-    'oxd-sheet': OxdSheet,
-    'oxd-dropdown': OxdDropdownMenu,
-    'profile-image': ProfileImage,
+    "oxd-icon": OxdIcon,
+    "oxd-sheet": OxdSheet,
+    "oxd-dropdown": OxdDropdownMenu,
+    "profile-image": ProfileImage,
   },
   props: {
     post: {
@@ -101,12 +101,12 @@ export default {
     },
   },
 
-  emits: ['edit', 'delete'],
+  emits: ["edit", "delete"],
 
   setup(props) {
-    const {locale} = useLocale();
-    const {jsDateFormat, jsTimeFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { locale } = useLocale();
+    const { jsDateFormat, jsTimeFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     const employeeFullName = computed(() => {
       return $tEmpName(props.post.employee, {
@@ -116,11 +116,11 @@ export default {
     });
 
     const postDateTime = computed(() => {
-      const {createdDate, createdTime} = props.post;
+      const { createdDate, createdTime } = props.post;
 
       const utcDate = parseDate(
         `${createdDate} ${createdTime} +00:00`,
-        'yyyy-MM-dd HH:mm xxx',
+        "yyyy-MM-dd HH:mm xxx"
       );
 
       return formatDate(utcDate, `${jsDateFormat} ${jsTimeFormat}`, {

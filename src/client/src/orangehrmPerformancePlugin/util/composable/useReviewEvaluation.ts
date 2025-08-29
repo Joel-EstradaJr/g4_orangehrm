@@ -18,9 +18,9 @@
 import {
   lessThanOrEqual,
   greaterThanOrEqual,
-} from '@/core/util/validation/rules';
-import usei18n from '@/core/util/composable/usei18n';
-import {APIService} from '@/core/util/services/api.service';
+} from "@/core/util/validation/rules";
+import usei18n from "@/core/util/composable/usei18n";
+import { APIService } from "@/core/util/services/api.service";
 
 export interface JobTitle {
   id: number;
@@ -73,32 +73,32 @@ export interface Review {
 }
 
 export default function useReviewEvaluation(http: APIService) {
-  const {$t} = usei18n();
+  const { $t } = usei18n();
 
   const getAllKpis = (reviewId: number) => {
     return http.request({
-      method: 'GET',
+      method: "GET",
       url: `/api/v2/performance/reviews/${reviewId}/kpis`,
     });
   };
 
   const getSupervisorReview = (reviewId: number) => {
     return http.request({
-      method: 'GET',
+      method: "GET",
       url: `/api/v2/performance/reviews/${reviewId}/evaluation/supervisor`,
     });
   };
 
   const getEmployeeReview = (reviewId: number) => {
     return http.request({
-      method: 'GET',
+      method: "GET",
       url: `/api/v2/performance/reviews/${reviewId}/evaluation/employee`,
     });
   };
 
   const getFinalReview = (reviewId: number) => {
     return http.request({
-      method: 'GET',
+      method: "GET",
       url: `/api/v2/performance/reviews/${reviewId}/evaluation/final`,
     });
   };
@@ -110,15 +110,15 @@ export default function useReviewEvaluation(http: APIService) {
       finalComment: string;
       finalRating: number;
       completedDate: string;
-    },
+    }
   ) => {
     return http.request({
-      method: 'PUT',
+      method: "PUT",
       url: `/api/v2/performance/reviews/${reviewId}/evaluation/final`,
       data: {
         ...reviewData,
         finalComment:
-          reviewData.finalComment === '' ? null : reviewData.finalComment,
+          reviewData.finalComment === "" ? null : reviewData.finalComment,
       },
     });
   };
@@ -126,10 +126,10 @@ export default function useReviewEvaluation(http: APIService) {
   const saveEmployeeReview = (
     reviewId: number,
     complete: boolean,
-    review: Review,
+    review: Review
   ) => {
     return http.request({
-      method: 'PUT',
+      method: "PUT",
       url: `/api/v2/performance/reviews/${reviewId}/evaluation/employee`,
       data: {
         complete,
@@ -141,7 +141,7 @@ export default function useReviewEvaluation(http: APIService) {
 
   const saveSupervisorReview = (reviewId: number, review: Review) => {
     return http.request({
-      method: 'PUT',
+      method: "PUT",
       url: `/api/v2/performance/reviews/${reviewId}/evaluation/supervisor`,
       data: {
         ratings: review.kpis,
@@ -154,15 +154,15 @@ export default function useReviewEvaluation(http: APIService) {
     return kpis.map((kpi) => [
       greaterThanOrEqual(
         kpi.minRating,
-        $t('performance.rating_should_be_greater_than_or_equal_to_minValue', {
+        $t("performance.rating_should_be_greater_than_or_equal_to_minValue", {
           minValue: kpi.minRating,
-        }),
+        })
       ),
       lessThanOrEqual(
         kpi.maxRating,
-        $t('performance.rating_should_be_less_than_or_equal_to_maxValue', {
+        $t("performance.rating_should_be_less_than_or_equal_to_maxValue", {
           maxValue: kpi.maxRating,
-        }),
+        })
       ),
     ]);
   };
@@ -181,10 +181,10 @@ export default function useReviewEvaluation(http: APIService) {
   const generateEvaluationFormData = (
     evaluationData: EvaluationData[],
     generalComment: string,
-    kpis: Array<{kpiId: number}>,
+    kpis: Array<{ kpiId: number }>
   ) => {
     return {
-      kpis: kpis.map(({kpiId}) => {
+      kpis: kpis.map(({ kpiId }) => {
         const _kpi = evaluationData.find((datum) => datum.kpi.id === kpiId);
         return {
           kpiId,
@@ -214,7 +214,7 @@ export default function useReviewEvaluation(http: APIService) {
     return new Map(
       allowedActions?.map((action) => {
         return [action.action, action.name];
-      }),
+      })
     );
   };
 

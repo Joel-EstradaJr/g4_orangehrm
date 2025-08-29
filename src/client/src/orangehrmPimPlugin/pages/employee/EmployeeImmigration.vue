@@ -34,7 +34,7 @@
     ></edit-immigration>
     <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
       <profile-action-header @click="onClickAdd">
-        {{ $t('pim.assigned_immigration_records') }}
+        {{ $t("pim.assigned_immigration_records") }}
       </profile-action-header>
     </div>
     <table-header
@@ -67,24 +67,24 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import ProfileActionHeader from '@/orangehrmPimPlugin/components/ProfileActionHeader';
-import EditEmployeeLayout from '@/orangehrmPimPlugin/components/EditEmployeeLayout';
-import SaveImmigration from '@/orangehrmPimPlugin/components/SaveImmigration';
-import EditImmigration from '@/orangehrmPimPlugin/components/EditImmigration';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import ProfileActionHeader from "@/orangehrmPimPlugin/components/ProfileActionHeader";
+import EditEmployeeLayout from "@/orangehrmPimPlugin/components/EditEmployeeLayout";
+import SaveImmigration from "@/orangehrmPimPlugin/components/SaveImmigration";
+import EditImmigration from "@/orangehrmPimPlugin/components/EditImmigration";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
   components: {
-    'profile-action-header': ProfileActionHeader,
-    'edit-employee-layout': EditEmployeeLayout,
-    'save-immigration': SaveImmigration,
-    'edit-immigration': EditImmigration,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "profile-action-header": ProfileActionHeader,
+    "edit-employee-layout": EditEmployeeLayout,
+    "save-immigration": SaveImmigration,
+    "edit-immigration": EditImmigration,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   props: {
@@ -101,16 +101,16 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.empNumber}/immigrations`,
+      `/api/v2/pim/employees/${props.empNumber}/immigrations`
     );
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     const immigrationNormalizer = (data) => {
       return data.map((item) => {
         return {
           id: item.id,
-          type: item.type == 1 ? 'Passport' : 'VISA',
+          type: item.type == 1 ? "Passport" : "VISA",
           number: item.number,
           countryCode: item.country.code,
           countryName: item.country.name,
@@ -154,45 +154,45 @@ export default {
     return {
       headers: [
         {
-          name: 'type',
-          slot: 'title',
-          title: this.$t('pim.document'),
-          style: {flex: 1},
+          name: "type",
+          slot: "title",
+          title: this.$t("pim.document"),
+          style: { flex: 1 },
         },
-        {name: 'number', title: this.$t('pim.number'), style: {flex: 1}},
+        { name: "number", title: this.$t("pim.number"), style: { flex: 1 } },
         {
-          name: 'countryName',
-          title: this.$t('pim.issued_by'),
-          style: {flex: 1},
-        },
-        {
-          name: 'issuedDate',
-          title: this.$t('pim.issued_date'),
-          style: {flex: 1},
+          name: "countryName",
+          title: this.$t("pim.issued_by"),
+          style: { flex: 1 },
         },
         {
-          name: 'expiryDate',
-          title: this.$t('general.expiry_date'),
-          style: {flex: 1},
+          name: "issuedDate",
+          title: this.$t("pim.issued_date"),
+          style: { flex: 1 },
         },
         {
-          name: 'actions',
-          slot: 'action',
-          title: this.$t('general.actions'),
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "expiryDate",
+          title: this.$t("general.expiry_date"),
+          style: { flex: 1 },
+        },
+        {
+          name: "actions",
+          slot: "action",
+          title: this.$t("general.actions"),
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -217,14 +217,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

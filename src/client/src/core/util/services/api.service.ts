@@ -22,10 +22,10 @@ import axios, {
   AxiosRequestHeaders,
   AxiosResponse,
   InternalAxiosRequestConfig,
-} from 'axios';
-import {WebStorage} from '../helper/storage';
-import {ComponentInternalInstance, getCurrentInstance} from 'vue';
-import {reloadPage} from '@ohrm/core/util/helper/navigation';
+} from "axios";
+import { WebStorage } from "../helper/storage";
+import { ComponentInternalInstance, getCurrentInstance } from "vue";
+import { reloadPage } from "@ohrm/core/util/helper/navigation";
 
 interface ErrorResponse {
   error: {
@@ -56,56 +56,56 @@ export class APIService {
 
   getAll(params?: object): Promise<AxiosResponse> {
     const headers = {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'Cache-Control':
-        'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Cache-Control":
+        "no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
     };
-    return this._http.get(this._apiSection, {headers, params});
+    return this._http.get(this._apiSection, { headers, params });
   }
 
   get(id: number, params?: object): Promise<AxiosResponse> {
     const headers = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
-    return this._http.get(`${this._apiSection}/${id}`, {headers, params});
+    return this._http.get(`${this._apiSection}/${id}`, { headers, params });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   create(data: any): Promise<AxiosResponse> {
     const headers = {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
     };
-    return this._http.post(this._apiSection, data, {headers});
+    return this._http.post(this._apiSection, data, { headers });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   update(id: number, data: any): Promise<AxiosResponse> {
     const headers = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
-    return this._http.put(`${this._apiSection}/${id}`, data, {headers});
+    return this._http.put(`${this._apiSection}/${id}`, data, { headers });
   }
 
   delete(id: number): Promise<AxiosResponse> {
     const headers = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
-    return this._http.delete(`${this._apiSection}/${id}`, {headers});
+    return this._http.delete(`${this._apiSection}/${id}`, { headers });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   deleteAll(data?: any): Promise<AxiosResponse> {
     const headers = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
-    return this._http.delete(`${this._apiSection}`, {headers, data});
+    return this._http.delete(`${this._apiSection}`, { headers, data });
   }
 
   request(options: AxiosRequestConfig): Promise<AxiosResponse> {
     const headers = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
     return this._http.request({
       url: this._apiSection,
@@ -120,7 +120,7 @@ export class APIService {
       this._ignorePathRegex &&
       (error.response?.status === 422 || error.response?.status === 400)
     ) {
-      const url: string = error.response.config.url ?? '';
+      const url: string = error.response.config.url ?? "";
       return this._ignorePathRegex.test(url);
     }
     return false;
@@ -146,17 +146,17 @@ export class APIService {
         }
 
         const $toast = vm?.appContext.config.globalProperties.$toast;
-        if ($toast && error.code !== 'ECONNABORTED') {
+        if ($toast && error.code !== "ECONNABORTED") {
           const response = error.response?.data;
           $toast.unexpectedError(response?.error.message || null);
         }
         return Promise.reject(error);
-      },
+      }
     );
 
-    if (process.env.NODE_ENV !== 'development') {
+    if (process.env.NODE_ENV !== "development") {
       const removeETagWeakValidatorDirective = (etag: string) => {
-        return etag.startsWith('W/') ? etag.substring(2) : etag;
+        return etag.startsWith("W/") ? etag.substring(2) : etag;
       };
       // Additional interceptors for caching
       this._http.interceptors.request.use(
@@ -167,8 +167,8 @@ export class APIService {
             if (cachedEtag) {
               // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-None-Match
               (config.headers as AxiosRequestHeaders).set(
-                'If-None-Match',
-                cachedEtag,
+                "If-None-Match",
+                cachedEtag
               );
             }
           }
@@ -176,26 +176,26 @@ export class APIService {
         },
         (error: AxiosError): Promise<AxiosError> => {
           return Promise.reject(error);
-        },
+        }
       );
       this._http.interceptors.response.use(
         (response: AxiosResponse) => {
-          const {config, headers} = response;
+          const { config, headers } = response;
           if (config.url && headers) {
             const url = config.url;
-            const etag = headers['etag'];
+            const etag = headers["etag"];
             const cachedEtag = this._cacheStorage.getItem(url);
             if (etag && etag !== cachedEtag) {
               this._cacheStorage.removeItem(url);
               this._cacheStorage.setItem(
                 url,
-                removeETagWeakValidatorDirective(etag),
+                removeETagWeakValidatorDirective(etag)
               );
 
               if (cachedEtag) this._cacheStorage.removeItem(cachedEtag);
               this._cacheStorage.setItem(
                 removeETagWeakValidatorDirective(etag),
-                JSON.stringify(response.data),
+                JSON.stringify(response.data)
               );
             }
           }
@@ -203,10 +203,10 @@ export class APIService {
         },
         (error: AxiosError) => {
           if (error.response?.status === 304) {
-            const etag = error.response.headers['etag'];
+            const etag = error.response.headers["etag"];
             if (etag) {
               const cacheData = this._cacheStorage.getItem(
-                removeETagWeakValidatorDirective(etag),
+                removeETagWeakValidatorDirective(etag)
               );
               if (cacheData) {
                 return Promise.resolve({
@@ -218,7 +218,7 @@ export class APIService {
             }
           }
           return Promise.reject(error);
-        },
+        }
       );
     }
   }

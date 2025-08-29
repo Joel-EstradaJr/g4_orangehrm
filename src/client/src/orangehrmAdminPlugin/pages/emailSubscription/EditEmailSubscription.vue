@@ -22,7 +22,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('admin.subscribers') }}: {{ title }}
+          {{ $t("admin.subscribers") }}: {{ title }}
         </oxd-text>
         <div>
           <oxd-button
@@ -62,7 +62,7 @@
     <delete-confirmation ref="deleteDialog"></delete-confirmation>
     <save-subscriber
       v-if="showSaveModal"
-      :data="{subscriptionId}"
+      :data="{ subscriptionId }"
       @close="onSaveModalClose"
     ></save-subscriber>
     <edit-subscriber
@@ -74,17 +74,17 @@
 </template>
 
 <script>
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import SaveSubscriber from './SaveSubscriber';
-import EditSubscriber from './EditSubscriber';
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import SaveSubscriber from "./SaveSubscriber";
+import EditSubscriber from "./EditSubscriber";
 
 export default {
   components: {
-    'save-subscriber': SaveSubscriber,
-    'edit-subscriber': EditSubscriber,
-    'delete-confirmation': DeleteConfirmationDialog,
+    "save-subscriber": SaveSubscriber,
+    "edit-subscriber": EditSubscriber,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
   props: {
     subscriptionId: {
@@ -96,7 +96,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/admin/email-subscriptions/${props.subscriptionId}/subscribers`,
+      `/api/v2/admin/email-subscriptions/${props.subscriptionId}/subscribers`
     );
 
     const {
@@ -127,34 +127,34 @@ export default {
     return {
       headers: [
         {
-          name: 'name',
-          slot: 'title',
-          title: this.$t('general.name'),
-          style: {flex: '30%'},
+          name: "name",
+          slot: "title",
+          title: this.$t("general.name"),
+          style: { flex: "30%" },
         },
         {
-          name: 'email',
-          title: this.$t('general.email'),
-          style: {flex: '55%'},
+          name: "email",
+          title: this.$t("general.email"),
+          style: { flex: "55%" },
         },
         {
-          name: 'actions',
-          title: this.$t('general.actions'),
-          slot: 'action',
-          style: {flex: '15%'},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          title: this.$t("general.actions"),
+          slot: "action",
+          style: { flex: "15%" },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -169,7 +169,7 @@ export default {
 
   computed: {
     title() {
-      return this.items.meta ? this.items.meta?.name : '';
+      return this.items.meta ? this.items.meta?.name : "";
     },
   },
 
@@ -178,7 +178,7 @@ export default {
       this.showSaveModal = true;
     },
     onClickEdit(item) {
-      this.editModalState = {...item, subscriptionId: this.subscriptionId};
+      this.editModalState = { ...item, subscriptionId: this.subscriptionId };
       this.showEditModal = true;
     },
     onSaveModalClose() {
@@ -195,14 +195,14 @@ export default {
         return this.items?.data[index].id;
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

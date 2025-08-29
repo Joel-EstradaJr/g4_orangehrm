@@ -21,7 +21,7 @@
   <oxd-dialog class="orangehrm-dialog-modal" @update:show="onCancel">
     <div class="orangehrm-modal-header">
       <oxd-text type="card-title">
-        {{ $t('leave.leave_request_comments') }}
+        {{ $t("leave.leave_request_comments") }}
       </oxd-text>
     </div>
     <oxd-divider />
@@ -56,19 +56,19 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {OxdDialog} from '@ohrm/oxd';
+import { APIService } from "@/core/util/services/api.service";
+import { OxdDialog } from "@ohrm/oxd";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import LeaveComment from '@/orangehrmLeavePlugin/components/LeaveComment';
+} from "@ohrm/core/util/validation/rules";
+import LeaveComment from "@/orangehrmLeavePlugin/components/LeaveComment";
 
 export default {
-  name: 'LeaveCommentModal',
+  name: "LeaveCommentModal",
   components: {
-    'oxd-dialog': OxdDialog,
-    'leave-comment': LeaveComment,
+    "oxd-dialog": OxdDialog,
+    "leave-comment": LeaveComment,
   },
   props: {
     id: {
@@ -81,12 +81,12 @@ export default {
       default: true,
     },
   },
-  emits: ['close'],
+  emits: ["close"],
   setup(props) {
-    const apiPath = props.leaveRequest ? 'leave-requests' : 'leaves';
+    const apiPath = props.leaveRequest ? "leave-requests" : "leaves";
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/leave/${apiPath}/${props.id}/leave-comments`,
+      `/api/v2/leave/${apiPath}/${props.id}/leave-comments`
     );
     return {
       http,
@@ -105,9 +105,9 @@ export default {
   beforeMount() {
     this.isLoading = true;
     this.http
-      .getAll({limit: 0})
+      .getAll({ limit: 0 })
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.comments = data;
       })
       .finally(() => {
@@ -128,7 +128,7 @@ export default {
     },
     onCancel() {
       this.comment = null;
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
   },
 };

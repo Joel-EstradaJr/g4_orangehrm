@@ -1,5 +1,5 @@
-import {h, defineComponent, Transition, App, reactive, toRefs} from 'vue';
-import {OxdOverlay, OxdSpinner} from '@ohrm/oxd';
+import { h, defineComponent, Transition, App, reactive, toRefs } from "vue";
+import { OxdOverlay, OxdSpinner } from "@ohrm/oxd";
 
 export interface LoaderAPI {
   startLoading: () => void;
@@ -11,7 +11,7 @@ const state = reactive({
 });
 
 const Loader = defineComponent({
-  name: 'OxdLoader',
+  name: "OxdLoader",
   setup() {
     return {
       ...toRefs(state),
@@ -21,18 +21,18 @@ const Loader = defineComponent({
   render() {
     return h(
       Transition,
-      {name: 'orangehrm-loader-fade', tag: 'div'},
+      { name: "orangehrm-loader-fade", tag: "div" },
       {
         default: () => {
           if (this.show) {
             return h(
               OxdOverlay,
-              {show: true, centered: true, class: 'orangehrm-loader'},
-              h(OxdSpinner, {withContainer: false}),
+              { show: true, centered: true, class: "orangehrm-loader" },
+              h(OxdSpinner, { withContainer: false })
             );
           }
         },
-      },
+      }
     );
   },
 });
@@ -40,9 +40,9 @@ const Loader = defineComponent({
 export default {
   install: (app: App) => {
     // Create loader vdom element
-    const loaderWrapper = document.createElement('oxd-loader');
-    loaderWrapper.id = 'oxd-loader_1';
-    (document.getElementById('app') as HTMLElement).appendChild(loaderWrapper);
+    const loaderWrapper = document.createElement("oxd-loader");
+    loaderWrapper.id = "oxd-loader_1";
+    (document.getElementById("app") as HTMLElement).appendChild(loaderWrapper);
 
     // loader API
     const startLoading = (): void => {
@@ -54,7 +54,7 @@ export default {
     };
 
     // Define Toaster component
-    app.component('OxdLoader', Loader);
+    app.component("OxdLoader", Loader);
 
     // Add Toaster API to Vue global scope
     const loaderAPI: LoaderAPI = {

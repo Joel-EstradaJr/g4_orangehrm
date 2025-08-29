@@ -15,8 +15,8 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {getCurrentInstance} from 'vue';
-import {ToasterAPI} from '../../plugins/toaster/toaster';
+import { getCurrentInstance } from "vue";
+import { ToasterAPI } from "../../plugins/toaster/toaster";
 
 export default function useToast() {
   const $toast: ToasterAPI | undefined =
@@ -28,7 +28,7 @@ export default function useToast() {
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const wrap = <Func extends (...args: any[]) => any>(
-    fn: Func | undefined,
+    fn: Func | undefined
   ): ((...args: Parameters<Func>) => ReturnType<Func>) => {
     return (...args: Parameters<Func>): ReturnType<Func> => {
       return fn && fn(...args);

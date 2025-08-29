@@ -22,7 +22,7 @@
     <div class="orangehrm-paper-container">
       <div class="orangehrm-header-container">
         <oxd-text tag="h6" class="orangehrm-main-title">
-          {{ $t('admin.job_titles') }}
+          {{ $t("admin.job_titles") }}
         </oxd-text>
         <div>
           <oxd-button
@@ -65,31 +65,31 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import usePaginate from '@ohrm/core/util/composable/usePaginate';
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@/core/util/services/api.service';
-import DeleteConfirmationDialog from '@ohrm/components/dialogs/DeleteConfirmationDialog.vue';
-import useSort from '@ohrm/core/util/composable/useSort';
+import { computed, ref } from "vue";
+import usePaginate from "@ohrm/core/util/composable/usePaginate";
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@/core/util/services/api.service";
+import DeleteConfirmationDialog from "@ohrm/components/dialogs/DeleteConfirmationDialog.vue";
+import useSort from "@ohrm/core/util/composable/useSort";
 
 const defaultFilters = {
-  jobTitleName: '',
-  jobDescription: '',
+  jobTitleName: "",
+  jobDescription: "",
 };
 
 const defaultSortOrder = {
-  'jt.jobTitleName': 'ASC',
+  "jt.jobTitleName": "ASC",
 };
 
 export default {
   components: {
-    'delete-confirmation': DeleteConfirmationDialog,
+    "delete-confirmation": DeleteConfirmationDialog,
   },
 
   setup() {
-    const filters = ref({...defaultFilters});
+    const filters = ref({ ...defaultFilters });
 
-    const {sortDefinition, sortField, sortOrder, onSort} = useSort({
+    const { sortDefinition, sortField, sortOrder, onSort } = useSort({
       sortDefinition: defaultSortOrder,
     });
 
@@ -104,7 +104,7 @@ export default {
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/job-titles',
+      "/api/v2/admin/job-titles"
     );
     const {
       showPaginator,
@@ -139,36 +139,36 @@ export default {
     return {
       headers: [
         {
-          name: 'title',
-          slot: 'title',
-          title: this.$t('admin.job_titles'),
-          sortField: 'jt.jobTitleName',
-          style: {flex: 2},
+          name: "title",
+          slot: "title",
+          title: this.$t("admin.job_titles"),
+          sortField: "jt.jobTitleName",
+          style: { flex: 2 },
         },
         {
-          name: 'description',
-          cellType: 'oxd-table-cell-truncate',
-          title: this.$t('admin.job_description'),
-          style: {flex: 4},
+          name: "description",
+          cellType: "oxd-table-cell-truncate",
+          title: this.$t("admin.job_description"),
+          style: { flex: 4 },
         },
         {
-          name: 'actions',
-          title: this.$t('general.actions'),
-          slot: 'action',
-          style: {flex: 1},
-          cellType: 'oxd-table-cell-actions',
+          name: "actions",
+          title: this.$t("general.actions"),
+          slot: "action",
+          style: { flex: 1 },
+          cellType: "oxd-table-cell-actions",
           cellConfig: {
             delete: {
               onClick: this.onClickDelete,
-              component: 'oxd-icon-button',
+              component: "oxd-icon-button",
               props: {
-                name: 'trash',
+                name: "trash",
               },
             },
             edit: {
               onClick: this.onClickEdit,
               props: {
-                name: 'pencil-fill',
+                name: "pencil-fill",
               },
             },
           },
@@ -180,10 +180,10 @@ export default {
 
   methods: {
     onClickAdd() {
-      navigate('/admin/saveJobTitle');
+      navigate("/admin/saveJobTitle");
     },
     onClickEdit(item) {
-      navigate('/admin/saveJobTitle/{id}', {id: item.id});
+      navigate("/admin/saveJobTitle/{id}", { id: item.id });
     },
     onClickDeleteSelected() {
       const ids = [];
@@ -191,14 +191,14 @@ export default {
         ids.push(this.items?.data[index].id);
       });
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems(ids);
         }
       });
     },
     onClickDelete(item) {
       this.$refs.deleteDialog.showDialog().then((confirmation) => {
-        if (confirmation === 'ok') {
+        if (confirmation === "ok") {
           this.deleteItems([item.id]);
         }
       });

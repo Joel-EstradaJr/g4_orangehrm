@@ -42,7 +42,7 @@
         </oxd-grid-item>
         <oxd-grid-item>
           <oxd-text type="card-body">
-            {{ $t('general.status') }}
+            {{ $t("general.status") }}
           </oxd-text>
           <oxd-text type="card-title">
             {{ evaluationLabel }}
@@ -61,13 +61,13 @@
       <oxd-divider />
       <oxd-grid :cols="4" class="orangehrm-evaluation-grid">
         <oxd-grid-item class="orangehrm-evaluation-grid-header">
-          <oxd-text type="subtitle-2">{{ $t('general.kpis') }}</oxd-text>
+          <oxd-text type="subtitle-2">{{ $t("general.kpis") }}</oxd-text>
         </oxd-grid-item>
         <oxd-grid-item class="orangehrm-evaluation-grid-header">
-          <oxd-text type="subtitle-2">{{ $t('performance.rating') }}</oxd-text>
+          <oxd-text type="subtitle-2">{{ $t("performance.rating") }}</oxd-text>
         </oxd-grid-item>
         <oxd-grid-item class="orangehrm-evaluation-grid-header">
-          <oxd-text type="subtitle-2">{{ $t('general.comments') }}</oxd-text>
+          <oxd-text type="subtitle-2">{{ $t("general.comments") }}</oxd-text>
         </oxd-grid-item>
         <oxd-grid-item
           class="orangehrm-evaluation-grid-spacer-md"
@@ -79,7 +79,7 @@
               class="orangehrm-evaluation-grid-kpi-header"
               type="subtitle-2"
             >
-              {{ $t('performance.kpi') }}
+              {{ $t("performance.kpi") }}
             </oxd-text>
             <oxd-text
               :title="kpi.title"
@@ -89,10 +89,10 @@
               {{ kpi.title }}
             </oxd-text>
             <oxd-text class="orangehrm-evaluation-grid-kpi-minmax" tag="p">
-              {{ $t('performance.min') }}: {{ kpi.minRating }}
+              {{ $t("performance.min") }}: {{ kpi.minRating }}
             </oxd-text>
             <oxd-text class="orangehrm-evaluation-grid-kpi-minmax" tag="p">
-              {{ $t('performance.max') }}: {{ kpi.maxRating }}
+              {{ $t("performance.max") }}: {{ kpi.maxRating }}
             </oxd-text>
           </oxd-grid-item>
           <oxd-grid-item>
@@ -100,7 +100,7 @@
               class="orangehrm-evaluation-grid-kpi-header"
               type="subtitle-2"
             >
-              {{ $t('performance.rating') }}
+              {{ $t("performance.rating") }}
             </oxd-text>
             <oxd-input-field
               type="input"
@@ -115,7 +115,7 @@
               class="orangehrm-evaluation-grid-kpi-header"
               type="subtitle-2"
             >
-              {{ $t('general.comment') }}
+              {{ $t("general.comment") }}
             </oxd-text>
             <oxd-input-field
               class="orangehrm-evaluation-grid-comment"
@@ -137,7 +137,7 @@
       <oxd-grid :cols="3" class="orangehrm-evaluation-grid">
         <oxd-grid-item class="orangehrm-evaluation-grid-general">
           <oxd-text tag="p" class="orangehrm-evaluation-grid-general-label">
-            {{ $t('performance.general_comment') }}
+            {{ $t("performance.general_comment") }}
           </oxd-text>
         </oxd-grid-item>
         <oxd-grid-item class="--span-column-2">
@@ -158,17 +158,17 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue';
-import usei18n from '@/core/util/composable/usei18n';
-import {shouldNotExceedCharLength} from '@/core/util/validation/rules';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import {OxdDivider} from '@ohrm/oxd';
+import { computed, ref } from "vue";
+import usei18n from "@/core/util/composable/usei18n";
+import { shouldNotExceedCharLength } from "@/core/util/validation/rules";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import { OxdDivider } from "@ohrm/oxd";
 
 const defaultPic = `${window.appGlobal.publicPath}/images/default-photo.png`;
 
 export default {
   components: {
-    'oxd-divider': OxdDivider,
+    "oxd-divider": OxdDivider,
   },
   props: {
     kpis: {
@@ -203,7 +203,7 @@ export default {
       type: Object,
       required: true,
       validator: (value) =>
-        Object.hasOwn(value, 'kpis') && Object.hasOwn(value, 'generalComment'),
+        Object.hasOwn(value, "kpis") && Object.hasOwn(value, "generalComment"),
     },
     collapsed: {
       type: Boolean,
@@ -215,11 +215,11 @@ export default {
     },
   },
 
-  emits: ['update:modelValue'],
+  emits: ["update:modelValue"],
 
   setup(props, context) {
-    const {$t} = usei18n();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { $t } = usei18n();
+    const { $tEmpName } = useEmployeeNameTranslate();
     const isCollapsed = ref(props.collapsed);
     const commentValidators = [shouldNotExceedCharLength(2000)];
 
@@ -238,10 +238,10 @@ export default {
     };
 
     const onUpdateRating = (value, index) => {
-      context.emit('update:modelValue', {
+      context.emit("update:modelValue", {
         kpis: props.modelValue.kpis.map((item, _index) => {
           if (_index === index) {
-            return {...item, rating: value};
+            return { ...item, rating: value };
           }
           return item;
         }),
@@ -250,10 +250,10 @@ export default {
     };
 
     const onUpdateComment = (value, index) => {
-      context.emit('update:modelValue', {
+      context.emit("update:modelValue", {
         kpis: props.modelValue.kpis.map((item, _index) => {
           if (_index === index) {
-            return {...item, comment: value};
+            return { ...item, comment: value };
           }
           return item;
         }),
@@ -262,20 +262,20 @@ export default {
     };
 
     const onUpdateGeneralComment = (value) => {
-      context.emit('update:modelValue', {
+      context.emit("update:modelValue", {
         kpis: props.modelValue.kpis,
         generalComment: value,
       });
     };
 
     const statusOpts = [
-      {id: 1, label: $t('performance.evaluation_activated')},
-      {id: 2, label: $t('performance.evaluation_in_progress')},
-      {id: 3, label: $t('performance.evaluation_completed')},
+      { id: 1, label: $t("performance.evaluation_activated") },
+      { id: 2, label: $t("performance.evaluation_in_progress") },
+      { id: 3, label: $t("performance.evaluation_completed") },
     ];
 
     const evaluationLabel = computed(
-      () => statusOpts.find((el) => el.id === props.status).label,
+      () => statusOpts.find((el) => el.id === props.status).label
     );
 
     return {

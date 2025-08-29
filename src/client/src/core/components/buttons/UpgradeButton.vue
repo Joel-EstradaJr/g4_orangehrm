@@ -42,13 +42,13 @@
 </template>
 
 <script>
-import {OxdGlassButton, OxdIcon} from '@ohrm/oxd';
+import { OxdGlassButton, OxdIcon } from "@ohrm/oxd";
 
 export default {
-  name: 'UpgradeButton',
+  name: "UpgradeButton",
   components: {
-    'oxd-icon': OxdIcon,
-    'oxd-glass-button': OxdGlassButton,
+    "oxd-icon": OxdIcon,
+    "oxd-glass-button": OxdGlassButton,
   },
 };
 </script>

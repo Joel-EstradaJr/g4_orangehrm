@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: 'ProfileImage',
+  name: "ProfileImage",
   props: {
     employee: {
       type: Object,

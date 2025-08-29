@@ -28,37 +28,37 @@
 </template>
 
 <script>
-import {ref, onBeforeMount, computed} from 'vue';
-import {APIService} from '@ohrm/core/util/services/api.service';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useLocale from '@/core/util/composable/useLocale';
+import { ref, onBeforeMount, computed } from "vue";
+import { APIService } from "@ohrm/core/util/services/api.service";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useLocale from "@/core/util/composable/useLocale";
 
 export default {
-  name: 'LeavePeriodDropdown',
+  name: "LeavePeriodDropdown",
   props: {
     modelValue: {
       type: Object,
       default: null,
     },
   },
-  emits: ['update:modelValue'],
+  emits: ["update:modelValue"],
   setup(props) {
     const options = ref([]);
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/leave/leave-periods',
+      "/api/v2/leave/leave-periods"
     );
-    const {jsDateFormat} = useDateFormat();
-    const {locale} = useLocale();
+    const { jsDateFormat } = useDateFormat();
+    const { locale } = useLocale();
 
     onBeforeMount(() => {
-      http.getAll().then(({data}) => {
+      http.getAll().then(({ data }) => {
         options.value = data.data.map((item) => {
           const startDate = formatDate(
             parseDate(item.startDate),
             jsDateFormat,
-            {locale},
+            { locale }
           );
           const endDate = formatDate(parseDate(item.endDate), jsDateFormat, {
             locale,
@@ -76,7 +76,7 @@ export default {
 
     const selectedPeriod = computed(() => {
       return options.value.find(
-        (_option) => _option.id === props.modelValue?.id,
+        (_option) => _option.id === props.modelValue?.id
       );
     });
 

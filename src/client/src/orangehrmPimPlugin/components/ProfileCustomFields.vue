@@ -22,7 +22,7 @@
     <oxd-divider />
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">{{
-        $t('pim.custom_fields')
+        $t("pim.custom_fields")
       }}</oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -52,22 +52,22 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {shouldNotExceedCharLength} from '@ohrm/core/util/validation/rules';
+import { APIService } from "@/core/util/services/api.service";
+import { shouldNotExceedCharLength } from "@ohrm/core/util/validation/rules";
 
 const formatExtraData = (data) => {
-  return typeof data === 'string'
+  return typeof data === "string"
     ? data
-        .split(',')
+        .split(",")
         .map((item, i) => {
-          return {id: i, label: item};
+          return { id: i, label: item };
         })
-        .filter((item) => item.label.trim() != '')
+        .filter((item) => item.label.trim() != "")
     : [];
 };
 
 export default {
-  name: 'ProfileCustomFields',
+  name: "ProfileCustomFields",
   props: {
     employeeId: {
       type: String,
@@ -82,7 +82,7 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/pim/employees/${props.employeeId}/custom-fields?screen=${props.screen}`,
+      `/api/v2/pim/employees/${props.employeeId}/custom-fields?screen=${props.screen}`
     );
 
     return {
@@ -106,8 +106,8 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data, meta} = response.data;
-        this.customFieldsModel = {...data};
+        const { data, meta } = response.data;
+        this.customFieldsModel = { ...data };
         if (meta.fields && meta.fields.length > 0) {
           this.fields = meta.fields.map((field) => {
             const extraData = formatExtraData(field.extraData);
@@ -119,7 +119,7 @@ export default {
             return {
               id: field.id,
               label: field.fieldName,
-              type: field.fieldType == 1 ? 'select' : 'input',
+              type: field.fieldType == 1 ? "select" : "input",
               model,
               extraData,
             };
@@ -136,9 +136,9 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           url: `/api/v2/pim/employees/${this.employeeId}/custom-fields`,
-          data: {...this.customFieldsModel},
+          data: { ...this.customFieldsModel },
           transformRequest: [
             (data) => {
               for (const key in data) {

@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('performance.edit_performance_tracker') }}
+        {{ $t("performance.edit_performance_tracker") }}
       </oxd-text>
       <oxd-divider />
       <oxd-form :loading="isLoading" @submit-valid="onSave">
@@ -73,15 +73,15 @@
 </template>
 
 <script>
-import {navigate} from '@/core/util/helper/navigation';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import ReviewerAutoComplete from '@/orangehrmPerformancePlugin/components/ReviewerAutoComplete';
+import { navigate } from "@/core/util/helper/navigation";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import ReviewerAutoComplete from "@/orangehrmPerformancePlugin/components/ReviewerAutoComplete";
 import {
   required,
   validSelection,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
-import {APIService} from '@/core/util/services/api.service';
+} from "@/core/util/validation/rules";
+import { APIService } from "@/core/util/services/api.service";
 
 const trackerModel = {
   name: null,
@@ -91,8 +91,8 @@ const trackerModel = {
 
 export default {
   components: {
-    'employee-autocomplete': EmployeeAutocomplete,
-    'reviewer-autocomplete': ReviewerAutoComplete,
+    "employee-autocomplete": EmployeeAutocomplete,
+    "reviewer-autocomplete": ReviewerAutoComplete,
   },
   props: {
     performanceTrackerId: {
@@ -104,7 +104,7 @@ export default {
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/performance/config/trackers',
+      "/api/v2/performance/config/trackers"
     );
     return {
       http,
@@ -114,7 +114,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      tracker: {...trackerModel},
+      tracker: { ...trackerModel },
       isReadOnly: false,
       rules: {
         tracker: [required, shouldNotExceedCharLength(200)],
@@ -132,7 +132,7 @@ export default {
               return true;
             }
             return this.$t(
-              'performance.employee_cannot_be_assigned_as_his_own_reviewer',
+              "performance.employee_cannot_be_assigned_as_his_own_reviewer"
             );
           },
         ],
@@ -145,7 +145,7 @@ export default {
     this.http
       .get(this.performanceTrackerId) //performance-tracker-id
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.isReadOnly = data.ownerEditable === false;
         this.tracker.id = data.id;
         this.tracker.name = data.trackerName;
@@ -171,7 +171,7 @@ export default {
 
   methods: {
     onCancel() {
-      navigate('/performance/viewPerformanceTracker');
+      navigate("/performance/viewPerformanceTracker");
     },
     onSave() {
       this.isLoading = true;
@@ -179,7 +179,7 @@ export default {
         trackerName: this.tracker.name.trim(),
         empNumber: this.tracker.employee.id,
         reviewerEmpNumbers: this.tracker.reviewers.map(
-          (employee) => employee.id,
+          (employee) => employee.id
         ),
       };
       this.http

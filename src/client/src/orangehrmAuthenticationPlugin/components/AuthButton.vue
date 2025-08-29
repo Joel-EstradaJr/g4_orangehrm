@@ -17,11 +17,11 @@
  */
  -->
 <script>
-import {h} from 'vue';
-import {OxdText} from '@ohrm/oxd';
+import { h } from "vue";
+import { OxdText } from "@ohrm/oxd";
 
 export default {
-  name: 'AuthButton',
+  name: "AuthButton",
   props: {
     label: {
       type: String,
@@ -31,19 +31,19 @@ export default {
   setup(props) {
     return () =>
       h(
-        'a',
+        "a",
         {
           title: props.label,
-          class: 'orangehrm-auth-button',
+          class: "orangehrm-auth-button",
         },
         h(
           OxdText,
           {
-            tag: 'p',
-            class: 'orangehrm-auth-button-text',
+            tag: "p",
+            class: "orangehrm-auth-button-text",
           },
-          () => props.label,
-        ),
+          () => props.label
+        )
       );
   },
 };

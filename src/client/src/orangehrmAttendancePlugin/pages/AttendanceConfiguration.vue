@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('attendance.attendance_configuration') }}
+        {{ $t("attendance.attendance_configuration") }}
       </oxd-text>
 
       <oxd-divider />
@@ -33,7 +33,7 @@
               <oxd-text tag="p" class="orangehrm-attendance-field-label">
                 {{
                   $t(
-                    'attendance.employee_can_change_current_time_when_punching_in_out',
+                    "attendance.employee_can_change_current_time_when_punching_in_out"
                   )
                 }}
               </oxd-text>
@@ -43,7 +43,7 @@
               <oxd-text tag="p" class="orangehrm-attendance-field-label">
                 {{
                   $t(
-                    'attendance.employee_can_edit_delete_own_attendance_records',
+                    "attendance.employee_can_edit_delete_own_attendance_records"
                   )
                 }}
               </oxd-text>
@@ -53,7 +53,7 @@
               <oxd-text tag="p" class="orangehrm-attendance-field-label">
                 {{
                   $t(
-                    'attendance.supervisor_can_add_edit_delete_attendance_records_of_subordinates',
+                    "attendance.supervisor_can_add_edit_delete_attendance_records_of_subordinates"
                   )
                 }}
               </oxd-text>
@@ -75,8 +75,8 @@
 </template>
 
 <script>
-import {APIService} from '@/core/util/services/api.service';
-import {OxdSwitchInput} from '@ohrm/oxd';
+import { APIService } from "@/core/util/services/api.service";
+import { OxdSwitchInput } from "@ohrm/oxd";
 
 const configsModel = {
   canUserChangeCurrentTime: false,
@@ -86,12 +86,12 @@ const configsModel = {
 
 export default {
   components: {
-    'oxd-switch-input': OxdSwitchInput,
+    "oxd-switch-input": OxdSwitchInput,
   },
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/attendance/configs',
+      "/api/v2/attendance/configs"
     );
     return {
       http,
@@ -99,7 +99,7 @@ export default {
   },
   data() {
     return {
-      config: {...configsModel},
+      config: { ...configsModel },
       isLoading: false,
     };
   },
@@ -108,8 +108,8 @@ export default {
     this.http
       .getAll()
       .then((response) => {
-        const {data} = response.data;
-        this.config = {...data};
+        const { data } = response.data;
+        this.config = { ...data };
       })
       .finally(() => {
         this.isLoading = false;
@@ -120,14 +120,14 @@ export default {
       this.isLoading = true;
       this.http
         .request({
-          method: 'PUT',
+          method: "PUT",
           data: {
             ...this.config,
           },
         })
         .then((response) => {
-          const {data} = response.data;
-          this.config = {...data};
+          const { data } = response.data;
+          this.config = { ...data };
           return this.$toast.saveSuccess();
         })
         .finally(() => {

@@ -137,15 +137,15 @@ import {
   validDateFormat,
   validTimeFormat,
   shouldNotExceedCharLength,
-} from '@/core/util/validation/rules';
-import {navigate} from '@/core/util/helper/navigation';
-import useLocale from '@/core/util/composable/useLocale';
-import {APIService} from '@/core/util/services/api.service';
-import useDateFormat from '@/core/util/composable/useDateFormat';
-import {formatDate, parseDate} from '@/core/util/helper/datefns';
-import useEmployeeNameTranslate from '@/core/util/composable/useEmployeeNameTranslate';
-import CandidateActionLayout from '@/orangehrmRecruitmentPlugin/components/CandidateActionLayout.vue';
-import InterviewerAutocomplete from '@/orangehrmRecruitmentPlugin/components/InterviewerAutocomplete.vue';
+} from "@/core/util/validation/rules";
+import { navigate } from "@/core/util/helper/navigation";
+import useLocale from "@/core/util/composable/useLocale";
+import { APIService } from "@/core/util/services/api.service";
+import useDateFormat from "@/core/util/composable/useDateFormat";
+import { formatDate, parseDate } from "@/core/util/helper/datefns";
+import useEmployeeNameTranslate from "@/core/util/composable/useEmployeeNameTranslate";
+import CandidateActionLayout from "@/orangehrmRecruitmentPlugin/components/CandidateActionLayout.vue";
+import InterviewerAutocomplete from "@/orangehrmRecruitmentPlugin/components/InterviewerAutocomplete.vue";
 
 const actionHistoryModel = {
   id: null,
@@ -175,8 +175,8 @@ const interviewModel = {
 
 export default {
   components: {
-    'candidate-action-layout': CandidateActionLayout,
-    'interviewer-autocomplete': InterviewerAutocomplete,
+    "candidate-action-layout": CandidateActionLayout,
+    "interviewer-autocomplete": InterviewerAutocomplete,
   },
 
   props: {
@@ -196,13 +196,13 @@ export default {
   },
 
   setup(props) {
-    const {locale} = useLocale();
-    const {jsDateFormat, userDateFormat} = useDateFormat();
-    const {$tEmpName} = useEmployeeNameTranslate();
+    const { locale } = useLocale();
+    const { jsDateFormat, userDateFormat } = useDateFormat();
+    const { $tEmpName } = useEmployeeNameTranslate();
 
     const http = new APIService(
       window.appGlobal.baseUrl,
-      `/api/v2/recruitment/candidates/${props.candidateId}/history`,
+      `/api/v2/recruitment/candidates/${props.candidateId}/history`
     );
 
     return {
@@ -217,8 +217,8 @@ export default {
   data() {
     return {
       isLoading: false,
-      history: {...actionHistoryModel},
-      interview: {...interviewModel},
+      history: { ...actionHistoryModel },
+      interview: { ...interviewModel },
       interviewers: [],
       rules: {
         interviewName: [required, shouldNotExceedCharLength(100)],
@@ -229,24 +229,24 @@ export default {
           validSelection,
           (value) => {
             return this.interviewers.filter(
-              (interviewer) => interviewer && interviewer.id === value?.id,
+              (interviewer) => interviewer && interviewer.id === value?.id
             ).length < 2
               ? true
-              : this.$t('general.already_exists');
+              : this.$t("general.already_exists");
           },
         ],
         note: [shouldNotExceedCharLength(2000)],
       },
       statuses: [
-        {id: 1, label: this.$t('recruitment.application_initiated')},
-        {id: 2, label: this.$t('recruitment.shortlist')},
-        {id: 3, label: this.$t('general.reject')},
-        {id: 4, label: this.$t('recruitment.schedule_interview')},
-        {id: 5, label: this.$t('recruitment.mark_interview_passed')},
-        {id: 6, label: this.$t('recruitment.mark_interview_failed')},
-        {id: 7, label: this.$t('recruitment.offer_job')},
-        {id: 8, label: this.$t('recruitment.decline_offer')},
-        {id: 9, label: this.$t('recruitment.hire')},
+        { id: 1, label: this.$t("recruitment.application_initiated") },
+        { id: 2, label: this.$t("recruitment.shortlist") },
+        { id: 3, label: this.$t("general.reject") },
+        { id: 4, label: this.$t("recruitment.schedule_interview") },
+        { id: 5, label: this.$t("recruitment.mark_interview_passed") },
+        { id: 6, label: this.$t("recruitment.mark_interview_failed") },
+        { id: 7, label: this.$t("recruitment.offer_job") },
+        { id: 8, label: this.$t("recruitment.decline_offer") },
+        { id: 9, label: this.$t("recruitment.hire") },
       ],
       disabled: false,
     };
@@ -263,7 +263,7 @@ export default {
       return formatDate(
         parseDate(this.history.performedDate),
         this.jsDateFormat,
-        {locale: this.locale},
+        { locale: this.locale }
       );
     },
     performedAction() {
@@ -282,19 +282,19 @@ export default {
     this.http
       .get(this.historyId)
       .then((response) => {
-        const {data, meta} = response.data;
-        this.history = {...data};
+        const { data, meta } = response.data;
+        this.history = { ...data };
         this.disabled = meta.disabled;
         return this.isScheduleInterview
           ? this.http.request({
-              method: 'GET',
+              method: "GET",
               url: `/api/v2/recruitment/candidates/${this.candidateId}/interviews/${this.history.interview.id}`,
             })
           : null;
       })
       .then((response) => {
         if (response) {
-          const {data} = response.data;
+          const { data } = response.data;
           this.interview.interviewName = data.name;
           this.interview.interviewDate = data.interviewDate;
           this.interview.interviewTime = data.interviewTime;
@@ -334,7 +334,7 @@ export default {
         .then(() => {
           return this.isScheduleInterview
             ? this.http.request({
-                method: 'PUT',
+                method: "PUT",
                 url: `/api/v2/recruitment/candidates/${this.candidateId}/interviews/${this.history.interview.id}`,
                 data: {
                   ...this.interview,
@@ -352,7 +352,7 @@ export default {
         });
     },
     onClickBack() {
-      navigate('/recruitment/addCandidate/{id}', {id: this.candidateId});
+      navigate("/recruitment/addCandidate/{id}", { id: this.candidateId });
     },
   },
 };

@@ -21,7 +21,7 @@
   <div class="orangehrm-background-container">
     <div class="orangehrm-card-container">
       <oxd-text tag="h6" class="orangehrm-main-title">
-        {{ $t('general.edit_license') }}
+        {{ $t("general.edit_license") }}
       </oxd-text>
 
       <oxd-divider />
@@ -54,13 +54,13 @@
 </template>
 
 <script>
-import {navigate} from '@ohrm/core/util/helper/navigation';
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { navigate } from "@ohrm/core/util/helper/navigation";
+import { APIService } from "@ohrm/core/util/services/api.service";
 import {
   required,
   shouldNotExceedCharLength,
-} from '@ohrm/core/util/validation/rules';
-import useServerValidation from '@/core/util/composable/useServerValidation';
+} from "@ohrm/core/util/validation/rules";
+import useServerValidation from "@/core/util/composable/useServerValidation";
 
 export default {
   props: {
@@ -72,10 +72,10 @@ export default {
   setup(props) {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/admin/licenses',
+      "/api/v2/admin/licenses"
     );
-    const {createUniqueValidator} = useServerValidation(http);
-    const licenseUniqueValidation = createUniqueValidator('License', 'name', {
+    const { createUniqueValidator } = useServerValidation(http);
+    const licenseUniqueValidation = createUniqueValidator("License", "name", {
       entityId: props.licenseId,
     });
 
@@ -89,8 +89,8 @@ export default {
     return {
       isLoading: false,
       license: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       rules: {
         name: [
@@ -107,7 +107,7 @@ export default {
     this.http
       .get(this.licenseId)
       .then((response) => {
-        const {data} = response.data;
+        const { data } = response.data;
         this.license.id = data.id;
         this.license.name = data.name;
       })
@@ -131,7 +131,7 @@ export default {
         });
     },
     onCancel() {
-      navigate('/admin/viewLicenses');
+      navigate("/admin/viewLicenses");
     },
   },
 };

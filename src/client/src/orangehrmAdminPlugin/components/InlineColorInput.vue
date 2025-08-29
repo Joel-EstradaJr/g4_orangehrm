@@ -36,14 +36,14 @@
 </template>
 
 <script>
-import {toRef, nextTick, computed} from 'vue';
-import {OxdColorInput, OxdLabel, useField} from '@ohrm/oxd';
+import { toRef, nextTick, computed } from "vue";
+import { OxdColorInput, OxdLabel, useField } from "@ohrm/oxd";
 
 export default {
-  name: 'InlineColorInput',
+  name: "InlineColorInput",
   components: {
-    'oxd-label': OxdLabel,
-    'oxd-color-input': OxdColorInput,
+    "oxd-label": OxdLabel,
+    "oxd-color-input": OxdColorInput,
   },
   inheritAttrs: false,
   props: {
@@ -73,19 +73,19 @@ export default {
       required: false,
     },
   },
-  emits: ['update:modelValue'],
+  emits: ["update:modelValue"],
   setup(props, context) {
-    const disabled = toRef(props, 'disabled');
-    const modelValue = toRef(props, 'modelValue');
+    const disabled = toRef(props, "disabled");
+    const modelValue = toRef(props, "modelValue");
     const initialValue = modelValue.value;
 
     const onReset = async () => {
-      context.emit('update:modelValue', initialValue);
+      context.emit("update:modelValue", initialValue);
       await nextTick();
     };
 
-    const {hasError, message} = useField({
-      fieldLabel: props.label ?? '',
+    const { hasError, message } = useField({
+      fieldLabel: props.label ?? "",
       rules: props.rules,
       modelValue,
       onReset,
@@ -94,13 +94,13 @@ export default {
 
     const classes = computed(() => ({
       label: {
-        'oxd-input-field-required': props.required,
+        "oxd-input-field-required": props.required,
       },
       message: {
-        'oxd-input-field-error-message': hasError,
+        "oxd-input-field-error-message": hasError,
       },
       wrapper: {
-        'orangehrm-color-input-wrapper': true,
+        "orangehrm-color-input-wrapper": true,
       },
     }));
 

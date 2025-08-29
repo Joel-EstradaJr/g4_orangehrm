@@ -30,7 +30,7 @@
             <employee-autocomplete
               v-model="employee"
               :rules="rules.employee"
-              :params="{includeEmployees: includeEmployeesParam}"
+              :params="{ includeEmployees: includeEmployeesParam }"
               :label="autocompleteLabel"
               required
             />
@@ -55,16 +55,16 @@ import {
   required,
   shouldNotExceedCharLength,
   validSelection,
-} from '@/core/util/validation/rules';
-import EmployeeAutocomplete from '@/core/components/inputs/EmployeeAutocomplete';
-import RequiredText from '@/core/components/labels/RequiredText';
+} from "@/core/util/validation/rules";
+import EmployeeAutocomplete from "@/core/components/inputs/EmployeeAutocomplete";
+import RequiredText from "@/core/components/labels/RequiredText";
 
 export default {
-  name: 'EmployeeRecords',
+  name: "EmployeeRecords",
 
   components: {
-    'required-text': RequiredText,
-    'employee-autocomplete': EmployeeAutocomplete,
+    "required-text": RequiredText,
+    "employee-autocomplete": EmployeeAutocomplete,
   },
 
   props: {
@@ -82,7 +82,7 @@ export default {
     },
   },
 
-  emits: ['search'],
+  emits: ["search"],
 
   data() {
     return {
@@ -95,7 +95,7 @@ export default {
 
   methods: {
     emitEmployee() {
-      this.$emit('search', this.employee?._employee);
+      this.$emit("search", this.employee?._employee);
     },
   },
 };

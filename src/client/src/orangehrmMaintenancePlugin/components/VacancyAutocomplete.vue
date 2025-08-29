@@ -24,20 +24,20 @@
     :clear="false"
     :create-options="loadVacancies"
   >
-    <template #option="{data}">
+    <template #option="{ data }">
       <span>{{ data.label }}</span>
     </template>
   </oxd-input-field>
 </template>
 
 <script>
-import {APIService} from '@ohrm/core/util/services/api.service';
+import { APIService } from "@ohrm/core/util/services/api.service";
 export default {
-  name: 'VacancyAutocomplete',
+  name: "VacancyAutocomplete",
   setup() {
     const http = new APIService(
       window.appGlobal.baseUrl,
-      '/api/v2/recruitment/vacancies',
+      "/api/v2/recruitment/vacancies"
     );
     return {
       http,
@@ -51,14 +51,14 @@ export default {
             .getAll({
               name: searchParam.trim(),
             })
-            .then(({data}) => {
+            .then(({ data }) => {
               resolve(
                 data.data.map((vacancy) => {
                   return {
                     id: vacancy.id,
                     label: vacancy.name,
                   };
-                }),
+                })
               );
             });
         } else {
