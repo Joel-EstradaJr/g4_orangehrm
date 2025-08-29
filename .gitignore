@@ -33,7 +33,7 @@ web/dist/
 
 # PHP Composer vendor dir (already committed in this project under src/vendor; keep lockfile)
 # If switching to a clean vendor install flow, uncomment the next line:
-src/vendor/
+# src/vendor/
 
 # Local composer artifacts
 src/composer.phar
